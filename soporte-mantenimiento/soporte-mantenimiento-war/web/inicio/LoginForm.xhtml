@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Login</title>
+        <h:outputStylesheet library="css" name="principal.css"/>
+    </h:head>
+    <h:body id="b_login">
+        <p:growl id="mensajes" showDetail="true">
+            <p:autoUpdate/>
+        </p:growl>
+        <div id="div_login">
+            <p:fieldset legend="Ingreso">
+                <h:form>
+                    <p:panelGrid columns="2">
+                        <p:outputLabel>Usuario:</p:outputLabel>
+                        <p:inputText required="true" value="#{usuariosMB.usuario.usuario}" requiredMessage="Ingrese el usuario"/>
+
+                        <p:outputLabel>Contrase&ntilde;a:</p:outputLabel>
+                        <p:password required="true" value="#{usuariosMB.usuario.clave}" requiredMessage="Ingrese la contrase&ntilde;a"/>
+                    </p:panelGrid>
+                    <p:commandButton value="Acceder" icon="fa fa-sign-in"/>
+                </h:form>
+            </p:fieldset>
+        </div>
+    </h:body>
+</html>
+

@@ -1,0 +1,50 @@
+/*TODAS LAS PANTALLAS*/
+*{
+    font-size: 1rem;
+}
+.fa {
+    color:red;
+}
+
+/*LOGIN*/
+#b_login {
+     
+}
+
+#div_login{
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%) !important;
+    text-align: center;
+}
+
+.ui-fieldset .ui-fieldset-legend{
+    text-decoration: none;
+    background: white;
+    border: none;
+    font-size: 1.5em;
+}
+
+/*TEMPLATE PRINCIPAL PRINCIPAL*/ 
+
+#div_header {
+
+    width: 100%;
+    margin: 1% 0;
+    padding: 1% 0;
+}
+
+#div_btnSidebar {
+    margin-right: 0;
+    margin-bottom: 1em;
+    border: none;
+}
+
+#div_contenido {
+
+}
+
+#div_menuLateral{
+
+}
