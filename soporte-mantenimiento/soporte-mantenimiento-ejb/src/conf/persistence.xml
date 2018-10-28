@@ -1,8 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="soportePU" transaction-type="JTA">
-    <jta-data-source>jdbc/__TimerPool</jta-data-source>
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <jta-data-source>jdbc/soporte</jta-data-source>
+    <class>edu.sv.uesocc.entidades.Arquitecturas</class>
+    <class>edu.sv.uesocc.entidades.Capacidades</class>
+    <class>edu.sv.uesocc.entidades.Componentes</class>
+    <class>edu.sv.uesocc.entidades.Cronograma</class>
+    <class>edu.sv.uesocc.entidades.DetallesOrdenTrabajo</class>
+    <class>edu.sv.uesocc.entidades.DiaNoLaboral</class>
+    <class>edu.sv.uesocc.entidades.Discos</class>
+    <class>edu.sv.uesocc.entidades.Equipos</class>
+    <class>edu.sv.uesocc.entidades.EquiposAsignados</class>
+    <class>edu.sv.uesocc.entidades.EstadosOrden</class>
+    <class>edu.sv.uesocc.entidades.EstadosSolicitud</class>
+    <class>edu.sv.uesocc.entidades.Fuentes</class>
+    <class>edu.sv.uesocc.entidades.HardwareComponente</class>
+    <class>edu.sv.uesocc.entidades.Mantenimientos</class>
+    <class>edu.sv.uesocc.entidades.Marcas</class>
+    <class>edu.sv.uesocc.entidades.Memorias</class>
+    <class>edu.sv.uesocc.entidades.Modelos</class>
+    <class>edu.sv.uesocc.entidades.Motherboards</class>
+    <class>edu.sv.uesocc.entidades.OrdenesTrabajo</class>
+    <class>edu.sv.uesocc.entidades.Procesadores</class>
+    <class>edu.sv.uesocc.entidades.Puertos</class>
+    <class>edu.sv.uesocc.entidades.Resposables</class>
+    <class>edu.sv.uesocc.entidades.Sockets</class>
+    <class>edu.sv.uesocc.entidades.Software</class>
+    <class>edu.sv.uesocc.entidades.SoftwareComponente</class>
+    <class>edu.sv.uesocc.entidades.Solicitudes</class>
+    <class>edu.sv.uesocc.entidades.Soluciones</class>
+    <class>edu.sv.uesocc.entidades.TarjetasVideo</class>
+    <class>edu.sv.uesocc.entidades.Tecnicos</class>
+    <class>edu.sv.uesocc.entidades.TiposComponente</class>
+    <class>edu.sv.uesocc.entidades.TiposDisco</class>
+    <class>edu.sv.uesocc.entidades.TiposMantenimiento</class>
+    <class>edu.sv.uesocc.entidades.TiposMemoria</class>
+    <class>edu.sv.uesocc.entidades.TiposSoftware</class>
+    <class>edu.sv.uesocc.entidades.Ubicaciones</class>
+    <class>edu.sv.uesocc.entidades.Ups</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>
 </persistence>

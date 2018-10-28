@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../templates/PrincipalTemplate.xhtml">
+
+            <ui:define name="contenido">
+
+                <!--Todos los campos para ingresar datos y los botones deben ir dentro de un FORM-->
+                <h:form id="f_tipoComponente">
+                    <div>
+                        <!--Boton que despliega el modal para crear registros-->
+                        <p:commandButton value="Nuevo" icon="fa fa-plus" onclick="PF('wd_crear').show()" update="f_crear"/>
+                    </div>
+                    <!--Tabla que muestra todos los datos-->
+                    <p:dataTable id="t_tipoComponente" emptyMessage="No hay registros" value="#{tiposComponenteMB.tipoCompList}" var="tipoComp"
+                                 paginator="true" rows="10" selection="#{tiposComponenteMB.tipoCompSeleccionado}" selectionMode="single" rowKey="#{tipoComp.idTipoComponente}">
+
+                        <!--Cabecera de la tabla que contiene el titulo-->
+                        <f:facet name="header">
+                            Tipos de Componente
+                        </f:facet>
+
+                        <!--Todas las columnas de la tabla-->
+                        <p:column headerText="ID" sortBy="#{tipoComp.idTipoComponente}">
+                            <p:outputLabel>#{tipoComp.idTipoComponente}</p:outputLabel>                        
+                        </p:column>
+
+                        <p:column headerText="Nombre">
+                            <p:outputLabel>#{tipoComp.nombre}</p:outputLabel>
+                        </p:column>
+
+                        <p:column headerText="Descripción">
+                            <p:outputLabel>#{tipoComp.descripcion}</p:outputLabel>
+                        </p:column>
+                        
+                        <!--Evento que abre el formulario para editar al dar doble click en una fila de la tabla-->
+                        <p:ajax event="rowDblselect" oncomplete="PF('wd_editar').show()" update=":f_editar"/>
+
+                    </p:dataTable>
+                    
+                    <!--Menu que se abre al dar click derecho a una fila de la tabla-->
+                    <p:contextMenu for="t_tipoComponente">
+                        <p:menuitem value="Eliminar" icon="fa fa-trash" action="#{tiposComponenteMB.eliminarTipoComponente()}" update="f_tipoComponente"/>
+                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                    </p:contextMenu>
+                </h:form>
+                
+                <!--Modal para crear un nuevo Tipo-->
+                <p:dialog widgetVar="wd_crear" modal="true" header="Nuevo Tipo">
+                        <h:form id="f_crear">
+                            <p:panelGrid columns="2">
+                                <p:outputLabel>Nombre:</p:outputLabel>
+                                <p:inputText value="#{tiposComponenteMB.tipoComp.nombre}" required="true" requiredMessage="Ingrese un nombre!"/>
+                                <p:outputLabel>Descripcion:</p:outputLabel>
+                                <p:inputTextarea value="#{tiposComponenteMB.tipoComp.descripcion}"/>
+                            </p:panelGrid>
+                            <p:commandButton icon="fa fa-check" value="Guardar" action="#{tiposComponenteMB.crearTipoComponente()}" oncomplete="PF('wd_crear').hide()" update="f_tipoComponente"/>
+                        </h:form>
+                    </p:dialog>
+                
+                <!--Modal para editar-->
+                <p:dialog widgetVar="wd_editar" modal="true" header="Editar Tipo">
+                        <h:form id="f_editar">
+                            <p:panelGrid columns="2">
+                                <p:outputLabel>Nombre:</p:outputLabel>
+                                <p:inputText value="#{tiposComponenteMB.tipoCompSeleccionado.nombre}"/>
+                                <p:outputLabel>Descripcion:</p:outputLabel>
+                                <p:inputTextarea value="#{tiposComponenteMB.tipoCompSeleccionado.descripcion}"/>
+                            </p:panelGrid>
+                            <p:commandButton icon="fa fa-check" value="Guardar" action="#{tiposComponenteMB.modificarTipoComponente()}" oncomplete="PF('wd_editar').hide()" update=":f_tipoComponente"/>
+                        </h:form>
+                    </p:dialog>
+
+            </ui:define>
+
+            <ui:define name="menuLateral">
+                <ui:include src="../templates/HwSwMenuLateral.xhtml"/>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
