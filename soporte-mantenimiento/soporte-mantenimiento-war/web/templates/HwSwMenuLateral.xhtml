@@ -11,7 +11,11 @@
             <h:form id="f_hardware_software">
                 <h2>Hardware y Software</h2>
                 <p:menu toggleable="true">
-                  
+                    <p:submenu label="Componentes">
+                        <p:menuitem value="Tipos de Componentes" url="../admin/TipoComponenteForm.jsf"/>
+                        <p:menuitem value="Marcas" url="../admin/MarcasForm.jsf"/>
+                        <p:menuitem value="Modelos" url="../admin/ModelosForm.jsf"/>
+                    </p:submenu>
                 </p:menu>
             </h:form>
 

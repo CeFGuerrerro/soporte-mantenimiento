@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../templates/PrincipalTemplate.xhtml">
+
+            <ui:define name="contenido">
+                <h:form id="f_marcas">
+                    <div>
+                        <p:commandButton value="Nuevo" icon="fa fa-plus" onclick="PF('wd_crear').show()" update="f_crear"/>
+                    </div>
+
+                    <p:dataTable id="t_marcas" emptyMessage="No hay registros" value="#{marcasMB.marcList}" var="mar"
+                                 selection="#{marcasMB.marcSeleccionada}" selectionMode="single" rowKey="#{mar.idMarca}"
+                                 rows="10" paginator="true">
+                        <f:facet name="header">
+                            Marcas
+                        </f:facet>
+
+                        <p:column headerText="ID" sortBy="#{mar.idMarca}">
+                            <p:outputLabel>#{mar.idMarca}</p:outputLabel>
+                        </p:column>
+
+                        <p:column headerText="Nombre" sortBy="#{mar.nombre}">
+                            <p:outputLabel>#{mar.nombre}</p:outputLabel>
+                        </p:column>
+
+                        <p:ajax event="rowDblselect" oncomplete="PF('wd_editar').show()" update=":f_editar"/>
+
+                    </p:dataTable>
+
+                    <p:contextMenu for="t_marcas">
+                        <p:menuitem value="Eliminar" action="#{marcasMB.eliminarMarca()}" icon="fa fa-trash" update="f_marcas"/>
+                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                    </p:contextMenu>
+                </h:form>
+                
+                <!--Formulario para crear marcas-->
+
+                <p:dialog widgetVar="wd_crear" modal="true" header="Nueva Marca">
+                    <h:form id="f_crear">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Marca"/>
+                            <p:inputText value="#{marcasMB.marc.nombre}" required="true" requiredMessage="Ingrese el nombre!"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" action="#{marcasMB.crearMarca()}" icon="fa fa-check" oncomplete="PF('wd_crear').hide()" update="f_marcas"/>
+                    </h:form>
+                </p:dialog>
+
+                <p:dialog widgetVar="wd_editar" modal="true" header="Editar Marca">
+                    <h:form id="f_editar">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Marca"/>
+                            <p:inputText value="#{marcasMB.marcSeleccionada.nombre}"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" action="#{marcasMB.modificarMarca()}" icon="fa fa-check" oncomplete="PF('wd_editar').hide()" update="f_marcas"/>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+
+            <ui:define name="menuLateral">
+                <ui:include src="../templates/HwSwMenuLateral.xhtml"/>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

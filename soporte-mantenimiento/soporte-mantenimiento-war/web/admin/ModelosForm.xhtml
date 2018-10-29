@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../templates/PrincipalTemplate.xhtml">
+
+            <ui:define name="contenido">
+                <h:form id="f_modelos">
+                    <div>
+                        <p:commandButton value="Nuevo" icon="fa fa-plus" onclick="PF('wd_crear').show()" update="f_crear"/>
+                    </div>
+                    <p:dataTable id="t_modelos" value="#{modelosMB.modelList}" var="model" selectionMode="single"
+                                 selection="#{modelosMB.modelSeleccionado}" rowKey="#{model.idModelo}" rows="10" paginator="true"
+                                 emptyMessage="No hay registros" widgetVar="wd_t_modelos">
+
+                        <f:facet name="header">
+                            Modelos
+                        </f:facet>
+
+                        <p:column headerText="ID" sortBy="#{model.idModelo}">
+                            <p:outputLabel>#{model.idModelo}</p:outputLabel>
+                        </p:column>
+
+                        <p:column headerText="Marca" sortBy="#{model.idMarca.nombre}" filterBy="#{model.idMarca.nombre}">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('wd_t_modelos').filter()" filter="true" filterMatchMode="startsWith">
+                                    <f:selectItem itemLabel="Seleccione una marca" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{marcasMB.marcList}" var="mar" itemLabel="#{mar.nombre}" itemValue="#{mar.nombre}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <p:outputLabel>#{model.idMarca.nombre}</p:outputLabel>
+                        </p:column>
+
+                        <p:column headerText="Modelo">
+                            <p:outputLabel>#{model.nombre}</p:outputLabel>
+                        </p:column>
+
+                        <p:ajax event="rowDblselect" oncomplete="PF('wd_editar').show()" update=":f_editar"/>
+
+                    </p:dataTable>
+
+                    <p:contextMenu for="t_modelos">
+                        <p:menuitem value="Eliminar" action="#{modelosMB.eliminarModelo()}" update="f_modelos" icon="fa fa-trash"/>
+                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                    </p:contextMenu>
+                </h:form>
+
+                <p:dialog widgetVar="wd_crear" modal="true" header="Nuevo Modelo">
+                    <h:form id="f_crear">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Modelo:"/>
+                            <p:inputText value="#{modelosMB.model.nombre}" required="true" requiredMessage="Ingrese el modelo"/>
+
+                            <p:outputLabel value="Marca"/>
+                            <p:selectOneMenu value="#{modelosMB.model.idMarca}" converter="objectConverter" required="true" 
+                                             requiredMessage="Seleccione una marca" filter="true" 
+                                             filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Seleccione una marca" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{marcasMB.marcList}" var="marca" itemLabel="#{marca.nombre}" itemValue="#{marca}"/>
+                            </p:selectOneMenu>
+
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" action="#{modelosMB.crearModelo()}" icon="fa fa-check" oncomplete="PF('wd_crear').hide()" update="f_modelos"/>
+                    </h:form>
+                </p:dialog>
+
+                <p:dialog widgetVar="wd_editar" modal="true" header="Editar Modelo">
+                    <h:form id="f_editar">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Modelo:"/>
+                            <p:inputText value="#{modelosMB.modelSeleccionado.nombre}" required="true" requiredMessage="Ingrese el modelo"/>
+
+                            <p:outputLabel value="Marca"/>
+                            <p:selectOneMenu value="#{modelosMB.modelSeleccionado.idMarca}" filter="true" 
+                                             filterMatchMode="startsWith" converter="objectConverter" required="true" 
+                                             requiredMessage="Seleccione una marca">
+                                <f:selectItem itemLabel="Seleccione una marca" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{marcasMB.marcList}" var="marca" itemLabel="#{marca.nombre}" itemValue="#{marca}"/>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" action="#{modelosMB.modificarModelo()}" icon="fa fa-check" oncomplete="PF('wd_editar').hide()" update="f_modelos"/>
+                    </h:form>
+                </p:dialog>
+
+            </ui:define>
+
+            <ui:define name="menuLateral">
+                <ui:include src="../templates/HwSwMenuLateral.xhtml"/>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

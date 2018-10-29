@@ -82,10 +82,10 @@ public class TiposComponenteMB implements Serializable {
         try {
             creado = tcf.create(tipoComp);
             if (creado) {
-                contexto.addMessage(null, new FacesMessage("Registro creado"));
+                contexto.addMessage(null, new FacesMessage("Registro guardado"));
                 tipoComp = new TiposComponente();
             } else {
-                contexto.addMessage(null, new FacesMessage("No se puede crear el registro"));
+                contexto.addMessage(null, new FacesMessage("No se pudo guardar el registro"));
             }
             obtenerTodos();
         } catch (Exception e) {
@@ -101,7 +101,7 @@ public class TiposComponenteMB implements Serializable {
             if (eliminado) {
                 contexto.addMessage(null, new FacesMessage("Registro eliminado"));
             } else {
-                contexto.addMessage(null, new FacesMessage("No se puede eliminar el registro"));
+                contexto.addMessage(null, new FacesMessage("No se pudo eliminar el registro"));
             }
             obtenerTodos();
         } catch (Exception e) {
@@ -117,7 +117,7 @@ public class TiposComponenteMB implements Serializable {
             if (modificado) {
                 contexto.addMessage(null, new FacesMessage("Registro modificado"));
             } else {
-                contexto.addMessage(null, new FacesMessage("No se puede modificar el registro"));
+                contexto.addMessage(null, new FacesMessage("No se pudo modificar el registro"));
             }
             obtenerTodos();
         } catch (Exception e) {
