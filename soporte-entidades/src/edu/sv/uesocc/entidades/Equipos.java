@@ -51,7 +51,7 @@ public class Equipos implements Serializable {
     private List<EquiposAsignados> equiposAsignadosList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEquipo")
     private List<Solicitudes> solicitudesList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEquipo")
+    @OneToMany(mappedBy = "idEquipo")
     private List<Componentes> componentesList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEquipo")
     private List<Cronograma> cronogramaList;
