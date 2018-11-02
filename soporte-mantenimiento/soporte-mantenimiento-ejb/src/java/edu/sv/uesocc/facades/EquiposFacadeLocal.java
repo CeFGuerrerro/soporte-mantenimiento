@@ -29,5 +29,5 @@ public interface EquiposFacadeLocal {
     List<Equipos> findRange(int[] range);
 
     int count();
-    
+        
 }

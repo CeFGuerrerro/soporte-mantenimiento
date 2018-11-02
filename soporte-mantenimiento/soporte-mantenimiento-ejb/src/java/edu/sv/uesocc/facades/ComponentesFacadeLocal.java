@@ -7,6 +7,7 @@ package edu.sv.uesocc.facades;
 
 import edu.sv.uesocc.entidades.Componentes;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Local;
 
 /**
@@ -29,5 +30,9 @@ public interface ComponentesFacadeLocal {
     List<Componentes> findRange(int[] range);
 
     int count();
+    
+    int countByDataFilter(Map<String, Object> filters);
+    
+    List<Componentes> findByDataFilter(int first, int pageSize, String sortField, String sortOrder, Map<String, Object> filters);
     
 }

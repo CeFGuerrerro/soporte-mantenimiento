@@ -32,6 +32,7 @@ public class MarcasMB implements Serializable {
     private void init(){
         marc = new Marcas();
         marcSeleccionada = new Marcas();
+        obtenerTodos();
     }
 
     public Marcas getMarc() {

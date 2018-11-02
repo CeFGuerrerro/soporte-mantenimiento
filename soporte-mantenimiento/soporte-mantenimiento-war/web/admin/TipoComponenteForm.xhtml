@@ -59,7 +59,7 @@
                                 <p:outputLabel>Nombre:</p:outputLabel>
                                 <p:inputText value="#{tiposComponenteMB.tipoComp.nombre}" required="true" requiredMessage="Ingrese un nombre!"/>
                                 <p:outputLabel>Descripcion:</p:outputLabel>
-                                <p:inputTextarea value="#{tiposComponenteMB.tipoComp.descripcion}"/>
+                                <p:inputTextarea rows="5" value="#{tiposComponenteMB.tipoComp.descripcion}"/>
                             </p:panelGrid>
                             <p:commandButton icon="fa fa-check" value="Guardar" action="#{tiposComponenteMB.crearTipoComponente()}" oncomplete="PF('wd_crear').hide()" update="f_tipoComponente"/>
                         </h:form>

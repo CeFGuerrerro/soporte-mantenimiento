@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../templates/PrincipalTemplate.xhtml">
+
+            <ui:define name="contenido">
+                <h:form id="f_equipo">
+                    <p:commandButton value="Nuevo Equipo" icon="fa fa-plus" onclick="PF('wd_crearEquipo').show()" update="f_crearEquipo"/>
+
+                    <!--Tabla para mostrar los equipos-->
+                    <p:dataTable id="t_equipos" emptyMessage="No hay registros" selectionMode="single" rows="10" scrollable="true"
+                                 paginator="true" value="#{equiposMB.equipList}" var="equip" rowKey="#{equip.idEquipo}"
+                                 selection="#{equiposMB.equipSeleccionado}" widgetVar="wd_tbl_componentes">
+                        <f:facet name="header">
+                            Equipos
+                        </f:facet>
+
+                        <p:column headerText="ID" style="width: 5em">
+                            <p:outputLabel value="#{equip.idEquipo}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Ubicaci&oacute;n" style="width: 9em">
+                            <p:outputLabel value="#{equip.idUbicacion.nombre}"/>
+                        </p:column>
+
+                        <p:column headerText="E" style="width: 30px">
+                            <p:outputPanel layout="inline" styleClass="fa fa-check" rendered="#{equip.estado}" />
+                            <p:outputPanel layout="inline" styleClass="fa fa-close" rendered="#{!equip.estado}" />
+                        </p:column>
+
+                        <p:column headerText="Observaciones" style="width: 12.5em">
+                            <p:outputLabel value="#{equip.observaciones}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+
+                <!--Menu para crear un equipo-->
+                <p:dialog widgetVar="wd_crearEquipo" modal="true" header="Nuevo Equipo">
+                    <h:form id="f_crearEquipo">
+
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Ubicacion"/>
+                            <p:selectOneMenu value="#{equiposMB.equip.idUbicacion}" converter="objectConverter" required="true"
+                                             requiredMessage="Seleccione una ubicacion" filter="true" filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Seleccione una ubicaci&oacute;n" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value="#{ubicacionesMB.ubicList}" var="ubic" itemLabel="#{ubic.nombre}" itemValue="#{tipo}"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Estado"/>
+                            <p:selectBooleanButton value="#{equiposMB.equip.estado}" onLabel="Funcionando" onIcon="fa fa-check" offLabel="De baja" offIcon="fa fa-close"/>
+
+                            <p:outputLabel value="Observaciones"/>
+                            <p:inputTextarea rows="3" cols="100" value="#{equiposMB.equip.observaciones}"/>
+
+                            <p:outputLabel value="Componentes"/>
+                        </p:panelGrid>
+                        <p:dataTable id="t_componentes" emptyMessage="No hay registros" rows="10" scrollable="true" paginatorPosition="top"
+                                     paginator="true" value="#{componentesMB.compList}" rowKey="#{comp.idComponente}" var="comp" lazy="true" scrollHeight="250"
+                                     selection="#{equiposMB.equip.componentesList}" widgetVar="wd_tbl_componentes">
+
+                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+
+                            <p:column headerText="Num. Inventario" filterBy="#{comp.numeroInventario}" sortBy="#{comp.numeroInventario}" style="width: 9em">
+                                <p:outputLabel value="#{comp.numeroInventario}"/>
+                            </p:column>
+
+                            <p:column headerText="Tipo" filterBy="#{comp.idTipoComponente.idTipoComponente}" style="width: 12em">
+                                <f:facet name="filter">
+                                    <p:selectOneMenu onchange="PF('wd_tbl_componentes').filter()" filter="true" filterMatchMode="startsWith" style="width: 8em">
+                                        <f:selectItem itemLabel="Seleccione un tipo" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{tiposComponenteMB.tipoCompList}" var="tc" itemLabel="#{tc.nombre}" itemValue="#{tc.idTipoComponente}" />
+                                    </p:selectOneMenu>
+                                </f:facet>
+                                <p:outputLabel value="#{comp.idTipoComponente.nombre}"/>
+                            </p:column>
+
+                            <p:column headerText="Marca" filterBy="#{comp.idModelo.idMarca.idMarca}" style="width: 12em;">
+                                <f:facet name="filter">
+                                    <p:selectOneMenu onchange="PF('wd_tbl_componentes').filter()" filter="true" filterMatchMode="startsWith" style="width: 10em">
+                                        <f:selectItem itemLabel="Seleccione una marca" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{marcasMB.marcList}" var="mar" itemLabel="#{mar.nombre}" itemValue="#{mar.idMarca}" />
+                                    </p:selectOneMenu>
+                                </f:facet>
+                                <p:outputLabel value="#{comp.idModelo.idMarca.nombre}"/>
+                            </p:column>
+
+                            <p:column headerText="Modelo" filterBy="#{comp.idModelo.idModelo}" style="width: 12em">
+                                <f:facet name="filter">
+                                    <p:selectOneMenu onchange="PF('wd_tbl_componentes').filter()" filter="true" filterMatchMode="startsWith" style="width: 10em">
+                                        <f:selectItem itemLabel="Seleccione un modelo" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{modelosMB.modelList}" var="m" itemLabel="#{m.nombre}" itemValue="#{m.idModelo}"/>
+                                    </p:selectOneMenu>
+                                </f:facet>
+                                <p:outputLabel value="#{comp.idModelo.nombre}"/>
+                            </p:column>
+
+                            <p:column headerText="Serial" filterBy="#{comp.numeroSerie}" style="width: 9em">
+                                <p:outputLabel value="#{comp.numeroSerie}"/>
+                            </p:column>
+
+                            <p:column headerText="Observaciones" style="width: 15em">
+                                <p:outputLabel value="#{comp.observaciones}"/>
+                            </p:column>
+                        </p:dataTable>
+
+                        <p:commandButton value="Agregar" actionListener="#{equiposMB.crearEquipo()}" update="f_equipo" icon="fa fa-check" oncomplete="PF('wd_crearEquipo').hide()"/>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+
+            <ui:define name="menuLateral">
+                <ui:include src="./../templates/HwSwMenuLateral.xhtml"/>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

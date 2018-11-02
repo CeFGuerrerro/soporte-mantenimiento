@@ -1,18 +1,229 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
         <ui:composition template="./../templates/PrincipalTemplate.xhtml">
 
             <ui:define name="contenido">
-                contenido
+                <h:form id="f_componentes">
+                    <div>
+                        <p:commandButton value="Nuevo Componente" icon="fa fa-plus" onclick="PF('wd_crearComponente').show()" update="f_crearComponente"/>
+                        <p:commandButton value="Nueva Marca" icon="fa fa-plus" onclick="PF('wd_crearMarca').show()" update="f_crearMarca"/>
+                        <p:commandButton value="Nuevo Modelo" icon="fa fa-plus" onclick="PF('wd_crearModelo').show()" update="f_crearModelo"/>
+                    </div>
+
+                    <!--Tabla de componentes-->
+
+                    <p:dataTable id="t_componentes" emptyMessage="No hay registros" selectionMode="single" rows="10" scrollable="true"
+                                 paginator="true" value="#{componentesMB.compList}" var="comp" lazy="true" 
+                                 selection="#{componentesMB.compSeleccionado}" widgetVar="wd_tbl_componentes">
+                        <f:facet name="header">
+                            Componentes
+                        </f:facet>
+
+                        <p:column headerText="Num. Inventario" filterBy="#{comp.numeroInventario}" sortBy="#{comp.numeroInventario}" style="width: 9em">
+                            <p:outputLabel value="#{comp.numeroInventario}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Equipo" style="width: 3em">
+                            <p:outputLabel value="#{comp.idEquipo.idEquipo}"/>
+                        </p:column>
+
+                        <p:column headerText="Tipo" filterBy="#{comp.idTipoComponente.idTipoComponente}" style="width: 12em">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('wd_tbl_componentes').filter()" filter="true" filterMatchMode="startsWith" style="width: 8em">
+                                    <f:selectItem itemLabel="Seleccione un tipo" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{tiposComponenteMB.tipoCompList}" var="tc" itemLabel="#{tc.nombre}" itemValue="#{tc.idTipoComponente}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <p:outputLabel value="#{comp.idTipoComponente.nombre}"/>
+                        </p:column>
+
+                        <p:column headerText="Marca" filterBy="#{comp.idModelo.idMarca.idMarca}" style="width: 12em;">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('wd_tbl_componentes').filter()" filter="true" filterMatchMode="startsWith" style="width: 10em">
+                                    <f:selectItem itemLabel="Seleccione una marca" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{marcasMB.marcList}" var="mar" itemLabel="#{mar.nombre}" itemValue="#{mar.idMarca}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <p:outputLabel value="#{comp.idModelo.idMarca.nombre}"/>
+                        </p:column>
+
+                        <p:column headerText="Modelo" filterBy="#{comp.idModelo.idModelo}" style="width: 12em">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('wd_tbl_componentes').filter()" filter="true" filterMatchMode="startsWith" style="width: 10em">
+                                <f:selectItem itemLabel="Seleccione un modelo" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItems value="#{modelosMB.modelList}" var="m" itemLabel="#{m.nombre}" itemValue="#{m.idModelo}"/>
+                            </p:selectOneMenu>
+                            </f:facet>
+                            <p:outputLabel value="#{comp.idModelo.nombre}"/>
+                        </p:column>
+
+                        <p:column headerText="Serial" filterBy="#{comp.numeroSerie}" style="width: 9em">
+                            <p:outputLabel value="#{comp.numeroSerie}"/>
+                        </p:column>
+
+                        <p:column headerText="Observaciones" style="width: 15em">
+                            <p:outputLabel value="#{comp.observaciones}"/>
+                        </p:column>
+                        
+                        <p:column headerText="E" style="width: 30px" sortBy="#{comp.estado}">
+                            <p:outputPanel layout="inline" styleClass="fa fa-check" rendered="#{comp.estado}" />
+                            <p:outputPanel layout="inline" styleClass="fa fa-close" rendered="#{!comp.estado}" />
+                        </p:column>
+                        
+                        <p:column headerText="A" style="width: 30px" sortBy="#{comp.asignado}">
+                            <p:outputPanel layout="inline" styleClass="fa fa-check" rendered="#{comp.asignado}" />
+                            <p:outputPanel layout="inline" styleClass="fa fa-close" rendered="#{!comp.asignado}" />
+                        </p:column>
+                        
+                        <p:column headerText="P" style="width: 30px" sortBy="#{comp.personal}">
+                            <p:outputPanel layout="inline" styleClass="fa fa-check" rendered="#{comp.personal}" />
+                            <p:outputPanel layout="inline" styleClass="fa fa-close" rendered="#{!comp.personal}" />
+                        </p:column>
+
+                        <p:ajax event="rowDblselect" oncomplete="PF('wd_editarComponente').show()" update=":f_editarComponente"/>
+
+                    </p:dataTable>
+
+                    <!--Menu para eliminar-->
+
+                    <p:contextMenu for="t_componentes">
+                        <p:menuitem value="Eliminar" icon="fa fa-trash" action="#{componentesMB.eliminarComponente()}" update="f_componentes"/>
+                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                    </p:contextMenu>
+                </h:form>
+
+                <!--Formulario para crear Marcas-->
+
+                <p:dialog widgetVar="wd_crearMarca" modal="true" header="Nueva Marca">
+                    <h:form id="f_crearMarca">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Marca"/>
+                            <p:inputText value="#{marcasMB.marc.nombre}" required="true" requiredMessage="Ingrese el nombre!"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" action="#{marcasMB.crearMarca()}" icon="fa fa-check" oncomplete="PF('wd_crearMarca').hide()" update="f_componentes"/>
+                    </h:form>
+                </p:dialog>
+
+                <!--Formulario para crear Modelos-->
+
+                <p:dialog widgetVar="wd_crearModelo" modal="true" header="Nuevo Modelo">
+                    <h:form id="f_crearModelo">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Modelo:"/>
+                            <p:inputText value="#{modelosMB.model.nombre}" required="true" requiredMessage="Ingrese el modelo"/>
+
+                            <p:outputLabel value="Marca"/>
+                            <p:selectOneMenu value="#{modelosMB.model.idMarca}" converter="objectConverter" required="true" 
+                                             requiredMessage="Seleccione una marca" filter="true" 
+                                             filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Seleccione una marca" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{marcasMB.marcList}" var="marca" itemLabel="#{marca.nombre}" itemValue="#{marca}"/>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" action="#{modelosMB.crearModelo()}" icon="fa fa-check" oncomplete="PF('wd_crearModelo').hide()" update="f_componentes"/>
+                    </h:form>
+                </p:dialog>
+
+                <!--Formulario para crear Componentes-->
+
+                <p:dialog widgetVar="wd_crearComponente" modal="true" header="Nuevo Componente">
+                    <h:form id="f_crearComponente">
+                        <p:panelGrid columns="2">
+
+                            <p:outputLabel value="Num. Inventario"/>
+                            <p:inputText value="#{componentesMB.comp.numeroInventario}"/>
+
+                            <p:outputLabel value="Serial"/>
+                            <p:inputText value="#{componentesMB.comp.numeroSerie}"/>
+
+                            <p:outputLabel value="Tipo Componente"/>
+                            <p:selectOneMenu value="#{componentesMB.comp.idTipoComponente}" converter="objectConverter" required="true"
+                                             requiredMessage="Seleccione un tipo" filter="true" filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Seleccione un tipo" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value="#{tiposComponenteMB.tipoCompList}" var="tipo" itemLabel="#{tipo.nombre}" itemValue="#{tipo}"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Modelo"/>
+                            <p:selectOneMenu value="#{componentesMB.comp.idModelo}" converter="objectConverter" required="true"
+                                             requiredMessage="Seleccione un modelo" filter="true" filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Seleccione un modelo" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value="#{modelosMB.modelList}" var="modelo" itemLabel="#{modelo.nombre}" itemValue="#{modelo}"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Estado"/>
+                            <p:selectBooleanButton value="#{componentesMB.comp.estado}" onLabel="Funcionando" onIcon="fa fa-check" offLabel="De baja" offIcon="fa fa-close"/>
+
+                            <p:outputLabel value="Asignado"/>
+                            <p:selectBooleanButton value="#{componentesMB.comp.asignado}" onLabel="Si" onIcon="fa fa-check" offLabel="No" offIcon="fa fa-close"/>
+
+                            <p:outputLabel value="Personal"/>
+                            <p:selectBooleanButton value="#{componentesMB.comp.personal}" onLabel="Si" onIcon="fa fa-check" offLabel="No" offIcon="fa fa-close"/>
+
+                            <p:outputLabel value="Descripción"/>
+                            <p:inputTextarea value="#{componentesMB.comp.observaciones}" rows="5" />
+
+                        </p:panelGrid>
+
+                        <p:commandButton value="Guardar" action="#{componentesMB.crearComponente()}" oncomplete="PF('wd_crearComponente').hide()" update="f_componentes"/>
+                    </h:form>
+                </p:dialog>
+
+                <!--Formulario para editar Componentes-->
+
+                <p:dialog widgetVar="wd_editarComponente" modal="true" header="Editar Componente">
+                    <h:form id="f_editarComponente">
+                        <p:panelGrid columns="2">
+
+                            <p:outputLabel value="Num. Inventario"/>
+                            <p:inputText value="#{componentesMB.compSeleccionado.numeroInventario}"/>
+
+                            <p:outputLabel value="Serial"/>
+                            <p:inputText value="#{componentesMB.compSeleccionado.numeroSerie}"/>
+
+                            <p:outputLabel value="Tipo Componente"/>
+                            <p:selectOneMenu value="#{componentesMB.compSeleccionado.idTipoComponente}" converter="objectConverter" required="true"
+                                             requiredMessage="Seleccione un tipo" filter="true" filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Seleccione un tipo" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value="#{tiposComponenteMB.tipoCompList}" var="tipo" itemLabel="#{tipo.nombre}" itemValue="#{tipo}"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Modelo"/>
+                            <p:selectOneMenu value="#{componentesMB.compSeleccionado.idModelo}" converter="objectConverter" required="true"
+                                             requiredMessage="Seleccione un modelo" filter="true" filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Seleccione un modelo" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value="#{modelosMB.modelList}" var="modelo" itemLabel="#{modelo.nombre}" itemValue="#{modelo}"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Estado"/>
+                            <p:selectBooleanButton value="#{componentesMB.compSeleccionado.estado}" onLabel="Funcionando" onIcon="fa fa-check" offLabel="De baja" offIcon="fa fa-close"/>
+
+                            <p:outputLabel value="Asignado"/>
+                            <p:selectBooleanButton value="#{componentesMB.compSeleccionado.asignado}" onLabel="Si" onIcon="fa fa-check" offLabel="No" offIcon="fa fa-close"/>
+
+                            <p:outputLabel value="Personal"/>
+                            <p:selectBooleanButton value="#{componentesMB.compSeleccionado.personal}" onLabel="Si" onIcon="fa fa-check" offLabel="No" offIcon="fa fa-close"/>
+
+                            <p:outputLabel value="Descripción"/>
+                            <p:inputTextarea value="#{componentesMB.compSeleccionado.observaciones}" rows="5" />
+
+                        </p:panelGrid>
+
+                        <p:commandButton value="Guardar" action="#{componentesMB.modificarComponente()}" oncomplete="PF('wd_editarComponente').hide()" update="f_componentes"/>
+                    </h:form>
+                </p:dialog>
+
             </ui:define>
 
             <ui:define name="menuLateral">
-                menuLateral
+                <ui:include src="../templates/HwSwMenuLateral.xhtml"/>
             </ui:define>
 
         </ui:composition>
