@@ -5,7 +5,7 @@
 -- Dumped from database version 10.5
 -- Dumped by pg_dump version 10.5
 
--- Started on 2018-10-26 09:18:33
+-- Started on 2018-10-30 14:14:14
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -123,7 +123,7 @@ CREATE TABLE public.componentes (
     id_componente integer NOT NULL,
     id_tipo_componente integer NOT NULL,
     id_modelo integer NOT NULL,
-    id_equipo integer NOT NULL,
+    id_equipo integer,
     numero_inventario text,
     numero_serie text,
     estado boolean,
@@ -2502,7 +2502,7 @@ ALTER TABLE ONLY public.equipos
     ADD CONSTRAINT id_ubicacion FOREIGN KEY (id_ubicacion) REFERENCES public.ubicaciones(id_ubicacion);
 
 
--- Completed on 2018-10-26 09:18:34
+-- Completed on 2018-10-30 14:14:15
 
 --
 -- PostgreSQL database dump complete
