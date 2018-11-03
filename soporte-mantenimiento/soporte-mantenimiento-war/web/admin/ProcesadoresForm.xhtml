@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../templates/PrincipalTemplate.xhtml">
+
+            <ui:define name="contenido">
+                <h:form id="f_procesador">
+
+                    <p:dataTable id="t_procesador" emptyMessage="No hay registros" value="#{procesadoresMB.procesadorList}" var="procesador"
+                                 selection="#{procesadoresMB.procesadorSeleccionado}" selectionMode="single" rowKey="#{procesador.idProcesador}"
+                                 rows="10" paginator="true">
+                        <f:facet name="header">
+                            Procesadores
+                        </f:facet>
+                        <p:column headerText="ID" sortBy="#{procesador.idProcesador}">
+                            <p:outputLabel>#{procesador.idProcesador}</p:outputLabel>
+                        </p:column>
+                        <p:column headerText="Num. Serie" sortBy="#{procesador.numeroSerie}">
+                            <p:outputLabel>#{procesador.numeroSerie}</p:outputLabel>
+                        </p:column>
+                        <p:column headerText="Arquitectura" sortBy="#{procesador.idArquitectura}">
+                            <p:outputLabel>#{procesador.idArquitectura}</p:outputLabel>
+                        </p:column>
+                        <p:column headerText="Modelo" sortBy="#{procesador.idModelo}">
+                            <p:outputLabel>#{procesador.idModelo}</p:outputLabel>
+                        </p:column>
+                        <p:column headerText="Socket" sortBy="#{procesador.idSocket}">
+                            <p:outputLabel>#{procesador.idSocket}</p:outputLabel>
+                        </p:column>
+
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+            <ui:define name="menuLateral">
+                <ui:include src="../templates/HwSwMenuLateral.xhtml"/>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

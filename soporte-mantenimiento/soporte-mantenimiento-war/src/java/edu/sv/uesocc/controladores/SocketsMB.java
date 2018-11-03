@@ -5,8 +5,8 @@
  */
 package edu.sv.uesocc.controladores;
 
-import edu.sv.uesocc.entidades.TiposMemoria;
-import edu.sv.uesocc.facades.TiposMemoriaFacadeLocal;
+import edu.sv.uesocc.entidades.Sockets;
+import edu.sv.uesocc.facades.SocketsFacadeLocal;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -16,67 +16,63 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
-/**
- *
- * @author o-a19
- */
-@Named(value = "tiposMemoriaMB")
+@Named(value = "socketsMB")
 @SessionScoped
-public class TiposMemoriaMB implements Serializable {
+public class SocketsMB implements Serializable {
 
     @EJB
-    private TiposMemoriaFacadeLocal tiposMemoriaFacade;
-    private TiposMemoria tipoMemoria;
-    private TiposMemoria tipoMemoriaSeleccionada;
-    private List<TiposMemoria> tiposMemoriaList = new ArrayList<>();
+    private SocketsFacadeLocal socketsFacade;
+
+    private Sockets socket;
+    private Sockets socketSeleccionado;
+    private List<Sockets> socketList = new ArrayList<>();
     FacesContext contexto = FacesContext.getCurrentInstance();
 
-    public TiposMemoriaMB() {
+        public SocketsMB() {
     }
-
     public void init() {
-        tipoMemoria = new TiposMemoria();
-        tipoMemoriaSeleccionada = new TiposMemoria();
+        socket = new Sockets();
+        socketSeleccionado = new Sockets();
         obtenerTodos();
     }
 
-    public TiposMemoria getTipoMemoria() {
-        return tipoMemoria;
+    public Sockets getSocket() {
+        return socket;
     }
 
-    public void setTipoMemoria(TiposMemoria tipoMemoria) {
-        this.tipoMemoria = tipoMemoria;
+    public void setSocket(Sockets socket) {
+        this.socket = socket;
     }
 
-    public TiposMemoria getTipoMemoriaSeleccionada() {
-        return tipoMemoriaSeleccionada;
+    public Sockets getSocketSeleccionado() {
+        return socketSeleccionado;
     }
 
-    public void setTipoMemoriaSeleccionada(TiposMemoria tipoMemoriaSeleccionada) {
-        this.tipoMemoriaSeleccionada = tipoMemoriaSeleccionada;
+    public void setSocketSeleccionado(Sockets socketSeleccionado) {
+        this.socketSeleccionado = socketSeleccionado;
     }
 
-    public List<TiposMemoria> getTiposMemoriaList() {
-        return tiposMemoriaList;
+    public List<Sockets> getSocketList() {
+        return socketList;
     }
 
-    public void setTiposMemoriaList(List<TiposMemoria> tiposMemoriaList) {
-        this.tiposMemoriaList = tiposMemoriaList;
+    public void setSocketList(List<Sockets> socketList) {
+        this.socketList = socketList;
     }
 
-    public void obtenerTodos() {
+    private void obtenerTodos() {
         try {
-            tiposMemoriaList = tiposMemoriaFacade.findAll();
+            socketList = socketsFacade.findAll();
         } catch (Exception e) {
             contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error!", e.getMessage()));
         }
     }
 
-    public void agregarTipoMemoria() {
+    public void agregarSocket() {
         try {
             boolean creado = false;
             if (creado) {
-                tipoMemoria = new TiposMemoria();
+                socket = new Sockets();
                 contexto.addMessage(null, new FacesMessage("Registro creado"));
             } else {
                 contexto.addMessage(null, new FacesMessage("No se pudo guardar el registro!"));
@@ -87,14 +83,14 @@ public class TiposMemoriaMB implements Serializable {
         }
     }
 
-    public void eliminarTipoMemoria() {
+    public void eliminarSocket() {
         boolean eliminado = false;
         try {
-            eliminado = tiposMemoriaFacade.remove(tipoMemoria);
+            eliminado = socketsFacade.remove(socket);
             if (eliminado) {
-                contexto.addMessage(null, new FacesMessage("Memoria eliminada"));
+                contexto.addMessage(null, new FacesMessage("Registro eliminado"));
             } else {
-                contexto.addMessage(null, new FacesMessage("No se ha podido eliminar memoria seleccionada"));
+                contexto.addMessage(null, new FacesMessage("No se ha podido eliminar registro seleccionado"));
             }
             obtenerTodos();
         } catch (Exception e) {
@@ -103,10 +99,10 @@ public class TiposMemoriaMB implements Serializable {
 
     }
 
-    public void editarTipoMemoria() {
+    public void editarSocket() {
         boolean editado = false;
         try {
-            editado = tiposMemoriaFacade.edit(tipoMemoria);
+            editado = socketsFacade.edit(socket);
             if (editado) {
                 contexto.addMessage(null, new FacesMessage("Registro modificado"));
             } else {
@@ -117,5 +113,4 @@ public class TiposMemoriaMB implements Serializable {
             contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error!", e.getMessage()));
         }
     }
-
 }

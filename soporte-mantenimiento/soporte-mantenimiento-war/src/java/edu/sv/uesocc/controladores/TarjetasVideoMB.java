@@ -5,9 +5,16 @@
  */
 package edu.sv.uesocc.controladores;
 
+import edu.sv.uesocc.entidades.TarjetasVideo;
+import edu.sv.uesocc.facades.TarjetasVideoFacadeLocal;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -17,10 +24,98 @@ import java.io.Serializable;
 @SessionScoped
 public class TarjetasVideoMB implements Serializable {
 
-    /**
-     * Creates a new instance of TarjetasVideoMB
-     */
+    @EJB
+    private TarjetasVideoFacadeLocal tarjetasVideoFacade;
+
+    private TarjetasVideo tarjeta;
+    private TarjetasVideo tarjetaSeleccionada;
+    private List<TarjetasVideo> tarjetaList = new ArrayList<>();
+    FacesContext contexto = FacesContext.getCurrentInstance();
+
     public TarjetasVideoMB() {
     }
+
+    public void init() {
+        tarjeta= new TarjetasVideo();
+        tarjetaSeleccionada= new TarjetasVideo();
+        obtenerTodos();
+    }
+
+    public TarjetasVideo getTarjeta() {
+        return tarjeta;
+    }
+
+    public void setTarjeta(TarjetasVideo tarjeta) {
+        this.tarjeta = tarjeta;
+    }
+
+    public TarjetasVideo getTarjetaSeleccionada() {
+        return tarjetaSeleccionada;
+    }
+
+    public void setTarjetaSeleccionada(TarjetasVideo tarjetaSeleccionada) {
+        this.tarjetaSeleccionada = tarjetaSeleccionada;
+    }
+
+    public List<TarjetasVideo> getTarjetaList() {
+        return tarjetaList;
+    }
+
+    public void setTarjetaList(List<TarjetasVideo> tarjetaList) {
+        this.tarjetaList = tarjetaList;
+    }
     
+    private void obtenerTodos() {
+        try {
+            tarjetaList = tarjetasVideoFacade.findAll();
+        } catch (Exception e) {
+            contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error!", e.getMessage()));
+        }
+    }
+
+    public void agregarTarjetaVideo() {
+        try {
+            boolean creado = false;
+            if (creado) {
+                tarjeta = new TarjetasVideo();
+                contexto.addMessage(null, new FacesMessage("Registro creado"));
+            } else {
+                contexto.addMessage(null, new FacesMessage("No se pudo guardar el registro!"));
+            }
+            obtenerTodos();
+        } catch (Exception e) {
+            contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error!", e.getMessage()));
+        }
+    }
+
+    public void eliminarTarjetaVideo() {
+        boolean eliminado = false;
+        try {
+            eliminado = tarjetasVideoFacade.remove(tarjeta);
+            if (eliminado) {
+                contexto.addMessage(null, new FacesMessage("Registro eliminado"));
+            } else {
+                contexto.addMessage(null, new FacesMessage("No se ha podido eliminar registro seleccionado"));
+            }
+            obtenerTodos();
+        } catch (Exception e) {
+            contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error!", e.getMessage()));
+        }
+
+    }
+
+    public void editarTarjetaVideo() {
+        boolean editado = false;
+        try {
+            editado = tarjetasVideoFacade.edit(tarjeta);
+            if (editado) {
+                contexto.addMessage(null, new FacesMessage("Registro modificado"));
+            } else {
+                contexto.addMessage(null, new FacesMessage("Ningun cambio fue efectuado en registro seleccionado"));
+            }
+            obtenerTodos();
+        } catch (Exception e) {
+            contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error!", e.getMessage()));
+        }
+    }
 }

@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../templates/PrincipalTemplate.xhtml">
+
+            <ui:define name="contenido">
+
+                <h:form id="f_discos">
+
+                    <div>
+                        <!--Boton agregar-->
+                        <p:commandButton value="Nuevo" icon="fa fa-plus" onclick="PF('wd_agregar').show()" update="f_agregar"/>
+                    </div>
+
+                    <!--Tabla con discos-->
+                    <p:dataTable id="t_discos" emptyMessage="No hay registros" value="#{discosMB.discosList}" var="disco"
+                                 selection="#{discosMB.discosSeleccionados}" selectionMode="single" rowKey="#{disco.idDisco}"
+                                 rows="10" paginator="true">
+                        <f:facet name="header">
+                            Discos
+                        </f:facet>
+
+                        <p:column headerText="ID" sortBy="#{disco.idDisco}">
+                            <p:outputLabel>#{disco.idDisco}</p:outputLabel>
+                        </p:column>
+                        <p:column headerText="Num. Serie" sortBy="#{disco.numeroSerie}">
+                            <p:outputLabel>#{disco.numeroSerie}</p:outputLabel>
+                        </p:column>
+
+                        <p:column headerText="Marca" sortBy="#{disco.idMarca.nombre}" filterBy="#{disco.idMarca.nombre}">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('wd_t_discos').filter()" filter="true" filterMatchMode="startsWith">
+                                    <f:selectItem itemLabel="Seleccionar marca" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{marcasMB.marcList}" var="mar" itemLabel="#{mar.nombre}" itemValue="#{mar.nombre}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+
+                            <p:outputLabel>#{disco.idMarca.nombre}</p:outputLabel>
+                        </p:column>
+
+                        <p:column headerText="Tipo disco" sortBy="#{disco.idTipoDisco.tipoDisco}" filterBy="#{disco.idTipoDisco.tipoDisco}">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('wd_t_discos').filter()" filter="true" filterMatchMode="startsWith">
+                                    <f:selectItem itemLabel="Seleccionar tipo" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{tiposDiscoMB.tipoDiscoList}" var="tipoDisco" itemLabel="#{tipoDisco.tipoDisco}" itemValue="#{tipoDisco.tipoDisco}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <p:outputLabel>#{disco.idTipoDisco.tipoDisco}</p:outputLabel>
+                        </p:column>
+
+                        <p:column headerText="Capacidad" sortBy="#{disco.idCapacidad.capacidad}" filterBy="#{disco.idCapacidad.capacidad}">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('wd_t_discos').filter()" filter="true" filterMatchMode="startsWith">
+                                    <f:selectItem itemLabel="Seleccione capacidad" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{capacidadesMB.capacidadList}" var="capacidad" itemLabel="#{capacidad.capacidad}" itemValue="#{capacidad.capacidad}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <p:outputLabel>#{disco.idCapacidad.capacidad}</p:outputLabel>
+                        </p:column>
+
+                        <p:column headerText="Tipo puerto" sortBy="#{disco.idPuerto.tipoPuerto}" filterBy="#{disco.idPuerto.tipoPuerto}">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('wd_t_discos').filter()" filter="true" filterMatchMode="startsWith">
+                                    <f:selectItem itemLabel="Seleccione puerto" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{puertosMB.puertoList}" var="puerto" itemLabel="#{puerto.tipoPuerto}" itemValue="#{puerto.tipoPuerto}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <p:outputLabel>#{disco.idPuerto.tipoPuerto}</p:outputLabel>
+                        </p:column>
+
+                        <p:ajax event="rowDblselect" oncomplete="PF('wd_editar').show()" update=":f_editar"/>
+
+                    </p:dataTable>
+
+                    <!--Eliminar-->
+                    <p:contextMenu for="t_discos">
+                        <p:menuitem value="Eliminar" action="#{discosMB.eliminarDisco()}" update="f_discos" icon="fa fa-trash"/>
+                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                    </p:contextMenu>
+
+                </h:form>
+
+                <!--Formulario para crear discos-->
+                <p:dialog widgetVar="wd_agregar" modal="true" header="Disco Nuevo">
+                    <h:form id="f_agregar">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel>Numero de Serie:</p:outputLabel>
+                            <p:inputText value="#{discosMB.disco.numeroSerie}" required="true" requiredMessage="Ingrese el numero de serie!"/>
+
+                            <p:outputLabel value="Marca"/>
+                            <p:selectOneMenu value="#{disco.idMarca.idMarca}" converter="objectConverter" required="true" 
+                                             requiredMessage="Seleccione una marca" filter="true" 
+                                             filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Seleccione una marca" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{marcasMB.marcList}" var="marca" itemLabel="#{marca.nombre}" itemValue="#{marca}"/>
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel value="Tipo Disco"/>
+                            <p:selectOneMenu value="#{disco.idTipoDisco.idTipoDisco}" converter="objectConverter" required="true" 
+                                             requiredMessage="Seleccione disco" filter="true" 
+                                             filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Seleccione disco" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{tiposDiscoMB.tipoDiscoList}" var="tipoDisco" itemLabel="#{tipoDisco.tipoDisco}" itemValue="#{tipoDisco}"/>
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel value="Capacidad"/>
+                            <p:selectOneMenu value="#{disco.idCapacidad.idCapacidad}" converter="objectConverter" required="true" 
+                                             requiredMessage="Seleccione capacidad" filter="true" 
+                                             filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Seleccione capacidad" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{capacidadesMB.capacidadList}" var="capacidad" itemLabel="#{capacidad.capacidad}" itemValue="#{capacidad}"/>
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel value="Tipo Puerto"/>
+                            <p:selectOneMenu value="#{disco.idPuerto.idPuerto}" converter="objectConverter" required="true" 
+                                             requiredMessage="Seleccione puerto" filter="true" 
+                                             filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Seleccione puerto" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{puertosMB.puertoList}" var="puerto" itemLabel="#{puerto.tipoPuerto}" itemValue="#{puerto}"/>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" action="#{discosMB.agregarDisco()}" icon="fa fa-check" oncomplete="PF('wd_agregar').hide()" update="f_discos"/>
+                    </h:form>
+                </p:dialog>
+
+                <!--Editar discos-->
+                <p:dialog widgetVar="wd_editar" modal="true" header="Editar Discos">
+                    <h:form id="f_editar">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Numero de serie:"/>
+                            <p:inputText value="#{discosMB.discosSeleccionados.numeroSerie}" required="true" requiredMessage="Ingrese numero de serie"/>
+                            <p:outputLabel value="Marca:"/>
+                            <p:inputText value="#{discosMB.discosSeleccionados.idMarca.nombre}" required="true" requiredMessage="Ingrese marca"/>
+                            <p:outputLabel value="Tipo disco:"/>
+                            <p:inputText value="#{discosMB.discosSeleccionados.idTipoDisco.tipoDisco}" required="true" requiredMessage="Ingrese tipo de disco"/>
+                            <p:outputLabel value="Capacidad:"/>
+                            <p:inputText value="#{discosMB.discosSeleccionados.idCapacidad.capacidad}" required="true" requiredMessage="Ingrese capacidad"/>
+                            <p:outputLabel value="Tipo puerto:"/>
+                            <p:inputText value="#{discosMB.discosSeleccionados.idPuerto.tipoPuerto}" required="true" requiredMessage="Ingrese el puerto"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" action="#{discosMB.editarDisco()}" icon="fa fa-check" oncomplete="PF('wd_editar').hide()" update="f_discos"/>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+
+            <ui:define name="menuLateral">
+                <ui:include src="../templates/HwSwMenuLateral.xhtml"/>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
