@@ -12,7 +12,11 @@
             <ui:define name="contenido">
 
                 <h:form id="f_memorias">
-
+                    <!--Boton agregar-->
+                    <div>
+                        <p:commandButton value="Nuevo" icon="fa fa-plus" onclick="PF('wd_agregar').show()" update="f_agregar"/>
+                    </div>
+                    <!--tabla-->
                     <p:dataTable id="t_memorias" emptyMessage="No hay registros" value="#{memoriasMB.memList}" var="memory"
                                  selection="#{memoriasMB.memSelect}" selectionMode="single" rowKey="#{memory.idMemoria}"
                                  rows="10" paginator="true">
@@ -25,19 +29,97 @@
                         <p:column headerText="Num. Serie" sortBy="#{memory.numeroSerie}">
                             <p:outputLabel>#{memory.numeroSerie}</p:outputLabel>
                         </p:column>
-                        <p:column headerText="Marca" sortBy="#{memory.idMarca}">
-                            <p:outputLabel>#{memory.idMarca}</p:outputLabel>
+
+                        <p:column headerText="Marca" sortBy="#{memory.idMarca.nombre}" filterBy="#{memory.idMarca.nombre}">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('wd_t_memorias').filter()" filter="true" filterMatchMode="startsWith">
+                                    <f:selectItem itemLabel="Seleccionar marca" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{marcasMB.marcList}" var="mar" itemLabel="#{mar.nombre}" itemValue="#{mar.nombre}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <p:outputLabel>#{memory.idMarca.nombre}</p:outputLabel>
                         </p:column>
-                        <p:column headerText="Tipo de memoria" sortBy="#{memory.idTipo}">
-                            <p:outputLabel>#{memory.idTipo}</p:outputLabel>
+
+                        <p:column headerText="Tipo de memoria" sortBy="#{memory.idTipo.tipoMemoria}" filterBy="#{memory.idTipo.tipoMemoria}">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('wd_t_memorias').filter()" filter="true" filterMatchMode="startsWith">
+                                    <f:selectItem itemLabel="Seleccionar memoria" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{tiposMemoriaMB.tiposMemoriaList}" var="tipoMemoria" itemLabel="#{tipoMemoria.tipoMemoria}" itemValue="#{tipoMemoria.tipoMemoria}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <p:outputLabel>#{memory.idTipo.tipoMemoria}</p:outputLabel>
                         </p:column>
-                        <p:column headerText="Capacidad" sortBy="#{memory.idCapacidad}">
-                            <p:outputLabel>#{memory.idCapacidad}</p:outputLabel>
+
+                        <p:column headerText="Capacidad" sortBy="#{memory.idCapacidad.capacidad}" filterBy="#{memory.idCapacidad.capacidad}">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('wd_t_capacidad').filter()" filter="true" filterMatchMode="startsWith">
+                                    <f:selectItem itemLabel="Seleccionar capacidad" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{capacidadesMB.capacidadList}" var="capacidad" itemLabel="#{capacidad.capacidad}" itemValue="#{capacidad.capacidad}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <p:outputLabel>#{memory.idCapacidad.capacidad}</p:outputLabel>
                         </p:column>
+
+                        <p:ajax event="rowDblselect" oncomplete="PF('wd_editar').show()" update=":f_editar"/>
                     </p:dataTable>
 
-
+                    <!--Eliminar-->
+                    <p:contextMenu for="t_memorias">
+                        <p:menuitem value="Eliminar" action="#{memoriasMB.eliminarMemoria()}" update="f_memorias" icon="fa fa-trash"/>
+                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                    </p:contextMenu>
                 </h:form>
+                <!--Crear-->
+                <p:dialog widgetVar="wd_agregar" modal="true" header="Agregar Memorias">
+                    <h:form id="f_agregar">
+                        <p:panelGrid columns="2">
+
+                            <p:outputLabel value="Numero de Serie:"/>
+                            <p:inputText value="#{memoriasMB.memory.numeroSerie}" required="true" requiredMessage="Ingrese numero de serie!"/>
+
+                            <p:outputLabel value="Marca"/>
+                            <p:selectOneMenu value="#{memory.idMarca.idMarca}" converter="objectConverter" required="true" 
+                                             requiredMessage="Seleccione una marca" filter="true" 
+                                             filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Seleccione una marca" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{marcasMB.marcList}" var="marca" itemLabel="#{marca.nombre}" itemValue="#{marca}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Tipo memoria"/>
+                            <p:selectOneMenu value="#{memory.idTipo.tipoMemoria}" converter="objectConverter" required="true" 
+                                             requiredMessage="Seleccione memoria" filter="true" 
+                                             filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Seleccione memoria" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{tiposMemoriaMB.tiposMemoriaList}" var="tipoMemoria" itemLabel="#{tipoMemoria.tipoMemoria}" itemValue="#{tipoMemoria}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Capacidad"/>
+                            <p:selectOneMenu value="#{memory.idCapacidad.capacidad}" converter="objectConverter" required="true" 
+                                             requiredMessage="Seleccione capacidad" filter="true" 
+                                             filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Seleccione capacidad" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{capacidadesMB.capacidadList}" var="capacidad" itemLabel="#{capacidad.capacidad}" itemValue="#{capacidad}"/>
+                            </p:selectOneMenu>
+
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" action="#{memoriasMB.agregarMemoria()}" icon="fa fa-check" oncomplete="PF('wd_agregar').hide()" update="f_memorias"/>
+                    </h:form>
+                </p:dialog>
+
+                <!--Editar-->
+                <p:dialog widgetVar="wd_editar" modal="true" header="Editar Memoria">
+                    <h:form id="f_editar">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Numero de serie:"/>
+                            <p:inputText value="#{memoriasMB.memSelect.numeroSerie}" required="true" requiredMessage="Ingrese numero de serie"/>
+                            <p:outputLabel value="Marca:"/>
+                            <p:inputText value="#{memoriasMB.memSelect.idMarca.nombre}" required="true" requiredMessage="Ingrese marca"/>
+                            <p:outputLabel value="Tipo memoria:"/>
+                            <p:inputText value="#{memoriasMB.memSelect.idTipo.tipoMemoria}" required="true" requiredMessage="Ingrese de tipo memoria"/>
+                            <p:outputLabel value="Capacidad"/>
+                            <p:inputText value="#{memoriasMB.memSelect.idCapacidad.capacidad}" required="true" requiredMessage="Ingrese capacidad"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" action="#{memoriasMB.editarMemoria()}" icon="fa fa-check" oncomplete="PF('wd_editar').hide()" update="f_memorias"/>
+                    </h:form>
+                </p:dialog>
             </ui:define>
 
             <ui:define name="menuLateral">

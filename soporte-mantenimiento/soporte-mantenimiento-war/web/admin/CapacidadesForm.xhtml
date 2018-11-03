@@ -12,8 +12,8 @@
             <ui:define name="contenido">
 
                 <h:form id="f_capacidad">
+                    <!--Boton agregar-->
                     <div>
-                        <!--Boton agregar-->
                         <p:commandButton value="Nuevo" icon="fa fa-plus" onclick="PF('wd_agregar').show()" update="f_agregar"/>
                     </div>
                     <!--tabla-->
@@ -34,15 +34,15 @@
 
                         <p:ajax event="rowDblselect" oncomplete="PF('wd_editar').show()" update=":f_editar"/>
                     </p:dataTable>
-                    
+
                     <!--Eliminar-->
                     <p:contextMenu for="t_capacidad">
                         <p:menuitem value="Eliminar" action="#{capacidadesMB.eliminarCapacidad()}" update="f_capacidad" icon="fa fa-trash"/>
                         <p:menuitem value="Cancelar" icon="fa fa-close"/>
                     </p:contextMenu>
-                    
+
                 </h:form>
-                
+
                 <!--Crear-->
                 <p:dialog widgetVar="wd_agregar" modal="true" header="Agregar Capacidad">
                     <h:form id="f_agregar">
@@ -53,7 +53,7 @@
                         <p:commandButton value="Guardar" action="#{capacidadesMB.agregarCapacidad()}" icon="fa fa-check" oncomplete="PF('wd_agregar').hide()" update="f_capacidad"/>
                     </h:form>
                 </p:dialog>
-                
+
                 <!--Editar-->
                 <p:dialog widgetVar="wd_editar" modal="true" header="Editar Capacidad">
                     <h:form id="f_editar">

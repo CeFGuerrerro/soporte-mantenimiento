@@ -12,7 +12,11 @@
             <ui:define name="contenido">
 
                 <h:form id="f_fuente">
-
+                    <!--Boton agregar-->
+                    <div>
+                        <p:commandButton value="Nuevo" icon="fa fa-plus" onclick="PF('wd_agregar').show()" update="f_agregar"/>
+                    </div>
+                    <!--tabla-->
                     <p:dataTable id="t_fuente" emptyMessage="No hay registros" value="#{fuentesMB.fuenteList}" var="fuente"
                                  selection="#{fuentesMB.fuenteSeleccionada}" selectionMode="single" rowKey="#{fuente.idFuente}"
                                  rows="10" paginator="true">
@@ -22,9 +26,17 @@
                         <p:column headerText="ID" sortBy="#{fuente.idFuente}">
                             <p:outputLabel>#{placa.idMotherboard}</p:outputLabel>
                         </p:column>
-                        <p:column headerText="Modelo" sortBy="#{fuente.idModelo}">
-                            <p:outputLabel>#{fuente.idModelo}</p:outputLabel>
+                   
+                        <p:column headerText="Modelo" sortBy="#{fuente.idModelo.nombre}" filterBy="#{fuente.idModelo.nombre}">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('wd_t_fuente').filter()" filter="true" filterMatchMode="startsWith">
+                                    <f:selectItem itemLabel="Seleccionar modelo" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{modelosMB.modelList}" var="modelo" itemLabel="#{modelo.nombre}" itemValue="#{modelo.nombre}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <p:outputLabel>#{fuente.idModelo.nombre}</p:outputLabel>
                         </p:column>
+
                         <p:column headerText="Num. Serie" sortBy="#{fuente.numeroSerie}">
                             <p:outputLabel>#{fuente.numeroSerie}</p:outputLabel>
                         </p:column>
@@ -34,10 +46,58 @@
                         <p:column headerText="Pines" sortBy="#{fuente.numeroPines}">
                             <p:outputLabel>#{fuente.numeroPines}</p:outputLabel>
                         </p:column>
+
+                        <p:ajax event="rowDblselect" oncomplete="PF('wd_editar').show()" update=":f_editar"/>
                     </p:dataTable>
 
-
+                    <!--Eliminar-->
+                    <p:contextMenu for="t_fuente">
+                        <p:menuitem value="Eliminar" action="#{fuentesMB.eliminarFuente()}" update="f_fuente" icon="fa fa-trash"/>
+                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                    </p:contextMenu>
                 </h:form>
+
+                <!--Crear-->
+                <p:dialog widgetVar="wd_agregar" modal="true" header="Agregar fuentes">
+                    <h:form id="f_agregar">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Numero de serie:"/>
+                            <p:inputText value="#{fuentesMB.fuente.numeroSerie}" required="true" requiredMessage="Ingrese numero de serie!"/>
+                            
+                            <p:outputLabel value="Modelo"/>
+                            <p:selectOneMenu value="#{fuente.idModelo.idModelo}" converter="objectConverter" required="true" 
+                                             requiredMessage="Seleccione modelo" filter="true" 
+                                             filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Seleccione modelo" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{modelosMB.modelList}" var="modelo" itemLabel="#{modelo.nombre}" itemValue="#{modelo}"/>
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel value="Potencia:"/>
+                            <p:inputText value="#{fuentesMB.fuente.potencia}" required="true" requiredMessage="Ingrese potencia!"/>
+                            <p:outputLabel value="Pines:"/>
+                            <p:inputText value="#{fuentesMB.fuente.numeroPines}" required="true" requiredMessage="Ingrese cantidad de pines!"/>
+                            
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" action="#{fuentesMB.agregarFuente()}" icon="fa fa-check" oncomplete="PF('wd_agregar').hide()" update="f_fuente"/>
+                    </h:form>
+                </p:dialog>
+
+                <!--Editar-->
+                <p:dialog widgetVar="wd_editar" modal="true" header="Editar Fuente">
+                    <h:form id="f_editar">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Numero de serie:"/>
+                            <p:inputText value="#{fuentesMB.fuenteSeleccionada.numeroSerie}" required="true" requiredMessage="Ingrese numero de serie"/>
+                            <p:outputLabel value="Modelo:"/>
+                            <p:inputText value="#{fuentesMB.fuenteSeleccionada.idModelo.nombre}" required="true" requiredMessage="Ingrese modelo de fuente"/>
+                            <p:outputLabel value="Potencia:"/>
+                            <p:inputText value="#{fuentesMB.fuenteSeleccionada.potencia}" required="true" requiredMessage="Ingrese potencia"/>
+                            <p:outputLabel value="Numero de pines:"/>
+                            <p:inputText value="#{fuentesMB.fuenteSeleccionada.numeroPines}" required="true" requiredMessage="Ingrese numero de pines"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" action="#{fuentesMB.editarFuente()}" icon="fa fa-check" oncomplete="PF('wd_editar').hide()" update="f_fuente"/>
+                    </h:form>
+                </p:dialog>
             </ui:define>
 
             <ui:define name="menuLateral">
