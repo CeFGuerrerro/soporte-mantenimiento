@@ -21,7 +21,7 @@ public class TecnicosMB implements Serializable {
 
     @EJB
     private TecnicosFacadeLocal tecnicoEJB;
-    private List<Tecnicos> tecnicos = new ArrayList<>();
+    private List<Tecnicos> tecnicos;
     private Tecnicos tecnico;
     private Tecnicos seleccion;
 
