@@ -78,7 +78,7 @@ public class TecnicosMB implements Serializable {
         boolean registrado = false;
         FacesContext contexto = FacesContext.getCurrentInstance();
         try {
-            tecnicoEJB.edit(seleccion);
+            registrado = tecnicoEJB.edit(seleccion);
             if (registrado) {
                 contexto.addMessage(null, new FacesMessage("Registro editado."));
             } else {
