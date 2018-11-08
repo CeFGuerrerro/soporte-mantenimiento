@@ -6,9 +6,7 @@
 package edu.sv.uesocc.entidades;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,23 +14,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author o-a19
+ * @author Cybertron
  */
 @Entity
-@Table(name = "tecnicos", catalog = "soporte", schema = "public")
+@Table(name = "tecnicos", catalog = "soporte_mantenimiento", schema = "public")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Tecnicos.findAll", query = "SELECT t FROM Tecnicos t")
     , @NamedQuery(name = "Tecnicos.findByIdTecnico", query = "SELECT t FROM Tecnicos t WHERE t.idTecnico = :idTecnico")
     , @NamedQuery(name = "Tecnicos.findByNombre", query = "SELECT t FROM Tecnicos t WHERE t.nombre = :nombre")
-    , @NamedQuery(name = "Tecnicos.findByDescripcion", query = "SELECT t FROM Tecnicos t WHERE t.descripcion = :descripcion")})
+    , @NamedQuery(name = "Tecnicos.findByDescripcion", query = "SELECT t FROM Tecnicos t WHERE t.descripcion = :descripcion")
+    , @NamedQuery(name = "Tecnicos.findByCorreo", query = "SELECT t FROM Tecnicos t WHERE t.correo = :correo")
+    , @NamedQuery(name = "Tecnicos.findByEstado", query = "SELECT t FROM Tecnicos t WHERE t.estado = :estado")})
 public class Tecnicos implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,8 +44,10 @@ public class Tecnicos implements Serializable {
     private String nombre;
     @Column(name = "descripcion", length = 2147483647)
     private String descripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTecnico")
-    private List<OrdenesTrabajo> ordenesTrabajoList;
+    @Column(name = "correo", length = 2147483647)
+    private String correo;
+    @Column(name = "estado")
+    private Boolean estado = true;
 
     public Tecnicos() {
     }
@@ -85,13 +85,20 @@ public class Tecnicos implements Serializable {
         this.descripcion = descripcion;
     }
 
-    @XmlTransient
-    public List<OrdenesTrabajo> getOrdenesTrabajoList() {
-        return ordenesTrabajoList;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setOrdenesTrabajoList(List<OrdenesTrabajo> ordenesTrabajoList) {
-        this.ordenesTrabajoList = ordenesTrabajoList;
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
 
     @Override
