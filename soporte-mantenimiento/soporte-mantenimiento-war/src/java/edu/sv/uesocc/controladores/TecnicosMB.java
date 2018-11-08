@@ -1,26 +1,45 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edu.sv.uesocc.controladores;
 
+import edu.sv.uesocc.entidades.Tecnicos;
+import edu.sv.uesocc.facades.TecnicosFacadeLocal;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.ejb.EJB;
 
-/**
- *
- * @author o-a19
- */
+
 @Named(value = "tecnicosMB")
 @SessionScoped
 public class TecnicosMB implements Serializable {
 
-    /**
-     * Creates a new instance of TecnicosMB
-     */
+    
     public TecnicosMB() {
     }
+    
+     @EJB
+     private TecnicosFacadeLocal tecnicoEJB;
+     private List<Tecnicos> tecnicos = new ArrayList<>();
+     private Tecnicos tecnico = new Tecnicos();
+
+    public List<Tecnicos> getTecnicos() {
+        return tecnicos;
+    }
+
+    public void setTecnicos(List<Tecnicos> tecnicos) {
+        this.tecnicos = tecnicos;
+    }
+
+    public Tecnicos getTecnico() {
+        return tecnico;
+    }
+
+    public void setTecnico(Tecnicos tecnico) {
+        this.tecnico = tecnico;
+    }
+     
+     
     
 }

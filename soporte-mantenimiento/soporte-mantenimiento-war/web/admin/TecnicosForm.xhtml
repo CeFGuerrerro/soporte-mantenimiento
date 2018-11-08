@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../templates/PrincipalTemplate.xhtml">
+
+            <ui:define name="contenido">
+                <h:form id="frmTecnicos">
+                    <div>
+                        <p:commandButton id="btnNuevo" value="Nuevo Tecnico"/>
+                    </div>
+                    
+                    <p:dataTable value="#{tecnicosMB.tecnicos}" var="tec" rows="10" paginator="true" emptyMessage="No hay registros" selectionMode="single"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página: ({currentPage} de {totalPages})" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+                        <f:facet name="header">
+                            Tecnicos
+                        </f:facet>
+                        
+                        <p:column headerText="Nombre" filterBy="#{tec.nombre}" filterMatchMode="contains">
+                            <p:outputLabel value="#{tec.nombre}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Descripcion">
+                            <p:outputLabel value="#{tec.nombre}"/>
+                        </p:column>
+                    </p:dataTable>
+                    
+                    
+                </h:form>
+                <h:form id="frmNuevo">
+                    <p:dialog id="dlgNuevo" widgetVar="wnuevo" header="Nuevo Tecnico" modal="true" resizable="false" closeOnEscape="true" draggable="false">
+                        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+                            <p:outputLabel value="Nombre" for="nombre"/>
+                            <p:inputText id="nombre" value="#{tecnicosMB.tecnico.nombre}" required="true" requiredMessage="¡Ingrese el nombre!"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar"  icon="fa fa-check" oncomplete="PF('wnuevo').hide()" update=":frmTecnicos"/>
+                    </p:dialog>
+                </h:form>
+            </ui:define>
+
+            <ui:define name="menuLateral">
+                <ui:include src="./../templates/HwSwMenuLateral.xhtml"/>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
