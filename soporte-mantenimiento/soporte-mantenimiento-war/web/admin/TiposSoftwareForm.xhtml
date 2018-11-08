@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"      
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <body>
+
+        <ui:composition template="./../templates/PrincipalTemplate.xhtml">
+
+            <ui:define name="contenido">
+                <h:form id="f_tipoSoftware">
+                    <div>
+                        <!--Boton que despliega el modal para crear registros-->
+                        <p:commandButton value="Nuevo" icon="fa fa-plus" onclick="PF('wd_crear').show()" update="f_crear"/>
+                    </div>
+                    <!--tabla Tipo Software-->
+                    <p:dataTable id="t_tipoSoftware" emptyMessage="No hay registros" value="#{tiposSoftwareMB.tiposSoftwareList}" var="tipoSoftware"
+                                 selection="#{tiposSoftwareMB.tipoSoftwareSeleccionado}" selectionMode="single" rowKey="#{tipoSoftware.idTipoSoftware}"
+                                 rows="10" paginator="true">
+
+                        <f:facet name="header">
+                            Tipos de Software
+                        </f:facet>
+                        <!-- Columnas de la tabla -->
+                        <p:column headerText="ID" sortBy="#{tipoSoftware.idTipoSoftware}">
+                            <p:outputLabel>#{tipoSoftware.idTipoSoftware}</p:outputLabel>
+                        </p:column>
+                        <p:column headerText="Tipo" sortBy="#{tipoSoftware.tipoSoftware}">
+                            <p:outputLabel>#{tipoSoftware.tipoSoftware}</p:outputLabel>
+                        </p:column>
+
+                        <p:ajax event="rowDblselect" oncomplete="PF('wd_editar').show()" update=":f_editar"/>
+
+                    </p:dataTable>
+                    <!--Menu que se abre al dar click derecho a una fila de la tabla-->
+                    <p:contextMenu for="t_tipoSoftware">
+                        <p:menuitem value="Eliminar" icon="fa fa-trash" action="#{tiposSoftwareMB.eliminarTipoSoftware()}" update="f_tipoSoftware"/>
+                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                    </p:contextMenu>
+                </h:form>
+                
+                   
+            </ui:define>
+
+            <ui:define name="menuLateral">
+                menuLateral
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
