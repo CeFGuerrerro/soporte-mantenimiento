@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"      
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
@@ -13,7 +13,9 @@
 
             <ui:define name="contenido">
                 <h:form id="f_tiposSoftware">
-                   
+                    <div>
+                        <p:commandButton id="btnNuevo" value="Nuevo Software" oncomplete="PF('snuevo').show();"/>
+                    </div>
                     <!--tabla Tipo Software-->
                     <p:dataTable id="t_tiposSoftware" emptyMessage="No hay registros" value="#{tiposSoftwareMB.tipoSWList}" var="tiposSoftware"
                                  selection="#{tiposSoftwareMB.tipoSWSeleccionado}" selectionMode="single" rowKey="#{tipoSoftware.idTipoSoftware}"
@@ -22,16 +24,16 @@
                         <f:facet name="header">
                             Tipos de Software
                         </f:facet>
+
                         <!-- Columnas de la tabla -->
                         <p:column headerText="ID" sortBy="#{tiposSoftware.idTipoSoftware}">
                             <p:outputLabel>#{tiposSoftware.idTipoSoftware}</p:outputLabel>
                         </p:column>
+
                         <p:column headerText="Tipo" sortBy="#{tiposSoftware.tipoSoftware}">
                             <p:outputLabel>#{tiposSoftware.tipoSoftware}</p:outputLabel>
                         </p:column>
-
-                   
-
+                        <p:ajax event="rowDblselect" oncomplete="PF('weditar').show()" update=":frmEditar"/>
                     </p:dataTable>
                     <!--Menu que se abre al dar click derecho a una fila de la tabla-->
                     <p:contextMenu for="t_tiposSoftware">
@@ -39,8 +41,28 @@
                         <p:menuitem value="Cancelar" icon="fa fa-close"/>
                     </p:contextMenu> 
                 </h:form>
-                
-                   
+
+                <h:form id="frmNuevo">
+                    <p:dialog id="dlgNuevo" widgetVar="snuevo" header="Nuevo Software" modal="true" resizable="false" closeOnEscape="true" draggable="false">
+                        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+                            <p:outputLabel value="Nombre" for="nombre"/>
+                            <p:inputText id="nombre" value="#{tiposSoftwareMB.tiposSW.tipoSoftware}" required="true" requiredMessage="¡Ingrese el nombre!"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{tiposSoftwareMB.crearTiposSoftware()}" oncomplete="PF('snuevo').hide()" update=":f_tiposSoftware"/>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="frmEditar">
+                    <p:dialog id="dlgEditar" widgetVar="weditar" header="Editar Software" modal="true" resizable="false" closeOnEscape="true" draggable="false">
+                        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+                            <p:outputLabel value="Nombre" for="nombre"/>
+                            <p:inputText id="nombre" value="#{tiposSoftwareMB.tipoSWSeleccionado.tipoSoftware}" required="true" requiredMessage="¡Ingrese el nombre!"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{(tiposSoftwareMB.modificarTiposSoftware())}" oncomplete="PF('weditar').hide()" update=":f_tiposSoftware"/>
+                    </p:dialog>
+
+                </h:form>
+
             </ui:define>
 
             <ui:define name="menuLateral">

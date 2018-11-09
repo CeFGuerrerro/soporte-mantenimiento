@@ -17,7 +17,7 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
-/**
+/** 
  *
  * @author o-a19
  */
@@ -47,19 +47,26 @@ public class TiposSoftwareMB implements Serializable {
     }
 
     // Getters y setters
-    public TiposSoftware getTipoComp() {
-        return tiposSW;
+
+    public TiposSoftwareFacadeLocal getTiposSoftwareFacade() {
+        return tiposSoftwareFacade;
+    }
+    
+     public void setTiposSoftwareFacade(TiposSoftwareFacadeLocal tiposSoftwareFacade) {
+        this.tiposSoftwareFacade = tiposSoftwareFacade;
     }
 
-    public void setTipoComp(TiposSoftware tiposSW) {
+    public TiposSoftware getTiposSW() {
+        return tiposSW;
+    }
+     public void setTiposSW(TiposSoftware tiposSW) {
         this.tiposSW = tiposSW;
     }
 
     public TiposSoftware getTipoSWSeleccionado() {
         return tipoSWSeleccionado;
     }
-
-    public void setTipoSWSeleccionado(TiposSoftware tipoSWSeleccionado) {
+      public void setTipoSWSeleccionado(TiposSoftware tipoSWSeleccionado) {
         this.tipoSWSeleccionado = tipoSWSeleccionado;
     }
 
