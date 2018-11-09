@@ -48,16 +48,16 @@ public class ArquitecturasMB implements Serializable {
     public void setArquitecturas(Arquitecturas arqui) {
         this.arqui = arqui;
     }
-    public Arquitecturas getarquiSeleccionado() {
+    public Arquitecturas getArquiSeleccionado() {
         return arquiSeleccionado;
     }
-    public void setarquiSeleccionado(Arquitecturas arquiSeleccionado) {
+    public void setArquiSeleccionado(Arquitecturas arquiSeleccionado) {
         this.arquiSeleccionado = arquiSeleccionado;
     }
-     public List<Arquitecturas> getarquiList() {
+     public List<Arquitecturas> getArquiList() {
         return arquiList;
     }
-      public void setarquiList(List<Arquitecturas> arquiList) {
+      public void setArquiList(List<Arquitecturas> arquiList) {
         this.arquiList = arquiList;
     }
        // --------------- Metodos ---------------------- 
