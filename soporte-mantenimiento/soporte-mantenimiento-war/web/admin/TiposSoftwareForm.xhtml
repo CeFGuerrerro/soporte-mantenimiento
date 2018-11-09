@@ -12,57 +12,47 @@
         <ui:composition template="./../templates/PrincipalTemplate.xhtml">
 
             <ui:define name="contenido">
-                <h:form id="f_tiposSoftware">
+                <h:form id="frmTabla">
                     <div>
-                        <p:commandButton id="btnNuevo" value="Nuevo Software" oncomplete="PF('snuevo').show();"/>
+                        <p:commandButton id="btnNuevo" value="Nuevo Tecnico" oncomplete="PF('wnuevo').show();"/>
                     </div>
-                    <!--tabla Tipo Software-->
-                    <p:dataTable id="t_tiposSoftware" emptyMessage="No hay registros" value="#{tiposSoftwareMB.tipoSWList}" var="tiposSoftware"
-                                 selection="#{tiposSoftwareMB.tipoSWSeleccionado}" selectionMode="single" rowKey="#{tipoSoftware.idTipoSoftware}"
-                                 rows="10" paginator="true">
-
+                    
+                    <p:dataTable value="#{tiposSoftwareMB.tipoSWList}" var="tec" rows="10" paginator="true" emptyMessage="No hay registros" selectionMode="single" selection="#{tiposSoftwareMB.tipoSWSeleccionado}"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="#{tec.idTipoSoftware}"
+                                 rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página: ({currentPage} de {totalPages})" paginatorAlwaysVisible="false" paginatorPosition="bottom">
                         <f:facet name="header">
-                            Tipos de Software
+                            Tecnicos
                         </f:facet>
-
-                        <!-- Columnas de la tabla -->
-                        <p:column headerText="ID" sortBy="#{tiposSoftware.idTipoSoftware}">
-                            <p:outputLabel>#{tiposSoftware.idTipoSoftware}</p:outputLabel>
+                        
+                        <p:column headerText="Nombre" filterBy="#{tec.tipoSoftware}" filterMatchMode="contains">
+                            <p:outputLabel value="#{tec.tipoSoftware}"/>
                         </p:column>
-
-                        <p:column headerText="Tipo" sortBy="#{tiposSoftware.tipoSoftware}">
-                            <p:outputLabel>#{tiposSoftware.tipoSoftware}</p:outputLabel>
-                        </p:column>
+                        
                         <p:ajax event="rowDblselect" oncomplete="PF('weditar').show()" update=":frmEditar"/>
                     </p:dataTable>
-                    <!--Menu que se abre al dar click derecho a una fila de la tabla-->
-                    <p:contextMenu for="t_tiposSoftware">
-                        <p:menuitem value="Eliminar" icon="fa fa-trash" action="#{tiposSoftwareMB.eliminarTiposSoftware()}" update="f_tiposSoftware"/>
-                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
-                    </p:contextMenu> 
+                    
                 </h:form>
-
                 <h:form id="frmNuevo">
-                    <p:dialog id="dlgNuevo" widgetVar="snuevo" header="Nuevo Software" modal="true" resizable="false" closeOnEscape="true" draggable="false">
+                    <p:dialog id="dlgNuevo" widgetVar="wnuevo" header="Nuevo Tecnico" modal="true" resizable="false" closeOnEscape="true" draggable="false">
                         <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
                             <p:outputLabel value="Nombre" for="nombre"/>
                             <p:inputText id="nombre" value="#{tiposSoftwareMB.tiposSW.tipoSoftware}" required="true" requiredMessage="¡Ingrese el nombre!"/>
                         </p:panelGrid>
-                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{tiposSoftwareMB.crearTiposSoftware()}" oncomplete="PF('snuevo').hide()" update=":f_tiposSoftware"/>
+                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{tiposSoftwareMB.crearTiposSoftware()}" oncomplete="PF('wnuevo').hide()" update=":frmTabla"/>
                     </p:dialog>
                 </h:form>
-
+                
                 <h:form id="frmEditar">
-                    <p:dialog id="dlgEditar" widgetVar="weditar" header="Editar Software" modal="true" resizable="false" closeOnEscape="true" draggable="false">
+                    <p:dialog id="dlgEditar" widgetVar="weditar" header="Editar Tecnico" modal="true" resizable="false" closeOnEscape="true" draggable="false">
                         <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
                             <p:outputLabel value="Nombre" for="nombre"/>
                             <p:inputText id="nombre" value="#{tiposSoftwareMB.tipoSWSeleccionado.tipoSoftware}" required="true" requiredMessage="¡Ingrese el nombre!"/>
+                            
                         </p:panelGrid>
-                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{(tiposSoftwareMB.modificarTiposSoftware())}" oncomplete="PF('weditar').hide()" update=":f_tiposSoftware"/>
+                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{tiposSoftwareMB.modificarTiposSoftware()}" oncomplete="PF('weditar').hide()" update=":frmTabla"/>
                     </p:dialog>
-
+                    
                 </h:form>
-
             </ui:define>
 
             <ui:define name="menuLateral">
