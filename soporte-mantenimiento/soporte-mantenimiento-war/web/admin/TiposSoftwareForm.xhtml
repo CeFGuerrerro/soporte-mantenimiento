@@ -12,35 +12,32 @@
         <ui:composition template="./../templates/PrincipalTemplate.xhtml">
 
             <ui:define name="contenido">
-                <h:form id="f_tipoSoftware">
-                    <div>
-                        <!--Boton que despliega el modal para crear registros-->
-                        <p:commandButton value="Nuevo" icon="fa fa-plus" onclick="PF('wd_crear').show()" update="f_crear"/>
-                    </div>
+                <h:form id="f_tiposSoftware">
+                   
                     <!--tabla Tipo Software-->
-                    <p:dataTable id="t_tipoSoftware" emptyMessage="No hay registros" value="#{tiposSoftwareMB.tiposSoftwareList}" var="tipoSoftware"
-                                 selection="#{tiposSoftwareMB.tipoSoftwareSeleccionado}" selectionMode="single" rowKey="#{tipoSoftware.idTipoSoftware}"
+                    <p:dataTable id="t_tiposSoftware" emptyMessage="No hay registros" value="#{tiposSoftwareMB.tipoSWList}" var="tiposSoftware"
+                                 selection="#{tiposSoftwareMB.tipoSWSeleccionado}" selectionMode="single" rowKey="#{tipoSoftware.idTipoSoftware}"
                                  rows="10" paginator="true">
 
                         <f:facet name="header">
                             Tipos de Software
                         </f:facet>
                         <!-- Columnas de la tabla -->
-                        <p:column headerText="ID" sortBy="#{tipoSoftware.idTipoSoftware}">
-                            <p:outputLabel>#{tipoSoftware.idTipoSoftware}</p:outputLabel>
+                        <p:column headerText="ID" sortBy="#{tiposSoftware.idTipoSoftware}">
+                            <p:outputLabel>#{tiposSoftware.idTipoSoftware}</p:outputLabel>
                         </p:column>
-                        <p:column headerText="Tipo" sortBy="#{tipoSoftware.tipoSoftware}">
-                            <p:outputLabel>#{tipoSoftware.tipoSoftware}</p:outputLabel>
+                        <p:column headerText="Tipo" sortBy="#{tiposSoftware.tipoSoftware}">
+                            <p:outputLabel>#{tiposSoftware.tipoSoftware}</p:outputLabel>
                         </p:column>
 
-                        <p:ajax event="rowDblselect" oncomplete="PF('wd_editar').show()" update=":f_editar"/>
+                   
 
                     </p:dataTable>
                     <!--Menu que se abre al dar click derecho a una fila de la tabla-->
-                    <p:contextMenu for="t_tipoSoftware">
-                        <p:menuitem value="Eliminar" icon="fa fa-trash" action="#{tiposSoftwareMB.eliminarTipoSoftware()}" update="f_tipoSoftware"/>
+                    <p:contextMenu for="t_tiposSoftware">
+                        <p:menuitem value="Eliminar" icon="fa fa-trash" action="#{tiposSoftwareMB.eliminarTiposSoftware()}" update="f_tiposSoftware"/>
                         <p:menuitem value="Cancelar" icon="fa fa-close"/>
-                    </p:contextMenu>
+                    </p:contextMenu> 
                 </h:form>
                 
                    
