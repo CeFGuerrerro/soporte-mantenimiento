@@ -70,7 +70,7 @@ public class SolucionesMB implements Serializable {
             contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error:", e.getMessage()));
         }
         soluciones = solucionEJB.findAll();
-        solucion = null;
+        solucion = new Soluciones();
     }
     
     public void editar() {
@@ -87,6 +87,6 @@ public class SolucionesMB implements Serializable {
             contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error:", e.getMessage()));
         }
         soluciones = solucionEJB.findAll();
-        seleccion = null;
+        seleccion = new Soluciones();
     }
 }
