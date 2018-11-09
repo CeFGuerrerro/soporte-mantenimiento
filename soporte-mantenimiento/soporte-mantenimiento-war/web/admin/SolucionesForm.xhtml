@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../templates/PrincipalTemplate.xhtml">
+
+            <ui:define name="contenido">
+                <h:form id="frmTabla">
+                    <div>
+                        <p:commandButton id="btnNuevo" value="Nueva Solucion" oncomplete="PF('wnuevo').show();"/>
+                    </div>
+                    
+                    <p:dataTable value="#{solucionesMB.soluciones}" var="sol" rows="10" paginator="true" emptyMessage="No hay registros" selectionMode="single" selection="#{solucionesMB.seleccion}"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="#{sol.idSolucion}"
+                                 rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página: ({currentPage} de {totalPages})" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+                        <f:facet name="header">
+                            Soluciones
+                        </f:facet>
+                        
+                        <p:column headerText="Nombre" filterBy="#{sol.nombre}" filterMatchMode="contains">
+                            <p:outputLabel value="#{sol.nombre}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Descripcion">
+                            <p:outputLabel value="#{sol.descripcion}" />
+                        </p:column>
+                        
+                        <p:ajax event="rowDblselect" oncomplete="PF('weditar').show()" update=":frmEditar"/>
+                    </p:dataTable>
+                    
+                </h:form>
+                <h:form id="frmNuevo">
+                    <p:dialog id="dlgNuevo" widgetVar="wnuevo" header="Nueva Solucion" modal="true" resizable="false" closeOnEscape="true" draggable="false">
+                        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+                            <p:outputLabel value="Nombre" for="nombre"/>
+                            <p:inputText id="nombre" value="#{solucionesMB.solucion.nombre}" required="true" requiredMessage="¡Ingrese el nombre!"/>
+                            <p:outputLabel value="Descripcion" for="descripcion"/>
+                            <p:inputTextarea id="descripcion" value="#{solucionesMB.solucion.descripcion}"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{solucionMB.registrar()}" oncomplete="PF('wnuevo').hide()" update=":frmTabla"/>
+                    </p:dialog>
+                </h:form>
+                
+                <h:form id="frmEditar">
+                    <p:dialog id="dlgEditar" widgetVar="weditar" header="Editar Solucion" modal="true" resizable="false" closeOnEscape="true" draggable="false">
+                        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+                            <p:outputLabel value="Nombre" for="nombre"/>
+                            <p:inputText id="nombre" value="#{solucionesMB.seleccion.nombre}" required="true" requiredMessage="¡Ingrese el nombre!"/>
+                            <p:outputLabel value="Descripcion" for="descripcion"/>
+                            <p:inputTextarea id="descripcion" value="#{solucionMB.seleccion.descripcion}"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{solucionMB.editar()}" oncomplete="PF('weditar').hide()" update=":frmTabla"/>
+                    </p:dialog>
+                    
+                </h:form>
+            </ui:define>
+
+            <ui:define name="menuLateral">
+                <ui:include src="./../templates/HwSwMenuLateral.xhtml"/>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
