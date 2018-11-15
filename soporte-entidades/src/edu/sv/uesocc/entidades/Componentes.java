@@ -48,7 +48,7 @@ public class Componentes implements Serializable {
     @Column(name = "numero_serie", length = 2147483647)
     private String numeroSerie;
     @Column(name = "estado")
-    private Boolean estado;
+    public Boolean estado;
     @Column(name = "personal")
     private Boolean personal;
     @Column(name = "asignado")
