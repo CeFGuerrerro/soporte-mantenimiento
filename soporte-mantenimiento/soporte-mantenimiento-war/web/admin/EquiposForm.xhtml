@@ -17,7 +17,7 @@
                     <!--Tabla para mostrar los equipos-->
                     <p:dataTable id="t_equipos" emptyMessage="No hay registros" selectionMode="single" rows="10" scrollable="true"
                                  paginator="true" value="#{equiposMB.equipList}" var="equip" rowKey="#{equip.idEquipo}"
-                                 selection="#{equiposMB.equipSeleccionado}" widgetVar="wd_tbl_componentes">
+                                 selection="#{equiposMB.equipSeleccionado}" widgetVar="wd_tbl_equipos">
                         <f:facet name="header">
                             Equipos
                         </f:facet>
@@ -25,7 +25,7 @@
                         <p:column headerText="ID" style="width: 5em">
                             <p:outputLabel value="#{equip.idEquipo}"/>
                         </p:column>
-                        
+
                         <p:column headerText="Ubicaci&oacute;n" style="width: 9em">
                             <p:outputLabel value="#{equip.idUbicacion.nombre}"/>
                         </p:column>
@@ -38,8 +38,33 @@
                         <p:column headerText="Observaciones" style="width: 12.5em">
                             <p:outputLabel value="#{equip.observaciones}"/>
                         </p:column>
-                    </p:dataTable>
+
+                        <p:column headerText="Componentes" style="width: 12.5em">
+                            <p:panelGrid columns="3">
+                                <p:outputLabel value="Num. Inventario"/>
+                                <p:outputLabel value="Num. Serie"/>
+                                <p:outputLabel value="Tipo"/>
+                            </p:panelGrid>
+                            <p:repeat value="#{equip.componentesList}" var="item">
+                                <p:panelGrid columns="3">
+                                    <p:outputLabel value="#{item.numeroInventario}"/>
+                                    <p:outputLabel value="#{item.numeroSerie}"/>
+                                    <p:outputLabel value="#{item.idTipoComponente.nombre}"/>
+                                </p:panelGrid>
+                            </p:repeat>
+
+                        </p:column>
+
+                        <p:ajax event="rowDblselect" listener="#{equiposMB.cargarComponentesEquipoSeleccionado()}" oncomplete="PF('wd_editarEquipo').show()" update=":f_editarEquipo"/>
+                    </p:dataTable> 
+
+                    <p:contextMenu for="t_equipos">
+                        <p:menuitem value="Eliminar" action="#{equiposMB.eliminarEquipo()}" icon="fa fa-trash" update="f_equipo"/>
+                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                    </p:contextMenu>
                 </h:form>
+                
+                <!--********************************MENUS PARA CREAR EQUIPOS****************************-->
 
                 <!--Menu para crear un equipo-->
                 <p:dialog widgetVar="wd_crearEquipo" modal="true" header="Nuevo Equipo">
@@ -60,14 +85,54 @@
                             <p:inputTextarea rows="3" cols="100" value="#{equiposMB.equip.observaciones}"/>
 
                             <p:outputLabel value="Componentes"/>
+                            <p:commandButton value="Agregar Componentes" icon="fa fa-plus" onclick="PF('wd_agregarComponentes').show()" update="f_agregarComponentes"/>
                         </p:panelGrid>
-                        <p:dataTable id="t_componentes" emptyMessage="No hay registros" rows="10" scrollable="true" paginatorPosition="top"
-                                     paginator="true" value="#{componentesMB.compList}" rowKey="#{comp.idComponente}" var="comp" lazy="true" scrollHeight="250"
-                                     selection="#{equiposMB.equip.componentesList}" widgetVar="wd_tbl_componentes">
+
+                        <!--Tabla de los componentes por equipo nuevos-->
+                        <p:dataTable id="t_componentesPorEquipo" emptyMessage="No hay registros" rows="8" selectionMode="single" selection="#{equiposMB.compSeleccionado}"
+                                     value="#{equiposMB.equip.componentesList}" rowKey="#{comp.idComponente}" var="comp">
+
+                            <p:column headerText="Num. Inventario" sortBy="#{comp.numeroInventario}" style="width: 9em">
+                                <p:outputLabel value="#{comp.numeroInventario}"/>
+                            </p:column>
+
+                            <p:column headerText="Num. Serie" style="width: 9em">
+                                <p:outputLabel value="#{comp.numeroSerie}"/>
+                            </p:column>
+
+                            <p:column headerText="Tipo" style="width: 12em">
+                                <p:outputLabel value="#{comp.idTipoComponente.nombre}"/>
+                            </p:column>
+
+                            <p:column headerText="Modelo" style="width: 12em">
+                                <p:outputLabel value="#{comp.idModelo.nombre}"/>
+                            </p:column>
+
+                            <p:column headerText="Marca" style="width: 12em">
+                                <p:outputLabel value="#{comp.idModelo.idMarca.nombre}"/>
+                            </p:column>
+
+                        </p:dataTable>
+
+                        <p:contextMenu for="t_componentesPorEquipo">
+                            <p:menuitem value="Eliminar" action="#{equiposMB.quitarComponentes()}" icon="fa fa-trash" update="f_crearEquipo"/>
+                            <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                        </p:contextMenu>
+
+                        <p:commandButton value="Guardar" icon="fa fa-check" actionListener="#{equiposMB.crearEquipo()}" update="f_equipo" oncomplete="PF('wd_crearEquipo').hide()"/>
+                    </h:form>
+                </p:dialog>
+                
+                 <!--Menu para mostrar los componentes cuando se crea un equipo--> 
+                <p:dialog widgetVar="wd_agregarComponentes" modal="true" header="Agregar Componentes" closeOnEscape="true">
+                    <h:form id="f_agregarComponentes">
+                        <p:dataTable id="t_componentes" emptyMessage="No hay registros" rows="20" scrollable="true"
+                                     value="#{componentesMB.compDisponiblesList}" rowKey="#{comp.idComponente}" var="comp" scrollHeight="300"
+                                     selection="#{equiposMB.compList}" widgetVar="wd_tbl_componentes">
 
                             <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
 
-                            <p:column headerText="Num. Inventario" filterBy="#{comp.numeroInventario}" sortBy="#{comp.numeroInventario}" style="width: 9em">
+                            <p:column headerText="Num. Inventario" filterBy="#{comp.numeroInventario}" filterMatchMode="contains" sortBy="#{comp.numeroInventario}" style="width: 9em">
                                 <p:outputLabel value="#{comp.numeroInventario}"/>
                             </p:column>
 
@@ -101,7 +166,7 @@
                                 <p:outputLabel value="#{comp.idModelo.nombre}"/>
                             </p:column>
 
-                            <p:column headerText="Serial" filterBy="#{comp.numeroSerie}" style="width: 9em">
+                            <p:column headerText="Serial" filterBy="#{comp.numeroSerie}" filterMatchMode="contains" style="width: 9em">
                                 <p:outputLabel value="#{comp.numeroSerie}"/>
                             </p:column>
 
@@ -109,10 +174,125 @@
                                 <p:outputLabel value="#{comp.observaciones}"/>
                             </p:column>
                         </p:dataTable>
-
-                        <p:commandButton value="Agregar" actionListener="#{equiposMB.crearEquipo()}" update="f_equipo" icon="fa fa-check" oncomplete="PF('wd_crearEquipo').hide()"/>
+                        <p:commandButton value="Agregar" actionListener="#{equiposMB.agregarComponentes()}" update="f_crearEquipo" icon="fa fa-check"/>
                     </h:form>
                 </p:dialog>
+                 
+                 <!--********************************MENUS PARA EDITAR EQUIPOS****************************-->
+
+                <!--Menu para editar los equipos-->
+                <p:dialog widgetVar="wd_editarEquipo" modal="true" header="Editar Equipo">
+                    <h:form id="f_editarEquipo">
+
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Ubicacion"/>
+                            <p:selectOneMenu value="#{equiposMB.equipSeleccionado.idUbicacion}" converter="objectConverter" required="true"
+                                             requiredMessage="Seleccione una ubicacion" filter="true" filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Seleccione una ubicaci&oacute;n" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value="#{ubicacionesMB.ubicList}" var="ubic" itemLabel="#{ubic.nombre}" itemValue="#{tipo}"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Estado"/>
+                            <p:selectBooleanButton value="#{equiposMB.equipSeleccionado.estado}" onLabel="Funcionando" onIcon="fa fa-check" offLabel="De baja" offIcon="fa fa-close"/>
+
+                            <p:outputLabel value="Observaciones"/>
+                            <p:inputTextarea rows="3" cols="100" value="#{equiposMB.equipSeleccionado.observaciones}"/>
+
+                            <p:outputLabel value="Componentes"/>
+                            <p:commandButton value="Agregar Componentes" icon="fa fa-plus" onclick="PF('wd_editarComponentes').show()" update="f_editarComponentes"/>
+                        </p:panelGrid>
+
+                        <!--Tabla de los componentes por equipo seleccionado-->
+                        <p:dataTable id="t_componentesPorEquipo" emptyMessage="No hay registros" rows="8" selectionMode="single" selection="#{equiposMB.compSeleccionado}"
+                                     value="#{equiposMB.compSeleccionadoDupList}" rowKey="#{comp.idComponente}" var="comp">
+
+                            <p:column headerText="Num. Inventario" sortBy="#{comp.numeroInventario}" style="width: 9em">
+                                <p:outputLabel value="#{comp.numeroInventario}"/>
+                            </p:column>
+
+                            <p:column headerText="Num. Serie" style="width: 9em">
+                                <p:outputLabel value="#{comp.numeroSerie}"/>
+                            </p:column>
+
+                            <p:column headerText="Tipo" style="width: 12em">
+                                <p:outputLabel value="#{comp.idTipoComponente.nombre}"/>
+                            </p:column>
+
+                            <p:column headerText="Modelo" style="width: 12em">
+                                <p:outputLabel value="#{comp.idModelo.nombre}"/>
+                            </p:column>
+
+                            <p:column headerText="Marca" style="width: 12em">
+                                <p:outputLabel value="#{comp.idModelo.idMarca.nombre}"/>
+                            </p:column>
+
+                        </p:dataTable>
+
+                        <p:contextMenu for="t_componentesPorEquipo">
+                            <p:menuitem value="Eliminar" action="#{equiposMB.quitarComponenteEquipoSeleccionado()}" icon="fa fa-trash" update="f_editarEquipo"/>
+                            <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                        </p:contextMenu>
+
+                        <p:commandButton value="Guardar" icon="fa fa-check" actionListener="#{equiposMB.modificarEquipo()}" update="f_equipo" oncomplete="PF('wd_editarEquipo').hide()"/>
+
+                    </h:form>
+                </p:dialog>
+                
+                 <!--Menu para mostrar los componentes cuando se edita un equipo--> 
+                <p:dialog widgetVar="wd_editarComponentes" modal="true" header="Agregar Componentes" closeOnEscape="true">
+                    <h:form id="f_editarComponentes">
+                        <p:dataTable id="t_componentes" emptyMessage="No hay registros" rows="20" scrollable="true"
+                                     value="#{componentesMB.compDisponiblesList}" rowKey="#{comp.idComponente}" var="comp" scrollHeight="300"
+                                     selection="#{equiposMB.compSeleccionadoList}" widgetVar="wd_tbl_componentes">
+
+                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+
+                            <p:column headerText="Num. Inventario" filterBy="#{comp.numeroInventario}" filterMatchMode="contains" sortBy="#{comp.numeroInventario}" style="width: 9em">
+                                <p:outputLabel value="#{comp.numeroInventario}"/>
+                            </p:column>
+
+                            <p:column headerText="Tipo" filterBy="#{comp.idTipoComponente.idTipoComponente}" style="width: 12em">
+                                <f:facet name="filter">
+                                    <p:selectOneMenu onchange="PF('wd_tbl_componentes').filter()" filter="true" filterMatchMode="startsWith" style="width: 8em">
+                                        <f:selectItem itemLabel="Seleccione un tipo" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{tiposComponenteMB.tipoCompList}" var="tc" itemLabel="#{tc.nombre}" itemValue="#{tc.idTipoComponente}" />
+                                    </p:selectOneMenu>
+                                </f:facet>
+                                <p:outputLabel value="#{comp.idTipoComponente.nombre}"/>
+                            </p:column>
+
+                            <p:column headerText="Marca" filterBy="#{comp.idModelo.idMarca.idMarca}" style="width: 12em;">
+                                <f:facet name="filter">
+                                    <p:selectOneMenu onchange="PF('wd_tbl_componentes').filter()" filter="true" filterMatchMode="startsWith" style="width: 10em">
+                                        <f:selectItem itemLabel="Seleccione una marca" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{marcasMB.marcList}" var="mar" itemLabel="#{mar.nombre}" itemValue="#{mar.idMarca}" />
+                                    </p:selectOneMenu>
+                                </f:facet>
+                                <p:outputLabel value="#{comp.idModelo.idMarca.nombre}"/>
+                            </p:column>
+
+                            <p:column headerText="Modelo" filterBy="#{comp.idModelo.idModelo}" style="width: 12em">
+                                <f:facet name="filter">
+                                    <p:selectOneMenu onchange="PF('wd_tbl_componentes').filter()" filter="true" filterMatchMode="startsWith" style="width: 10em">
+                                        <f:selectItem itemLabel="Seleccione un modelo" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{modelosMB.modelList}" var="m" itemLabel="#{m.nombre}" itemValue="#{m.idModelo}"/>
+                                    </p:selectOneMenu>
+                                </f:facet>
+                                <p:outputLabel value="#{comp.idModelo.nombre}"/>
+                            </p:column>
+
+                            <p:column headerText="Serial" filterBy="#{comp.numeroSerie}" filterMatchMode="contains" style="width: 9em">
+                                <p:outputLabel value="#{comp.numeroSerie}"/>
+                            </p:column>
+
+                            <p:column headerText="Observaciones" style="width: 15em">
+                                <p:outputLabel value="#{comp.observaciones}"/>
+                            </p:column>
+                        </p:dataTable>
+                        <p:commandButton value="Agregar" actionListener="#{equiposMB.agregarComponentesEquipoSelecionado()}" update="f_editarEquipo" icon="fa fa-check"/>
+                    </h:form>
+                </p:dialog>
+                 
             </ui:define>
 
             <ui:define name="menuLateral">

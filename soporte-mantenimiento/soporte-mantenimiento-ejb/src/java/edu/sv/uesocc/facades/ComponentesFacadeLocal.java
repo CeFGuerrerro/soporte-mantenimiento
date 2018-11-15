@@ -34,5 +34,7 @@ public interface ComponentesFacadeLocal {
     int countByDataFilter(Map<String, Object> filters);
     
     List<Componentes> findByDataFilter(int first, int pageSize, String sortField, String sortOrder, Map<String, Object> filters);
+
+    public List<Componentes> findDisponibles();
     
 }

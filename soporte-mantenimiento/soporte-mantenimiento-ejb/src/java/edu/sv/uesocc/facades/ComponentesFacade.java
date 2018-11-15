@@ -95,5 +95,19 @@ public class ComponentesFacade extends AbstractFacade<Componentes> implements Co
         }
         return em.createQuery(cq).setFirstResult(first).setMaxResults(pageSize).getResultList();
     }
+    
+    @Override
+    public List<Componentes> findDisponibles(){
+        boolean estado = true;
+        boolean asignado = false;
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Componentes> cq =  cb.createQuery(Componentes.class);
+        Root<Componentes> comp = cq.from(Componentes.class);
+        Predicate condiciones = cb.and(cb.equal(comp.get("estado"), estado), cb.equal(comp.get("asignado"), asignado));
+        cq.select(comp);
+        cq.where(condiciones);
+        
+        return em.createQuery(cq).getResultList();
+    }
 
 }
