@@ -43,7 +43,7 @@
                             <p:outputLabel value="Descripcion" for="descripcion"/>
                             <p:inputTextarea id="descripcion" value="#{solucionesMB.solucion.descripcion}"/>
                         </p:panelGrid>
-                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{solucionMB.registrar()}" oncomplete="PF('wnuevo').hide()" update=":frmTabla"/>
+                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{solucionesMB.registrar()}" oncomplete="PF('wnuevo').hide()" update=":frmTabla"/>
                     </p:dialog>
                 </h:form>
                 
@@ -53,9 +53,9 @@
                             <p:outputLabel value="Nombre" for="nombre"/>
                             <p:inputText id="nombre" value="#{solucionesMB.seleccion.nombre}" required="true" requiredMessage="¡Ingrese el nombre!"/>
                             <p:outputLabel value="Descripcion" for="descripcion"/>
-                            <p:inputTextarea id="descripcion" value="#{solucionMB.seleccion.descripcion}"/>
+                            <p:inputTextarea id="descripcion" value="#{solucionesMB.seleccion.descripcion}"/>
                         </p:panelGrid>
-                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{solucionMB.editar()}" oncomplete="PF('weditar').hide()" update=":frmTabla"/>
+                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{solucionesMB.editar()}" oncomplete="PF('weditar').hide()" update=":frmTabla"/>
                     </p:dialog>
                     
                 </h:form>

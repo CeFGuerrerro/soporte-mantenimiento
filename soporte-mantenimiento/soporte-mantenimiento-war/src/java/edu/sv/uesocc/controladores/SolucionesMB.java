@@ -53,7 +53,6 @@ public class SolucionesMB implements Serializable {
     private void init() {
         solucion = new Soluciones();
         seleccion = new Soluciones();
-
         soluciones = solucionEJB.findAll();
     }
 
@@ -63,7 +62,7 @@ public class SolucionesMB implements Serializable {
         try {
             registrado = solucionEJB.create(solucion);
             if (registrado) {
-                contexto.addMessage(null, new FacesMessage("Tecnico registrado."));
+                contexto.addMessage(null, new FacesMessage("Solucion registrada."));
             } else {
                 contexto.addMessage(null, new FacesMessage("No se pudo registrar."));
             }
@@ -71,7 +70,7 @@ public class SolucionesMB implements Serializable {
             contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error:", e.getMessage()));
         }
         soluciones = solucionEJB.findAll();
-        solucion = null;
+        solucion = new Soluciones();
     }
     
     public void editar() {
@@ -88,6 +87,6 @@ public class SolucionesMB implements Serializable {
             contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error:", e.getMessage()));
         }
         soluciones = solucionEJB.findAll();
-        seleccion = null;
+        seleccion = new Soluciones();
     }
 }
