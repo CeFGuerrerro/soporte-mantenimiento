@@ -12,7 +12,11 @@
 
             <ui:define name="contenido">
                 <h:form id="f_procesador">
-
+                    <!--Boton agregar-->
+                    <div>
+                        <p:commandButton value="Nuevo" icon="fa fa-plus" onclick="PF('wd_agregar').show()" update="f_agregar"/>
+                    </div>
+                    <!--tabla-->
                     <p:dataTable id="t_procesador" emptyMessage="No hay registros" value="#{procesadoresMB.procesadorList}" var="procesador"
                                  selection="#{procesadoresMB.procesadorSeleccionado}" selectionMode="single" rowKey="#{procesador.idProcesador}"
                                  rows="10" paginator="true">
@@ -25,18 +29,90 @@
                         <p:column headerText="Num. Serie" sortBy="#{procesador.numeroSerie}">
                             <p:outputLabel>#{procesador.numeroSerie}</p:outputLabel>
                         </p:column>
-                        <p:column headerText="Arquitectura" sortBy="#{procesador.idArquitectura}">
-                            <p:outputLabel>#{procesador.idArquitectura}</p:outputLabel>
+                        <p:column headerText="Arquitectura" sortBy="#{procesador.idArquitectura.arquitectura}" filterBy="#{procesador.idArquitectura.arquitectura}">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('wd_t_procesador').filter()" filter="true" filterMatchMode="startsWith">
+                                    <f:selectItem itemLabel="Seleccionar arquitectura" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{arquitecturasMB.arquiList}" var="arqui" itemLabel="#{arqui.arquitectura}" itemValue="#{arqui.arquitectura}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <p:outputLabel>#{procesador.idArquitectura.arquitectura}</p:outputLabel>
                         </p:column>
-                        <p:column headerText="Modelo" sortBy="#{procesador.idModelo}">
-                            <p:outputLabel>#{procesador.idModelo}</p:outputLabel>
+                        <p:column headerText="Modelo" sortBy="#{procesador.idModelo.nombre}" filterBy="#{procesador.idModelo.nombre}">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('wd_t_procesador').filter()" filter="true" filterMatchMode="startsWith">
+                                    <f:selectItem itemLabel="Seleccionar modelo" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{modelosMB.modelList}" var="modelo" itemLabel="#{modelo.nombre}" itemValue="#{modelo.nombre}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <p:outputLabel>#{procesador.idModelo.nombre}</p:outputLabel>
+                        </p:column>                   
+                        <p:column headerText="Socket" sortBy="#{procesador.idSocket.socket}" filterBy="#{procesador.idSocket.socket}">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('wd_t_procesador').filter()" filter="true" filterMatchMode="startsWith">
+                                    <f:selectItem itemLabel="Seleccionar socket" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{socketsMB.socketList}" var="socket" itemLabel="#{socket.socket}" itemValue="#{socket.socket}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <p:outputLabel>#{procesador.idSocket.socket}</p:outputLabel>
                         </p:column>
-                        <p:column headerText="Socket" sortBy="#{procesador.idSocket}">
-                            <p:outputLabel>#{procesador.idSocket}</p:outputLabel>
-                        </p:column>
-
+                        <p:ajax event="rowDblselect" oncomplete="PF('wd_editar').show()" update=":f_editar"/>
                     </p:dataTable>
+                    <!--Eliminar-->
+                    <p:contextMenu for="t_procesador">
+                        <p:menuitem value="Eliminar" action="#{procesadoresMB.eliminarProcesador()}" update="f_procesador" icon="fa fa-trash"/>
+                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                    </p:contextMenu>
                 </h:form>
+                 <!--Crear-->
+                <p:dialog widgetVar="wd_agregar" modal="true" header="Agregar Procesador">
+                    <h:form id="f_agregar">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Número de Serie:"/>
+                            <p:inputText value="#{procesadoresMB.procesador.numeroSerie}" required="true" requiredMessage="Ingrese el número de serie!"/>
+                            <p:outputLabel value="Arquitectura:"/>
+                            <p:selectOneMenu value="#{procesador.idArquitectura.idArquitectura}" converter="objectConverter" required="true" 
+                                             requiredMessage="Seleccione una arquitectura" filter="true" 
+                                             filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Seleccione una arquitectura" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{arquitecturasMB.arquiList}" var="arqui" itemLabel="#{arqui.arquitectura}" itemValue="#{arqui}"/>
+                            </p:selectOneMenu>
+                             <p:outputLabel value="Modelo:"/>
+                             <p:selectOneMenu value="#{procesador.idModelo.idModelo}" converter="objectConverter" required="true" 
+                                             requiredMessage="Seleccione un modelo" filter="true" 
+                                             filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Seleccione un modelo" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{modelosMB.modelList}" var="modelo" itemLabel="#{modelo.nombre}" itemValue="#{modelo}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Socket"/>
+                            <p:selectOneMenu value="#{procesador.idSocket.idSocket}" converter="objectConverter" required="true" 
+                                             requiredMessage="Seleccione un socket" filter="true" 
+                                             filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Seleccione un socket" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{socketsMB.socketList}" var="socket" itemLabel="#{socket.socket}" itemValue="#{socket}"/>
+                            </p:selectOneMenu>
+
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" action="#{procesadoresMB.agregarProcesador()}" icon="fa fa-check" oncomplete="PF('wd_agregar').hide()" update="f_procesador"/>
+                    </h:form>
+                </p:dialog>
+
+                <!--Editar-->
+                <p:dialog widgetVar="wd_editar" modal="true" header="Editar Motherboard">
+                    <h:form id="f_editar">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Numero de serie:"/>
+                            <p:inputText value="#{procesadoresMB.procesadorSeleccionado.numeroSerie}" required="true" requiredMessage="Ingrese numero de serie"/>
+                            <p:outputLabel value="Arquitectura:"/>
+                            <p:inputText value="#{procesadoresMB.procesadorSeleccionado.idArquitectura.arquitectura}" required="true" requiredMessage="Ingrese marca"/>
+                            <p:outputLabel value="Modelo:"/>
+                            <p:inputText value="#{procesadoresMB.procesadorSeleccionado.idModelo.nombre}" required="true" requiredMessage="Ingrese marca"/>
+                            <p:outputLabel value="Socket:"/>
+                            <p:inputText value="#{procesadoresMB.procesadorSeleccionado.idSocket.socket}" required="true" requiredMessage="Ingrese socket"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" action="#{motherboardsMB.editarMotherboard()}" icon="fa fa-check" oncomplete="PF('wd_editar').hide()" update="f_procesador"/>
+                    </h:form>
+                </p:dialog>
             </ui:define>
             <ui:define name="menuLateral">
                 <ui:include src="../templates/HwSwMenuLateral.xhtml"/>

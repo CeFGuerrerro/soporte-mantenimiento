@@ -10,25 +10,53 @@
         <ui:composition template="./../templates/PrincipalTemplate.xhtml">
             <ui:define name="contenido">
                 <h:form id="f_tipoMemoria">
-
+                    <!--Boton agregar-->
+                    <div>
+                        <p:commandButton value="Nuevo" icon="fa fa-plus" onclick="PF('wd_agregar').show()" update="f_agregar"/>
+                    </div>
+                    <!--tabla-->
                     <p:dataTable id="t_tipoMemoria" emptyMessage="No hay registros" value="#{tiposMemoriaMB.tiposMemoriaList}" var="tipoMemoria"
                                  selection="#{tiposMemoriaMB.tipoMemoriaSeleccionada}" selectionMode="single" rowKey="#{tipoMemoria.idTipoMemoria}"
                                  rows="10" paginator="true">
                         <f:facet name="header">
                             Tipos de Memorias
                         </f:facet>
-                        
+
                         <p:column headerText="ID" sortBy="#{tipoMemoria.idTipoMemoria}">
                             <p:outputLabel>#{tipoMemoria.idTipoMemoria}</p:outputLabel>
                         </p:column>
                         <p:column headerText="Tipo" sortBy="#{tipoMemoria.tipoMemoria}">
                             <p:outputLabel>#{tipoMemoria.tipoMemoria}</p:outputLabel>
                         </p:column>
-                       
+                        <p:ajax event="rowDblselect" oncomplete="PF('wd_editar').show()" update=":f_editar"/>
                     </p:dataTable>
-
-
+                    <!--Eliminar-->
+                    <p:contextMenu for="t_tipoMemoria">
+                        <p:menuitem value="Eliminar" action="#{tiposMemoriaMB.eliminarTipoMemoria()}" update="f_tipoMemoria" icon="fa fa-trash"/>
+                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                    </p:contextMenu>
                 </h:form>
+                <!--Crear-->
+                <p:dialog widgetVar="wd_agregar" modal="true" header="Agregar Tipo de Memoria">
+                    <h:form id="f_agregar">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Tipo de Memoria:"/>
+                            <p:inputText value="#{tiposMemoriaMB.tipoMemoria.tipoMemoria}" required="true" requiredMessage="Ingrese tipo de memoria!"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" action="#{tiposMemoriaMB.agregarTipoMemoria()}" icon="fa fa-check" oncomplete="PF('wd_agregar').hide()" update="f_tipoMemoria"/>
+                    </h:form>
+                </p:dialog>
+
+                <!--Editar-->
+                <p:dialog widgetVar="wd_editar" modal="true" header="Editar Tipo de Memoria">
+                    <h:form id="f_editar">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Tipo de Memoria:"/>
+                            <p:inputText value="#{tiposMemoriaMB.tipoMemoriaSeleccionada.tipoMemoria}"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" action="#{tiposMemoriaMB.editarTipoMemoria()}" icon="fa fa-check" oncomplete="PF('wd_editar').hide()" update="f_tipoMemoria"/>
+                    </h:form>
+                </p:dialog>
             </ui:define>
 
             <ui:define name="menuLateral">

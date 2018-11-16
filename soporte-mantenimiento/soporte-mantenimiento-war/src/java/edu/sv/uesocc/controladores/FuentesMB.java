@@ -8,20 +8,20 @@ package edu.sv.uesocc.controladores;
 import edu.sv.uesocc.entidades.Fuentes;
 import edu.sv.uesocc.facades.FuentesFacadeLocal;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 
 /**
  *
  * @author o-a19
  */
 @Named(value = "fuentesMB")
-@SessionScoped
+@ViewScoped
 public class FuentesMB implements Serializable {
 
     @EJB

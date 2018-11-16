@@ -12,7 +12,11 @@
             <ui:define name="contenido">
 
                 <h:form id="f_puertos">
-
+                    <!--Boton agregar-->
+                    <div>
+                        <p:commandButton value="Nuevo" icon="fa fa-plus" onclick="PF('wd_agregar').show()" update="f_agregar"/>
+                    </div>
+                    <!--tabla-->
                     <p:dataTable id="t_puertos" emptyMessage="No hay registros" value="#{puertosMB.puertoList}" var="puerto"
                                  selection="#{puertosMB.puertoSeleccionado}" selectionMode="single" rowKey="#{puerto.idPuerto}"
                                  rows="10" paginator="true">
@@ -25,11 +29,37 @@
                         <p:column headerText="Tipo puerto" sortBy="#{puerto.tipoPuerto}">
                             <p:outputLabel>#{puerto.tipoPuerto}</p:outputLabel>
                         </p:column>
-
+                        
+                        <p:ajax event="rowDblselect" oncomplete="PF('wd_editar').show()" update=":f_editar"/>
                     </p:dataTable>
-
+                    <!--Eliminar-->
+                    <p:contextMenu for="t_puertos">
+                        <p:menuitem value="Eliminar" action="#{puertosMB.eliminarPuerto()}" update="f_puertos" icon="fa fa-trash"/>
+                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                    </p:contextMenu>
 
                 </h:form>
+                <!--Crear-->
+                <p:dialog widgetVar="wd_agregar" modal="true" header="Agregar Puerto">
+                    <h:form id="f_agregar">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Puerto"/>
+                            <p:inputText value="#{puertosMB.puerto.tipoPuerto}" required="true" requiredMessage="Ingrese puerto!"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" action="#{puertosMB.agregarPuerto()}" icon="fa fa-check" oncomplete="PF('wd_agregar').hide()" update="f_puertos"/>
+                    </h:form>
+                </p:dialog>
+
+                <!--Editar-->
+                <p:dialog widgetVar="wd_editar" modal="true" header="Editar Puerto">
+                    <h:form id="f_editar">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Puerto"/>
+                            <p:inputText value="#{puertosMB.puertoSeleccionado.tipoPuerto}"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" action="#{puertosMB.editarPuerto()}" icon="fa fa-check" oncomplete="PF('wd_editar').hide()" update="f_puertos"/>
+                    </h:form>
+                </p:dialog>
             </ui:define>
 
             <ui:define name="menuLateral">

@@ -12,7 +12,11 @@
             <ui:define name="contenido">
 
                 <h:form id="f_tarjetasV">
-
+                    <!--Boton agregar-->
+                    <div>
+                        <p:commandButton value="Nuevo" icon="fa fa-plus" onclick="PF('wd_agregar').show()" update="f_agregar"/>
+                    </div>
+                    <!--tabla-->
                     <p:dataTable id="t_tarjetasV" emptyMessage="No hay registros" value="#{tarjetasVideoMB.tarjetaList}" var="tarjeta"
                                  selection="#{tarjetasVideoMB.tarjetaSeleccionada}" selectionMode="single" rowKey="#{tarjeta.idTarjetaVideo}"
                                  rows="10" paginator="true">
@@ -25,17 +29,74 @@
                         <p:column headerText="Num. Serie" sortBy="#{tarjeta.numeroSerial}">
                             <p:outputLabel>#{tarjeta.numeroSerial}</p:outputLabel>
                         </p:column>
-                        <p:column headerText="Marca" sortBy="#{tarjeta.idMarca}">
-                            <p:outputLabel>#{tarjeta.idMarca}</p:outputLabel>
+
+                        <p:column headerText="Marca" sortBy="#{tarjeta.idMarca.nombre}" filterBy="#{tarjeta.idMarca.nombre}">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('wd_t_tarjetasV').filter()" filter="true" filterMatchMode="startsWith">
+                                    <f:selectItem itemLabel="Seleccionar marca" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{marcasMB.marcList}" var="mar" itemLabel="#{mar.nombre}" itemValue="#{mar.nombre}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <p:outputLabel>#{tarjeta.idMarca.nombre}</p:outputLabel>
                         </p:column>
-                        <p:column headerText="Puerto" sortBy="#{tarjeta.idPuerto}">
-                            <p:outputLabel>#{tarjeta.idPuerto}</p:outputLabel>
+                        <p:column headerText="Tipo puerto" sortBy="#{tarjeta.idPuerto.tipoPuerto}" filterBy="#{tarjeta.idPuerto.tipoPuerto}">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('wd_t_tarjetasV').filter()" filter="true" filterMatchMode="startsWith">
+                                    <f:selectItem itemLabel="Seleccione puerto" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{puertosMB.puertoList}" var="puerto" itemLabel="#{puerto.tipoPuerto}" itemValue="#{puerto.tipoPuerto}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <p:outputLabel>#{tarjeta.idPuerto.tipoPuerto}</p:outputLabel>
                         </p:column>
-                 
+                        <p:ajax event="rowDblselect" oncomplete="PF('wd_editar').show()" update=":f_editar"/>
+
                     </p:dataTable>
 
-
+                    <!--Eliminar-->
+                    <p:contextMenu for="t_tarjetasV">
+                        <p:menuitem value="Eliminar" action="#{tarjetasVideoMB.eliminarTarjetaVideo()}" update="f_tarjetasV" icon="fa fa-trash"/>
+                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                    </p:contextMenu>
                 </h:form>
+                <!--Formulario para crear tarjetas-->
+                <p:dialog widgetVar="wd_agregar" modal="true" header="Disco Nuevo">
+                    <h:form id="f_agregar">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel>Numero de Serie:</p:outputLabel>
+                            <p:inputText value="#{tarjetasVideoMB.tarjeta.numeroSerial}" required="true" requiredMessage="Ingrese el numero de serie!"/>
+
+                            <p:outputLabel value="Marca"/>
+                            <p:selectOneMenu value="#{tarjeta.idMarca.idMarca}" converter="objectConverter" required="true" 
+                                             requiredMessage="Seleccione una marca" filter="true" 
+                                             filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Seleccione una marca" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{marcasMB.marcList}" var="marca" itemLabel="#{marca.nombre}" itemValue="#{marca}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Tipo Puerto"/>
+                            <p:selectOneMenu value="#{tarjeta.idPuerto.idPuerto}" converter="objectConverter" required="true" 
+                                             requiredMessage="Seleccione puerto" filter="true" 
+                                             filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Seleccione puerto" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{puertosMB.puertoList}" var="puerto" itemLabel="#{puerto.tipoPuerto}" itemValue="#{puerto}"/>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" action="#{tarjetasVideoMB.agregarTarjetaVideo()}" icon="fa fa-check" oncomplete="PF('wd_agregar').hide()" update="f_tarjetasV"/>
+                    </h:form>
+                </p:dialog>
+                <!--Editar discos-->
+                <p:dialog widgetVar="wd_editar" modal="true" header="Editar Discos">
+                    <h:form id="f_editar">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Numero de serie:"/>
+                            <p:inputText value="#{tarjetasVideoMB.tarjetaSeleccionada.numeroSerial}" required="true" requiredMessage="Ingrese numero de serie"/>
+                            <p:outputLabel value="Marca:"/>
+                            <p:inputText value="#{tarjetasVideoMB.tarjetaSeleccionada.idMarca.nombre}" required="true" requiredMessage="Ingrese marca"/>
+                            <p:outputLabel value="Tipo puerto:"/>
+                            <p:inputText value="#{tarjetasVideoMB.tarjetaSeleccionada.idPuerto.tipoPuerto}" required="true" requiredMessage="Ingrese el puerto"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" action="#{tarjetasVideoMB.editarTarjetaVideo()}" icon="fa fa-check" oncomplete="PF('wd_editar').hide()" update="f_tarjetasV"/>
+                    </h:form>
+                </p:dialog>
             </ui:define>
 
             <ui:define name="menuLateral">
