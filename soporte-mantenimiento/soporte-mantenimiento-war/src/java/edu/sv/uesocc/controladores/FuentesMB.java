@@ -11,6 +11,7 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -30,11 +31,11 @@ public class FuentesMB implements Serializable {
     private Fuentes fuente;
     private Fuentes fuenteSeleccionada;
     private List<Fuentes> fuenteList = new ArrayList<>();
-    FacesContext contexto = FacesContext.getCurrentInstance();
 
     public FuentesMB() {
     }
 
+    @PostConstruct
     public void init() {
         fuente = new Fuentes();
         fuenteSeleccionada = new Fuentes();
@@ -66,6 +67,8 @@ public class FuentesMB implements Serializable {
     }
 
     private void obtenerTodos() {
+
+        FacesContext contexto = FacesContext.getCurrentInstance();
         try {
             fuenteList = fuentesFacade.findAll();
         } catch (Exception e) {
@@ -74,8 +77,10 @@ public class FuentesMB implements Serializable {
     }
 
     public void agregarFuente() {
+        boolean creado = false;
+        FacesContext contexto = FacesContext.getCurrentInstance();
         try {
-            boolean creado = false;
+            creado = fuentesFacade.create(fuente);
             if (creado) {
                 fuente = new Fuentes();
                 contexto.addMessage(null, new FacesMessage("Registro creado"));
@@ -90,6 +95,7 @@ public class FuentesMB implements Serializable {
 
     public void eliminarFuente() {
         boolean eliminado = false;
+        FacesContext contexto = FacesContext.getCurrentInstance();
         try {
             eliminado = fuentesFacade.remove(fuente);
             if (eliminado) {
@@ -106,6 +112,7 @@ public class FuentesMB implements Serializable {
 
     public void editarFuente() {
         boolean editado = false;
+        FacesContext contexto = FacesContext.getCurrentInstance();
         try {
             editado = fuentesFacade.edit(fuente);
             if (editado) {

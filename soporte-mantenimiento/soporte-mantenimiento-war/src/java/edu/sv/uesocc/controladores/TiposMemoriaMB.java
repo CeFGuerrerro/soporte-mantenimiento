@@ -11,6 +11,7 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -29,11 +30,11 @@ public class TiposMemoriaMB implements Serializable {
     private TiposMemoria tipoMemoria;
     private TiposMemoria tipoMemoriaSeleccionada;
     private List<TiposMemoria> tiposMemoriaList = new ArrayList<>();
-    FacesContext contexto = FacesContext.getCurrentInstance();
 
     public TiposMemoriaMB() {
     }
 
+    @PostConstruct
     public void init() {
         tipoMemoria = new TiposMemoria();
         tipoMemoriaSeleccionada = new TiposMemoria();
@@ -65,6 +66,7 @@ public class TiposMemoriaMB implements Serializable {
     }
 
     public void obtenerTodos() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
         try {
             tiposMemoriaList = tiposMemoriaFacade.findAll();
         } catch (Exception e) {
@@ -73,8 +75,10 @@ public class TiposMemoriaMB implements Serializable {
     }
 
     public void agregarTipoMemoria() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
+        boolean creado = false;
         try {
-            boolean creado = false;
+            creado = tiposMemoriaFacade.create(tipoMemoria);
             if (creado) {
                 tipoMemoria = new TiposMemoria();
                 contexto.addMessage(null, new FacesMessage("Registro creado"));
@@ -88,6 +92,7 @@ public class TiposMemoriaMB implements Serializable {
     }
 
     public void eliminarTipoMemoria() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
         boolean eliminado = false;
         try {
             eliminado = tiposMemoriaFacade.remove(tipoMemoria);
@@ -104,6 +109,7 @@ public class TiposMemoriaMB implements Serializable {
     }
 
     public void editarTipoMemoria() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
         boolean editado = false;
         try {
             editado = tiposMemoriaFacade.edit(tipoMemoria);

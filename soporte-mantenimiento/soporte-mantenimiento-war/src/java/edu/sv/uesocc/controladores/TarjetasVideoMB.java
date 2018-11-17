@@ -11,6 +11,7 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -30,14 +31,14 @@ public class TarjetasVideoMB implements Serializable {
     private TarjetasVideo tarjeta;
     private TarjetasVideo tarjetaSeleccionada;
     private List<TarjetasVideo> tarjetaList = new ArrayList<>();
-    FacesContext contexto = FacesContext.getCurrentInstance();
 
     public TarjetasVideoMB() {
     }
 
+    @PostConstruct
     public void init() {
-        tarjeta= new TarjetasVideo();
-        tarjetaSeleccionada= new TarjetasVideo();
+        tarjeta = new TarjetasVideo();
+        tarjetaSeleccionada = new TarjetasVideo();
         obtenerTodos();
     }
 
@@ -64,8 +65,9 @@ public class TarjetasVideoMB implements Serializable {
     public void setTarjetaList(List<TarjetasVideo> tarjetaList) {
         this.tarjetaList = tarjetaList;
     }
-    
+
     private void obtenerTodos() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
         try {
             tarjetaList = tarjetasVideoFacade.findAll();
         } catch (Exception e) {
@@ -74,8 +76,10 @@ public class TarjetasVideoMB implements Serializable {
     }
 
     public void agregarTarjetaVideo() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
+        boolean creado = false;
         try {
-            boolean creado = false;
+            creado = tarjetasVideoFacade.create(tarjeta);
             if (creado) {
                 tarjeta = new TarjetasVideo();
                 contexto.addMessage(null, new FacesMessage("Registro creado"));
@@ -89,6 +93,7 @@ public class TarjetasVideoMB implements Serializable {
     }
 
     public void eliminarTarjetaVideo() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
         boolean eliminado = false;
         try {
             eliminado = tarjetasVideoFacade.remove(tarjeta);
@@ -105,6 +110,7 @@ public class TarjetasVideoMB implements Serializable {
     }
 
     public void editarTarjetaVideo() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
         boolean editado = false;
         try {
             editado = tarjetasVideoFacade.edit(tarjeta);

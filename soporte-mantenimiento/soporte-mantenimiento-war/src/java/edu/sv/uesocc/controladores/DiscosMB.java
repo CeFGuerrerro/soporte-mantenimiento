@@ -11,6 +11,7 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -33,6 +34,7 @@ public class DiscosMB implements Serializable {
     
     public DiscosMB() {
     }
+    @PostConstruct
     private void init() {
         disco = new Discos();
         discosSeleccionados = new Discos();

@@ -15,18 +15,18 @@
                         <p:commandButton value="Nuevo" icon="fa fa-plus" onclick="PF('wd_agregar').show()" update="f_agregar"/>
                     </div>
                     <!--tabla-->
-                    <p:dataTable id="t_tipoDisco" emptyMessage="No hay registros" value="#{tiposDiscoMB.tipoDiscoList}" var="tipoDisco"
-                                 selection="#{tiposDiscoMB.tipoDiscoSeleccionado}" selectionMode="single" rowKey="#{tipoDisco.idTipoDisco}"
+                    <p:dataTable id="t_tipoDisco" emptyMessage="No hay registros" value="#{tiposDiscoMB.tipoDiscoList}" var="tDisco"
+                                 selection="#{tiposDiscoMB.tipoDiscoSeleccionado}" selectionMode="single" rowKey="#{tDisco.idTipoDisco}"
                                  rows="10" paginator="true">
                         <f:facet name="header">
                             Tipos de Discos
                         </f:facet>
 
-                        <p:column headerText="ID" sortBy="#{tipoDisco.idTipoDisco}">
-                            <p:outputLabel>#{tipoDisco.idTipoDisco}</p:outputLabel>
+                        <p:column headerText="ID" sortBy="#{tDisco.idTipoDisco}">
+                            <p:outputLabel>#{tDisco.idTipoDisco}</p:outputLabel>
                         </p:column>
-                        <p:column headerText="Tipo" sortBy="#{tipoDisco.tipoDisco}">
-                            <p:outputLabel>#{tipoDisco.tipoDisco}</p:outputLabel>
+                        <p:column headerText="Tipo" sortBy="#{tDisco.tipoDisco}">
+                            <p:outputLabel>#{tDisco.tipoDisco}</p:outputLabel>
                         </p:column>
                         <p:ajax event="rowDblselect" oncomplete="PF('wd_editar').show()" update=":f_editar"/>
                     </p:dataTable>
@@ -41,12 +41,12 @@
                     <h:form id="f_agregar">
                         <p:panelGrid columns="2">
                             <p:outputLabel value="Tipo de Disco:"/>
-                            <p:inputText value="#{tiposDiscoMB.tipoDisco.tipoDisco}" required="true" requiredMessage="Ingrese tipo de memoria!"/>
+                            <p:inputText value="#{tiposDiscoMB.tipoDisco.tipoDisco}" required="true" requiredMessage="Ingrese tipo de disco!"/>
                         </p:panelGrid>
                         <p:commandButton value="Guardar" action="#{tiposDiscoMB.agregarTipoDisco()}" icon="fa fa-check" oncomplete="PF('wd_agregar').hide()" update="f_tipoDisco"/>
                     </h:form>
                 </p:dialog>
-
+             
                 <!--Editar-->
                 <p:dialog widgetVar="wd_editar" modal="true" header="Editar Tipo de Disco">
                     <h:form id="f_editar">

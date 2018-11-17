@@ -11,6 +11,7 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -30,10 +31,11 @@ public class MemoriasMB implements Serializable {
     private Memorias memory;
     private Memorias memSelect;
     private List<Memorias> memList = new ArrayList<>();
-    FacesContext contexto = FacesContext.getCurrentInstance();
+    
 
     public MemoriasMB() {
     }
+    @PostConstruct
     public void init() {
         memory = new Memorias();
         memSelect = new Memorias();
@@ -65,6 +67,7 @@ public class MemoriasMB implements Serializable {
     }
 
     public void obtenerTodas() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
         try {
             memList = memoriasFacade.findAll();
         } catch (Exception e) {
@@ -74,8 +77,10 @@ public class MemoriasMB implements Serializable {
     }
 
     public void agregarMemoria() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
+        boolean creado = false;
         try {
-            boolean creado = false;
+            creado= memoriasFacade.create(memory);
             if (creado) {
                 memory = new Memorias();
                 contexto.addMessage(null, new FacesMessage("Registro creado"));
@@ -90,6 +95,7 @@ public class MemoriasMB implements Serializable {
 
     public void eliminarMemoria() {
         boolean eliminado = false;
+        FacesContext contexto = FacesContext.getCurrentInstance();
         try {
             eliminado = memoriasFacade.remove(memory);
             if (eliminado) {
@@ -105,6 +111,7 @@ public class MemoriasMB implements Serializable {
     }
 
     public void editarMemoria() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
         boolean editado = false;
         try {
             editado = memoriasFacade.edit(memory);

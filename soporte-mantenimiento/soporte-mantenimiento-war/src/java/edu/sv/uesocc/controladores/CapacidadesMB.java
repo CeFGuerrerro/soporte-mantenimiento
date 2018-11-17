@@ -6,6 +6,7 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -29,6 +30,7 @@ public class CapacidadesMB implements Serializable {
     public CapacidadesMB() {
     }
 
+    @PostConstruct
     public void init() {
         capacidad = new Capacidades();
         objSeleccionado = new Capacidades();

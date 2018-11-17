@@ -11,6 +11,7 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -29,15 +30,15 @@ public class ProcesadoresMB implements Serializable {
     private Procesadores procesador;
     private Procesadores procesadorSeleccionado;
     private List<Procesadores> procesadorList = new ArrayList<>();
-    FacesContext contexto = FacesContext.getCurrentInstance();
 
     public ProcesadoresMB() {
     }
-    
-    public void init(){
-    procesador = new Procesadores();
-    procesadorSeleccionado = new Procesadores();
-    obtenerTodos();
+
+    @PostConstruct
+    public void init() {
+        procesador = new Procesadores();
+        procesadorSeleccionado = new Procesadores();
+        obtenerTodos();
     }
 
     public Procesadores getProcesador() {
@@ -65,6 +66,7 @@ public class ProcesadoresMB implements Serializable {
     }
 
     private void obtenerTodos() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
         try {
             procesadorList = procesadoresFacade.findAll();
         } catch (Exception e) {
@@ -73,8 +75,10 @@ public class ProcesadoresMB implements Serializable {
     }
 
     public void agregarProcesador() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
+        boolean creado = false;
         try {
-            boolean creado = false;
+            creado = procesadoresFacade.create(procesador);
             if (creado) {
                 procesador = new Procesadores();
                 contexto.addMessage(null, new FacesMessage("Registro creado"));
@@ -88,6 +92,7 @@ public class ProcesadoresMB implements Serializable {
     }
 
     public void eliminarProcesador() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
         boolean eliminado = false;
         try {
             eliminado = procesadoresFacade.remove(procesador);
@@ -104,6 +109,7 @@ public class ProcesadoresMB implements Serializable {
     }
 
     public void editarProcesador() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
         boolean editado = false;
         try {
             editado = procesadoresFacade.edit(procesador);
@@ -117,5 +123,5 @@ public class ProcesadoresMB implements Serializable {
             contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error!", e.getMessage()));
         }
     }
-    
+
 }

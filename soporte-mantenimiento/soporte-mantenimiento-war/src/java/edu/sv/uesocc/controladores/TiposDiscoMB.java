@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,6 +12,7 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -27,26 +29,26 @@ public class TiposDiscoMB implements Serializable {
     @EJB
     private TiposDiscoFacadeLocal tiposDiscoFacade;
 
-    private TiposDisco tipoDisco;
+    private TiposDisco tpDisco;
     private TiposDisco tipoDiscoSeleccionado;
     private List<TiposDisco> tipoDiscoList = new ArrayList<>();
-    FacesContext contexto = FacesContext.getCurrentInstance();
 
     public TiposDiscoMB() {
     }
 
+    @PostConstruct
     public void init() {
-        tipoDisco = new TiposDisco();
+        tpDisco = new TiposDisco();
         tipoDiscoSeleccionado = new TiposDisco();
         obtenerTodos();
     }
 
     public TiposDisco getTipoDisco() {
-        return tipoDisco;
+        return tpDisco;
     }
 
-    public void setTipoDisco(TiposDisco tipoDisco) {
-        this.tipoDisco = tipoDisco;
+    public void setTipoDisco(TiposDisco tpDisco) {
+        this.tpDisco = tpDisco;
     }
 
     public TiposDisco getTipoDiscoSeleccionado() {
@@ -66,6 +68,7 @@ public class TiposDiscoMB implements Serializable {
     }
 
     public void obtenerTodos() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
         try {
             tipoDiscoList = tiposDiscoFacade.findAll();
         } catch (Exception e) {
@@ -74,10 +77,12 @@ public class TiposDiscoMB implements Serializable {
     }
 
     public void agregarTipoDisco() {
+        boolean creado = false;
+        FacesContext contexto = FacesContext.getCurrentInstance();
         try {
-            boolean creado = false;
+            creado=tiposDiscoFacade.create(tpDisco);
             if (creado) {
-                tipoDisco = new TiposDisco();
+                tpDisco = new TiposDisco();
                 contexto.addMessage(null, new FacesMessage("Registro creado"));
             } else {
                 contexto.addMessage(null, new FacesMessage("No se pudo guardar el registro!"));
@@ -90,8 +95,9 @@ public class TiposDiscoMB implements Serializable {
 
     public void eliminarTipoDisco() {
         boolean eliminado = false;
+        FacesContext contexto = FacesContext.getCurrentInstance();
         try {
-            eliminado = tiposDiscoFacade.remove(tipoDisco);
+            eliminado = tiposDiscoFacade.remove(tpDisco);
             if (eliminado) {
                 contexto.addMessage(null, new FacesMessage("Registro eliminado"));
             } else {
@@ -106,8 +112,9 @@ public class TiposDiscoMB implements Serializable {
 
     public void editarTipoDisco() {
         boolean editado = false;
+        FacesContext contexto = FacesContext.getCurrentInstance();
         try {
-            editado = tiposDiscoFacade.edit(tipoDisco);
+            editado = tiposDiscoFacade.edit(tpDisco);
             if (editado) {
                 contexto.addMessage(null, new FacesMessage("Registro modificado"));
             } else {

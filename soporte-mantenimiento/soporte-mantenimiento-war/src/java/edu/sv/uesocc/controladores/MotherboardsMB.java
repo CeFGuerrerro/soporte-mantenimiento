@@ -11,6 +11,7 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -30,11 +31,11 @@ public class MotherboardsMB implements Serializable {
     private Motherboards placa;
     private Motherboards placaSeleccionada;
     private List<Motherboards> placaList = new ArrayList<>();
-    FacesContext contexto = FacesContext.getCurrentInstance();
 
     public MotherboardsMB() {
     }
 
+    @PostConstruct
     public void init() {
         placa = new Motherboards();
         placaSeleccionada = new Motherboards();
@@ -66,6 +67,7 @@ public class MotherboardsMB implements Serializable {
     }
 
     private void obtenerTodos() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
         try {
             placaList = motherboardsFacade.findAll();
         } catch (Exception e) {
@@ -74,8 +76,10 @@ public class MotherboardsMB implements Serializable {
     }
 
     public void agregarMotherboard() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
+        boolean creado = false;
         try {
-            boolean creado = false;
+            creado= motherboardsFacade.create(placa);
             if (creado) {
                 placa = new Motherboards();
                 contexto.addMessage(null, new FacesMessage("Registro creado"));
@@ -89,6 +93,7 @@ public class MotherboardsMB implements Serializable {
     }
 
     public void eliminarMotherboard() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
         boolean eliminado = false;
         try {
             eliminado = motherboardsFacade.remove(placa);
@@ -105,6 +110,8 @@ public class MotherboardsMB implements Serializable {
     }
 
     public void editarMotherboard() {
+                FacesContext contexto = FacesContext.getCurrentInstance();
+
         boolean editado = false;
         try {
             editado = motherboardsFacade.edit(placa);

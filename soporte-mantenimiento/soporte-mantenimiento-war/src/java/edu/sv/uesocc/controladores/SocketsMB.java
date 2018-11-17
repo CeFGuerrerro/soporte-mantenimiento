@@ -11,6 +11,7 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -26,10 +27,11 @@ public class SocketsMB implements Serializable {
     private Sockets socket;
     private Sockets socketSeleccionado;
     private List<Sockets> socketList = new ArrayList<>();
-    FacesContext contexto = FacesContext.getCurrentInstance();
 
-        public SocketsMB() {
+    public SocketsMB() {
     }
+
+    @PostConstruct
     public void init() {
         socket = new Sockets();
         socketSeleccionado = new Sockets();
@@ -61,6 +63,7 @@ public class SocketsMB implements Serializable {
     }
 
     private void obtenerTodos() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
         try {
             socketList = socketsFacade.findAll();
         } catch (Exception e) {
@@ -69,8 +72,10 @@ public class SocketsMB implements Serializable {
     }
 
     public void agregarSocket() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
+        boolean creado = false;
         try {
-            boolean creado = false;
+            creado = socketsFacade.create(socket);
             if (creado) {
                 socket = new Sockets();
                 contexto.addMessage(null, new FacesMessage("Registro creado"));
@@ -84,6 +89,7 @@ public class SocketsMB implements Serializable {
     }
 
     public void eliminarSocket() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
         boolean eliminado = false;
         try {
             eliminado = socketsFacade.remove(socket);
@@ -100,6 +106,7 @@ public class SocketsMB implements Serializable {
     }
 
     public void editarSocket() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
         boolean editado = false;
         try {
             editado = socketsFacade.edit(socket);
