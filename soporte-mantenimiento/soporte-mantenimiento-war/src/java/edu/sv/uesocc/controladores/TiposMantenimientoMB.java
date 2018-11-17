@@ -10,20 +10,20 @@ import edu.sv.uesocc.entidades.TiposMantenimiento;
 import edu.sv.uesocc.facades.MantenimientosFacadeLocal;
 import edu.sv.uesocc.facades.TiposMantenimientoFacadeLocal;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 
 /**
  *
  * @author o-a19
  */
 @Named(value = "tiposMantenimientoMB")
-@SessionScoped
+@ViewScoped
 public class TiposMantenimientoMB implements Serializable {
 
     /**
@@ -31,7 +31,7 @@ public class TiposMantenimientoMB implements Serializable {
      */
     public TiposMantenimientoMB() {
     }
-    
+
     @EJB
     private TiposMantenimientoFacadeLocal tipoMantenimientoEJB;
     private List<TiposMantenimiento> tiposMantenimiento;
@@ -40,6 +40,15 @@ public class TiposMantenimientoMB implements Serializable {
     @EJB
     private MantenimientosFacadeLocal mantenimientoEJB;
     private List<Mantenimientos> mantenimientos;
+    private Mantenimientos mantenimiento;
+
+    public Mantenimientos getMantenimiento() {
+        return mantenimiento;
+    }
+
+    public void setMantenimiento(Mantenimientos mantenimiento) {
+        this.mantenimiento = mantenimiento;
+    }
 
     public List<Mantenimientos> getMantenimientos() {
         return mantenimientos;
@@ -75,6 +84,7 @@ public class TiposMantenimientoMB implements Serializable {
 
     @PostConstruct
     private void init() {
+        mantenimiento = new Mantenimientos();
         tipoMantenimiento = new TiposMantenimiento();
         seleccion = new TiposMantenimiento();
         tiposMantenimiento = tipoMantenimientoEJB.findAll();
@@ -85,9 +95,12 @@ public class TiposMantenimientoMB implements Serializable {
         boolean registrado = false;
         FacesContext contexto = FacesContext.getCurrentInstance();
         try {
+            tipoMantenimiento.setIdMantenimiento(mantenimiento);
             registrado = tipoMantenimientoEJB.create(tipoMantenimiento);
             if (registrado) {
                 contexto.addMessage(null, new FacesMessage("Solucion registrada."));
+                mantenimiento = new Mantenimientos();
+                tipoMantenimiento = new TiposMantenimiento();
             } else {
                 contexto.addMessage(null, new FacesMessage("No se pudo registrar."));
             }
@@ -95,16 +108,18 @@ public class TiposMantenimientoMB implements Serializable {
             contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error:", e.getMessage()));
         }
         tiposMantenimiento = tipoMantenimientoEJB.findAll();
-        tipoMantenimiento = new TiposMantenimiento();
     }
-    
+
     public void editar() {
         boolean registrado = false;
         FacesContext contexto = FacesContext.getCurrentInstance();
         try {
+            seleccion.setIdMantenimiento(mantenimiento);
             registrado = tipoMantenimientoEJB.edit(seleccion);
             if (registrado) {
                 contexto.addMessage(null, new FacesMessage("Registro editado."));
+                mantenimiento = new Mantenimientos();
+                seleccion = new TiposMantenimiento();
             } else {
                 contexto.addMessage(null, new FacesMessage("No se pudo registrar."));
             }
@@ -112,9 +127,8 @@ public class TiposMantenimientoMB implements Serializable {
             contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error:", e.getMessage()));
         }
         tiposMantenimiento = tipoMantenimientoEJB.findAll();
-        seleccion = new TiposMantenimiento();
     }
-    
+
     public void eliminar() {
         boolean registrado = false;
         FacesContext contexto = FacesContext.getCurrentInstance();
@@ -122,6 +136,7 @@ public class TiposMantenimientoMB implements Serializable {
             registrado = tipoMantenimientoEJB.remove(seleccion);
             if (registrado) {
                 contexto.addMessage(null, new FacesMessage("Registro editado."));
+                seleccion = new TiposMantenimiento();
             } else {
                 contexto.addMessage(null, new FacesMessage("No se pudo registrar."));
             }
@@ -129,6 +144,5 @@ public class TiposMantenimientoMB implements Serializable {
             contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error:", e.getMessage()));
         }
         tiposMantenimiento = tipoMantenimientoEJB.findAll();
-        seleccion = new TiposMantenimiento();
     }
 }

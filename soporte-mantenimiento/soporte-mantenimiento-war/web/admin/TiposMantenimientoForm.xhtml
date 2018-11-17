@@ -23,7 +23,7 @@
                             Soluciones
                         </f:facet>
                         
-                        <p:column headerText="Nombre" filterBy="#{tab.nombre}" filterMatchMode="contains">
+                        <p:column headerText="Tipo de Mantenimiento" filterBy="#{tab.nombre}" filterMatchMode="contains">
                             <p:outputLabel value="#{tab.nombre}"/>
                         </p:column>
                         
@@ -42,26 +42,26 @@
                 <h:form id="frmNuevo">
                     <p:dialog id="dlgNuevo" widgetVar="wnuevo" header="Nuevo Tipo de Mantenimiento" modal="true" resizable="false" closeOnEscape="true" draggable="false">
                         <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
-                            <p:outputLabel value="Nombre" for="nombre"/>
+                            <p:outputLabel value="Tipo de Mantenimiento" for="nombre"/>
                             <p:inputText id="nombre" value="#{tiposMantenimientoMB.tipoMantenimiento.nombre}" required="true" requiredMessage="¡Ingrese el nombre!"/>
                             <p:outputLabel value="Mantenimiento" for="mantenimiento"/>
-                            <p:selectOneMenu value="#{tiposMantenimientoMB.tipoMantenimiento.idTipoMantenimiento}" id="mantenimiento" required="true" requiredMessage="¡Ingrese Mantenimiento!">
+                            <p:selectOneMenu value="#{tiposMantenimientoMB.mantenimiento.idMantenimiento}" id="mantenimiento" required="true" requiredMessage="¡Ingrese Mantenimiento!">
                                 <f:selectItems value="#{tiposMantenimientoMB.mantenimientos}" var="mantto" itemLabel="#{mantto.nombre}" itemValue="#{mantto.idMantenimiento}"/>
                             </p:selectOneMenu>
                             <p:outputLabel value="Descripcion" for="descripcion"/>
                             <p:inputTextarea id="descripcion" value="#{tiposMantenimientoMB.tipoMantenimiento.descripcion}"/>
                         </p:panelGrid>
-                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{solucionesMB.registrar()}" oncomplete="PF('wnuevo').hide()" update=":frmTabla"/>
+                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{tiposMantenimientoMB.registrar()}" oncomplete="PF('wnuevo').hide()" update=":frmTabla"/>
                     </p:dialog>
                 </h:form>
                 
                 <h:form id="frmEditar">
                     <p:dialog id="dlgEditar" widgetVar="weditar" header="Editar Tipo de Mantenimiento" modal="true" resizable="false" closeOnEscape="true" draggable="false">
                         <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
-                            <p:outputLabel value="Nombre" for="nombre"/>
+                            <p:outputLabel value="Tipo de Mantenimiento" for="nombre"/>
                             <p:inputText id="nombre" value="#{tiposMantenimientoMB.seleccion.nombre}" required="true" requiredMessage="¡Ingrese el nombre!"/>
                             <p:outputLabel value="Mantenimiento" for="mantenimiento"/>
-                            <p:selectOneMenu id="mantenimiento" value="#{tiposMantenimientoMB.seleccion.idTipoMantenimiento}" required="true" requiredMessage="¡Ingrese Mantenimiento!">
+                            <p:selectOneMenu id="mantenimiento" value="#{tiposMantenimientoMB.mantenimiento.idMantenimiento}" required="true" requiredMessage="¡Ingrese Mantenimiento!">
                                 <f:selectItems value="#{tiposMantenimientoMB.mantenimientos}" var="mantto" itemLabel="#{mantto.nombre}" itemValue="#{mantto.idMantenimiento}"/>
                             </p:selectOneMenu>
                             <p:outputLabel value="Descripcion" for="descripcion"/>
