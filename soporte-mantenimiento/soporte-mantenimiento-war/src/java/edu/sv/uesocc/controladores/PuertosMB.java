@@ -106,7 +106,7 @@ public class PuertosMB implements Serializable {
     public void editarPuerto() {
         boolean editado = false;
         try {
-            editado = puertosFacade.edit(puerto);
+            editado = puertosFacade.edit(puertoSeleccionado);
             if (editado) {
                 contexto.addMessage(null, new FacesMessage("Registro modificado"));
             } else {

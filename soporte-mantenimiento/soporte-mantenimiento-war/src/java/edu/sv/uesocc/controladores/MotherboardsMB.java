@@ -114,7 +114,7 @@ public class MotherboardsMB implements Serializable {
 
         boolean editado = false;
         try {
-            editado = motherboardsFacade.edit(placa);
+            editado = motherboardsFacade.edit(placaSeleccionada);
             if (editado) {
                 contexto.addMessage(null, new FacesMessage("Registro modificado"));
             } else {

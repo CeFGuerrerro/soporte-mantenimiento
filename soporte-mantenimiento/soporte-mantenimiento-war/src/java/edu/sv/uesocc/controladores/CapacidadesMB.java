@@ -110,7 +110,7 @@ public class CapacidadesMB implements Serializable {
         boolean editado = false;
         FacesContext contexto = FacesContext.getCurrentInstance();
         try {
-            editado = capacidadesFacade.edit(capacidad);
+            editado = capacidadesFacade.edit(objSeleccionado);
             if (editado) {
                 contexto.addMessage(null, new FacesMessage("Registro modificado"));
             } else {

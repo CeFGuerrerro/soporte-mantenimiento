@@ -114,7 +114,7 @@ public class FuentesMB implements Serializable {
         boolean editado = false;
         FacesContext contexto = FacesContext.getCurrentInstance();
         try {
-            editado = fuentesFacade.edit(fuente);
+            editado = fuentesFacade.edit(fuenteSeleccionada);
             if (editado) {
                 contexto.addMessage(null, new FacesMessage("Registro modificado"));
             } else {

@@ -112,11 +112,11 @@ public class TiposMemoriaMB implements Serializable {
         FacesContext contexto = FacesContext.getCurrentInstance();
         boolean editado = false;
         try {
-            editado = tiposMemoriaFacade.edit(tipoMemoria);
+            editado = tiposMemoriaFacade.edit(tipoMemoriaSeleccionada);
             if (editado) {
                 contexto.addMessage(null, new FacesMessage("Registro modificado"));
             } else {
-                contexto.addMessage(null, new FacesMessage("Ningun cambio fue efectuado en registro seleccionado"));
+                contexto.addMessage(null, new FacesMessage("Ningún cambio fue efectuado en registro seleccionado"));
             }
             obtenerTodos();
         } catch (Exception e) {

@@ -114,7 +114,7 @@ public class MemoriasMB implements Serializable {
         FacesContext contexto = FacesContext.getCurrentInstance();
         boolean editado = false;
         try {
-            editado = memoriasFacade.edit(memory);
+            editado = memoriasFacade.edit(memSelect);
             if (editado) {
                 contexto.addMessage(null, new FacesMessage("Memoria modificada"));
             } else {

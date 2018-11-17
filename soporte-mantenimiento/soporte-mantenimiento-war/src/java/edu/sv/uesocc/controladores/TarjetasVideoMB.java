@@ -113,11 +113,11 @@ public class TarjetasVideoMB implements Serializable {
         FacesContext contexto = FacesContext.getCurrentInstance();
         boolean editado = false;
         try {
-            editado = tarjetasVideoFacade.edit(tarjeta);
+            editado = tarjetasVideoFacade.edit(tarjetaSeleccionada);
             if (editado) {
                 contexto.addMessage(null, new FacesMessage("Registro modificado"));
             } else {
-                contexto.addMessage(null, new FacesMessage("Ningun cambio fue efectuado en registro seleccionado"));
+                contexto.addMessage(null, new FacesMessage("Ningún cambio fue efectuado en registro seleccionado"));
             }
             obtenerTodos();
         } catch (Exception e) {
