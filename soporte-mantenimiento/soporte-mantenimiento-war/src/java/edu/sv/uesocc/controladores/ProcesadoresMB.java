@@ -112,7 +112,7 @@ public class ProcesadoresMB implements Serializable {
         FacesContext contexto = FacesContext.getCurrentInstance();
         boolean editado = false;
         try {
-            editado = procesadoresFacade.edit(procesador);
+            editado = procesadoresFacade.edit(procesadorSeleccionado);
             if (editado) {
                 contexto.addMessage(null, new FacesMessage("Registro modificado"));
             } else {

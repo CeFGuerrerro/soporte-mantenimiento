@@ -114,7 +114,7 @@ public class TiposDiscoMB implements Serializable {
         boolean editado = false;
         FacesContext contexto = FacesContext.getCurrentInstance();
         try {
-            editado = tiposDiscoFacade.edit(tpDisco);
+            editado = tiposDiscoFacade.edit(tipoDiscoSeleccionado);
             if (editado) {
                 contexto.addMessage(null, new FacesMessage("Registro modificado"));
             } else {

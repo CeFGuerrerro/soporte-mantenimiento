@@ -116,11 +116,11 @@ public class DiscosMB implements Serializable {
         boolean editado =false;
         FacesContext contexto = FacesContext.getCurrentInstance();
         try {
-            editado=discosFacade.edit(disco);
+            editado=discosFacade.edit(discosSeleccionados);
             if (editado) {
                 contexto.addMessage(null, new FacesMessage("Disco modificado"));
             } else {
-                contexto.addMessage(null, new FacesMessage("Ningun cambio fue efectuado en el disco seleccionado"));
+                contexto.addMessage(null, new FacesMessage("Ningún cambio fue efectuado en el disco seleccionado"));
             }obtenerTodos();;
         } catch (Exception e) {
             contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,"Error!", e.getMessage()));

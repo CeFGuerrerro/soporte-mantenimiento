@@ -109,7 +109,7 @@ public class SocketsMB implements Serializable {
         FacesContext contexto = FacesContext.getCurrentInstance();
         boolean editado = false;
         try {
-            editado = socketsFacade.edit(socket);
+            editado = socketsFacade.edit(socketSeleccionado);
             if (editado) {
                 contexto.addMessage(null, new FacesMessage("Registro modificado"));
             } else {

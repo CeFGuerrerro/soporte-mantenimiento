@@ -54,7 +54,7 @@
                             <p:outputLabel value="Tipo de Disco:"/>
                             <p:inputText value="#{tiposDiscoMB.tipoDiscoSeleccionado.tipoDisco}"/>
                         </p:panelGrid>
-                        <p:commandButton value="Guardar" action="#{tiposDiscoMB.editarTipoDisco()}" icon="fa fa-check" oncomplete="PF('wd_editar').hide()" update="f_tipoDisco"/>
+                        <p:commandButton value="Editar" action="#{tiposDiscoMB.editarTipoDisco()}" icon="fa fa-check" oncomplete="PF('wd_editar').hide()" update="f_tipoDisco"/>
                     </h:form>
                 </p:dialog>
             </ui:define>
