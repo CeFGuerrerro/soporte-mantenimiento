@@ -16,14 +16,14 @@
                         <p:commandButton id="btnNuevo" value="Nuevo Mantenimiento" oncomplete="PF('wnuevo').show();"/>
                     </div>
                     
-                    <p:dataTable value="#{mantenimientosMB.mantenimientos}" id="tabla" var="tab" rows="10" paginator="true" emptyMessage="No hay registros" selectionMode="single" selection="#{mantenimientosMB.seleccion}"
-                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="#{tab.idMantenimiento}"
+                    <p:dataTable value="#{estadosOrdenMB.estados}" id="tabla" var="tab" rows="10" paginator="true" emptyMessage="No hay registros" selectionMode="single" selection="#{estadosOrdenMB.seleccion}"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="#{tab.idEstado}"
                                  rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página: ({currentPage} de {totalPages})" paginatorAlwaysVisible="false" paginatorPosition="bottom">
                         <f:facet name="header">
-                            Mantenimientos
+                            Estados para Ordenes de Trabajo
                         </f:facet>
                         
-                        <p:column headerText="Nombre" filterBy="#{tab.nombre}" filterMatchMode="contains">
+                        <p:column headerText="Estado" filterBy="#{tab.nombre}" filterMatchMode="contains">
                             <p:outputLabel value="#{tab.nombre}"/>
                         </p:column>
                         
@@ -34,31 +34,31 @@
                         <p:ajax event="rowDblselect" oncomplete="PF('weditar').show()" update=":frmEditar"/>
                     </p:dataTable>
                     <p:contextMenu for="tabla">
-                        <p:menuitem value="Eliminar" icon="fa fa-trash" action="#{mantenimientosMB.eliminar()}" update="frmTabla"/>
+                        <p:menuitem value="Eliminar" icon="fa fa-trash" action="#{estadosOrdenMB.eliminar()}" update="frmTabla"/>
                         <p:menuitem value="Cancelar" icon="fa fa-close"/>
                     </p:contextMenu>
                 </h:form>
                 <h:form id="frmNuevo">
-                    <p:dialog id="dlgNuevo" widgetVar="wnuevo" header="Nuevo Mantenimiento" modal="true" resizable="false" closeOnEscape="true" draggable="false">
+                    <p:dialog id="dlgNuevo" widgetVar="wnuevo" header="Nuevo Estado" modal="true" resizable="false" closeOnEscape="true" draggable="false">
                         <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
                             <p:outputLabel value="Nombre" for="nombre"/>
-                            <p:inputText id="nombre" value="#{mantenimientosMB.mantenimiento.nombre}" required="true" requiredMessage="¡Ingrese el nombre!"/>
+                            <p:inputText id="nombre" value="#{estadosOrdenMB.estado.nombre}" required="true" requiredMessage="¡Ingrese el nombre!"/>
                             <p:outputLabel value="Descripcion" for="descripcion"/>
-                            <p:inputTextarea id="descripcion" value="#{mantenimientosMB.mantenimiento.descripcion}"/>
+                            <p:inputTextarea id="descripcion" value="#{estadosOrdenMB.estado.descripcion}"/>
                         </p:panelGrid>
-                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{mantenimientosMB.registrar()}" oncomplete="PF('wnuevo').hide()" update=":frmTabla"/>
+                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{estadosOrdenMB.registrar()}" oncomplete="PF('wnuevo').hide()" update=":frmTabla"/>
                     </p:dialog>
                 </h:form>
                 
                 <h:form id="frmEditar">
-                    <p:dialog id="dlgEditar" widgetVar="weditar" header="Editar Mantenimiento" modal="true" resizable="false" closeOnEscape="true" draggable="false">
+                    <p:dialog id="dlgEditar" widgetVar="weditar" header="Editar Estado" modal="true" resizable="false" closeOnEscape="true" draggable="false">
                         <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
                             <p:outputLabel value="Nombre" for="nombre"/>
-                            <p:inputText id="nombre" value="#{mantenimientosMB.seleccion.nombre}" required="true" requiredMessage="¡Ingrese el nombre!"/>
+                            <p:inputText id="nombre" value="#{estadosOrdenMB.seleccion.nombre}" required="true" requiredMessage="¡Ingrese el nombre!"/>
                             <p:outputLabel value="Descripcion" for="descripcion"/>
-                            <p:inputTextarea id="descripcion" value="#{mantenimientosMB.seleccion.descripcion}"/>
+                            <p:inputTextarea id="descripcion" value="#{estadosOrdenMB.seleccion.descripcion}"/>
                         </p:panelGrid>
-                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{mantenimientosMB.editar()}" oncomplete="PF('weditar').hide()" update=":frmTabla"/>
+                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{estadosOrdenMB.editar()}" oncomplete="PF('weditar').hide()" update=":frmTabla"/>
                     </p:dialog>
                     
                 </h:form>

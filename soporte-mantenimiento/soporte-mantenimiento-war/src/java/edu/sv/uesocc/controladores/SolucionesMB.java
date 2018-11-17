@@ -89,4 +89,21 @@ public class SolucionesMB implements Serializable {
         soluciones = solucionEJB.findAll();
         seleccion = new Soluciones();
     }
+    
+    public void eliminar() {
+        boolean registrado = false;
+        FacesContext contexto = FacesContext.getCurrentInstance();
+        try {
+            registrado = solucionEJB.remove(seleccion);
+            if (registrado) {
+                contexto.addMessage(null, new FacesMessage("Registro eliminado."));
+                seleccion = new Soluciones();
+            } else {
+                contexto.addMessage(null, new FacesMessage("No se pudo eliminar."));
+            }
+        } catch (Exception e) {
+            contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error:", e.getMessage()));
+        }
+        soluciones = solucionEJB.findAll();
+    }
 }

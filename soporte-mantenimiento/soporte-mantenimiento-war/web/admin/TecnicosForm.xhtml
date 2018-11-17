@@ -16,7 +16,7 @@
                         <p:commandButton id="btnNuevo" value="Nuevo Tecnico" oncomplete="PF('wnuevo').show();"/>
                     </div>
                     
-                    <p:dataTable value="#{tecnicosMB.tecnicos}" var="tec" rows="10" paginator="true" emptyMessage="No hay registros" selectionMode="single" selection="#{tecnicosMB.seleccion}"
+                    <p:dataTable value="#{tecnicosMB.tecnicos}" id="tabla" var="tec" rows="10" paginator="true" emptyMessage="No hay registros" selectionMode="single" selection="#{tecnicosMB.seleccion}"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="#{tec.idTecnico}"
                                  rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página: ({currentPage} de {totalPages})" paginatorAlwaysVisible="false" paginatorPosition="bottom">
                         <f:facet name="header">
@@ -42,7 +42,10 @@
                         
                         <p:ajax event="rowDblselect" oncomplete="PF('weditar').show()" update=":frmEditar"/>
                     </p:dataTable>
-                    
+                    <p:contextMenu for="tabla">
+                        <p:menuitem value="Eliminar" icon="fa fa-trash" action="#{tecnicosMB.eliminar()}" update="frmTabla"/>
+                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                    </p:contextMenu>
                 </h:form>
                 <h:form id="frmNuevo">
                     <p:dialog id="dlgNuevo" widgetVar="wnuevo" header="Nuevo Tecnico" modal="true" resizable="false" closeOnEscape="true" draggable="false">

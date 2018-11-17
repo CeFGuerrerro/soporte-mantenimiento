@@ -90,4 +90,21 @@ public class TecnicosMB implements Serializable {
         tecnicos = tecnicoEJB.findAll();
         seleccion = null;
     }
+    
+    public void eliminar() {
+        boolean registrado = false;
+        FacesContext contexto = FacesContext.getCurrentInstance();
+        try {
+            registrado = tecnicoEJB.remove(seleccion);
+            if (registrado) {
+                contexto.addMessage(null, new FacesMessage("Registro eliminado."));
+                seleccion = new Tecnicos();
+            } else {
+                contexto.addMessage(null, new FacesMessage("No se pudo eliminar."));
+            }
+        } catch (Exception e) {
+            contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error:", e.getMessage()));
+        }
+        tecnicos = tecnicoEJB.findAll();
+    }
 }

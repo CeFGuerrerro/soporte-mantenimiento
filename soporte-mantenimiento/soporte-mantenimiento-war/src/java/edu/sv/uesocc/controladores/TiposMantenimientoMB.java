@@ -138,7 +138,7 @@ public class TiposMantenimientoMB implements Serializable {
                 contexto.addMessage(null, new FacesMessage("Registro editado."));
                 seleccion = new TiposMantenimiento();
             } else {
-                contexto.addMessage(null, new FacesMessage("No se pudo registrar."));
+                contexto.addMessage(null, new FacesMessage("No se pudo eliminar."));
             }
         } catch (Exception e) {
             contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error:", e.getMessage()));
