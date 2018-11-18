@@ -13,7 +13,7 @@
             <ui:define name="contenido">
                 <h:form id="frmTabla">
                     <div>
-                        <p:commandButton id="btnNuevo" value="Nuevo Mantenimiento" oncomplete="PF('wnuevo').show();"/>
+                        <p:commandButton id="btnNuevo" value="Nuevo Estado" oncomplete="PF('wnuevo').show();"/>
                     </div>
                     
                     <p:dataTable value="#{estadosOrdenMB.estados}" id="tabla" var="tab" rows="10" paginator="true" emptyMessage="No hay registros" selectionMode="single" selection="#{estadosOrdenMB.seleccion}"

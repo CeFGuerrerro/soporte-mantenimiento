@@ -3,16 +3,16 @@ package edu.sv.uesocc.controladores;
 import edu.sv.uesocc.entidades.EstadosOrden;
 import edu.sv.uesocc.facades.EstadosOrdenFacadeLocal;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 
 @Named(value = "estadosOrdenMB")
-@SessionScoped
+@ViewScoped
 public class EstadosOrdenMB implements Serializable {
 
     public EstadosOrdenMB() {

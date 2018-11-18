@@ -48,7 +48,7 @@
                             <p:outputLabel value="Tipo de Mantenimiento" for="nombre"/>
                             <p:inputText id="nombre" value="#{tiposMantenimientoMB.tipoMantenimiento.nombre}" required="true" requiredMessage="¡Ingrese el nombre!"/>
                             <p:outputLabel value="Mantenimiento" for="mantenimiento"/>
-                            <p:selectOneMenu value="#{tiposMantenimientoMB.mantenimiento.idMantenimiento}" id="mantenimiento" required="true" requiredMessage="¡Ingrese Mantenimiento!">
+                            <p:selectOneMenu value="#{tiposMantenimientoMB.mantenimiento.idMantenimiento}" id="mantenimiento" required="true" requiredMessage="¡Ingrese Tipo de Mantenimiento!">
                                 <f:selectItems value="#{tiposMantenimientoMB.mantenimientos}" var="mantto" itemLabel="#{mantto.nombre}" itemValue="#{mantto.idMantenimiento}"/>
                             </p:selectOneMenu>
                             <p:outputLabel value="Descripcion" for="descripcion"/>
@@ -64,7 +64,7 @@
                             <p:outputLabel value="Tipo de Mantenimiento" for="nombre"/>
                             <p:inputText id="nombre" value="#{tiposMantenimientoMB.seleccion.nombre}" required="true" requiredMessage="¡Ingrese el nombre!"/>
                             <p:outputLabel value="Mantenimiento" for="mantenimiento"/>
-                            <p:selectOneMenu id="mantenimiento" value="#{tiposMantenimientoMB.mantenimiento.idMantenimiento}" required="true" requiredMessage="¡Ingrese Mantenimiento!">
+                            <p:selectOneMenu id="mantenimiento" value="#{tiposMantenimientoMB.mantenimiento.idMantenimiento}" required="true" requiredMessage="¡Ingrese Tipo de Mantenimiento!">
                                 <f:selectItems value="#{tiposMantenimientoMB.mantenimientos}" var="mantto" itemLabel="#{mantto.nombre}" itemValue="#{mantto.idMantenimiento}"/>
                             </p:selectOneMenu>
                             <p:outputLabel value="Descripcion" for="descripcion"/>
