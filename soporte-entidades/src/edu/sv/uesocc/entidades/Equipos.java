@@ -37,12 +37,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Equipos.findByObservaciones", query = "SELECT e FROM Equipos e WHERE e.observaciones = :observaciones")})
 public class Equipos implements Serializable {
 
-    @Column(name = "obsevaciones", length = 2147483647)
-    private String obsevaciones;
-    @JoinColumn(name = "id_responsable", referencedColumnName = "id_responsable")
-    @ManyToOne
-    private Responsables idResponsable;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,6 +56,9 @@ public class Equipos implements Serializable {
     @JoinColumn(name = "id_ubicacion", referencedColumnName = "id_ubicacion", nullable = false)
     @ManyToOne(optional = false)
     private Ubicaciones idUbicacion;
+    @JoinColumn(name = "id_responsable", referencedColumnName = "id_responsable")
+    @ManyToOne
+    private Responsables idResponsable;
 
     public Equipos() {
     }
@@ -153,15 +150,7 @@ public class Equipos implements Serializable {
     public String toString() {
         return "edu.sv.uesocc.entidades.Equipos[ idEquipo=" + idEquipo + " ]";
     }
-
-    public String getObsevaciones() {
-        return obsevaciones;
-    }
-
-    public void setObsevaciones(String obsevaciones) {
-        this.obsevaciones = obsevaciones;
-    }
-
+    
     public Responsables getIdResponsable() {
         return idResponsable;
     }
@@ -169,5 +158,5 @@ public class Equipos implements Serializable {
     public void setIdResponsable(Responsables idResponsable) {
         this.idResponsable = idResponsable;
     }
-    
+
 }
