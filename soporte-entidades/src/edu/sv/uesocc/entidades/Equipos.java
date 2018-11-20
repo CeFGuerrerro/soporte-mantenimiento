@@ -37,6 +37,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Equipos.findByObservaciones", query = "SELECT e FROM Equipos e WHERE e.observaciones = :observaciones")})
 public class Equipos implements Serializable {
 
+    @Column(name = "obsevaciones", length = 2147483647)
+    private String obsevaciones;
+    @JoinColumn(name = "id_responsable", referencedColumnName = "id_responsable")
+    @ManyToOne
+    private Responsables idResponsable;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,8 +53,6 @@ public class Equipos implements Serializable {
     private Boolean estado;
     @Column(name = "observaciones", length = 2147483647)
     private String observaciones;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEquipo")
-    private List<EquiposAsignados> equiposAsignadosList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEquipo")
     private List<Solicitudes> solicitudesList;
     @OneToMany(mappedBy = "idEquipo")
@@ -88,15 +92,6 @@ public class Equipos implements Serializable {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
-    }
-
-    @XmlTransient
-    public List<EquiposAsignados> getEquiposAsignadosList() {
-        return equiposAsignadosList;
-    }
-
-    public void setEquiposAsignadosList(List<EquiposAsignados> equiposAsignadosList) {
-        this.equiposAsignadosList = equiposAsignadosList;
     }
 
     @XmlTransient
@@ -157,6 +152,22 @@ public class Equipos implements Serializable {
     @Override
     public String toString() {
         return "edu.sv.uesocc.entidades.Equipos[ idEquipo=" + idEquipo + " ]";
+    }
+
+    public String getObsevaciones() {
+        return obsevaciones;
+    }
+
+    public void setObsevaciones(String obsevaciones) {
+        this.obsevaciones = obsevaciones;
+    }
+
+    public Responsables getIdResponsable() {
+        return idResponsable;
+    }
+
+    public void setIdResponsable(Responsables idResponsable) {
+        this.idResponsable = idResponsable;
     }
     
 }

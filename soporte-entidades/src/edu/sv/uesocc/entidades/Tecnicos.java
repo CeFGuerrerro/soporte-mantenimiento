@@ -6,7 +6,9 @@
 package edu.sv.uesocc.entidades;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,8 +16,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,6 +36,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Tecnicos.findByCorreo", query = "SELECT t FROM Tecnicos t WHERE t.correo = :correo")
     , @NamedQuery(name = "Tecnicos.findByEstado", query = "SELECT t FROM Tecnicos t WHERE t.estado = :estado")})
 public class Tecnicos implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTecnico")
+    private List<OrdenesTrabajo> ordenesTrabajoList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -124,6 +131,15 @@ public class Tecnicos implements Serializable {
     @Override
     public String toString() {
         return "edu.sv.uesocc.entidades.Tecnicos[ idTecnico=" + idTecnico + " ]";
+    }
+
+    @XmlTransient
+    public List<OrdenesTrabajo> getOrdenesTrabajoList() {
+        return ordenesTrabajoList;
+    }
+
+    public void setOrdenesTrabajoList(List<OrdenesTrabajo> ordenesTrabajoList) {
+        this.ordenesTrabajoList = ordenesTrabajoList;
     }
     
 }

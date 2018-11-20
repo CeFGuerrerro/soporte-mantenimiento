@@ -35,6 +35,20 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Cronograma.findByFecha", query = "SELECT c FROM Cronograma c WHERE c.fecha = :fecha")})
 public class Cronograma implements Serializable {
 
+    @Basic(optional = false)
+    @Column(name = "fecha_inicio", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date fechaInicio;
+    @Basic(optional = false)
+    @Column(name = "fecha_fin", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date fechaFin;
+    @Basic(optional = false)
+    @Column(name = "nombre_evento", nullable = false, length = 2147483647)
+    private String nombreEvento;
+    @Column(name = "descripcion", length = 2147483647)
+    private String descripcion;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -108,6 +122,38 @@ public class Cronograma implements Serializable {
     @Override
     public String toString() {
         return "edu.sv.uesocc.entidades.Cronograma[ idCronograma=" + idCronograma + " ]";
+    }
+
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Date getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+
+    public String getNombreEvento() {
+        return nombreEvento;
+    }
+
+    public void setNombreEvento(String nombreEvento) {
+        this.nombreEvento = nombreEvento;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
     
 }
