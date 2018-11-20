@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../templates/PrincipalTemplate.xhtml">
+
+            <ui:define name="contenido">
+               <h:form id="f_ubicaciones">
+                    <div>
+                        <p:commandButton value="Nuevo" icon="fa fa-plus" onclick="PF('wd_crear').show()" update="f_crear"/>
+                    </div>
+
+                   <p:dataTable id="t_ubicaciones" emptyMessage="No hay registros" value="#{ubicacionesMB.ubicList}" var="ubic"
+                                selection="#{ubicacionesMB.ubicSeleccionado}" selectionMode="single" rowKey="#{ubic.idUbicacion}"
+                                 rows="10" paginator="true">
+                        <f:facet name="header">
+                            Departamentos y Unidades
+                        </f:facet>
+
+                       <p:column headerText="ID" sortBy="#{ubic.idUbicacion}">
+                           <p:outputLabel>#{ubic.idUbicacion}</p:outputLabel>
+                        </p:column>
+
+                       <p:column headerText="Nombre" sortBy="#{ubic.nombre}">
+                           <p:outputLabel>#{ubic.nombre}</p:outputLabel>
+                        </p:column>
+
+                        <p:ajax event="rowDblselect" oncomplete="PF('wd_editar').show()" update=":f_editar"/>
+
+                    </p:dataTable>
+
+                    <p:contextMenu for="t_ubicaciones">
+                        <p:menuitem value="Eliminar" action="#{ubicacionesMB.eliminarUbicacion()}" icon="fa fa-trash" update="f_ubicaciones"/>
+                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                    </p:contextMenu>
+                </h:form>
+                
+                <!--Formulario para crear ubicaciones-->
+
+                <p:dialog widgetVar="wd_crear" modal="true" header="Nueva Ubicaci&oacute;n">
+                    <h:form id="f_crear">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Ubicaci&oacute;n"/>
+                            <p:inputText value="#{ubicacionesMB.ubic.nombre}" required="true" requiredMessage="Ingrese la ubicaci&oacute;n"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" action="#{ubicacionesMB.crearUbicacion()}" icon="fa fa-check" oncomplete="PF('wd_crear').hide()" update="f_ubicaciones"/>
+                    </h:form>
+                </p:dialog>
+
+                <p:dialog widgetVar="wd_editar" modal="true" header="Editar Ubicaci&oacute;n">
+                    <h:form id="f_editar">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Ubicaci&oacute;n"/>
+                            <p:inputText value="#{ubicacionesMB.ubicSeleccionado.nombre}"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" action="#{ubicacionesMB.ubicSeleccionado}" icon="fa fa-check" oncomplete="PF('wd_editar').hide()" update="f_ubicaciones"/>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+
+            <ui:define name="menuLateral">
+                menuLateral
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
