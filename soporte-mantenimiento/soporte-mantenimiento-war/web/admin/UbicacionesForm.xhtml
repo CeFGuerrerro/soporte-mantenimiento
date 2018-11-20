@@ -59,7 +59,7 @@
                             <p:outputLabel value="Ubicaci&oacute;n"/>
                             <p:inputText value="#{ubicacionesMB.ubicSeleccionado.nombre}"/>
                         </p:panelGrid>
-                        <p:commandButton value="Guardar" action="#{ubicacionesMB.ubicSeleccionado}" icon="fa fa-check" oncomplete="PF('wd_editar').hide()" update="f_ubicaciones"/>
+                        <p:commandButton value="Guardar" action="#{ubicacionesMB.modificarUbicacion()}" icon="fa fa-check" oncomplete="PF('wd_editar').hide()" update="f_ubicaciones"/>
                     </h:form>
                 </p:dialog>
             </ui:define>
