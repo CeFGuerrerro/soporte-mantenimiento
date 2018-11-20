@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -35,6 +37,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Cronograma.findByNombreEvento", query = "SELECT c FROM Cronograma c WHERE c.nombreEvento = :nombreEvento")
     , @NamedQuery(name = "Cronograma.findByDescripcion", query = "SELECT c FROM Cronograma c WHERE c.descripcion = :descripcion")})
 public class Cronograma implements Serializable {
+
+    @JoinColumn(name = "id_equipo", referencedColumnName = "id_equipo")
+    @ManyToOne
+    private Equipos idEquipo;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -133,6 +139,14 @@ public class Cronograma implements Serializable {
     @Override
     public String toString() {
         return "edu.sv.uesocc.entidades.Cronograma[ idCronograma=" + idCronograma + " ]";
+    }
+
+    public Equipos getIdEquipo() {
+        return idEquipo;
+    }
+
+    public void setIdEquipo(Equipos idEquipo) {
+        this.idEquipo = idEquipo;
     }
     
 }
