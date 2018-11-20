@@ -5,7 +5,7 @@
  */
 package edu.sv.uesocc.facades;
 
-import edu.sv.uesocc.entidades.Resposables;
+import edu.sv.uesocc.entidades.Responsables;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,19 +14,19 @@ import javax.ejb.Local;
  * @author o-a19
  */
 @Local
-public interface ResposablesFacadeLocal {
+public interface ResponsablesFacadeLocal {
 
-    boolean create(Resposables resposables);
+    boolean create(Responsables responsables);
 
-    boolean edit(Resposables resposables);
+    boolean edit(Responsables responsables);
 
-    boolean remove(Resposables resposables);
+    boolean remove(Responsables responsables);
 
-    Resposables find(Object id);
+    Responsables find(Object id);
 
-    List<Resposables> findAll();
+    List<Responsables> findAll();
 
-    List<Resposables> findRange(int[] range);
+    List<Responsables> findRange(int[] range);
 
     int count();
     
