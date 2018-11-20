@@ -62,6 +62,9 @@ public class Equipos implements Serializable {
     @JoinColumn(name = "id_ubicacion", referencedColumnName = "id_ubicacion", nullable = false)
     @ManyToOne(optional = false)
     private Ubicaciones idUbicacion;
+    @JoinColumn(name = "id_responsable", referencedColumnName = "id_responsable")
+    @ManyToOne
+    private Responsables idResponsable;
 
     public Equipos() {
     }
@@ -170,4 +173,12 @@ public class Equipos implements Serializable {
         this.idResponsable = idResponsable;
     }
     
+    public Responsables getIdResponsable() {
+        return idResponsable;
+    }
+
+    public void setIdResponsable(Responsables idResponsable) {
+        this.idResponsable = idResponsable;
+    }
+
 }

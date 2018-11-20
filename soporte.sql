@@ -5,7 +5,7 @@
 -- Dumped from database version 10.5
 -- Dumped by pg_dump version 10.5
 
--- Started on 2018-10-30 14:14:14
+-- Started on 2018-11-20 15:55:18
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -26,7 +26,7 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 2549 (class 0 OID 0)
+-- TOC entry 2531 (class 0 OID 0)
 -- Dependencies: 1
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
@@ -39,7 +39,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 209 (class 1259 OID 16628)
+-- TOC entry 196 (class 1259 OID 32965)
 -- Name: arquitecturas; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -52,7 +52,7 @@ CREATE TABLE public.arquitecturas (
 ALTER TABLE public.arquitecturas OWNER TO postgres;
 
 --
--- TOC entry 232 (class 1259 OID 16697)
+-- TOC entry 197 (class 1259 OID 32971)
 -- Name: arquitecturas_id_arquitectura_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -68,8 +68,8 @@ CREATE SEQUENCE public.arquitecturas_id_arquitectura_seq
 ALTER TABLE public.arquitecturas_id_arquitectura_seq OWNER TO postgres;
 
 --
--- TOC entry 2550 (class 0 OID 0)
--- Dependencies: 232
+-- TOC entry 2532 (class 0 OID 0)
+-- Dependencies: 197
 -- Name: arquitecturas_id_arquitectura_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -77,7 +77,7 @@ ALTER SEQUENCE public.arquitecturas_id_arquitectura_seq OWNED BY public.arquitec
 
 
 --
--- TOC entry 204 (class 1259 OID 16613)
+-- TOC entry 198 (class 1259 OID 32973)
 -- Name: capacidades; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -90,7 +90,7 @@ CREATE TABLE public.capacidades (
 ALTER TABLE public.capacidades OWNER TO postgres;
 
 --
--- TOC entry 233 (class 1259 OID 16706)
+-- TOC entry 199 (class 1259 OID 32979)
 -- Name: capacidades_id_capacidad_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -106,8 +106,8 @@ CREATE SEQUENCE public.capacidades_id_capacidad_seq
 ALTER TABLE public.capacidades_id_capacidad_seq OWNER TO postgres;
 
 --
--- TOC entry 2551 (class 0 OID 0)
--- Dependencies: 233
+-- TOC entry 2533 (class 0 OID 0)
+-- Dependencies: 199
 -- Name: capacidades_id_capacidad_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -115,7 +115,7 @@ ALTER SEQUENCE public.capacidades_id_capacidad_seq OWNED BY public.capacidades.i
 
 
 --
--- TOC entry 211 (class 1259 OID 16634)
+-- TOC entry 200 (class 1259 OID 32981)
 -- Name: componentes; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -136,7 +136,7 @@ CREATE TABLE public.componentes (
 ALTER TABLE public.componentes OWNER TO postgres;
 
 --
--- TOC entry 234 (class 1259 OID 16715)
+-- TOC entry 201 (class 1259 OID 32987)
 -- Name: componentes_id_componente_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -152,8 +152,8 @@ CREATE SEQUENCE public.componentes_id_componente_seq
 ALTER TABLE public.componentes_id_componente_seq OWNER TO postgres;
 
 --
--- TOC entry 2552 (class 0 OID 0)
--- Dependencies: 234
+-- TOC entry 2534 (class 0 OID 0)
+-- Dependencies: 201
 -- Name: componentes_id_componente_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -161,21 +161,24 @@ ALTER SEQUENCE public.componentes_id_componente_seq OWNED BY public.componentes.
 
 
 --
--- TOC entry 222 (class 1259 OID 16667)
+-- TOC entry 202 (class 1259 OID 32989)
 -- Name: cronograma; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.cronograma (
     id_cronograma integer NOT NULL,
-    id_equipo integer NOT NULL,
-    fecha date NOT NULL
+    id_equipo integer,
+    fecha_inicio date NOT NULL,
+    fecha_fin date NOT NULL,
+    nombre_evento text NOT NULL,
+    descripcion text
 );
 
 
 ALTER TABLE public.cronograma OWNER TO postgres;
 
 --
--- TOC entry 235 (class 1259 OID 16725)
+-- TOC entry 203 (class 1259 OID 32995)
 -- Name: cronograma_id_cronograma_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -191,8 +194,8 @@ CREATE SEQUENCE public.cronograma_id_cronograma_seq
 ALTER TABLE public.cronograma_id_cronograma_seq OWNER TO postgres;
 
 --
--- TOC entry 2553 (class 0 OID 0)
--- Dependencies: 235
+-- TOC entry 2535 (class 0 OID 0)
+-- Dependencies: 203
 -- Name: cronograma_id_cronograma_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -200,7 +203,7 @@ ALTER SEQUENCE public.cronograma_id_cronograma_seq OWNED BY public.cronograma.id
 
 
 --
--- TOC entry 228 (class 1259 OID 16685)
+-- TOC entry 204 (class 1259 OID 32997)
 -- Name: detalles_orden_trabajo; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -216,7 +219,7 @@ CREATE TABLE public.detalles_orden_trabajo (
 ALTER TABLE public.detalles_orden_trabajo OWNER TO postgres;
 
 --
--- TOC entry 236 (class 1259 OID 16731)
+-- TOC entry 205 (class 1259 OID 33003)
 -- Name: detalles_orden_trabajo_id_detalle_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -232,8 +235,8 @@ CREATE SEQUENCE public.detalles_orden_trabajo_id_detalle_seq
 ALTER TABLE public.detalles_orden_trabajo_id_detalle_seq OWNER TO postgres;
 
 --
--- TOC entry 2554 (class 0 OID 0)
--- Dependencies: 236
+-- TOC entry 2536 (class 0 OID 0)
+-- Dependencies: 205
 -- Name: detalles_orden_trabajo_id_detalle_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -241,45 +244,7 @@ ALTER SEQUENCE public.detalles_orden_trabajo_id_detalle_seq OWNED BY public.deta
 
 
 --
--- TOC entry 221 (class 1259 OID 16664)
--- Name: dia_no_laboral; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.dia_no_laboral (
-    id_dia integer NOT NULL,
-    fecha date NOT NULL
-);
-
-
-ALTER TABLE public.dia_no_laboral OWNER TO postgres;
-
---
--- TOC entry 237 (class 1259 OID 16740)
--- Name: dia_no_laboral_id_dia_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.dia_no_laboral_id_dia_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.dia_no_laboral_id_dia_seq OWNER TO postgres;
-
---
--- TOC entry 2555 (class 0 OID 0)
--- Dependencies: 237
--- Name: dia_no_laboral_id_dia_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.dia_no_laboral_id_dia_seq OWNED BY public.dia_no_laboral.id_dia;
-
-
---
--- TOC entry 199 (class 1259 OID 16598)
+-- TOC entry 206 (class 1259 OID 33010)
 -- Name: discos; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -296,7 +261,7 @@ CREATE TABLE public.discos (
 ALTER TABLE public.discos OWNER TO postgres;
 
 --
--- TOC entry 238 (class 1259 OID 16746)
+-- TOC entry 207 (class 1259 OID 33016)
 -- Name: discos_id_discos_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -312,8 +277,8 @@ CREATE SEQUENCE public.discos_id_discos_seq
 ALTER TABLE public.discos_id_discos_seq OWNER TO postgres;
 
 --
--- TOC entry 2556 (class 0 OID 0)
--- Dependencies: 238
+-- TOC entry 2537 (class 0 OID 0)
+-- Dependencies: 207
 -- Name: discos_id_discos_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -321,7 +286,7 @@ ALTER SEQUENCE public.discos_id_discos_seq OWNED BY public.discos.id_disco;
 
 
 --
--- TOC entry 218 (class 1259 OID 16655)
+-- TOC entry 208 (class 1259 OID 33018)
 -- Name: equipos; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -329,6 +294,7 @@ CREATE TABLE public.equipos (
     id_equipo integer NOT NULL,
     id_ubicacion integer NOT NULL,
     estado boolean,
+    id_responsable integer,
     observaciones text
 );
 
@@ -336,7 +302,7 @@ CREATE TABLE public.equipos (
 ALTER TABLE public.equipos OWNER TO postgres;
 
 --
--- TOC entry 239 (class 1259 OID 16755)
+-- TOC entry 209 (class 1259 OID 33024)
 -- Name: equipo_id_equipo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -352,8 +318,8 @@ CREATE SEQUENCE public.equipo_id_equipo_seq
 ALTER TABLE public.equipo_id_equipo_seq OWNER TO postgres;
 
 --
--- TOC entry 2557 (class 0 OID 0)
--- Dependencies: 239
+-- TOC entry 2538 (class 0 OID 0)
+-- Dependencies: 209
 -- Name: equipo_id_equipo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -361,48 +327,7 @@ ALTER SEQUENCE public.equipo_id_equipo_seq OWNED BY public.equipos.id_equipo;
 
 
 --
--- TOC entry 223 (class 1259 OID 16670)
--- Name: equipos_asignados; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.equipos_asignados (
-    id_equipo_asignado integer NOT NULL,
-    id_equipo integer NOT NULL,
-    id_responsable integer NOT NULL,
-    fecha date,
-    observaciones text
-);
-
-
-ALTER TABLE public.equipos_asignados OWNER TO postgres;
-
---
--- TOC entry 240 (class 1259 OID 16764)
--- Name: equipos_asignados_id_equipo_asignado_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.equipos_asignados_id_equipo_asignado_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.equipos_asignados_id_equipo_asignado_seq OWNER TO postgres;
-
---
--- TOC entry 2558 (class 0 OID 0)
--- Dependencies: 240
--- Name: equipos_asignados_id_equipo_asignado_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.equipos_asignados_id_equipo_asignado_seq OWNED BY public.equipos_asignados.id_equipo_asignado;
-
-
---
--- TOC entry 227 (class 1259 OID 16682)
+-- TOC entry 210 (class 1259 OID 33026)
 -- Name: estados_orden; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -416,7 +341,7 @@ CREATE TABLE public.estados_orden (
 ALTER TABLE public.estados_orden OWNER TO postgres;
 
 --
--- TOC entry 241 (class 1259 OID 16773)
+-- TOC entry 211 (class 1259 OID 33032)
 -- Name: estado_ordenes_id_estado_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -432,8 +357,8 @@ CREATE SEQUENCE public.estado_ordenes_id_estado_seq
 ALTER TABLE public.estado_ordenes_id_estado_seq OWNER TO postgres;
 
 --
--- TOC entry 2559 (class 0 OID 0)
--- Dependencies: 241
+-- TOC entry 2539 (class 0 OID 0)
+-- Dependencies: 211
 -- Name: estado_ordenes_id_estado_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -441,7 +366,7 @@ ALTER SEQUENCE public.estado_ordenes_id_estado_seq OWNED BY public.estados_orden
 
 
 --
--- TOC entry 226 (class 1259 OID 16679)
+-- TOC entry 212 (class 1259 OID 33034)
 -- Name: estados_solicitud; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -455,7 +380,7 @@ CREATE TABLE public.estados_solicitud (
 ALTER TABLE public.estados_solicitud OWNER TO postgres;
 
 --
--- TOC entry 242 (class 1259 OID 16782)
+-- TOC entry 213 (class 1259 OID 33040)
 -- Name: estados_solicitud_id_estado_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -471,8 +396,8 @@ CREATE SEQUENCE public.estados_solicitud_id_estado_seq
 ALTER TABLE public.estados_solicitud_id_estado_seq OWNER TO postgres;
 
 --
--- TOC entry 2560 (class 0 OID 0)
--- Dependencies: 242
+-- TOC entry 2540 (class 0 OID 0)
+-- Dependencies: 213
 -- Name: estados_solicitud_id_estado_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -480,7 +405,7 @@ ALTER SEQUENCE public.estados_solicitud_id_estado_seq OWNED BY public.estados_so
 
 
 --
--- TOC entry 202 (class 1259 OID 16607)
+-- TOC entry 214 (class 1259 OID 33042)
 -- Name: fuentes; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -496,7 +421,7 @@ CREATE TABLE public.fuentes (
 ALTER TABLE public.fuentes OWNER TO postgres;
 
 --
--- TOC entry 243 (class 1259 OID 16791)
+-- TOC entry 215 (class 1259 OID 33048)
 -- Name: fuentes_id_fuente_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -512,8 +437,8 @@ CREATE SEQUENCE public.fuentes_id_fuente_seq
 ALTER TABLE public.fuentes_id_fuente_seq OWNER TO postgres;
 
 --
--- TOC entry 2561 (class 0 OID 0)
--- Dependencies: 243
+-- TOC entry 2541 (class 0 OID 0)
+-- Dependencies: 215
 -- Name: fuentes_id_fuente_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -521,7 +446,7 @@ ALTER SEQUENCE public.fuentes_id_fuente_seq OWNED BY public.fuentes.id_fuente;
 
 
 --
--- TOC entry 210 (class 1259 OID 16631)
+-- TOC entry 216 (class 1259 OID 33050)
 -- Name: hardware_componente; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -541,7 +466,7 @@ CREATE TABLE public.hardware_componente (
 ALTER TABLE public.hardware_componente OWNER TO postgres;
 
 --
--- TOC entry 244 (class 1259 OID 16800)
+-- TOC entry 217 (class 1259 OID 33056)
 -- Name: hardware_componente_id_hardware_componente_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -557,8 +482,8 @@ CREATE SEQUENCE public.hardware_componente_id_hardware_componente_seq
 ALTER TABLE public.hardware_componente_id_hardware_componente_seq OWNER TO postgres;
 
 --
--- TOC entry 2562 (class 0 OID 0)
--- Dependencies: 244
+-- TOC entry 2542 (class 0 OID 0)
+-- Dependencies: 217
 -- Name: hardware_componente_id_hardware_componente_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -566,7 +491,7 @@ ALTER SEQUENCE public.hardware_componente_id_hardware_componente_seq OWNED BY pu
 
 
 --
--- TOC entry 230 (class 1259 OID 16691)
+-- TOC entry 218 (class 1259 OID 33058)
 -- Name: mantenimientos; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -580,7 +505,7 @@ CREATE TABLE public.mantenimientos (
 ALTER TABLE public.mantenimientos OWNER TO postgres;
 
 --
--- TOC entry 245 (class 1259 OID 16810)
+-- TOC entry 219 (class 1259 OID 33064)
 -- Name: mantenimientos_id_mantenimiento_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -596,8 +521,8 @@ CREATE SEQUENCE public.mantenimientos_id_mantenimiento_seq
 ALTER TABLE public.mantenimientos_id_mantenimiento_seq OWNER TO postgres;
 
 --
--- TOC entry 2563 (class 0 OID 0)
--- Dependencies: 245
+-- TOC entry 2543 (class 0 OID 0)
+-- Dependencies: 219
 -- Name: mantenimientos_id_mantenimiento_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -605,7 +530,7 @@ ALTER SEQUENCE public.mantenimientos_id_mantenimiento_seq OWNED BY public.manten
 
 
 --
--- TOC entry 207 (class 1259 OID 16622)
+-- TOC entry 220 (class 1259 OID 33066)
 -- Name: marcas; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -618,7 +543,7 @@ CREATE TABLE public.marcas (
 ALTER TABLE public.marcas OWNER TO postgres;
 
 --
--- TOC entry 246 (class 1259 OID 16819)
+-- TOC entry 221 (class 1259 OID 33072)
 -- Name: marcas_id_marca_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -634,8 +559,8 @@ CREATE SEQUENCE public.marcas_id_marca_seq
 ALTER TABLE public.marcas_id_marca_seq OWNER TO postgres;
 
 --
--- TOC entry 2564 (class 0 OID 0)
--- Dependencies: 246
+-- TOC entry 2544 (class 0 OID 0)
+-- Dependencies: 221
 -- Name: marcas_id_marca_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -643,7 +568,7 @@ ALTER SEQUENCE public.marcas_id_marca_seq OWNED BY public.marcas.id_marca;
 
 
 --
--- TOC entry 198 (class 1259 OID 16595)
+-- TOC entry 222 (class 1259 OID 33074)
 -- Name: memorias; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -659,7 +584,7 @@ CREATE TABLE public.memorias (
 ALTER TABLE public.memorias OWNER TO postgres;
 
 --
--- TOC entry 247 (class 1259 OID 16828)
+-- TOC entry 223 (class 1259 OID 33080)
 -- Name: memorias_id_memoria_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -675,8 +600,8 @@ CREATE SEQUENCE public.memorias_id_memoria_seq
 ALTER TABLE public.memorias_id_memoria_seq OWNER TO postgres;
 
 --
--- TOC entry 2565 (class 0 OID 0)
--- Dependencies: 247
+-- TOC entry 2545 (class 0 OID 0)
+-- Dependencies: 223
 -- Name: memorias_id_memoria_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -684,7 +609,7 @@ ALTER SEQUENCE public.memorias_id_memoria_seq OWNED BY public.memorias.id_memori
 
 
 --
--- TOC entry 208 (class 1259 OID 16625)
+-- TOC entry 224 (class 1259 OID 33082)
 -- Name: modelos; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -698,7 +623,7 @@ CREATE TABLE public.modelos (
 ALTER TABLE public.modelos OWNER TO postgres;
 
 --
--- TOC entry 248 (class 1259 OID 16837)
+-- TOC entry 225 (class 1259 OID 33088)
 -- Name: modelos_id_modelo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -714,8 +639,8 @@ CREATE SEQUENCE public.modelos_id_modelo_seq
 ALTER TABLE public.modelos_id_modelo_seq OWNER TO postgres;
 
 --
--- TOC entry 2566 (class 0 OID 0)
--- Dependencies: 248
+-- TOC entry 2546 (class 0 OID 0)
+-- Dependencies: 225
 -- Name: modelos_id_modelo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -723,7 +648,7 @@ ALTER SEQUENCE public.modelos_id_modelo_seq OWNED BY public.modelos.id_modelo;
 
 
 --
--- TOC entry 201 (class 1259 OID 16604)
+-- TOC entry 226 (class 1259 OID 33090)
 -- Name: motherboards; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -738,7 +663,7 @@ CREATE TABLE public.motherboards (
 ALTER TABLE public.motherboards OWNER TO postgres;
 
 --
--- TOC entry 249 (class 1259 OID 16846)
+-- TOC entry 227 (class 1259 OID 33096)
 -- Name: motherboards_id_motherboard_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -754,8 +679,8 @@ CREATE SEQUENCE public.motherboards_id_motherboard_seq
 ALTER TABLE public.motherboards_id_motherboard_seq OWNER TO postgres;
 
 --
--- TOC entry 2567 (class 0 OID 0)
--- Dependencies: 249
+-- TOC entry 2547 (class 0 OID 0)
+-- Dependencies: 227
 -- Name: motherboards_id_motherboard_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -763,7 +688,7 @@ ALTER SEQUENCE public.motherboards_id_motherboard_seq OWNED BY public.motherboar
 
 
 --
--- TOC entry 225 (class 1259 OID 16676)
+-- TOC entry 228 (class 1259 OID 33098)
 -- Name: ordenes_trabajo; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -785,7 +710,7 @@ CREATE TABLE public.ordenes_trabajo (
 ALTER TABLE public.ordenes_trabajo OWNER TO postgres;
 
 --
--- TOC entry 250 (class 1259 OID 16855)
+-- TOC entry 229 (class 1259 OID 33104)
 -- Name: ordenes_trabajo_id_orden_trabajo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -801,8 +726,8 @@ CREATE SEQUENCE public.ordenes_trabajo_id_orden_trabajo_seq
 ALTER TABLE public.ordenes_trabajo_id_orden_trabajo_seq OWNER TO postgres;
 
 --
--- TOC entry 2568 (class 0 OID 0)
--- Dependencies: 250
+-- TOC entry 2548 (class 0 OID 0)
+-- Dependencies: 229
 -- Name: ordenes_trabajo_id_orden_trabajo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -810,7 +735,7 @@ ALTER SEQUENCE public.ordenes_trabajo_id_orden_trabajo_seq OWNED BY public.orden
 
 
 --
--- TOC entry 200 (class 1259 OID 16601)
+-- TOC entry 230 (class 1259 OID 33106)
 -- Name: procesadores; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -826,7 +751,7 @@ CREATE TABLE public.procesadores (
 ALTER TABLE public.procesadores OWNER TO postgres;
 
 --
--- TOC entry 251 (class 1259 OID 16864)
+-- TOC entry 231 (class 1259 OID 33112)
 -- Name: procesadores_id_procesador_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -842,8 +767,8 @@ CREATE SEQUENCE public.procesadores_id_procesador_seq
 ALTER TABLE public.procesadores_id_procesador_seq OWNER TO postgres;
 
 --
--- TOC entry 2569 (class 0 OID 0)
--- Dependencies: 251
+-- TOC entry 2549 (class 0 OID 0)
+-- Dependencies: 231
 -- Name: procesadores_id_procesador_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -851,7 +776,7 @@ ALTER SEQUENCE public.procesadores_id_procesador_seq OWNED BY public.procesadore
 
 
 --
--- TOC entry 205 (class 1259 OID 16616)
+-- TOC entry 232 (class 1259 OID 33114)
 -- Name: puertos; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -864,7 +789,7 @@ CREATE TABLE public.puertos (
 ALTER TABLE public.puertos OWNER TO postgres;
 
 --
--- TOC entry 252 (class 1259 OID 16873)
+-- TOC entry 233 (class 1259 OID 33120)
 -- Name: puertos_id_puerto_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -880,8 +805,8 @@ CREATE SEQUENCE public.puertos_id_puerto_seq
 ALTER TABLE public.puertos_id_puerto_seq OWNER TO postgres;
 
 --
--- TOC entry 2570 (class 0 OID 0)
--- Dependencies: 252
+-- TOC entry 2550 (class 0 OID 0)
+-- Dependencies: 233
 -- Name: puertos_id_puerto_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -889,21 +814,22 @@ ALTER SEQUENCE public.puertos_id_puerto_seq OWNED BY public.puertos.id_puerto;
 
 
 --
--- TOC entry 220 (class 1259 OID 16661)
--- Name: resposables; Type: TABLE; Schema: public; Owner: postgres
+-- TOC entry 234 (class 1259 OID 33122)
+-- Name: responsables; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.resposables (
+CREATE TABLE public.responsables (
     id_responsable integer NOT NULL,
     nombre text NOT NULL,
-    correo text
+    correo text,
+    id_ubicacion integer
 );
 
 
-ALTER TABLE public.resposables OWNER TO postgres;
+ALTER TABLE public.responsables OWNER TO postgres;
 
 --
--- TOC entry 253 (class 1259 OID 16882)
+-- TOC entry 235 (class 1259 OID 33128)
 -- Name: resposables_id_responsable_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -919,16 +845,16 @@ CREATE SEQUENCE public.resposables_id_responsable_seq
 ALTER TABLE public.resposables_id_responsable_seq OWNER TO postgres;
 
 --
--- TOC entry 2571 (class 0 OID 0)
--- Dependencies: 253
+-- TOC entry 2551 (class 0 OID 0)
+-- Dependencies: 235
 -- Name: resposables_id_responsable_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.resposables_id_responsable_seq OWNED BY public.resposables.id_responsable;
+ALTER SEQUENCE public.resposables_id_responsable_seq OWNED BY public.responsables.id_responsable;
 
 
 --
--- TOC entry 206 (class 1259 OID 16619)
+-- TOC entry 236 (class 1259 OID 33130)
 -- Name: sockets; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -941,7 +867,7 @@ CREATE TABLE public.sockets (
 ALTER TABLE public.sockets OWNER TO postgres;
 
 --
--- TOC entry 254 (class 1259 OID 16891)
+-- TOC entry 237 (class 1259 OID 33136)
 -- Name: sockets_id_socket_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -957,8 +883,8 @@ CREATE SEQUENCE public.sockets_id_socket_seq
 ALTER TABLE public.sockets_id_socket_seq OWNER TO postgres;
 
 --
--- TOC entry 2572 (class 0 OID 0)
--- Dependencies: 254
+-- TOC entry 2552 (class 0 OID 0)
+-- Dependencies: 237
 -- Name: sockets_id_socket_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -966,7 +892,7 @@ ALTER SEQUENCE public.sockets_id_socket_seq OWNED BY public.sockets.id_socket;
 
 
 --
--- TOC entry 213 (class 1259 OID 16640)
+-- TOC entry 238 (class 1259 OID 33138)
 -- Name: software; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -984,7 +910,7 @@ CREATE TABLE public.software (
 ALTER TABLE public.software OWNER TO postgres;
 
 --
--- TOC entry 212 (class 1259 OID 16637)
+-- TOC entry 239 (class 1259 OID 33144)
 -- Name: software_componente; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1001,7 +927,7 @@ CREATE TABLE public.software_componente (
 ALTER TABLE public.software_componente OWNER TO postgres;
 
 --
--- TOC entry 256 (class 1259 OID 16910)
+-- TOC entry 240 (class 1259 OID 33150)
 -- Name: software_componente_id_software_componente_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1017,8 +943,8 @@ CREATE SEQUENCE public.software_componente_id_software_componente_seq
 ALTER TABLE public.software_componente_id_software_componente_seq OWNER TO postgres;
 
 --
--- TOC entry 2573 (class 0 OID 0)
--- Dependencies: 256
+-- TOC entry 2553 (class 0 OID 0)
+-- Dependencies: 240
 -- Name: software_componente_id_software_componente_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -1026,7 +952,7 @@ ALTER SEQUENCE public.software_componente_id_software_componente_seq OWNED BY pu
 
 
 --
--- TOC entry 255 (class 1259 OID 16901)
+-- TOC entry 241 (class 1259 OID 33152)
 -- Name: software_id_software_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1042,8 +968,8 @@ CREATE SEQUENCE public.software_id_software_seq
 ALTER TABLE public.software_id_software_seq OWNER TO postgres;
 
 --
--- TOC entry 2574 (class 0 OID 0)
--- Dependencies: 255
+-- TOC entry 2554 (class 0 OID 0)
+-- Dependencies: 241
 -- Name: software_id_software_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -1051,7 +977,7 @@ ALTER SEQUENCE public.software_id_software_seq OWNED BY public.software.id_softw
 
 
 --
--- TOC entry 224 (class 1259 OID 16673)
+-- TOC entry 242 (class 1259 OID 33154)
 -- Name: solicitudes; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1068,7 +994,7 @@ CREATE TABLE public.solicitudes (
 ALTER TABLE public.solicitudes OWNER TO postgres;
 
 --
--- TOC entry 257 (class 1259 OID 16919)
+-- TOC entry 243 (class 1259 OID 33160)
 -- Name: solicitudes_id_solicitud_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1084,8 +1010,8 @@ CREATE SEQUENCE public.solicitudes_id_solicitud_seq
 ALTER TABLE public.solicitudes_id_solicitud_seq OWNER TO postgres;
 
 --
--- TOC entry 2575 (class 0 OID 0)
--- Dependencies: 257
+-- TOC entry 2555 (class 0 OID 0)
+-- Dependencies: 243
 -- Name: solicitudes_id_solicitud_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -1093,7 +1019,7 @@ ALTER SEQUENCE public.solicitudes_id_solicitud_seq OWNED BY public.solicitudes.i
 
 
 --
--- TOC entry 214 (class 1259 OID 16643)
+-- TOC entry 244 (class 1259 OID 33162)
 -- Name: soluciones; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1107,7 +1033,7 @@ CREATE TABLE public.soluciones (
 ALTER TABLE public.soluciones OWNER TO postgres;
 
 --
--- TOC entry 258 (class 1259 OID 16928)
+-- TOC entry 245 (class 1259 OID 33168)
 -- Name: soluciones_id_solucion_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1123,8 +1049,8 @@ CREATE SEQUENCE public.soluciones_id_solucion_seq
 ALTER TABLE public.soluciones_id_solucion_seq OWNER TO postgres;
 
 --
--- TOC entry 2576 (class 0 OID 0)
--- Dependencies: 258
+-- TOC entry 2556 (class 0 OID 0)
+-- Dependencies: 245
 -- Name: soluciones_id_solucion_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -1132,7 +1058,7 @@ ALTER SEQUENCE public.soluciones_id_solucion_seq OWNED BY public.soluciones.id_s
 
 
 --
--- TOC entry 203 (class 1259 OID 16610)
+-- TOC entry 246 (class 1259 OID 33170)
 -- Name: tarjetas_video; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1147,7 +1073,7 @@ CREATE TABLE public.tarjetas_video (
 ALTER TABLE public.tarjetas_video OWNER TO postgres;
 
 --
--- TOC entry 259 (class 1259 OID 16937)
+-- TOC entry 247 (class 1259 OID 33176)
 -- Name: tarjetas_video_id_tarjeta_video_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1163,8 +1089,8 @@ CREATE SEQUENCE public.tarjetas_video_id_tarjeta_video_seq
 ALTER TABLE public.tarjetas_video_id_tarjeta_video_seq OWNER TO postgres;
 
 --
--- TOC entry 2577 (class 0 OID 0)
--- Dependencies: 259
+-- TOC entry 2557 (class 0 OID 0)
+-- Dependencies: 247
 -- Name: tarjetas_video_id_tarjeta_video_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -1172,21 +1098,23 @@ ALTER SEQUENCE public.tarjetas_video_id_tarjeta_video_seq OWNED BY public.tarjet
 
 
 --
--- TOC entry 231 (class 1259 OID 16694)
+-- TOC entry 248 (class 1259 OID 33178)
 -- Name: tecnicos; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.tecnicos (
     id_tecnico integer NOT NULL,
     nombre text NOT NULL,
-    descripcion text
+    descripcion text,
+    correo text,
+    estado boolean
 );
 
 
 ALTER TABLE public.tecnicos OWNER TO postgres;
 
 --
--- TOC entry 260 (class 1259 OID 16946)
+-- TOC entry 249 (class 1259 OID 33184)
 -- Name: tecnicos_id_tecnico_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1202,8 +1130,8 @@ CREATE SEQUENCE public.tecnicos_id_tecnico_seq
 ALTER TABLE public.tecnicos_id_tecnico_seq OWNER TO postgres;
 
 --
--- TOC entry 2578 (class 0 OID 0)
--- Dependencies: 260
+-- TOC entry 2558 (class 0 OID 0)
+-- Dependencies: 249
 -- Name: tecnicos_id_tecnico_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -1211,7 +1139,7 @@ ALTER SEQUENCE public.tecnicos_id_tecnico_seq OWNED BY public.tecnicos.id_tecnic
 
 
 --
--- TOC entry 215 (class 1259 OID 16646)
+-- TOC entry 250 (class 1259 OID 33186)
 -- Name: tipos_componente; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1225,7 +1153,7 @@ CREATE TABLE public.tipos_componente (
 ALTER TABLE public.tipos_componente OWNER TO postgres;
 
 --
--- TOC entry 261 (class 1259 OID 16955)
+-- TOC entry 251 (class 1259 OID 33192)
 -- Name: tipo_componente_id_tipo_componente_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1241,8 +1169,8 @@ CREATE SEQUENCE public.tipo_componente_id_tipo_componente_seq
 ALTER TABLE public.tipo_componente_id_tipo_componente_seq OWNER TO postgres;
 
 --
--- TOC entry 2579 (class 0 OID 0)
--- Dependencies: 261
+-- TOC entry 2559 (class 0 OID 0)
+-- Dependencies: 251
 -- Name: tipo_componente_id_tipo_componente_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -1250,7 +1178,7 @@ ALTER SEQUENCE public.tipo_componente_id_tipo_componente_seq OWNED BY public.tip
 
 
 --
--- TOC entry 197 (class 1259 OID 16592)
+-- TOC entry 252 (class 1259 OID 33194)
 -- Name: tipos_disco; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1263,7 +1191,7 @@ CREATE TABLE public.tipos_disco (
 ALTER TABLE public.tipos_disco OWNER TO postgres;
 
 --
--- TOC entry 262 (class 1259 OID 16964)
+-- TOC entry 253 (class 1259 OID 33200)
 -- Name: tipos_disco_id_tipo_disco_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1279,8 +1207,8 @@ CREATE SEQUENCE public.tipos_disco_id_tipo_disco_seq
 ALTER TABLE public.tipos_disco_id_tipo_disco_seq OWNER TO postgres;
 
 --
--- TOC entry 2580 (class 0 OID 0)
--- Dependencies: 262
+-- TOC entry 2560 (class 0 OID 0)
+-- Dependencies: 253
 -- Name: tipos_disco_id_tipo_disco_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -1288,7 +1216,7 @@ ALTER SEQUENCE public.tipos_disco_id_tipo_disco_seq OWNED BY public.tipos_disco.
 
 
 --
--- TOC entry 229 (class 1259 OID 16688)
+-- TOC entry 254 (class 1259 OID 33202)
 -- Name: tipos_mantenimiento; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1303,7 +1231,7 @@ CREATE TABLE public.tipos_mantenimiento (
 ALTER TABLE public.tipos_mantenimiento OWNER TO postgres;
 
 --
--- TOC entry 263 (class 1259 OID 16973)
+-- TOC entry 255 (class 1259 OID 33208)
 -- Name: tipos_mantenimiento_id_tipo_mantenimiento_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1319,8 +1247,8 @@ CREATE SEQUENCE public.tipos_mantenimiento_id_tipo_mantenimiento_seq
 ALTER TABLE public.tipos_mantenimiento_id_tipo_mantenimiento_seq OWNER TO postgres;
 
 --
--- TOC entry 2581 (class 0 OID 0)
--- Dependencies: 263
+-- TOC entry 2561 (class 0 OID 0)
+-- Dependencies: 255
 -- Name: tipos_mantenimiento_id_tipo_mantenimiento_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -1328,7 +1256,7 @@ ALTER SEQUENCE public.tipos_mantenimiento_id_tipo_mantenimiento_seq OWNED BY pub
 
 
 --
--- TOC entry 196 (class 1259 OID 16589)
+-- TOC entry 256 (class 1259 OID 33210)
 -- Name: tipos_memoria; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1341,7 +1269,7 @@ CREATE TABLE public.tipos_memoria (
 ALTER TABLE public.tipos_memoria OWNER TO postgres;
 
 --
--- TOC entry 264 (class 1259 OID 16982)
+-- TOC entry 257 (class 1259 OID 33216)
 -- Name: tipos_memoria_id_tipo_memoria_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1357,8 +1285,8 @@ CREATE SEQUENCE public.tipos_memoria_id_tipo_memoria_seq
 ALTER TABLE public.tipos_memoria_id_tipo_memoria_seq OWNER TO postgres;
 
 --
--- TOC entry 2582 (class 0 OID 0)
--- Dependencies: 264
+-- TOC entry 2562 (class 0 OID 0)
+-- Dependencies: 257
 -- Name: tipos_memoria_id_tipo_memoria_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -1366,7 +1294,7 @@ ALTER SEQUENCE public.tipos_memoria_id_tipo_memoria_seq OWNED BY public.tipos_me
 
 
 --
--- TOC entry 216 (class 1259 OID 16649)
+-- TOC entry 258 (class 1259 OID 33218)
 -- Name: tipos_software; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1379,7 +1307,7 @@ CREATE TABLE public.tipos_software (
 ALTER TABLE public.tipos_software OWNER TO postgres;
 
 --
--- TOC entry 265 (class 1259 OID 16992)
+-- TOC entry 259 (class 1259 OID 33224)
 -- Name: tipos_software_id_tipo_software_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1395,8 +1323,8 @@ CREATE SEQUENCE public.tipos_software_id_tipo_software_seq
 ALTER TABLE public.tipos_software_id_tipo_software_seq OWNER TO postgres;
 
 --
--- TOC entry 2583 (class 0 OID 0)
--- Dependencies: 265
+-- TOC entry 2563 (class 0 OID 0)
+-- Dependencies: 259
 -- Name: tipos_software_id_tipo_software_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -1404,7 +1332,7 @@ ALTER SEQUENCE public.tipos_software_id_tipo_software_seq OWNED BY public.tipos_
 
 
 --
--- TOC entry 219 (class 1259 OID 16658)
+-- TOC entry 260 (class 1259 OID 33226)
 -- Name: ubicaciones; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1418,7 +1346,7 @@ CREATE TABLE public.ubicaciones (
 ALTER TABLE public.ubicaciones OWNER TO postgres;
 
 --
--- TOC entry 266 (class 1259 OID 17001)
+-- TOC entry 261 (class 1259 OID 33232)
 -- Name: ubicaciones_id_ubicacion_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1434,8 +1362,8 @@ CREATE SEQUENCE public.ubicaciones_id_ubicacion_seq
 ALTER TABLE public.ubicaciones_id_ubicacion_seq OWNER TO postgres;
 
 --
--- TOC entry 2584 (class 0 OID 0)
--- Dependencies: 266
+-- TOC entry 2564 (class 0 OID 0)
+-- Dependencies: 261
 -- Name: ubicaciones_id_ubicacion_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -1443,7 +1371,7 @@ ALTER SEQUENCE public.ubicaciones_id_ubicacion_seq OWNED BY public.ubicaciones.i
 
 
 --
--- TOC entry 217 (class 1259 OID 16652)
+-- TOC entry 262 (class 1259 OID 33234)
 -- Name: ups; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1461,7 +1389,7 @@ CREATE TABLE public.ups (
 ALTER TABLE public.ups OWNER TO postgres;
 
 --
--- TOC entry 267 (class 1259 OID 17010)
+-- TOC entry 263 (class 1259 OID 33240)
 -- Name: ups_id_ups_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1477,8 +1405,8 @@ CREATE SEQUENCE public.ups_id_ups_seq
 ALTER TABLE public.ups_id_ups_seq OWNER TO postgres;
 
 --
--- TOC entry 2585 (class 0 OID 0)
--- Dependencies: 267
+-- TOC entry 2565 (class 0 OID 0)
+-- Dependencies: 263
 -- Name: ups_id_ups_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -1486,7 +1414,7 @@ ALTER SEQUENCE public.ups_id_ups_seq OWNED BY public.ups.id_ups;
 
 
 --
--- TOC entry 2281 (class 2604 OID 16699)
+-- TOC entry 2256 (class 2604 OID 33242)
 -- Name: arquitecturas id_arquitectura; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1494,7 +1422,7 @@ ALTER TABLE ONLY public.arquitecturas ALTER COLUMN id_arquitectura SET DEFAULT n
 
 
 --
--- TOC entry 2276 (class 2604 OID 16708)
+-- TOC entry 2257 (class 2604 OID 33243)
 -- Name: capacidades id_capacidad; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1502,7 +1430,7 @@ ALTER TABLE ONLY public.capacidades ALTER COLUMN id_capacidad SET DEFAULT nextva
 
 
 --
--- TOC entry 2283 (class 2604 OID 16717)
+-- TOC entry 2258 (class 2604 OID 33244)
 -- Name: componentes id_componente; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1510,7 +1438,7 @@ ALTER TABLE ONLY public.componentes ALTER COLUMN id_componente SET DEFAULT nextv
 
 
 --
--- TOC entry 2294 (class 2604 OID 16727)
+-- TOC entry 2259 (class 2604 OID 33245)
 -- Name: cronograma id_cronograma; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1518,7 +1446,7 @@ ALTER TABLE ONLY public.cronograma ALTER COLUMN id_cronograma SET DEFAULT nextva
 
 
 --
--- TOC entry 2300 (class 2604 OID 16733)
+-- TOC entry 2260 (class 2604 OID 33246)
 -- Name: detalles_orden_trabajo id_detalle; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1526,15 +1454,7 @@ ALTER TABLE ONLY public.detalles_orden_trabajo ALTER COLUMN id_detalle SET DEFAU
 
 
 --
--- TOC entry 2293 (class 2604 OID 16742)
--- Name: dia_no_laboral id_dia; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.dia_no_laboral ALTER COLUMN id_dia SET DEFAULT nextval('public.dia_no_laboral_id_dia_seq'::regclass);
-
-
---
--- TOC entry 2271 (class 2604 OID 16748)
+-- TOC entry 2261 (class 2604 OID 33248)
 -- Name: discos id_disco; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1542,7 +1462,7 @@ ALTER TABLE ONLY public.discos ALTER COLUMN id_disco SET DEFAULT nextval('public
 
 
 --
--- TOC entry 2290 (class 2604 OID 16757)
+-- TOC entry 2262 (class 2604 OID 33249)
 -- Name: equipos id_equipo; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1550,15 +1470,7 @@ ALTER TABLE ONLY public.equipos ALTER COLUMN id_equipo SET DEFAULT nextval('publ
 
 
 --
--- TOC entry 2295 (class 2604 OID 16766)
--- Name: equipos_asignados id_equipo_asignado; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.equipos_asignados ALTER COLUMN id_equipo_asignado SET DEFAULT nextval('public.equipos_asignados_id_equipo_asignado_seq'::regclass);
-
-
---
--- TOC entry 2299 (class 2604 OID 16775)
+-- TOC entry 2263 (class 2604 OID 33250)
 -- Name: estados_orden id_estado; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1566,7 +1478,7 @@ ALTER TABLE ONLY public.estados_orden ALTER COLUMN id_estado SET DEFAULT nextval
 
 
 --
--- TOC entry 2298 (class 2604 OID 16784)
+-- TOC entry 2264 (class 2604 OID 33251)
 -- Name: estados_solicitud id_estado; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1574,7 +1486,7 @@ ALTER TABLE ONLY public.estados_solicitud ALTER COLUMN id_estado SET DEFAULT nex
 
 
 --
--- TOC entry 2274 (class 2604 OID 16793)
+-- TOC entry 2265 (class 2604 OID 33252)
 -- Name: fuentes id_fuente; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1582,7 +1494,7 @@ ALTER TABLE ONLY public.fuentes ALTER COLUMN id_fuente SET DEFAULT nextval('publ
 
 
 --
--- TOC entry 2282 (class 2604 OID 16802)
+-- TOC entry 2266 (class 2604 OID 33253)
 -- Name: hardware_componente id_hardware_componente; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1590,7 +1502,7 @@ ALTER TABLE ONLY public.hardware_componente ALTER COLUMN id_hardware_componente 
 
 
 --
--- TOC entry 2302 (class 2604 OID 16812)
+-- TOC entry 2267 (class 2604 OID 33254)
 -- Name: mantenimientos id_mantenimiento; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1598,7 +1510,7 @@ ALTER TABLE ONLY public.mantenimientos ALTER COLUMN id_mantenimiento SET DEFAULT
 
 
 --
--- TOC entry 2279 (class 2604 OID 16821)
+-- TOC entry 2268 (class 2604 OID 33255)
 -- Name: marcas id_marca; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1606,7 +1518,7 @@ ALTER TABLE ONLY public.marcas ALTER COLUMN id_marca SET DEFAULT nextval('public
 
 
 --
--- TOC entry 2270 (class 2604 OID 16830)
+-- TOC entry 2269 (class 2604 OID 33256)
 -- Name: memorias id_memoria; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1614,7 +1526,7 @@ ALTER TABLE ONLY public.memorias ALTER COLUMN id_memoria SET DEFAULT nextval('pu
 
 
 --
--- TOC entry 2280 (class 2604 OID 16839)
+-- TOC entry 2270 (class 2604 OID 33257)
 -- Name: modelos id_modelo; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1622,7 +1534,7 @@ ALTER TABLE ONLY public.modelos ALTER COLUMN id_modelo SET DEFAULT nextval('publ
 
 
 --
--- TOC entry 2273 (class 2604 OID 16848)
+-- TOC entry 2271 (class 2604 OID 33258)
 -- Name: motherboards id_motherboard; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1630,7 +1542,7 @@ ALTER TABLE ONLY public.motherboards ALTER COLUMN id_motherboard SET DEFAULT nex
 
 
 --
--- TOC entry 2297 (class 2604 OID 16857)
+-- TOC entry 2272 (class 2604 OID 33259)
 -- Name: ordenes_trabajo id_orden_trabajo; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1638,7 +1550,7 @@ ALTER TABLE ONLY public.ordenes_trabajo ALTER COLUMN id_orden_trabajo SET DEFAUL
 
 
 --
--- TOC entry 2272 (class 2604 OID 16866)
+-- TOC entry 2273 (class 2604 OID 33260)
 -- Name: procesadores id_procesador; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1646,7 +1558,7 @@ ALTER TABLE ONLY public.procesadores ALTER COLUMN id_procesador SET DEFAULT next
 
 
 --
--- TOC entry 2277 (class 2604 OID 16875)
+-- TOC entry 2274 (class 2604 OID 33261)
 -- Name: puertos id_puerto; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1654,15 +1566,15 @@ ALTER TABLE ONLY public.puertos ALTER COLUMN id_puerto SET DEFAULT nextval('publ
 
 
 --
--- TOC entry 2292 (class 2604 OID 16884)
--- Name: resposables id_responsable; Type: DEFAULT; Schema: public; Owner: postgres
+-- TOC entry 2275 (class 2604 OID 33262)
+-- Name: responsables id_responsable; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.resposables ALTER COLUMN id_responsable SET DEFAULT nextval('public.resposables_id_responsable_seq'::regclass);
+ALTER TABLE ONLY public.responsables ALTER COLUMN id_responsable SET DEFAULT nextval('public.resposables_id_responsable_seq'::regclass);
 
 
 --
--- TOC entry 2278 (class 2604 OID 16893)
+-- TOC entry 2276 (class 2604 OID 33263)
 -- Name: sockets id_socket; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1670,7 +1582,7 @@ ALTER TABLE ONLY public.sockets ALTER COLUMN id_socket SET DEFAULT nextval('publ
 
 
 --
--- TOC entry 2285 (class 2604 OID 16903)
+-- TOC entry 2277 (class 2604 OID 33264)
 -- Name: software id_software; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1678,7 +1590,7 @@ ALTER TABLE ONLY public.software ALTER COLUMN id_software SET DEFAULT nextval('p
 
 
 --
--- TOC entry 2284 (class 2604 OID 16912)
+-- TOC entry 2278 (class 2604 OID 33265)
 -- Name: software_componente id_software_componente; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1686,7 +1598,7 @@ ALTER TABLE ONLY public.software_componente ALTER COLUMN id_software_componente 
 
 
 --
--- TOC entry 2296 (class 2604 OID 16921)
+-- TOC entry 2279 (class 2604 OID 33266)
 -- Name: solicitudes id_solicitud; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1694,7 +1606,7 @@ ALTER TABLE ONLY public.solicitudes ALTER COLUMN id_solicitud SET DEFAULT nextva
 
 
 --
--- TOC entry 2286 (class 2604 OID 16930)
+-- TOC entry 2280 (class 2604 OID 33267)
 -- Name: soluciones id_solucion; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1702,7 +1614,7 @@ ALTER TABLE ONLY public.soluciones ALTER COLUMN id_solucion SET DEFAULT nextval(
 
 
 --
--- TOC entry 2275 (class 2604 OID 16939)
+-- TOC entry 2281 (class 2604 OID 33268)
 -- Name: tarjetas_video id_tarjeta_video; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1710,7 +1622,7 @@ ALTER TABLE ONLY public.tarjetas_video ALTER COLUMN id_tarjeta_video SET DEFAULT
 
 
 --
--- TOC entry 2303 (class 2604 OID 16948)
+-- TOC entry 2282 (class 2604 OID 33269)
 -- Name: tecnicos id_tecnico; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1718,7 +1630,7 @@ ALTER TABLE ONLY public.tecnicos ALTER COLUMN id_tecnico SET DEFAULT nextval('pu
 
 
 --
--- TOC entry 2287 (class 2604 OID 16957)
+-- TOC entry 2283 (class 2604 OID 33270)
 -- Name: tipos_componente id_tipo_componente; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1726,7 +1638,7 @@ ALTER TABLE ONLY public.tipos_componente ALTER COLUMN id_tipo_componente SET DEF
 
 
 --
--- TOC entry 2269 (class 2604 OID 16966)
+-- TOC entry 2284 (class 2604 OID 33271)
 -- Name: tipos_disco id_tipo_disco; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1734,7 +1646,7 @@ ALTER TABLE ONLY public.tipos_disco ALTER COLUMN id_tipo_disco SET DEFAULT nextv
 
 
 --
--- TOC entry 2301 (class 2604 OID 16975)
+-- TOC entry 2285 (class 2604 OID 33272)
 -- Name: tipos_mantenimiento id_tipo_mantenimiento; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1742,7 +1654,7 @@ ALTER TABLE ONLY public.tipos_mantenimiento ALTER COLUMN id_tipo_mantenimiento S
 
 
 --
--- TOC entry 2268 (class 2604 OID 16984)
+-- TOC entry 2286 (class 2604 OID 33273)
 -- Name: tipos_memoria id_tipo_memoria; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1750,7 +1662,7 @@ ALTER TABLE ONLY public.tipos_memoria ALTER COLUMN id_tipo_memoria SET DEFAULT n
 
 
 --
--- TOC entry 2288 (class 2604 OID 16994)
+-- TOC entry 2287 (class 2604 OID 33274)
 -- Name: tipos_software id_tipo_software; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1758,7 +1670,7 @@ ALTER TABLE ONLY public.tipos_software ALTER COLUMN id_tipo_software SET DEFAULT
 
 
 --
--- TOC entry 2291 (class 2604 OID 17003)
+-- TOC entry 2288 (class 2604 OID 33275)
 -- Name: ubicaciones id_ubicacion; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1766,7 +1678,7 @@ ALTER TABLE ONLY public.ubicaciones ALTER COLUMN id_ubicacion SET DEFAULT nextva
 
 
 --
--- TOC entry 2289 (class 2604 OID 17012)
+-- TOC entry 2289 (class 2604 OID 33276)
 -- Name: ups id_ups; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1774,7 +1686,7 @@ ALTER TABLE ONLY public.ups ALTER COLUMN id_ups SET DEFAULT nextval('public.ups_
 
 
 --
--- TOC entry 2331 (class 2606 OID 17030)
+-- TOC entry 2291 (class 2606 OID 33278)
 -- Name: arquitecturas id_arquitectura; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1783,7 +1695,7 @@ ALTER TABLE ONLY public.arquitecturas
 
 
 --
--- TOC entry 2321 (class 2606 OID 17028)
+-- TOC entry 2293 (class 2606 OID 33280)
 -- Name: capacidades id_capacidad; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1792,7 +1704,7 @@ ALTER TABLE ONLY public.capacidades
 
 
 --
--- TOC entry 2335 (class 2606 OID 17022)
+-- TOC entry 2295 (class 2606 OID 33282)
 -- Name: componentes id_componente; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1801,7 +1713,7 @@ ALTER TABLE ONLY public.componentes
 
 
 --
--- TOC entry 2357 (class 2606 OID 17089)
+-- TOC entry 2297 (class 2606 OID 33284)
 -- Name: cronograma id_cronograma; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1810,7 +1722,7 @@ ALTER TABLE ONLY public.cronograma
 
 
 --
--- TOC entry 2369 (class 2606 OID 17329)
+-- TOC entry 2299 (class 2606 OID 33286)
 -- Name: detalles_orden_trabajo id_detalle; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1819,16 +1731,7 @@ ALTER TABLE ONLY public.detalles_orden_trabajo
 
 
 --
--- TOC entry 2355 (class 2606 OID 17042)
--- Name: dia_no_laboral id_dia; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.dia_no_laboral
-    ADD CONSTRAINT id_dia PRIMARY KEY (id_dia);
-
-
---
--- TOC entry 2311 (class 2606 OID 17127)
+-- TOC entry 2301 (class 2606 OID 33290)
 -- Name: discos id_disco; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1837,7 +1740,7 @@ ALTER TABLE ONLY public.discos
 
 
 --
--- TOC entry 2349 (class 2606 OID 17070)
+-- TOC entry 2303 (class 2606 OID 33292)
 -- Name: equipos id_equipo; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1846,16 +1749,7 @@ ALTER TABLE ONLY public.equipos
 
 
 --
--- TOC entry 2359 (class 2606 OID 17077)
--- Name: equipos_asignados id_equipo_asignado; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.equipos_asignados
-    ADD CONSTRAINT id_equipo_asignado PRIMARY KEY (id_equipo_asignado);
-
-
---
--- TOC entry 2367 (class 2606 OID 17046)
+-- TOC entry 2305 (class 2606 OID 33294)
 -- Name: estados_orden id_estado_orden; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1864,7 +1758,7 @@ ALTER TABLE ONLY public.estados_orden
 
 
 --
--- TOC entry 2365 (class 2606 OID 17048)
+-- TOC entry 2307 (class 2606 OID 33296)
 -- Name: estados_solicitud id_estado_solicitud; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1873,7 +1767,7 @@ ALTER TABLE ONLY public.estados_solicitud
 
 
 --
--- TOC entry 2317 (class 2606 OID 17268)
+-- TOC entry 2309 (class 2606 OID 33298)
 -- Name: fuentes id_fuente; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1882,7 +1776,7 @@ ALTER TABLE ONLY public.fuentes
 
 
 --
--- TOC entry 2333 (class 2606 OID 17236)
+-- TOC entry 2311 (class 2606 OID 33300)
 -- Name: hardware_componente id_hardware_componente; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1891,7 +1785,7 @@ ALTER TABLE ONLY public.hardware_componente
 
 
 --
--- TOC entry 2373 (class 2606 OID 17050)
+-- TOC entry 2313 (class 2606 OID 33302)
 -- Name: mantenimientos id_mantenimiento; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1900,7 +1794,7 @@ ALTER TABLE ONLY public.mantenimientos
 
 
 --
--- TOC entry 2327 (class 2606 OID 17036)
+-- TOC entry 2315 (class 2606 OID 33304)
 -- Name: marcas id_marca; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1909,7 +1803,7 @@ ALTER TABLE ONLY public.marcas
 
 
 --
--- TOC entry 2309 (class 2606 OID 17110)
+-- TOC entry 2317 (class 2606 OID 33306)
 -- Name: memorias id_memoria; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1918,7 +1812,7 @@ ALTER TABLE ONLY public.memorias
 
 
 --
--- TOC entry 2329 (class 2606 OID 17056)
+-- TOC entry 2319 (class 2606 OID 33308)
 -- Name: modelos id_modelo; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1927,7 +1821,7 @@ ALTER TABLE ONLY public.modelos
 
 
 --
--- TOC entry 2315 (class 2606 OID 17166)
+-- TOC entry 2321 (class 2606 OID 33310)
 -- Name: motherboards id_motherboard; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1936,7 +1830,7 @@ ALTER TABLE ONLY public.motherboards
 
 
 --
--- TOC entry 2363 (class 2606 OID 17302)
+-- TOC entry 2323 (class 2606 OID 33312)
 -- Name: ordenes_trabajo id_orden_trabajo; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1945,7 +1839,7 @@ ALTER TABLE ONLY public.ordenes_trabajo
 
 
 --
--- TOC entry 2313 (class 2606 OID 17149)
+-- TOC entry 2325 (class 2606 OID 33314)
 -- Name: procesadores id_procesador; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1954,7 +1848,7 @@ ALTER TABLE ONLY public.procesadores
 
 
 --
--- TOC entry 2323 (class 2606 OID 17032)
+-- TOC entry 2327 (class 2606 OID 33316)
 -- Name: puertos id_puerto; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1963,16 +1857,16 @@ ALTER TABLE ONLY public.puertos
 
 
 --
--- TOC entry 2353 (class 2606 OID 17040)
--- Name: resposables id_responsable; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2329 (class 2606 OID 33318)
+-- Name: responsables id_responsable; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.resposables
+ALTER TABLE ONLY public.responsables
     ADD CONSTRAINT id_responsable PRIMARY KEY (id_responsable);
 
 
 --
--- TOC entry 2325 (class 2606 OID 17034)
+-- TOC entry 2331 (class 2606 OID 33320)
 -- Name: sockets id_socket; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1981,7 +1875,7 @@ ALTER TABLE ONLY public.sockets
 
 
 --
--- TOC entry 2339 (class 2606 OID 17096)
+-- TOC entry 2333 (class 2606 OID 33322)
 -- Name: software id_software; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1990,7 +1884,7 @@ ALTER TABLE ONLY public.software
 
 
 --
--- TOC entry 2337 (class 2606 OID 17190)
+-- TOC entry 2335 (class 2606 OID 33324)
 -- Name: software_componente id_software_componente; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1999,7 +1893,7 @@ ALTER TABLE ONLY public.software_componente
 
 
 --
--- TOC entry 2361 (class 2606 OID 17295)
+-- TOC entry 2337 (class 2606 OID 33326)
 -- Name: solicitudes id_solicitud; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2008,7 +1902,7 @@ ALTER TABLE ONLY public.solicitudes
 
 
 --
--- TOC entry 2341 (class 2606 OID 17052)
+-- TOC entry 2339 (class 2606 OID 33328)
 -- Name: soluciones id_solucion; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2017,7 +1911,7 @@ ALTER TABLE ONLY public.soluciones
 
 
 --
--- TOC entry 2319 (class 2606 OID 17178)
+-- TOC entry 2341 (class 2606 OID 33330)
 -- Name: tarjetas_video id_tarjeta_video; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2026,7 +1920,7 @@ ALTER TABLE ONLY public.tarjetas_video
 
 
 --
--- TOC entry 2375 (class 2606 OID 17044)
+-- TOC entry 2343 (class 2606 OID 33332)
 -- Name: tecnicos id_tecnico; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2035,7 +1929,7 @@ ALTER TABLE ONLY public.tecnicos
 
 
 --
--- TOC entry 2343 (class 2606 OID 17108)
+-- TOC entry 2345 (class 2606 OID 33334)
 -- Name: tipos_componente id_tipo_componente; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2044,7 +1938,7 @@ ALTER TABLE ONLY public.tipos_componente
 
 
 --
--- TOC entry 2307 (class 2606 OID 17024)
+-- TOC entry 2347 (class 2606 OID 33336)
 -- Name: tipos_disco id_tipo_disco; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2053,7 +1947,7 @@ ALTER TABLE ONLY public.tipos_disco
 
 
 --
--- TOC entry 2371 (class 2606 OID 17063)
+-- TOC entry 2349 (class 2606 OID 33338)
 -- Name: tipos_mantenimiento id_tipo_mantenimiento; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2062,7 +1956,7 @@ ALTER TABLE ONLY public.tipos_mantenimiento
 
 
 --
--- TOC entry 2305 (class 2606 OID 17026)
+-- TOC entry 2351 (class 2606 OID 33340)
 -- Name: tipos_memoria id_tipo_memoria; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2071,7 +1965,7 @@ ALTER TABLE ONLY public.tipos_memoria
 
 
 --
--- TOC entry 2345 (class 2606 OID 17054)
+-- TOC entry 2353 (class 2606 OID 33342)
 -- Name: tipos_software id_tipo_software; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2080,7 +1974,7 @@ ALTER TABLE ONLY public.tipos_software
 
 
 --
--- TOC entry 2351 (class 2606 OID 17038)
+-- TOC entry 2355 (class 2606 OID 33344)
 -- Name: ubicaciones id_ubicacion; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2089,7 +1983,7 @@ ALTER TABLE ONLY public.ubicaciones
 
 
 --
--- TOC entry 2347 (class 2606 OID 17202)
+-- TOC entry 2357 (class 2606 OID 33346)
 -- Name: ups id_ups; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2098,7 +1992,7 @@ ALTER TABLE ONLY public.ups
 
 
 --
--- TOC entry 2405 (class 2606 OID 17102)
+-- TOC entry 2393 (class 2606 OID 33347)
 -- Name: software id_arquitectura; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2107,7 +2001,7 @@ ALTER TABLE ONLY public.software
 
 
 --
--- TOC entry 2384 (class 2606 OID 17155)
+-- TOC entry 2389 (class 2606 OID 33352)
 -- Name: procesadores id_arquitectura; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2116,7 +2010,7 @@ ALTER TABLE ONLY public.procesadores
 
 
 --
--- TOC entry 2378 (class 2606 OID 17121)
+-- TOC entry 2379 (class 2606 OID 33357)
 -- Name: memorias id_capacidad; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2125,7 +2019,7 @@ ALTER TABLE ONLY public.memorias
 
 
 --
--- TOC entry 2380 (class 2606 OID 17133)
+-- TOC entry 2365 (class 2606 OID 33362)
 -- Name: discos id_capacidad; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2134,7 +2028,7 @@ ALTER TABLE ONLY public.discos
 
 
 --
--- TOC entry 2403 (class 2606 OID 17196)
+-- TOC entry 2395 (class 2606 OID 33367)
 -- Name: software_componente id_componente; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2143,7 +2037,7 @@ ALTER TABLE ONLY public.software_componente
 
 
 --
--- TOC entry 2406 (class 2606 OID 17203)
+-- TOC entry 2402 (class 2606 OID 33372)
 -- Name: ups id_componente; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2152,7 +2046,7 @@ ALTER TABLE ONLY public.ups
 
 
 --
--- TOC entry 2392 (class 2606 OID 17237)
+-- TOC entry 2372 (class 2606 OID 33377)
 -- Name: hardware_componente id_componente; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2161,7 +2055,7 @@ ALTER TABLE ONLY public.hardware_componente
 
 
 --
--- TOC entry 2394 (class 2606 OID 17247)
+-- TOC entry 2373 (class 2606 OID 33382)
 -- Name: hardware_componente id_disco; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2170,16 +2064,7 @@ ALTER TABLE ONLY public.hardware_componente
 
 
 --
--- TOC entry 2409 (class 2606 OID 17078)
--- Name: equipos_asignados id_equipo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.equipos_asignados
-    ADD CONSTRAINT id_equipo FOREIGN KEY (id_equipo) REFERENCES public.equipos(id_equipo);
-
-
---
--- TOC entry 2408 (class 2606 OID 17090)
+-- TOC entry 2361 (class 2606 OID 33387)
 -- Name: cronograma id_equipo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2188,7 +2073,7 @@ ALTER TABLE ONLY public.cronograma
 
 
 --
--- TOC entry 2401 (class 2606 OID 17289)
+-- TOC entry 2358 (class 2606 OID 33392)
 -- Name: componentes id_equipo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2197,7 +2082,7 @@ ALTER TABLE ONLY public.componentes
 
 
 --
--- TOC entry 2411 (class 2606 OID 17296)
+-- TOC entry 2397 (class 2606 OID 33397)
 -- Name: solicitudes id_equipo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2206,7 +2091,7 @@ ALTER TABLE ONLY public.solicitudes
 
 
 --
--- TOC entry 2416 (class 2606 OID 17318)
+-- TOC entry 2385 (class 2606 OID 33402)
 -- Name: ordenes_trabajo id_estado_orden; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2215,7 +2100,7 @@ ALTER TABLE ONLY public.ordenes_trabajo
 
 
 --
--- TOC entry 2412 (class 2606 OID 17323)
+-- TOC entry 2398 (class 2606 OID 33407)
 -- Name: solicitudes id_estado_solicitud; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2224,7 +2109,7 @@ ALTER TABLE ONLY public.solicitudes
 
 
 --
--- TOC entry 2398 (class 2606 OID 17274)
+-- TOC entry 2374 (class 2606 OID 33412)
 -- Name: hardware_componente id_fuente; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2233,7 +2118,7 @@ ALTER TABLE ONLY public.hardware_componente
 
 
 --
--- TOC entry 2420 (class 2606 OID 17064)
+-- TOC entry 2401 (class 2606 OID 33417)
 -- Name: tipos_mantenimiento id_mantenimiento; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2242,7 +2127,7 @@ ALTER TABLE ONLY public.tipos_mantenimiento
 
 
 --
--- TOC entry 2414 (class 2606 OID 17308)
+-- TOC entry 2386 (class 2606 OID 33422)
 -- Name: ordenes_trabajo id_mantenimiento; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2251,7 +2136,7 @@ ALTER TABLE ONLY public.ordenes_trabajo
 
 
 --
--- TOC entry 2391 (class 2606 OID 17057)
+-- TOC entry 2382 (class 2606 OID 33427)
 -- Name: modelos id_marca; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2260,7 +2145,7 @@ ALTER TABLE ONLY public.modelos
 
 
 --
--- TOC entry 2376 (class 2606 OID 17111)
+-- TOC entry 2380 (class 2606 OID 33432)
 -- Name: memorias id_marca; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2269,7 +2154,7 @@ ALTER TABLE ONLY public.memorias
 
 
 --
--- TOC entry 2379 (class 2606 OID 17128)
+-- TOC entry 2366 (class 2606 OID 33437)
 -- Name: discos id_marca; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2278,7 +2163,7 @@ ALTER TABLE ONLY public.discos
 
 
 --
--- TOC entry 2386 (class 2606 OID 17167)
+-- TOC entry 2383 (class 2606 OID 33442)
 -- Name: motherboards id_marca; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2287,7 +2172,7 @@ ALTER TABLE ONLY public.motherboards
 
 
 --
--- TOC entry 2389 (class 2606 OID 17179)
+-- TOC entry 2399 (class 2606 OID 33447)
 -- Name: tarjetas_video id_marca; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2296,7 +2181,7 @@ ALTER TABLE ONLY public.tarjetas_video
 
 
 --
--- TOC entry 2393 (class 2606 OID 17242)
+-- TOC entry 2375 (class 2606 OID 33452)
 -- Name: hardware_componente id_memoria; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2305,7 +2190,7 @@ ALTER TABLE ONLY public.hardware_componente
 
 
 --
--- TOC entry 2383 (class 2606 OID 17150)
+-- TOC entry 2390 (class 2606 OID 33457)
 -- Name: procesadores id_modelo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2314,7 +2199,7 @@ ALTER TABLE ONLY public.procesadores
 
 
 --
--- TOC entry 2388 (class 2606 OID 17269)
+-- TOC entry 2371 (class 2606 OID 33462)
 -- Name: fuentes id_modelo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2323,7 +2208,7 @@ ALTER TABLE ONLY public.fuentes
 
 
 --
--- TOC entry 2400 (class 2606 OID 17284)
+-- TOC entry 2359 (class 2606 OID 33467)
 -- Name: componentes id_modelo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2332,7 +2217,7 @@ ALTER TABLE ONLY public.componentes
 
 
 --
--- TOC entry 2396 (class 2606 OID 17257)
+-- TOC entry 2376 (class 2606 OID 33472)
 -- Name: hardware_componente id_motherboard; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2341,7 +2226,7 @@ ALTER TABLE ONLY public.hardware_componente
 
 
 --
--- TOC entry 2417 (class 2606 OID 17330)
+-- TOC entry 2362 (class 2606 OID 33477)
 -- Name: detalles_orden_trabajo id_orden_trabajo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2350,7 +2235,7 @@ ALTER TABLE ONLY public.detalles_orden_trabajo
 
 
 --
--- TOC entry 2395 (class 2606 OID 17252)
+-- TOC entry 2377 (class 2606 OID 33482)
 -- Name: hardware_componente id_procesador; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2359,7 +2244,7 @@ ALTER TABLE ONLY public.hardware_componente
 
 
 --
--- TOC entry 2381 (class 2606 OID 17138)
+-- TOC entry 2367 (class 2606 OID 33487)
 -- Name: discos id_puerto; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2368,7 +2253,7 @@ ALTER TABLE ONLY public.discos
 
 
 --
--- TOC entry 2390 (class 2606 OID 17184)
+-- TOC entry 2400 (class 2606 OID 33492)
 -- Name: tarjetas_video id_puerto; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2377,16 +2262,16 @@ ALTER TABLE ONLY public.tarjetas_video
 
 
 --
--- TOC entry 2410 (class 2606 OID 17083)
--- Name: equipos_asignados id_responsable; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2369 (class 2606 OID 33497)
+-- Name: equipos id_responsables; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.equipos_asignados
-    ADD CONSTRAINT id_responsable FOREIGN KEY (id_responsable) REFERENCES public.resposables(id_responsable);
+ALTER TABLE ONLY public.equipos
+    ADD CONSTRAINT id_responsables FOREIGN KEY (id_responsable) REFERENCES public.responsables(id_responsable);
 
 
 --
--- TOC entry 2385 (class 2606 OID 17160)
+-- TOC entry 2391 (class 2606 OID 33502)
 -- Name: procesadores id_socket; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2395,7 +2280,7 @@ ALTER TABLE ONLY public.procesadores
 
 
 --
--- TOC entry 2387 (class 2606 OID 17172)
+-- TOC entry 2384 (class 2606 OID 33507)
 -- Name: motherboards id_socket; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2404,7 +2289,7 @@ ALTER TABLE ONLY public.motherboards
 
 
 --
--- TOC entry 2402 (class 2606 OID 17191)
+-- TOC entry 2396 (class 2606 OID 33512)
 -- Name: software_componente id_software; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2413,7 +2298,7 @@ ALTER TABLE ONLY public.software_componente
 
 
 --
--- TOC entry 2413 (class 2606 OID 17303)
+-- TOC entry 2387 (class 2606 OID 33517)
 -- Name: ordenes_trabajo id_solicitud; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2422,7 +2307,7 @@ ALTER TABLE ONLY public.ordenes_trabajo
 
 
 --
--- TOC entry 2419 (class 2606 OID 17340)
+-- TOC entry 2363 (class 2606 OID 33522)
 -- Name: detalles_orden_trabajo id_solucion; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2431,7 +2316,7 @@ ALTER TABLE ONLY public.detalles_orden_trabajo
 
 
 --
--- TOC entry 2397 (class 2606 OID 17262)
+-- TOC entry 2378 (class 2606 OID 33527)
 -- Name: hardware_componente id_tarjeta_video; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2440,7 +2325,7 @@ ALTER TABLE ONLY public.hardware_componente
 
 
 --
--- TOC entry 2415 (class 2606 OID 17313)
+-- TOC entry 2388 (class 2606 OID 33532)
 -- Name: ordenes_trabajo id_tecnico; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2449,7 +2334,7 @@ ALTER TABLE ONLY public.ordenes_trabajo
 
 
 --
--- TOC entry 2399 (class 2606 OID 17279)
+-- TOC entry 2360 (class 2606 OID 33537)
 -- Name: componentes id_tipo_componente; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2458,7 +2343,7 @@ ALTER TABLE ONLY public.componentes
 
 
 --
--- TOC entry 2382 (class 2606 OID 17143)
+-- TOC entry 2368 (class 2606 OID 33542)
 -- Name: discos id_tipo_disco; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2467,7 +2352,7 @@ ALTER TABLE ONLY public.discos
 
 
 --
--- TOC entry 2418 (class 2606 OID 17335)
+-- TOC entry 2364 (class 2606 OID 33547)
 -- Name: detalles_orden_trabajo id_tipo_mantenimiento; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2476,7 +2361,7 @@ ALTER TABLE ONLY public.detalles_orden_trabajo
 
 
 --
--- TOC entry 2377 (class 2606 OID 17116)
+-- TOC entry 2381 (class 2606 OID 33552)
 -- Name: memorias id_tipo_memoria; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2485,7 +2370,7 @@ ALTER TABLE ONLY public.memorias
 
 
 --
--- TOC entry 2404 (class 2606 OID 17097)
+-- TOC entry 2394 (class 2606 OID 33557)
 -- Name: software id_tipo_software; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2494,7 +2379,7 @@ ALTER TABLE ONLY public.software
 
 
 --
--- TOC entry 2407 (class 2606 OID 17071)
+-- TOC entry 2370 (class 2606 OID 33562)
 -- Name: equipos id_ubicacion; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2502,7 +2387,16 @@ ALTER TABLE ONLY public.equipos
     ADD CONSTRAINT id_ubicacion FOREIGN KEY (id_ubicacion) REFERENCES public.ubicaciones(id_ubicacion);
 
 
--- Completed on 2018-10-30 14:14:15
+--
+-- TOC entry 2392 (class 2606 OID 33567)
+-- Name: responsables id_ubicacion; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.responsables
+    ADD CONSTRAINT id_ubicacion FOREIGN KEY (id_ubicacion) REFERENCES public.ubicaciones(id_ubicacion);
+
+
+-- Completed on 2018-11-20 15:55:20
 
 --
 -- PostgreSQL database dump complete
