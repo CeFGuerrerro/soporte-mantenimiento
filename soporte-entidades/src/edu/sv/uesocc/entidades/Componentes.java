@@ -6,7 +6,9 @@
 package edu.sv.uesocc.entidades;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,8 +18,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,6 +40,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Componentes.findByAsignado", query = "SELECT c FROM Componentes c WHERE c.asignado = :asignado")
     , @NamedQuery(name = "Componentes.findByObservaciones", query = "SELECT c FROM Componentes c WHERE c.observaciones = :observaciones")})
 public class Componentes implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idComponente")
+    private List<SoftwareComponente> softwareComponenteList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idComponente")
+    private List<HardwareComponente> hardwareComponenteList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idComponente")
+    private List<Ups> upsList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -175,6 +186,33 @@ public class Componentes implements Serializable {
     @Override
     public String toString() {
         return "edu.sv.uesocc.entidades.Componentes[ idComponente=" + idComponente + " ]";
+    }
+
+    @XmlTransient
+    public List<SoftwareComponente> getSoftwareComponenteList() {
+        return softwareComponenteList;
+    }
+
+    public void setSoftwareComponenteList(List<SoftwareComponente> softwareComponenteList) {
+        this.softwareComponenteList = softwareComponenteList;
+    }
+
+    @XmlTransient
+    public List<HardwareComponente> getHardwareComponenteList() {
+        return hardwareComponenteList;
+    }
+
+    public void setHardwareComponenteList(List<HardwareComponente> hardwareComponenteList) {
+        this.hardwareComponenteList = hardwareComponenteList;
+    }
+
+    @XmlTransient
+    public List<Ups> getUpsList() {
+        return upsList;
+    }
+
+    public void setUpsList(List<Ups> upsList) {
+        this.upsList = upsList;
     }
     
 }

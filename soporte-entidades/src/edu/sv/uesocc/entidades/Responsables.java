@@ -8,12 +8,13 @@ package edu.sv.uesocc.entidades;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -26,14 +27,14 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author o-a19
  */
 @Entity
-@Table(name = "resposables", catalog = "soporte", schema = "public")
+@Table(name = "responsables", catalog = "soporte", schema = "USUARIO1")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Resposables.findAll", query = "SELECT r FROM Resposables r")
-    , @NamedQuery(name = "Resposables.findByIdResponsable", query = "SELECT r FROM Resposables r WHERE r.idResponsable = :idResponsable")
-    , @NamedQuery(name = "Resposables.findByNombre", query = "SELECT r FROM Resposables r WHERE r.nombre = :nombre")
-    , @NamedQuery(name = "Resposables.findByCorreo", query = "SELECT r FROM Resposables r WHERE r.correo = :correo")})
-public class Resposables implements Serializable {
+    @NamedQuery(name = "Responsables.findAll", query = "SELECT r FROM Responsables r")
+    , @NamedQuery(name = "Responsables.findByIdResponsable", query = "SELECT r FROM Responsables r WHERE r.idResponsable = :idResponsable")
+    , @NamedQuery(name = "Responsables.findByNombre", query = "SELECT r FROM Responsables r WHERE r.nombre = :nombre")
+    , @NamedQuery(name = "Responsables.findByCorreo", query = "SELECT r FROM Responsables r WHERE r.correo = :correo")})
+public class Responsables implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -46,17 +47,20 @@ public class Resposables implements Serializable {
     private String nombre;
     @Column(name = "correo", length = 2147483647)
     private String correo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idResponsable")
-    private List<EquiposAsignados> equiposAsignadosList;
+    @OneToMany(mappedBy = "idResponsable")
+    private List<Equipos> equiposList;
+    @JoinColumn(name = "id_ubicacion", referencedColumnName = "id_ubicacion")
+    @ManyToOne
+    private Ubicaciones idUbicacion;
 
-    public Resposables() {
+    public Responsables() {
     }
 
-    public Resposables(Integer idResponsable) {
+    public Responsables(Integer idResponsable) {
         this.idResponsable = idResponsable;
     }
 
-    public Resposables(Integer idResponsable, String nombre) {
+    public Responsables(Integer idResponsable, String nombre) {
         this.idResponsable = idResponsable;
         this.nombre = nombre;
     }
@@ -86,12 +90,20 @@ public class Resposables implements Serializable {
     }
 
     @XmlTransient
-    public List<EquiposAsignados> getEquiposAsignadosList() {
-        return equiposAsignadosList;
+    public List<Equipos> getEquiposList() {
+        return equiposList;
     }
 
-    public void setEquiposAsignadosList(List<EquiposAsignados> equiposAsignadosList) {
-        this.equiposAsignadosList = equiposAsignadosList;
+    public void setEquiposList(List<Equipos> equiposList) {
+        this.equiposList = equiposList;
+    }
+
+    public Ubicaciones getIdUbicacion() {
+        return idUbicacion;
+    }
+
+    public void setIdUbicacion(Ubicaciones idUbicacion) {
+        this.idUbicacion = idUbicacion;
     }
 
     @Override
@@ -104,10 +116,10 @@ public class Resposables implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Resposables)) {
+        if (!(object instanceof Responsables)) {
             return false;
         }
-        Resposables other = (Resposables) object;
+        Responsables other = (Responsables) object;
         if ((this.idResponsable == null && other.idResponsable != null) || (this.idResponsable != null && !this.idResponsable.equals(other.idResponsable))) {
             return false;
         }
@@ -116,7 +128,7 @@ public class Resposables implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.sv.uesocc.entidades.Resposables[ idResponsable=" + idResponsable + " ]";
+        return "edu.sv.uesocc.entidades.Responsables[ idResponsable=" + idResponsable + " ]";
     }
     
 }
