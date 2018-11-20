@@ -28,5 +28,5 @@ public class DiaNoLaboralFacade extends AbstractFacade<DiaNoLaboral> implements 
     public DiaNoLaboralFacade() {
         super(DiaNoLaboral.class);
     }
-    
+
 }

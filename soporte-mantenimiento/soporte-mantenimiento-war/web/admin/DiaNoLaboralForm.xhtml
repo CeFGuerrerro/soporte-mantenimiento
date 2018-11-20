@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../templates/PrincipalTemplate.xhtml">
+
+            <ui:define name="contenido">
+                <h:form>
+                    <p:panelGrid columns="1" styleClass="ui-panelgrid-blank">
+                        <p:column>
+                            <p:calendar id="calendario" mode="inline" value="#{diaNoLaboralMB.dia.fecha}" disabledWeekends="true" pages="3" navigator="true" 
+                                    required="true" requiredMessage="Seleccione una fecha"/>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton value="Agregar dia no laboral" icon="fa fa-calendar" update=":frmTabla" actionListener="#{diaNoLaboralMB.registrar()}"/>
+                        </p:column>
+                    </p:panelGrid>
+                </h:form>
+                <h:form id="frmTabla">
+                    
+                    <p:dataTable value="#{diaNoLaboralMB.dias}" id="tabla" var="tab" rows="10" paginator="true" emptyMessage="No hay registros" selectionMode="single" selection="#{diaNoLaboralMB.seleccion}"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="#{tab.idDia}"
+                                 rowsPerPageTemplate="5,10,15" widgetVar="wtabla" currentPageReportTemplate="Página: ({currentPage} de {totalPages})" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+                        <f:facet name="header">
+                            Dias no Laborales
+                        </f:facet>
+                        
+                        <p:column headerText="Fecha" filterBy="#{tab.fecha}" filterMatchMode="contains">
+                            <p:calendar id="restricted" value="#{tab.fecha}" pattern="dd/MM/yyyy" readonly="true" readonlyInput="true" disabledWeekends="true"/>
+                        </p:column>
+                    </p:dataTable>
+                    <p:contextMenu for="tabla">
+                        <p:menuitem value="Eliminar" icon="fa fa-trash" action="#{diaNoLaboralMB.eliminar()}" update="frmTabla"/>
+                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                    </p:contextMenu>
+                </h:form>
+            </ui:define>
+
+            <ui:define name="menuLateral">
+                <ui:include src="./../templates/HwSwMenuLateral.xhtml"/>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

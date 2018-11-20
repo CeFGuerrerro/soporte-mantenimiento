@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../templates/PrincipalTemplate.xhtml">
+
+            <ui:define name="contenido">
+                <h:form>
+                    <h:panelGrid columnClasses="value">
+                        <h3 style="margin-top: 0">Cronograma de Actividades</h3>
+                        <p:schedule id="schedule" value="#{cronogramaMB.eventModel}" widgetVar="myschedule" locale="es">
+
+                            <p:ajax event="dateSelect" listener="#{cronogramaMB.onDateSelect}" oncomplete="PF('eventDialog').show();" />
+                            <p:ajax event="eventSelect" listener="#{cronogramaMB.onEventSelect}" oncomplete="PF('eventDialog').show();" />
+                            <p:ajax event="eventMove" listener="#{cronogramaMB.onEventMove}"/>
+                            <p:ajax event="eventResize" listener="#{cronogramaMB.onEventResize}"/>
+
+                        </p:schedule>
+                    </h:panelGrid>
+                    <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">
+                        <h:panelGrid id="eventDetails" columns="2">
+                            <p:outputLabel for="titulo" value="Titulo:" />
+                            <p:inputText id="titulo" value="#{cronogramaMB.event.title}" required="true"/>
+
+                            <p:outputLabel for="desde" value="Desde:" />
+                            <p:calendar id="desde" value="#{cronogramaMB.event.startDate}" pattern="dd/MM/yyyy" disabledWeekends="true" required="true"/>
+
+                            <p:outputLabel for="hasta" value="Hasta:" />
+                            <p:calendar id="hasta" value="#{cronogramaMB.event.endDate}" pattern="dd/MM/yyyy" disabledWeekends="true" required="true"/>
+                            
+                            <p:outputLabel for="equipo" value="Equipo:" />
+                            <p:inputText id="equipo" value="#{cronogramaMB.event.data}"/>
+                            
+                            <p:outputLabel for="descripcion" value="Descripcion:" />
+                            <p:inputText id="descripcion" value="#{cronogramaMB.event.description}"/>
+
+                            <p:commandButton type="reset" value="Reiniciar" />
+                            <p:commandButton id="addButton" value="Guardar" action="#{cronogramaMB.addEvent}" oncomplete="PF('myschedule').update();" />
+                        </h:panelGrid>
+                    </p:dialog>    
+                </h:form>
+                <h:outputScript library="js" name="spanishLocale.js"/>
+            </ui:define>
+
+            <ui:define name="menuLateral">
+                menuLateral
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
