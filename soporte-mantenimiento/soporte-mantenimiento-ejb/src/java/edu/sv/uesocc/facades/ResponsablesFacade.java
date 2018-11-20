@@ -5,7 +5,7 @@
  */
 package edu.sv.uesocc.facades;
 
-import edu.sv.uesocc.entidades.EquiposAsignados;
+import edu.sv.uesocc.entidades.Responsables;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author o-a19
  */
 @Stateless
-public class EquiposAsignadosFacade extends AbstractFacade<EquiposAsignados> implements EquiposAsignadosFacadeLocal {
+public class ResponsablesFacade extends AbstractFacade<Responsables> implements ResponsablesFacadeLocal {
 
     @PersistenceContext(unitName = "soportePU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class EquiposAsignadosFacade extends AbstractFacade<EquiposAsignados> imp
         return em;
     }
 
-    public EquiposAsignadosFacade() {
-        super(EquiposAsignados.class);
+    public ResponsablesFacade() {
+        super(Responsables.class);
     }
     
 }

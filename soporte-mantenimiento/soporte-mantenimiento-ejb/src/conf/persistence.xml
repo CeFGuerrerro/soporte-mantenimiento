@@ -7,10 +7,8 @@
     <class>edu.sv.uesocc.entidades.Componentes</class>
     <class>edu.sv.uesocc.entidades.Cronograma</class>
     <class>edu.sv.uesocc.entidades.DetallesOrdenTrabajo</class>
-    <class>edu.sv.uesocc.entidades.DiaNoLaboral</class>
     <class>edu.sv.uesocc.entidades.Discos</class>
     <class>edu.sv.uesocc.entidades.Equipos</class>
-    <class>edu.sv.uesocc.entidades.EquiposAsignados</class>
     <class>edu.sv.uesocc.entidades.EstadosOrden</class>
     <class>edu.sv.uesocc.entidades.EstadosSolicitud</class>
     <class>edu.sv.uesocc.entidades.Fuentes</class>
@@ -23,7 +21,7 @@
     <class>edu.sv.uesocc.entidades.OrdenesTrabajo</class>
     <class>edu.sv.uesocc.entidades.Procesadores</class>
     <class>edu.sv.uesocc.entidades.Puertos</class>
-    <class>edu.sv.uesocc.entidades.Resposables</class>
+    <class>edu.sv.uesocc.entidades.Responsables</class>
     <class>edu.sv.uesocc.entidades.Sockets</class>
     <class>edu.sv.uesocc.entidades.Software</class>
     <class>edu.sv.uesocc.entidades.SoftwareComponente</class>

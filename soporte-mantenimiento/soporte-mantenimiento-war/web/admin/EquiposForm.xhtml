@@ -22,11 +22,17 @@
                             Equipos
                         </f:facet>
 
-                        <p:column headerText="ID" style="width: 5em">
+                        <p:column headerText="ID" style="width: 5em" filterBy="#{equip.idEquipo}">
                             <p:outputLabel value="#{equip.idEquipo}"/>
                         </p:column>
 
-                        <p:column headerText="Ubicaci&oacute;n" style="width: 9em">
+                        <p:column headerText="Ubicaci&oacute;n" filterBy="#{equip.idUbicacion.idUbicacion}" style="width: 9em">
+                            <f:facet name="filter">
+                                    <p:selectOneMenu onchange="PF('wd_tbl_equipos').filter()" filter="true" filterMatchMode="startsWith" style="width: 10em">
+                                        <f:selectItem itemLabel="Seleccione Ubicacion" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{ubicacionesMB.ubicList}" var="ub" itemLabel="#{ub.nombre}" itemValue="#{ub.idUbicacion}" />
+                                    </p:selectOneMenu>
+                                </f:facet>
                             <p:outputLabel value="#{equip.idUbicacion.nombre}"/>
                         </p:column>
 
@@ -58,12 +64,13 @@
                         <p:ajax event="rowDblselect" listener="#{equiposMB.cargarComponentesEquipoSeleccionado()}" oncomplete="PF('wd_editarEquipo').show()" update=":f_editarEquipo"/>
                     </p:dataTable> 
 
-                    <p:contextMenu for="t_equipos">
-                        <p:menuitem value="Eliminar" action="#{equiposMB.eliminarEquipo()}" icon="fa fa-trash" update="f_equipo"/>
-                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
-                    </p:contextMenu>
+                    <!--                    <p:contextMenu for="t_equipos">
+                                            <p:menuitem value="Eliminar" action="{equiposMB.eliminarEquipo()}" icon="fa fa-trash" update="f_equipo"/>
+                                            <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                                        </p:contextMenu> -->
+
                 </h:form>
-                
+
                 <!--********************************MENUS PARA CREAR EQUIPOS****************************-->
 
                 <!--Menu para crear un equipo-->
@@ -122,8 +129,8 @@
                         <p:commandButton value="Guardar" icon="fa fa-check" actionListener="#{equiposMB.crearEquipo()}" update="f_equipo" oncomplete="PF('wd_crearEquipo').hide()"/>
                     </h:form>
                 </p:dialog>
-                
-                 <!--Menu para mostrar los componentes cuando se crea un equipo--> 
+
+                <!--Menu para mostrar los componentes cuando se crea un equipo--> 
                 <p:dialog widgetVar="wd_agregarComponentes" modal="true" header="Agregar Componentes" closeOnEscape="true">
                     <h:form id="f_agregarComponentes">
                         <p:dataTable id="t_componentes" emptyMessage="No hay registros" rows="20" scrollable="true"
@@ -177,8 +184,8 @@
                         <p:commandButton value="Agregar" actionListener="#{equiposMB.agregarComponentes()}" update="f_crearEquipo" icon="fa fa-check"/>
                     </h:form>
                 </p:dialog>
-                 
-                 <!--********************************MENUS PARA EDITAR EQUIPOS****************************-->
+
+                <!--********************************MENUS PARA EDITAR EQUIPOS****************************-->
 
                 <!--Menu para editar los equipos-->
                 <p:dialog widgetVar="wd_editarEquipo" modal="true" header="Editar Equipo">
@@ -237,8 +244,8 @@
 
                     </h:form>
                 </p:dialog>
-                
-                 <!--Menu para mostrar los componentes cuando se edita un equipo--> 
+
+                <!--Menu para mostrar los componentes cuando se edita un equipo--> 
                 <p:dialog widgetVar="wd_editarComponentes" modal="true" header="Agregar Componentes" closeOnEscape="true">
                     <h:form id="f_editarComponentes">
                         <p:dataTable id="t_componentes" emptyMessage="No hay registros" rows="20" scrollable="true"
@@ -292,7 +299,7 @@
                         <p:commandButton value="Agregar" actionListener="#{equiposMB.agregarComponentesEquipoSelecionado()}" update="f_editarEquipo" icon="fa fa-check"/>
                     </h:form>
                 </p:dialog>
-                 
+
             </ui:define>
 
             <ui:define name="menuLateral">
