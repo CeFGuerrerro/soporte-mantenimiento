@@ -22,23 +22,27 @@
                             Equipos
                         </f:facet>
 
-                        <p:column headerText="ID" style="width: 5em" filterBy="#{equip.idEquipo}">
+                        <p:column headerText="ID" style="width: 2em" filterBy="#{equip.idEquipo}">
                             <p:outputLabel value="#{equip.idEquipo}"/>
                         </p:column>
 
-                        <p:column headerText="Ubicaci&oacute;n" filterBy="#{equip.idUbicacion.idUbicacion}" style="width: 9em">
+                        <p:column headerText="Responsable" style="width: 9em" filterBy="#{equip.idResponsable.nombre}" filterMatchMode="contains">
+                            <p:outputLabel value="#{equip.idResponsable.nombre}"/>
+                        </p:column>
+
+                        <p:column headerText="Ubicaci&oacute;n" filterBy="#{equip.idUbicacion.idUbicacion}" style="width: 7em">
                             <f:facet name="filter">
-                                    <p:selectOneMenu onchange="PF('wd_tbl_equipos').filter()" filter="true" filterMatchMode="startsWith" style="width: 10em">
-                                        <f:selectItem itemLabel="Seleccione Ubicacion" itemValue="#{null}" noSelectionOption="true" />
-                                        <f:selectItems value="#{ubicacionesMB.ubicList}" var="ub" itemLabel="#{ub.nombre}" itemValue="#{ub.idUbicacion}" />
-                                    </p:selectOneMenu>
-                                </f:facet>
+                                <p:selectOneMenu onchange="PF('wd_tbl_equipos').filter()" filter="true" filterMatchMode="startsWith" style="width: 10em">
+                                    <f:selectItem itemLabel="Seleccione Ubicacion" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{ubicacionesMB.ubicList}" var="ub" itemLabel="#{ub.nombre}" itemValue="#{ub.idUbicacion}" />
+                                </p:selectOneMenu>
+                            </f:facet>
                             <p:outputLabel value="#{equip.idUbicacion.nombre}"/>
                         </p:column>
 
-                        <p:column headerText="E" style="width: 30px">
-                            <p:outputPanel layout="inline" styleClass="fa fa-check" rendered="#{equip.estado}" />
-                            <p:outputPanel layout="inline" styleClass="fa fa-close" rendered="#{!equip.estado}" />
+                        <p:column headerText="E" style="width: 10px">
+                            <p:outputPanel layout="inline" styleClass="fa fa-check" rendered="#{equip.estado}"/>
+                            <p:outputPanel layout="inline" styleClass="fa fa-close" rendered="#{!equip.estado}"/>
                         </p:column>
 
                         <p:column headerText="Observaciones" style="width: 12.5em">
@@ -78,12 +82,19 @@
                     <h:form id="f_crearEquipo">
 
                         <p:panelGrid columns="2">
+
                             <p:outputLabel value="Ubicacion"/>
                             <p:selectOneMenu value="#{equiposMB.equip.idUbicacion}" converter="objectConverter" required="true"
                                              requiredMessage="Seleccione una ubicacion" filter="true" filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="Seleccione una ubicaci&oacute;n" itemValue="" noSelectionOption="true"/>
                                 <f:selectItems value="#{ubicacionesMB.ubicList}" var="ubic" itemLabel="#{ubic.nombre}" itemValue="#{tipo}"/>
                             </p:selectOneMenu>
+
+                            <p:outputLabel value="Responsable"/>
+                            <p:commandButton value="Agregar Responsable" icon="fa fa-plus" onclick="PF('wd_agregarResponsable').show()" update="f_agregarResponsable"/>
+
+                            <br/>
+                            <p:outputLabel value="#{equiposMB.equip.idResponsable.nombre}"/>
 
                             <p:outputLabel value="Estado"/>
                             <p:selectBooleanButton value="#{equiposMB.equip.estado}" onLabel="Funcionando" onIcon="fa fa-check" offLabel="De baja" offIcon="fa fa-close"/>
@@ -133,8 +144,8 @@
                 <!--Menu para mostrar los componentes cuando se crea un equipo--> 
                 <p:dialog widgetVar="wd_agregarComponentes" modal="true" header="Agregar Componentes" closeOnEscape="true">
                     <h:form id="f_agregarComponentes">
-                        <p:dataTable id="t_componentes" emptyMessage="No hay registros" rows="20" scrollable="true"
-                                     value="#{componentesMB.compDisponiblesList}" rowKey="#{comp.idComponente}" var="comp" scrollHeight="300"
+                        <p:dataTable id="t_componentes" emptyMessage="No hay registros" rows="20" scrollable="true" lazy="true"
+                                     value="#{componentesMB.compList}" rowKey="#{comp.idComponente}" var="comp" scrollHeight="300"
                                      selection="#{equiposMB.compList}" widgetVar="wd_tbl_componentes">
 
                             <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
@@ -185,6 +196,39 @@
                     </h:form>
                 </p:dialog>
 
+                <!--Menu para mostrar los responsables cuando se crea un equipo-->
+                <p:dialog widgetVar="wd_agregarResponsable" modal="true" header="Agregar Responsable" closeOnEscape="true">
+                    <h:form id="f_agregarResponsable">
+                        <p:dataTable id="t_responsables" emptyMessage="No hay registros" value="#{responsablesMB.respList}" var="res"
+                                     selection="#{equiposMB.equip.idResponsable}" selectionMode="single" rowKey="#{res.idResponsable}"
+                                     rows="10" widgetVar="wd_tbl_responsables">
+
+                            <p:column headerText="ID" sortBy="#{res.idResponsable}">
+                                <p:outputLabel>#{res.idResponsable}</p:outputLabel>
+                            </p:column>
+
+                            <p:column headerText="Nombre" sortBy="#{res.nombre}" filterBy="#{res.nombre}" filterMatchMode="contains"  filterStyle="width: 200px;">
+                                <p:outputLabel>#{res.nombre}</p:outputLabel>
+                            </p:column>
+
+                            <p:column headerText="Ubicacion" sortBy="#{res.idUbicacion.nombre}" filterBy="#{res.idUbicacion.idUbicacion}">
+                                <f:facet name="filter">
+                                    <p:selectOneMenu onchange="PF('wd_tbl_responsables').filter()" filter="true" filterMatchMode="startsWith" style="width: 10em">
+                                        <f:selectItem itemLabel="Seleccione Ubicacion" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{ubicacionesMB.ubicList}" var="ub" itemLabel="#{ub.nombre}" itemValue="#{ub.idUbicacion}" />
+                                    </p:selectOneMenu>
+                                </f:facet>
+                                <p:outputLabel>#{res.idUbicacion.nombre}</p:outputLabel>
+                            </p:column>
+
+                            <p:column headerText="Correo" sortBy="#{res.correo}">
+                                <p:outputLabel>#{res.correo}</p:outputLabel>
+                            </p:column>
+                        </p:dataTable>
+                        <p:commandButton value="Asignar" update="f_crearEquipo" icon="fa fa-check" onclick="PF('wd_agregarResponsable').hide();"/>
+                    </h:form>
+                </p:dialog>
+
                 <!--********************************MENUS PARA EDITAR EQUIPOS****************************-->
 
                 <!--Menu para editar los equipos-->
@@ -198,6 +242,12 @@
                                 <f:selectItem itemLabel="Seleccione una ubicaci&oacute;n" itemValue="" noSelectionOption="true"/>
                                 <f:selectItems value="#{ubicacionesMB.ubicList}" var="ubic" itemLabel="#{ubic.nombre}" itemValue="#{tipo}"/>
                             </p:selectOneMenu>
+                            
+                            <p:outputLabel value="Responsable"/>
+                            <p:commandButton value="Agregar Responsable" icon="fa fa-plus" onclick="PF('wd_editarResponsable').show()" update="f_editarResponsable"/>
+
+                            <br/>
+                            <p:outputLabel value="#{equiposMB.equipSeleccionado.idResponsable.nombre}"/>
 
                             <p:outputLabel value="Estado"/>
                             <p:selectBooleanButton value="#{equiposMB.equipSeleccionado.estado}" onLabel="Funcionando" onIcon="fa fa-check" offLabel="De baja" offIcon="fa fa-close"/>
@@ -248,8 +298,8 @@
                 <!--Menu para mostrar los componentes cuando se edita un equipo--> 
                 <p:dialog widgetVar="wd_editarComponentes" modal="true" header="Agregar Componentes" closeOnEscape="true">
                     <h:form id="f_editarComponentes">
-                        <p:dataTable id="t_componentes" emptyMessage="No hay registros" rows="20" scrollable="true"
-                                     value="#{componentesMB.compDisponiblesList}" rowKey="#{comp.idComponente}" var="comp" scrollHeight="300"
+                        <p:dataTable id="t_componentes" emptyMessage="No hay registros" rows="20" scrollable="true" lazy="true"
+                                     value="#{componentesMB.compList}" rowKey="#{comp.idComponente}" var="comp" scrollHeight="300"
                                      selection="#{equiposMB.compSeleccionadoList}" widgetVar="wd_tbl_componentes">
 
                             <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
@@ -297,6 +347,39 @@
                             </p:column>
                         </p:dataTable>
                         <p:commandButton value="Agregar" actionListener="#{equiposMB.agregarComponentesEquipoSelecionado()}" update="f_editarEquipo" icon="fa fa-check"/>
+                    </h:form>
+                </p:dialog>
+                
+                <!--Menu para mostrar los responsables cuando se edita un equipo-->
+                <p:dialog widgetVar="wd_editarResponsable" modal="true" header="Agregar Responsable" closeOnEscape="true">
+                    <h:form id="f_editarResponsable">
+                        <p:dataTable id="t_responsables" emptyMessage="No hay registros" value="#{responsablesMB.respList}" var="res"
+                                     selection="#{equiposMB.equipSeleccionado.idResponsable}" selectionMode="single" rowKey="#{res.idResponsable}"
+                                     rows="10" widgetVar="wd_tbl_responsables">
+
+                            <p:column headerText="ID" sortBy="#{res.idResponsable}">
+                                <p:outputLabel>#{res.idResponsable}</p:outputLabel>
+                            </p:column>
+
+                            <p:column headerText="Nombre" sortBy="#{res.nombre}" filterBy="#{res.nombre}" filterMatchMode="contains"  filterStyle="width: 200px;">
+                                <p:outputLabel>#{res.nombre}</p:outputLabel>
+                            </p:column>
+
+                            <p:column headerText="Ubicacion" sortBy="#{res.idUbicacion.nombre}" filterBy="#{res.idUbicacion.idUbicacion}">
+                                <f:facet name="filter">
+                                    <p:selectOneMenu onchange="PF('wd_tbl_responsables').filter()" filter="true" filterMatchMode="startsWith" style="width: 10em">
+                                        <f:selectItem itemLabel="Seleccione Ubicacion" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{ubicacionesMB.ubicList}" var="ub" itemLabel="#{ub.nombre}" itemValue="#{ub.idUbicacion}" />
+                                    </p:selectOneMenu>
+                                </f:facet>
+                                <p:outputLabel>#{res.idUbicacion.nombre}</p:outputLabel>
+                            </p:column>
+
+                            <p:column headerText="Correo" sortBy="#{res.correo}">
+                                <p:outputLabel>#{res.correo}</p:outputLabel>
+                            </p:column>
+                        </p:dataTable>
+                        <p:commandButton value="Asignar" update="f_editarEquipo" icon="fa fa-check" onclick="PF('wd_editarResponsable').hide();"/>
                     </h:form>
                 </p:dialog>
 

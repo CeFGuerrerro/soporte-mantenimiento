@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../templates/PrincipalTemplate.xhtml">
+
+            <ui:define name="contenido">
+                <h:form id="f_responsables">
+                    <div>
+                        <p:commandButton value="Nuevo" icon="fa fa-plus" onclick="PF('wd_crear').show()" update="f_crear"/>
+                    </div>
+
+                    <p:dataTable id="t_responsables" emptyMessage="No hay registros" value="#{responsablesMB.respList}" var="res"
+                                 selection="#{responsablesMB.respSeleccionado}" selectionMode="single" rowKey="#{res.idResponsable}"
+                                 rows="10" paginator="true" widgetVar="wd_tbl_responsables">
+                        <f:facet name="header">
+                            Responsables
+                        </f:facet>
+
+                        <p:column headerText="ID" sortBy="#{res.idResponsable}">
+                            <p:outputLabel>#{res.idResponsable}</p:outputLabel>
+                        </p:column>
+
+                        <p:column headerText="Nombre" sortBy="#{res.nombre}" filterBy="#{res.nombre}" filterMatchMode="contains"  filterStyle="width: 200px;">
+                            <p:outputLabel>#{res.nombre}</p:outputLabel>
+                        </p:column>
+                        
+                        <p:column headerText="Ubicacion" sortBy="#{res.idUbicacion.nombre}" filterBy="#{res.idUbicacion.idUbicacion}">
+                            <f:facet name="filter">
+                                    <p:selectOneMenu onchange="PF('wd_tbl_responsables').filter()" filter="true" filterMatchMode="startsWith" style="width: 10em">
+                                        <f:selectItem itemLabel="Seleccione Ubicacion" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{ubicacionesMB.ubicList}" var="ub" itemLabel="#{ub.nombre}" itemValue="#{ub.idUbicacion}" />
+                                    </p:selectOneMenu>
+                                </f:facet>
+                            <p:outputLabel>#{res.idUbicacion.nombre}</p:outputLabel>
+                        </p:column>
+                        
+                        <p:column headerText="Correo" sortBy="#{res.correo}">
+                            <p:outputLabel>#{res.correo}</p:outputLabel>
+                        </p:column>
+
+                        <p:ajax event="rowDblselect" oncomplete="PF('wd_editar').show()" update=":f_editar"/>
+
+                    </p:dataTable>
+
+                    <p:contextMenu for="t_responsables">
+                        <p:menuitem value="Eliminar" action="#{responsablesMB.eliminarResponsable()}" icon="fa fa-trash" update="f_responsables"/>
+                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                    </p:contextMenu>
+                </h:form>
+                
+                <!--Formulario para crear responsables-->
+
+                <p:dialog widgetVar="wd_crear" modal="true" header="Nuevo Responsable">
+                    <h:form id="f_crear">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Nombre"/>
+                            <p:inputText value="#{responsablesMB.resp.nombre}" required="true" requiredMessage="Ingrese el nombre!"/>
+                            
+                            <p:outputLabel value="Ubicacion"/>
+                            <p:selectOneMenu value="#{responsablesMB.resp.idUbicacion}" converter="objectConverter" required="true"
+                                             requiredMessage="Seleccione una ubicacion" filter="true" filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Seleccione una ubicaci&oacute;n" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value="#{ubicacionesMB.ubicList}" var="ubic" itemLabel="#{ubic.nombre}" itemValue="#{tipo}"/>
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel value="Correo"/>
+                            <p:inputText value="#{responsablesMB.resp.correo}"/>
+                            
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" action="#{responsablesMB.crearResponsable()}" icon="fa fa-check" oncomplete="PF('wd_crear').hide()" update="f_responsables"/>
+                    </h:form>
+                </p:dialog>
+
+                <p:dialog widgetVar="wd_editar" modal="true" header="Editar Responsble">
+                    <h:form id="f_editar">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Nombre"/>
+                            <p:inputText value="#{responsablesMB.respSeleccionado.nombre}" required="true" requiredMessage="Ingrese el nombre!"/>
+                            
+                            <p:outputLabel value="Ubicacion"/>
+                            <p:selectOneMenu value="#{responsablesMB.respSeleccionado.idUbicacion}" converter="objectConverter" required="true"
+                                             requiredMessage="Seleccione una ubicacion" filter="true" filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Seleccione una ubicaci&oacute;n" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value="#{ubicacionesMB.ubicList}" var="ubic" itemLabel="#{ubic.nombre}" itemValue="#{tipo}"/>
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel value="Correo"/>
+                            <p:inputText value="#{responsablesMB.respSeleccionado.correo}"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" action="#{responsablesMB.editarResponsable()}" icon="fa fa-check" oncomplete="PF('wd_editar').hide()" update="f_responsables"/>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+
+            <ui:define name="menuLateral">
+                menuLateral
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

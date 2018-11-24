@@ -24,7 +24,6 @@ public class ComponentesMB implements Serializable {
 
     private Componentes comp;
     private Componentes compSeleccionado;
-    private List<Componentes> compDisponiblesList = new ArrayList<>();
     private LazyDataModel<Componentes> compList;
 
     public ComponentesMB() {
@@ -34,7 +33,6 @@ public class ComponentesMB implements Serializable {
     private void init() {
         comp = new Componentes();
         compSeleccionado = new Componentes();
-        compDisponiblesList = compf.findDisponibles();
         this.compList = new LazyDataModel<Componentes>() {
 
             @Override
@@ -111,15 +109,6 @@ public class ComponentesMB implements Serializable {
     public void setCompList(LazyDataModel<Componentes> compList) {
         this.compList = compList;
     }
-
-    public List<Componentes> getCompDisponiblesList() {
-        return compDisponiblesList;
-    }
-
-    public void setCompDisponiblesList(List<Componentes> compDisponiblesList) {
-        this.compDisponiblesList = compDisponiblesList;
-    }
-    
 
     public void crearComponente() {
         FacesContext contexto = FacesContext.getCurrentInstance();
