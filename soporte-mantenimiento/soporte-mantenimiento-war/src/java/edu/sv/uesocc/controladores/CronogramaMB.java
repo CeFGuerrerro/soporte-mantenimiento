@@ -4,6 +4,7 @@ import edu.sv.uesocc.entidades.Cronograma;
 import edu.sv.uesocc.facades.CronogramaFacadeLocal;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -30,7 +31,6 @@ public class CronogramaMB implements Serializable {
     private CronogramaFacadeLocal cronogramaEJB;
     private List<Cronograma> actividades;
     private Cronograma actividad = new Cronograma();
-    private Cronograma seleccion = new Cronograma();
 
     private ScheduleModel eventModel;
     private ScheduleEvent event = new DefaultScheduleEvent();
@@ -49,14 +49,6 @@ public class CronogramaMB implements Serializable {
 
     public void setActividad(Cronograma actividad) {
         this.actividad = actividad;
-    }
-
-    public Cronograma getSeleccion() {
-        return seleccion;
-    }
-
-    public void setSeleccion(Cronograma seleccion) {
-        this.seleccion = seleccion;
     }
 
     public ScheduleModel getEventModel() {
@@ -78,60 +70,113 @@ public class CronogramaMB implements Serializable {
     @PostConstruct
     public void init() {
         actividades = cronogramaEJB.findAll();
-        eventModel = llenarChronograma(actividades);
+        eventModel = llenarCronograma(actividades);
     }
 
-    public ScheduleModel llenarChronograma(List<Cronograma> lista) {
-        ScheduleEvent eventos = new DefaultScheduleEvent();
+    public ScheduleModel llenarCronograma(List<Cronograma> lista) {
+        ScheduleEvent evento;
         ScheduleModel modelo = new DefaultScheduleModel();
 
         for (Cronograma actividadLista : lista) {
-            modelo.addEvent(new DefaultScheduleEvent());
+            Date fechaFin = agregarHoras(actividadLista.getFechaFin());
+            evento = new DefaultScheduleEvent(actividadLista.getNombreEvento(), actividadLista.getFechaInicio(), fechaFin);
+            modelo.addEvent(evento);
+            evento.setId(actividadLista.getIdCronograma().toString());
         }
 
         return modelo;
     }
 
+    public Date agregarHoras(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.HOUR_OF_DAY, 23);
+        return calendar.getTime();
+    }
+
+    public void dltEvent() {
+
+        boolean registrado = false;
+        FacesMessage message = null;
+
+        try {
+            Integer id = Integer.parseInt(event.getId());
+            actividad.setIdCronograma(id);
+            actividad.setNombreEvento(event.getTitle());
+            actividad.setFechaInicio(event.getStartDate());
+            actividad.setFechaFin(event.getEndDate());
+            registrado = cronogramaEJB.remove(actividad);
+            if (registrado) {
+                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Actividad eliminada", null);
+                addMessage(message);
+                eventModel = new DefaultScheduleModel();
+                actividad = new Cronograma();
+            } else {
+                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "No se pudo registrar", null);
+                addMessage(message);
+            }
+        } catch (Exception e) {
+            message = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error!", e.getMessage());
+            addMessage(message);
+        }
+        actividades = cronogramaEJB.findAll();
+        eventModel = llenarCronograma(actividades);
+        event = new DefaultScheduleEvent();
+    }
+
     public void addEvent() {
         //Si el Id es null se tomo como que no existe y se agrega al modelo y a la base de datos
+        boolean registrado = false;
+        FacesMessage message = null;
+        
         if (event.getId() == null) {
-            boolean registrado = false;
-            FacesContext contexto = FacesContext.getCurrentInstance();
 
             try {
-
+                actividad.setNombreEvento(event.getTitle());
+                actividad.setFechaInicio(event.getStartDate());
+                actividad.setFechaFin(event.getEndDate());
                 registrado = cronogramaEJB.create(actividad);
                 if (registrado) {
-                    contexto.addMessage(null, new FacesMessage("Actividad agregada."));
+                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Actividad agregada", null);
+                    addMessage(message);
                     actividad = new Cronograma();
-                    eventModel.addEvent(event);
+                    eventModel = new DefaultScheduleModel();
                 } else {
-                    contexto.addMessage(null, new FacesMessage("No se pudo registrar."));
+                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "No se pudo registrar", null);
+                    addMessage(message);
                 }
 
             } catch (Exception e) {
-                contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error:", e.getMessage()));
+                message = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error!", e.getMessage());
+                addMessage(message);
             }
             actividades = cronogramaEJB.findAll();
+            eventModel = llenarCronograma(actividades);
 
         } else {
             //Si el Id no es null se toma como una actividad ya existente y se edita.
-            boolean registrado = false;
-            FacesContext contexto = FacesContext.getCurrentInstance();
             try {
-                registrado = cronogramaEJB.edit(seleccion);
+                Integer id = Integer.parseInt(event.getId());
+                actividad.setIdCronograma(id);
+                actividad.setNombreEvento(event.getTitle());
+                actividad.setFechaInicio(event.getStartDate());
+                actividad.setFechaFin(event.getEndDate());
+                registrado = cronogramaEJB.edit(actividad);
                 if (registrado) {
-                    contexto.addMessage(null, new FacesMessage("Actividad editada."));
+                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Actividad modificada", null);
+                    addMessage(message);
                     actividad = new Cronograma();
-                    seleccion = new Cronograma();
-                    eventModel.updateEvent(event);
+                    eventModel = new DefaultScheduleModel();
                 } else {
-                    contexto.addMessage(null, new FacesMessage("No se pudo registrar."));
+                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "No se pudo registrar", null);
+                    addMessage(message);
                 }
             } catch (Exception e) {
-                contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error:", e.getMessage()));
+                message = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error!", e.getMessage());
+                addMessage(message);
             }
             actividades = cronogramaEJB.findAll();
+            eventModel = llenarCronograma(actividades);
         }
 
         event = new DefaultScheduleEvent();
@@ -146,15 +191,45 @@ public class CronogramaMB implements Serializable {
     }
 
     public void onEventMove(ScheduleEntryMoveEvent event) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event moved", "Day delta:" + event.getDayDelta() + ", Minute delta:" + event.getMinuteDelta());
 
-        addMessage(message);
+        ScheduleEvent onMove = event.getScheduleEvent();
+        boolean registrado = false;
+        FacesMessage message = null;
+
+        try {
+            Integer id = Integer.parseInt(onMove.getId());
+            actividad.setIdCronograma(id);
+            actividad.setNombreEvento(onMove.getTitle());
+            //Date desde = onMoveDesde(onMove.getStartDate(), event.getDayDelta());
+            actividad.setFechaInicio(onMove.getStartDate());
+            System.out.println(actividad.getFechaInicio());
+            actividad.setFechaFin(onMove.getEndDate());
+            registrado = cronogramaEJB.edit(actividad);
+            if (registrado) {
+                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Actividad desplazada.", "Dias: " + event.getDayDelta());
+                System.out.println(event.getDayDelta() + " " + event.getMinuteDelta());
+                System.out.println(actividad.getFechaInicio() + " --- " + actividad.getFechaFin());
+                System.out.println(onMove.getStartDate() + " --- " + onMove.getEndDate());
+                addMessage(message);
+                actividad = new Cronograma();
+            } else {
+                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "No se registro el cambio en la DB");
+                addMessage(message);
+            }
+        } catch (Exception e) {
+            message = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error!", e.getMessage());
+            addMessage(message);
+        }
+        actividades = cronogramaEJB.findAll();
+
     }
-
-    public void onEventResize(ScheduleEntryResizeEvent event) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event resized", "Day delta:" + event.getDayDelta() + ", Minute delta:" + event.getMinuteDelta());
-
-        addMessage(message);
+    
+    public Date onMoveDesde(Date date, int dias) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.HOUR_OF_DAY, 0);
+        calendar.add(Calendar.DATE, dias);
+        return calendar.getTime();
     }
 
     private void addMessage(FacesMessage message) {

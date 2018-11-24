@@ -3,17 +3,16 @@ package edu.sv.uesocc.controladores;
 import edu.sv.uesocc.entidades.Tecnicos;
 import edu.sv.uesocc.facades.TecnicosFacadeLocal;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 
 @Named(value = "tecnicosMB")
-@SessionScoped
+@ViewScoped
 public class TecnicosMB implements Serializable {
 
     public TecnicosMB() {
