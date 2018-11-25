@@ -78,21 +78,21 @@
                             <p:inputText value="#{memoriasMB.memory.numeroSerie}" required="true" requiredMessage="Ingrese numero de serie!"/>
 
                             <p:outputLabel value="Marca"/>
-                            <p:selectOneMenu value="#{memory.idMarca.idMarca}" converter="objectConverter" required="true" 
+                            <p:selectOneMenu value="#{memoriasMB.memory.idMarca}" converter="objectConverter" required="true" 
                                              requiredMessage="Seleccione una marca" filter="true" 
                                              filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="Seleccione una marca" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{marcasMB.marcList}" var="marca" itemLabel="#{marca.nombre}" itemValue="#{marca}"/>
                             </p:selectOneMenu>
                             <p:outputLabel value="Tipo memoria"/>
-                            <p:selectOneMenu value="#{memory.idTipo.tipoMemoria}" converter="objectConverter" required="true" 
+                            <p:selectOneMenu value="#{memoriasMB.memory.idTipo}" converter="objectConverter" required="true" 
                                              requiredMessage="Seleccione memoria" filter="true" 
                                              filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="Seleccione memoria" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{tiposMemoriaMB.tiposMemoriaList}" var="tipoMemoria" itemLabel="#{tipoMemoria.tipoMemoria}" itemValue="#{tipoMemoria}"/>
                             </p:selectOneMenu>
                             <p:outputLabel value="Capacidad"/>
-                            <p:selectOneMenu value="#{memory.idCapacidad.capacidad}" converter="objectConverter" required="true" 
+                            <p:selectOneMenu value="#{memoriasMB.memory.idCapacidad}" converter="objectConverter" required="true" 
                                              requiredMessage="Seleccione capacidad" filter="true" 
                                              filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="Seleccione capacidad" itemValue="" noSelectionOption="true" />

@@ -71,21 +71,21 @@
                             <p:outputLabel value="Número de Serie:"/>
                             <p:inputText value="#{procesadoresMB.procesador.numeroSerie}" required="true" requiredMessage="Ingrese el número de serie!"/>
                             <p:outputLabel value="Arquitectura:"/>
-                            <p:selectOneMenu value="#{procesador.idArquitectura.idArquitectura}" converter="objectConverter" required="true" 
+                            <p:selectOneMenu value="#{procesadoresMB.procesador.idArquitectura}" converter="objectConverter" required="true" 
                                              requiredMessage="Seleccione una arquitectura" filter="true" 
                                              filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="Seleccione una arquitectura" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{arquitecturasMB.arquiList}" var="arqui" itemLabel="#{arqui.arquitectura}" itemValue="#{arqui}"/>
                             </p:selectOneMenu>
                              <p:outputLabel value="Modelo:"/>
-                             <p:selectOneMenu value="#{procesador.idModelo.idModelo}" converter="objectConverter" required="true" 
+                             <p:selectOneMenu value="#{procesadoresMB.procesador.idModelo}" converter="objectConverter" required="true" 
                                              requiredMessage="Seleccione un modelo" filter="true" 
                                              filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="Seleccione un modelo" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{modelosMB.modelList}" var="modelo" itemLabel="#{modelo.nombre}" itemValue="#{modelo}"/>
                             </p:selectOneMenu>
                             <p:outputLabel value="Socket"/>
-                            <p:selectOneMenu value="#{procesador.idSocket.idSocket}" converter="objectConverter" required="true" 
+                            <p:selectOneMenu value="#{procesadoresMB.procesador.idSocket}" converter="objectConverter" required="true" 
                                              requiredMessage="Seleccione un socket" filter="true" 
                                              filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="Seleccione un socket" itemValue="" noSelectionOption="true" />

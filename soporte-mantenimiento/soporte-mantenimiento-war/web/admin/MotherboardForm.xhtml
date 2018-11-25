@@ -62,14 +62,14 @@
                             <p:outputLabel>Numero de Serie:</p:outputLabel>
                             <p:inputText value="#{motherboardsMB.placa.numeroSerie}" required="true" requiredMessage="Ingrese el número de serie!"/>
                             <p:outputLabel value="Marca"/>
-                            <p:selectOneMenu value="#{placa.idMarca.idMarca}" converter="objectConverter" required="true" 
+                            <p:selectOneMenu value="#{motherboardsMB.placa.idMarca}" converter="objectConverter" required="true" 
                                              requiredMessage="Seleccione una marca" filter="true" 
                                              filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="Seleccione una marca" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{marcasMB.marcList}" var="marca" itemLabel="#{marca.nombre}" itemValue="#{marca}"/>
                             </p:selectOneMenu>
                             <p:outputLabel value="Socket"/>
-                            <p:selectOneMenu value="#{placa.idSocket.idSocket}" converter="objectConverter" required="true" 
+                            <p:selectOneMenu value="#{motherboardsMB.placa.idSocket}" converter="objectConverter" required="true" 
                                              requiredMessage="Seleccione un socket" filter="true" 
                                              filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="Seleccione un socket" itemValue="" noSelectionOption="true" />

@@ -24,9 +24,9 @@
                             Fuentes
                         </f:facet>
                         <p:column headerText="ID" sortBy="#{fuente.idFuente}">
-                            <p:outputLabel>#{placa.idMotherboard}</p:outputLabel>
+                            <p:outputLabel>#{fuente.idFuente}</p:outputLabel>
                         </p:column>
-                   
+
                         <p:column headerText="Modelo" sortBy="#{fuente.idModelo.nombre}" filterBy="#{fuente.idModelo.nombre}">
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('wd_t_fuente').filter()" filter="true" filterMatchMode="startsWith">
@@ -63,20 +63,20 @@
                         <p:panelGrid columns="2">
                             <p:outputLabel value="Numero de serie:"/>
                             <p:inputText value="#{fuentesMB.fuente.numeroSerie}" required="true" requiredMessage="Ingrese numero de serie!"/>
-                            
+
                             <p:outputLabel value="Modelo"/>
-                            <p:selectOneMenu value="#{fuente.idModelo.idModelo}" converter="objectConverter" required="true" 
+                            <p:selectOneMenu value="#{fuentesMB.fuente.idModelo}" converter="objectConverter" required="true" 
                                              requiredMessage="Seleccione modelo" filter="true" 
                                              filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="Seleccione modelo" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{modelosMB.modelList}" var="modelo" itemLabel="#{modelo.nombre}" itemValue="#{modelo}"/>
                             </p:selectOneMenu>
-                            
+
                             <p:outputLabel value="Potencia:"/>
                             <p:inputText value="#{fuentesMB.fuente.potencia}" required="true" requiredMessage="Ingrese potencia!"/>
                             <p:outputLabel value="Pines:"/>
                             <p:inputText value="#{fuentesMB.fuente.numeroPines}" required="true" requiredMessage="Ingrese cantidad de pines!"/>
-                            
+
                         </p:panelGrid>
                         <p:commandButton value="Guardar" action="#{fuentesMB.agregarFuente()}" icon="fa fa-check" oncomplete="PF('wd_agregar').hide()" update="f_fuente"/>
                     </h:form>

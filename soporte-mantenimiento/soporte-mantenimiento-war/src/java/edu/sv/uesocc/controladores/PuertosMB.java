@@ -11,6 +11,7 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -30,10 +31,10 @@ public class PuertosMB implements Serializable {
     private Puertos puerto;
     private Puertos puertoSeleccionado;
     private List<Puertos> puertoList = new ArrayList<>();
-    FacesContext contexto = FacesContext.getCurrentInstance();
      
     public PuertosMB() {
     }
+    @PostConstruct
     public void init(){
     puerto = new Puertos();
     puertoSeleccionado = new Puertos();
@@ -65,6 +66,8 @@ public class PuertosMB implements Serializable {
     }
  
     private void obtenerTodos() {
+        
+    FacesContext contexto = FacesContext.getCurrentInstance();
         try {
             puertoList = puertosFacade.findAll();
         } catch (Exception e) {
@@ -72,9 +75,13 @@ public class PuertosMB implements Serializable {
         }
     }
 
-    public void agregarPuerto() {
+    public void agregarPuerto()
+    {
+        
+    FacesContext contexto = FacesContext.getCurrentInstance();
+        boolean creado = false;
         try {
-            boolean creado = false;
+            creado=puertosFacade.create(puerto);
             if (creado) {
                 puerto = new Puertos();
                 contexto.addMessage(null, new FacesMessage("Registro creado"));
@@ -88,6 +95,8 @@ public class PuertosMB implements Serializable {
     }
 
     public void eliminarPuerto() {
+        
+    FacesContext contexto = FacesContext.getCurrentInstance();
         boolean eliminado = false;
         try {
             eliminado = puertosFacade.remove(puerto);
@@ -104,6 +113,8 @@ public class PuertosMB implements Serializable {
     }
 
     public void editarPuerto() {
+        
+    FacesContext contexto = FacesContext.getCurrentInstance();
         boolean editado = false;
         try {
             editado = puertosFacade.edit(puertoSeleccionado);

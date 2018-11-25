@@ -94,7 +94,7 @@
                             <p:inputText value="#{discosMB.disco.numeroSerie}" required="true" requiredMessage="Ingrese el numero de serie!"/>
 
                             <p:outputLabel value="Marca"/>
-                            <p:selectOneMenu value="#{disco.idMarca.idMarca}" converter="objectConverter" required="true" 
+                            <p:selectOneMenu value="#{discosMB.disco.idMarca}" converter="objectConverter" required="true" 
                                              requiredMessage="Seleccione una marca" filter="true" 
                                              filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="Seleccione una marca" itemValue="" noSelectionOption="true" />
@@ -102,7 +102,7 @@
                             </p:selectOneMenu>
                             
                             <p:outputLabel value="Tipo Disco"/>
-                            <p:selectOneMenu value="#{disco.idTipoDisco.idTipoDisco}" converter="objectConverter" required="true" 
+                            <p:selectOneMenu value="#{discosMB.disco.idTipoDisco}" converter="objectConverter" required="true" 
                                              requiredMessage="Seleccione disco" filter="true" 
                                              filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="Seleccione disco" itemValue="" noSelectionOption="true" />
@@ -110,7 +110,7 @@
                             </p:selectOneMenu>
                             
                             <p:outputLabel value="Capacidad"/>
-                            <p:selectOneMenu value="#{disco.idCapacidad.idCapacidad}" converter="objectConverter" required="true" 
+                            <p:selectOneMenu value="#{discosMB.disco.idCapacidad}" converter="objectConverter" required="true" 
                                              requiredMessage="Seleccione capacidad" filter="true" 
                                              filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="Seleccione capacidad" itemValue="" noSelectionOption="true" />
@@ -118,7 +118,7 @@
                             </p:selectOneMenu>
                             
                             <p:outputLabel value="Tipo Puerto"/>
-                            <p:selectOneMenu value="#{disco.idPuerto.idPuerto}" converter="objectConverter" required="true" 
+                            <p:selectOneMenu value="#{discosMB.disco.idPuerto}" converter="objectConverter" required="true" 
                                              requiredMessage="Seleccione puerto" filter="true" 
                                              filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="Seleccione puerto" itemValue="" noSelectionOption="true" />

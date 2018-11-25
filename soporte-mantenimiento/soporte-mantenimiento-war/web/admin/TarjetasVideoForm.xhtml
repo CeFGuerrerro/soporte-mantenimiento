@@ -66,14 +66,14 @@
                             <p:inputText value="#{tarjetasVideoMB.tarjeta.numeroSerial}" required="true" requiredMessage="Ingrese el numero de serie!"/>
 
                             <p:outputLabel value="Marca"/>
-                            <p:selectOneMenu value="#{tarjeta.idMarca.idMarca}" converter="objectConverter" required="true" 
+                            <p:selectOneMenu value="#{tarjetasVideoMB.tarjeta.idMarca}" converter="objectConverter" required="true" 
                                              requiredMessage="Seleccione una marca" filter="true" 
                                              filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="Seleccione una marca" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{marcasMB.marcList}" var="marca" itemLabel="#{marca.nombre}" itemValue="#{marca}"/>
                             </p:selectOneMenu>
                             <p:outputLabel value="Tipo Puerto"/>
-                            <p:selectOneMenu value="#{tarjeta.idPuerto.idPuerto}" converter="objectConverter" required="true" 
+                            <p:selectOneMenu value="#{tarjetasVideoMB.tarjeta.idPuerto}" converter="objectConverter" required="true" 
                                              requiredMessage="Seleccione puerto" filter="true" 
                                              filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="Seleccione puerto" itemValue="" noSelectionOption="true" />
