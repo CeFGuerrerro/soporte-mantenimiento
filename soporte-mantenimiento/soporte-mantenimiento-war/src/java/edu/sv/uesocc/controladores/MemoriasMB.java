@@ -97,7 +97,7 @@ public class MemoriasMB implements Serializable {
         boolean eliminado = false;
         FacesContext contexto = FacesContext.getCurrentInstance();
         try {
-            eliminado = memoriasFacade.remove(memory);
+            eliminado = memoriasFacade.remove(memSelect);
             if (eliminado) {
                 contexto.addMessage(null, new FacesMessage("Memoria eliminada"));
             } else {
@@ -118,7 +118,7 @@ public class MemoriasMB implements Serializable {
             if (editado) {
                 contexto.addMessage(null, new FacesMessage("Memoria modificada"));
             } else {
-                contexto.addMessage(null, new FacesMessage("Ningun cambio fue efectuado en memoria seleccionada"));
+                contexto.addMessage(null, new FacesMessage("Ningún cambio fue efectuado en memoria seleccionada"));
             }
             obtenerTodas();
         } catch (Exception e) {

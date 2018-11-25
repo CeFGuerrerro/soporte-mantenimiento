@@ -99,7 +99,7 @@ public class DiscosMB implements Serializable {
         boolean eliminado= false;
         FacesContext contexto= FacesContext.getCurrentInstance();
         try {
-            eliminado= discosFacade.remove(disco);
+            eliminado= discosFacade.remove(discosSeleccionados);
             if (eliminado) {
                  contexto.addMessage(null, new FacesMessage("Disco eliminado"));
             }

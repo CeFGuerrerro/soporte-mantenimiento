@@ -93,7 +93,7 @@ public class CapacidadesMB implements Serializable {
         boolean eliminado = false;
         FacesContext contexto = FacesContext.getCurrentInstance();
         try {
-            eliminado = capacidadesFacade.remove(capacidad);
+            eliminado = capacidadesFacade.remove(objSeleccionado);
             if (eliminado) {
                 contexto.addMessage(null, new FacesMessage("Registro eliminado"));
             } else {
@@ -114,7 +114,7 @@ public class CapacidadesMB implements Serializable {
             if (editado) {
                 contexto.addMessage(null, new FacesMessage("Registro modificado"));
             } else {
-                contexto.addMessage(null, new FacesMessage("Ningun cambio fue efectuado en registro seleccionado"));
+                contexto.addMessage(null, new FacesMessage("Ningún cambio fue efectuado en registro seleccionado"));
             }
             obtenerTodas();
         } catch (Exception e) {

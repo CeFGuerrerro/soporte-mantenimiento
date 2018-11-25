@@ -96,7 +96,7 @@ public class MotherboardsMB implements Serializable {
         FacesContext contexto = FacesContext.getCurrentInstance();
         boolean eliminado = false;
         try {
-            eliminado = motherboardsFacade.remove(placa);
+            eliminado = motherboardsFacade.remove(placaSeleccionada);
             if (eliminado) {
                 contexto.addMessage(null, new FacesMessage("Registro eliminado"));
             } else {
@@ -118,7 +118,7 @@ public class MotherboardsMB implements Serializable {
             if (editado) {
                 contexto.addMessage(null, new FacesMessage("Registro modificado"));
             } else {
-                contexto.addMessage(null, new FacesMessage("Ningun cambio fue efectuado en registro seleccionado"));
+                contexto.addMessage(null, new FacesMessage("Ningún cambio fue efectuado en registro seleccionado"));
             }
             obtenerTodos();
         } catch (Exception e) {

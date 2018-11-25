@@ -95,7 +95,7 @@ public class TiposMemoriaMB implements Serializable {
         FacesContext contexto = FacesContext.getCurrentInstance();
         boolean eliminado = false;
         try {
-            eliminado = tiposMemoriaFacade.remove(tipoMemoria);
+            eliminado = tiposMemoriaFacade.remove(tipoMemoriaSeleccionada);
             if (eliminado) {
                 contexto.addMessage(null, new FacesMessage("Memoria eliminada"));
             } else {

@@ -97,7 +97,7 @@ public class FuentesMB implements Serializable {
         boolean eliminado = false;
         FacesContext contexto = FacesContext.getCurrentInstance();
         try {
-            eliminado = fuentesFacade.remove(fuente);
+            eliminado = fuentesFacade.remove(fuenteSeleccionada);
             if (eliminado) {
                 contexto.addMessage(null, new FacesMessage("Registro eliminado"));
             } else {
@@ -118,7 +118,7 @@ public class FuentesMB implements Serializable {
             if (editado) {
                 contexto.addMessage(null, new FacesMessage("Registro modificado"));
             } else {
-                contexto.addMessage(null, new FacesMessage("Ningun cambio fue efectuado en registro seleccionado"));
+                contexto.addMessage(null, new FacesMessage("Ningún cambio fue efectuado en registro seleccionado"));
             }
             obtenerTodos();
         } catch (Exception e) {

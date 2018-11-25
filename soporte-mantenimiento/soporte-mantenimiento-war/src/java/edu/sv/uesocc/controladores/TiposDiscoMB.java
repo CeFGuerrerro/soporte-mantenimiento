@@ -97,7 +97,7 @@ public class TiposDiscoMB implements Serializable {
         boolean eliminado = false;
         FacesContext contexto = FacesContext.getCurrentInstance();
         try {
-            eliminado = tiposDiscoFacade.remove(tpDisco);
+            eliminado = tiposDiscoFacade.remove(tipoDiscoSeleccionado);
             if (eliminado) {
                 contexto.addMessage(null, new FacesMessage("Registro eliminado"));
             } else {
@@ -118,7 +118,7 @@ public class TiposDiscoMB implements Serializable {
             if (editado) {
                 contexto.addMessage(null, new FacesMessage("Registro modificado"));
             } else {
-                contexto.addMessage(null, new FacesMessage("Ningun cambio fue efectuado en registro seleccionado"));
+                contexto.addMessage(null, new FacesMessage("Ningún cambio fue efectuado en registro seleccionado"));
             }
             obtenerTodos();
         } catch (Exception e) {

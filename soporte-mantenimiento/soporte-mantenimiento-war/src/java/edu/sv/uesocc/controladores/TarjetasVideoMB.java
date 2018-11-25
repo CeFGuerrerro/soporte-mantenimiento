@@ -96,7 +96,7 @@ public class TarjetasVideoMB implements Serializable {
         FacesContext contexto = FacesContext.getCurrentInstance();
         boolean eliminado = false;
         try {
-            eliminado = tarjetasVideoFacade.remove(tarjeta);
+            eliminado = tarjetasVideoFacade.remove(tarjetaSeleccionada);
             if (eliminado) {
                 contexto.addMessage(null, new FacesMessage("Registro eliminado"));
             } else {
