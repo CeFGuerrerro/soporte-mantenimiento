@@ -16,7 +16,7 @@
                         <p:commandButton id="btnNuevo" value="Nueva Arquitectura" oncomplete="PF('wnuevo').show();"/>
                     </div>
                     
-                    <p:dataTable value="#{arquitecturasMB.arquiList}" id="tabla" var="tab" rows="10" paginator="true" emptyMessage="No hay registros" selectionMode="single" selection="#{arquitecturasMB.seleccion}"
+                    <p:dataTable value="#{arquitecturasMB.arquiList}" id="tabla" var="tab" rows="10" paginator="true" emptyMessage="No hay registros" selectionMode="single" selection="#{arquitecturasMB.arquiSeleccionado}"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="#{tab.idArquitectura}"
                                  rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página: ({currentPage} de {totalPages})" paginatorAlwaysVisible="false" paginatorPosition="bottom">
                         <f:facet name="header">

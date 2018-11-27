@@ -12,51 +12,74 @@
         <ui:composition template="./../templates/PrincipalTemplate.xhtml">
 
             <ui:define name="contenido">
-                <h:form id="frmTabla">
+                <h:form id="f_tiposSoftware">
+                    <!--Boton agregar-->
                     <div>
-                        <p:commandButton id="btnNuevo" value="Nuevo Software" oncomplete="PF('wnuevo').show();"/>
+                        <p:commandButton id="btnNuevo" value="Nuevo Software" icon="fa fa-plus" onclick="PF('wd_agregar').show()" update="f_agregar"/>
                     </div>
-                    
-                    <p:dataTable value="#{tiposSoftwareMB.tipoSWList}" var="tsw" rows="10" paginator="true" emptyMessage="No hay registros" selectionMode="single" selection="#{tiposSoftwareMB.tipoSWSeleccionado}"
-                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="#{tsw.idTipoSoftware}"
-                                 rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página: ({currentPage} de {totalPages})" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+
+                    <!--tabla Tipo Software-->
+                    <p:dataTable 
+                        id="t_tiposSoftware" emptyMessage="No hay registros" selectionMode="single" rows="10" scrollable="true"
+                        paginator="true" var="tsw" rowKey="#{tsw.idTipoSoftware}"  
+                        selection="#{softwareMB.softwareSeleccionado}" widgetVar="wd_t_software" value="#{tiposSoftwareMB.tipoSWList}">
+
                         <f:facet name="header">
                             Tipos Software
                         </f:facet>
-                        
+
+                        <p:column headerText="ID" sortBy="#{tsw.idTipoSoftware}">
+                            <p:outputLabel>#{tsw.idTipoSoftware}</p:outputLabel>
+                        </p:column>
+
                         <p:column headerText="Nombre" filterBy="#{tsw.tipoSoftware}" filterMatchMode="contains">
                             <p:outputLabel value="#{tsw.tipoSoftware}"/>
                         </p:column>
-                        
-                        <p:ajax event="rowDblselect" oncomplete="PF('weditar').show()" update=":frmEditar"/>
+
+                        <p:ajax event="rowDblselect" oncomplete="PF('weditar').show()" update=":f_editar"/>
                     </p:dataTable>
-                    
+
+                    <!--Eliminar-->
+                    <p:contextMenu for="t_tiposSoftware">
+                        <p:menuitem value="Eliminar" action="#{tiposSoftwareMB.eliminarTiposSoftware()}" update="f_tiposSoftware" icon="fa fa-trash"/>
+                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                    </p:contextMenu>
+
                 </h:form>
-                <h:form id="frmNuevo">
-                    <p:dialog id="dlgNuevo" widgetVar="wnuevo" header="Nuevo Tipo Software" modal="true" resizable="false" closeOnEscape="true" draggable="false">
-                        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
-                            <p:outputLabel value="Nombre" for="nombre"/>
-                            <p:inputText id="nombre" value="#{tiposSoftwareMB.tiposSW.tipoSoftware}" required="true" requiredMessage="¡Ingrese el nombre!"/>
+                <!-- Agregar nuevo -->
+                <p:dialog widgetVar="wd_agregar" modal="true" header="Agregar Tipo de Software">
+                    <h:form id="f_agregar">
+                        <p:panelGrid columns="2">
+
+                            <p:outputLabel value="Tipo Software:"/>
+                            <p:inputText value="#{tiposSoftwareMB.tiposSW.tipoSoftware}" required="true" requiredMessage="Ingrese tipo de Software!"/>
+
                         </p:panelGrid>
-                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{tiposSoftwareMB.crearTiposSoftware()}" oncomplete="PF('wnuevo').hide()" update=":frmTabla"/>
-                    </p:dialog>
-                </h:form>
-                
-                <h:form id="frmEditar">
-                    <p:dialog id="dlgEditar" widgetVar="weditar" header="Editar Tipo Software" modal="true" resizable="false" closeOnEscape="true" draggable="false">
-                        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
-                            <p:outputLabel value="Nombre" for="nombre"/>
-                            <p:inputText id="nombre" value="#{tiposSoftwareMB.tipoSWSeleccionado.tipoSoftware}" required="true" requiredMessage="¡Ingrese el nombre!"/>
-                            
+
+                        <p:commandButton value="Guardar" action="#{tiposSoftwareMB.crearTiposSoftware()}" icon="fa fa-check" oncomplete="PF('wd_agregar').hide()" update="f_tiposSoftware"/>
+
+                    </h:form>
+                </p:dialog>
+
+                <!--Editar TS-->
+                <p:dialog widgetVar="wd_editar" modal="true" header="Editar Tipo de Software">
+                    <h:form id="f_editar">
+                        <p:panelGrid columns="2">
+
+                            <p:outputLabel value="Tipo de Software:"/>
+                            <p:inputText value="#{tiposSoftwareMB.tipoSWSeleccionado.tipoSoftware}"/>
+
                         </p:panelGrid>
-                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{tiposSoftwareMB.modificarTiposSoftware()}" oncomplete="PF('weditar').hide()" update=":frmTabla"/>
-                    </p:dialog>
-                    
-                </h:form>
+
+                        <p:commandButton value="Guardar" action="#{tiposSoftwareMB.modificarTiposSoftware()}" icon="fa fa-check" oncomplete="PF('wd_editar').hide()" update="f_tiposSoftware"/>
+                        
+                    </h:form>
+                </p:dialog>
+
             </ui:define>
 
             <ui:define name="menuLateral">
-                menuLateral
+                <ui:include src="../templates/HwSwMenuLateral.xhtml"/>
             </ui:define>
 
         </ui:composition>

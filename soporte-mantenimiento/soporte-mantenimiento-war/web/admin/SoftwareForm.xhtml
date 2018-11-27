@@ -12,57 +12,160 @@
 
             <ui:define name="contenido">
                 <h:form id="f_software">
-                    <div>
-                        <p:commandButton value="Nuevo" icon="fa fa-plus" onclick="PF('wd_crear').show()" update="f_crear"/>
-                    </div>
-                    <p:dataTable id="t_modelos" value="#{softwareMB.softwareList}" var="sw" selectionMode="single"
-                                 selection="#{softwareMB.softwareSeleccionado}" rowKey="#{software.idSoftware}" rows="10" paginator="true"
-                                 emptyMessage="No hay registros" widgetVar="wd_t_software">
 
+                    <!-- Boton nuevo -->
+                    <div>
+                        <p:commandButton value="Nuevo Software" icon="fa fa-plus" onclick="PF('wd_crear').show()" update="f_crear"/>
+                    </div>
+
+                    <!-- Tabla Software -->
+
+                    <p:dataTable id="t_software" emptyMessage="No hay registros" selectionMode="single" rows="10" scrollable="true"
+                                 paginator="true" value="#{softwareMB.softwareList}" var="soft" rowKey="#{soft.idSoftware}" 
+                                 selection="#{softwareMB.softwareSeleccionado}" widgetVar="wd_t_software">
+                      
                         <f:facet name="header">
                             Software
                         </f:facet>
 
-                        <p:column headerText="ID" sortBy="#{software.idSoftware}">
-                            <p:outputLabel>#{software.idSoftware}</p:outputLabel>
+                        <!-- Columnas de la Tabla -->
+                        <p:column headerText="ID" sortBy="#{soft.idSoftware}">
+                            <p:outputLabel>#{soft.idSoftware}</p:outputLabel>
                         </p:column>
-                        
-                         <p:column headerText="Tipo Software" sortBy="#{software.idTipoSoftware.nombre}" filterBy="#{software.idTipoSoftware.nombre}">
+
+                        <p:column headerText="Nombre" filterBy="#{soft.nombre}" sortBy="#{soft.nombre}" style="width: 9em">
+                            <p:outputLabel value="#{soft.nombre}"/>
+                        </p:column>
+
+                        <p:column headerText="Tipo Software" sortBy="#{soft.idTipoSoftware.idTipoSoftware}" filterBy="#{soft.idTipoSoftware.idTipoSoftware}" style="width: 12em">
                             <f:facet name="filter">
-                                <p:selectOneMenu onchange="PF('wd_t_software').filter()" filter="true" filterMatchMode="startsWith">
-                                    <f:selectItem itemLabel="Seleccione un tipo de Software" itemValue="#{null}" noSelectionOption="true" />
-                                    <f:selectItems value="#{tiposSoftwareMB.tipoSWList}" var="tsw" itemLabel="#{tsw.tipoSoftware}" itemValue="#{tsw.tipoSoftware}" />
+                                <p:selectOneMenu onchange="PF('wd_t_software').filter()" filter="true" filterMatchMode="startsWith" style="width: 8em">
+                                    <f:selectItem itemLabel="Seleccione un Tipo de Software" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{tiposSoftwareMB.tipoSWList}" var="ts" itemLabel="#{ts.tipoSoftware}" itemValue="#{ts.tipoSoftware}" />
                                 </p:selectOneMenu>
                             </f:facet>
-                            <p:outputLabel>#{software.idTipoSoftware.nombre}</p:outputLabel>
+                            <p:outputLabel>#{soft.idTipoSoftware.tipoSoftware}</p:outputLabel>
                         </p:column>
-                        
-                          <p:column headerText="Arquitectura" sortBy="#{software.idArquitectura.arquitectura}" filterBy="#{software.idArquitectura.arquitectura}">
+
+
+                        <p:column headerText="Arquitectura" sortBy="#{soft.idArquitectura.idArquitectura}" filterBy="#{soft.idArquitectura.idArquitectura}" style="width: 12em;">
                             <f:facet name="filter">
-                                <p:selectOneMenu onchange="PF('wd_t_software').filter()" filter="true" filterMatchMode="startsWith">
-                                    <f:selectItem itemLabel="Seleccione un tipo de Arquitectura" itemValue="#{null}" noSelectionOption="true" />
-                                    <f:selectItems value="#{arquitecturasMB.arquiList}" var="arq" itemLabel="#{arq.arquitectura}" itemValue="#{arq.arquitectura}" />
+                                <p:selectOneMenu onchange="PF('wd_t_software').filter()" filter="true" filterMatchMode="startsWith" style="width: 10em">
+                                    <f:selectItem itemLabel="Seleccione una Arquitectura" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{arquitecturasMB.arquiList}" var="ar" itemLabel="#{ar.arquitectura}" itemValue="#{ar.arquitectura}" />
                                 </p:selectOneMenu>
                             </f:facet>
-                            <p:outputLabel>#{software.idArquitectura.arquitectura}</p:outputLabel>
+                            <p:outputLabel>#{soft.idArquitectura.arquitectura}</p:outputLabel>
                         </p:column>
-                        
-                        <p:column headerText="Nombre">
-                            <p:outputLabel>#{software.nombre}</p:outputLabel>
+
+
+                        <p:column headerText="Version" filterBy="#{soft.version}" sortBy="#{soft.version}" style="width: 9em">
+                            <p:outputLabel value="#{soft.version}"/>
                         </p:column>
-                        
-                        <p:column headerText="Version">
-                            <p:outputLabel>#{software.nombre}</p:outputLabel>
+
+                        <p:column headerText="Service Pack" filterBy="#{soft.servicePack}" sortBy="#{soft.servicePack}" style="width: 9em">
+                            <p:outputLabel value="#{soft.servicePack}"/>
                         </p:column>
+
+                        <p:column headerText="Observaciones" style="width: 15em">
+                            <p:outputLabel value="#{soft.descripcion}"/>
+                        </p:column>
+
+                        <p:ajax event="rowDblselect" oncomplete="PF('wd_editar').show()" update=":f_editar"/>
 
                     </p:dataTable>
 
+                    <!--Menu para eliminar-->
+
+                    <p:contextMenu for="t_software">
+                        <p:menuitem value="Eliminar" icon="fa fa-trash" action="#{softwareMB.eliminarSoftware()}" update="f_software"/>
+                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                    </p:contextMenu>               
+
                 </h:form>
 
-            </ui:define>
+                <!-- Formulario para agregar Software -->
+                <p:dialog widgetVar="wd_crear" modal="true" header="Nuevo Software">
+                    <h:form id="f_crear">
+                        <p:panelGrid columns="2">
+
+                            <p:outputLabel value="Software:"/>
+                            <p:inputText value="#{softwareMB.software.nombre}" required="true" requiredMessage="Ingrese el software"/>
+
+                            <p:outputLabel value="Tipo Software"/>
+                            <p:selectOneMenu value="#{softwareMB.software.idTipoSoftware}" converter="objectConverter" required="true"
+                                             requiredMessage="Seleccione un tipo de software" filter="true" filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Seleccione un tipo de software" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value="#{tiposSoftwareMB.tipoSWList}" var="ts" itemLabel="#{ts.tipoSoftware}" itemValue="#{ts}"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Arquitectura"/>
+                            <p:selectOneMenu value="#{softwareMB.software.idArquitectura}" converter="objectConverter" required="true" 
+                                             requiredMessage="Seleccione una Arquitectura" filter="true" 
+                                             filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Seleccione una Arquitectura" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{arquitecturasMB.arquiList}" var="arq" itemLabel="#{arq.arquitectura}" itemValue="#{arq}"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Version"/>
+                            <p:inputText value="#{softwareMB.software.version}"/>
+
+                            <p:outputLabel value="Service Pack"/>
+                            <p:inputText value="#{softwareMB.software.servicePack}"/>
+
+                            <p:outputLabel value="Descripción"/>
+                            <p:inputTextarea value="#{softwareMB.software.descripcion}" rows="5" />
+
+                        </p:panelGrid>
+
+                        <p:commandButton value="Guardar" action="#{softwareMB.crearSoftware()}" icon="fa fa-check" oncomplete="PF('wd_crear').hide()" update="f_software"/>
+                    </h:form>
+                </p:dialog>
+
+                <!--Formulario para editar Software -->
+                <p:dialog widgetVar="wd_editar" modal="true" header="Editar Software">
+                    <h:form id="f_editar">
+                        <p:panelGrid columns="2">
+
+                            <p:outputLabel value="Software:"/>
+                            <p:inputText value="#{softwareMB.softwareSeleccionado.nombre}" required="true" requiredMessage="Ingrese el software"/>
+
+                            <p:outputLabel value="Tipo Software"/>
+                            <p:selectOneMenu value="#{softwareMB.softwareSeleccionado.idTipoSoftware}" filter="true" 
+                                             filterMatchMode="startsWith" converter="objectConverter" required="true" 
+                                             requiredMessage="Seleccione un Tipo de Software">
+                                <f:selectItem itemLabel="Seleccione un Tipo de Software" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{tiposSoftwareMB.tipoSWList}" var="ts" itemLabel="#{ts.tipoSoftware}" itemValue="#{ts}"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Tipo Arquitectura"/>
+                            <p:selectOneMenu value="#{softwareMB.softwareSeleccionado.idArquitectura}" filter="true" 
+                                             filterMatchMode="startsWith" converter="objectConverter" required="true" 
+                                             requiredMessage="Seleccione un Tipo de Arquitectura">
+                                <f:selectItem itemLabel="Seleccione un Tipo de Arquitectura" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{arquitecturasMB.arquiList}" var="aq" itemLabel="#{aq.arquitectura}" itemValue="#{aq}"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Versión"/>
+                            <p:inputText value="#{softwareMB.softwareSeleccionado.version}"/>
+
+                            <p:outputLabel value="Service Pack"/>
+                            <p:inputText value="#{softwareMB.softwareSeleccionado.servicePack}"/>
+
+                            <p:outputLabel value="Descripción"/>
+                            <p:inputTextarea value="#{softwareMB.softwareSeleccionado.descripcion}" rows="5" />
+
+                        </p:panelGrid>
+
+                        <p:commandButton value="Guardar" action="#{softwareMB.modificarSoftware()}" oncomplete="PF('wd_editar').hide()" update="f_software"/>
+                       
+                    </h:form>
+                </p:dialog>
+
+            </ui:define> 
 
             <ui:define name="menuLateral">
-                menuLateral
+                 <ui:include src="../templates/HwSwMenuLateral.xhtml"/>
             </ui:define>
 
         </ui:composition>

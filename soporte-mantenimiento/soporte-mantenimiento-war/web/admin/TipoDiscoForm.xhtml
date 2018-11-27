@@ -13,7 +13,7 @@
                     <!--Boton agregar-->
                     <div>
                         <p:commandButton value="Nuevo" icon="fa fa-plus" onclick="PF('wd_agregar').show()" update="f_agregar"/>
-                    </div>
+                    </div> 
                     <!--tabla-->
                     <p:dataTable id="t_tipoDisco" emptyMessage="No hay registros" value="#{tiposDiscoMB.tipoDiscoList}" var="tDisco"
                                  selection="#{tiposDiscoMB.tipoDiscoSeleccionado}" selectionMode="single" rowKey="#{tDisco.idTipoDisco}"

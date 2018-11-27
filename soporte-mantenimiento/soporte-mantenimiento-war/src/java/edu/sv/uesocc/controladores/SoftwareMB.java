@@ -8,7 +8,6 @@ package edu.sv.uesocc.controladores;
 import edu.sv.uesocc.entidades.Software;
 import edu.sv.uesocc.facades.SoftwareFacadeLocal;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,13 +15,14 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 
 /**
  *
  * @author o-a19
  */
 @Named(value = "softwareMB")
-@SessionScoped
+@ViewScoped
 public class SoftwareMB implements Serializable {
 
     @EJB
@@ -44,6 +44,7 @@ public class SoftwareMB implements Serializable {
         softwareSeleccionado = new Software();
         obtenerTodos();
     }
+    // ---------- Getter and Setter ---------
 
     public Software getSoftware() {
         return software;
@@ -68,6 +69,8 @@ public class SoftwareMB implements Serializable {
     public void setSoftwareList(List<Software> softwareList) {
         this.softwareList = softwareList;
     }
+    
+    //--------- Metodos ---------
 
     public void obtenerTodos() {
         FacesContext contexto = FacesContext.getCurrentInstance();
