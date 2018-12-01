@@ -11,13 +11,14 @@
             <h:form id="f_hardware_software">
                 <h2>Hardware y Software</h2>
                 <p:menu toggleable="true">
-                    <p:submenu label="Componentes">
+                    <p:submenu label="Componentes" expanded="false">
                         <p:menuitem value="Tipos de Componentes" url="../admin/TipoComponenteForm.jsf"/>
                         <p:menuitem value="Componentes" url="../admin/ComponentesForm.jsf"/>
+                        <p:menuitem value="UPS" url="../admin/UpsForm.jsf"/>
                         <p:menuitem value="Marcas" url="../admin/MarcasForm.jsf"/>
                         <p:menuitem value="Modelos" url="../admin/ModelosForm.jsf"/>
                     </p:submenu>
-                    <p:submenu label="Hardware">
+                    <p:submenu label="Hardware" expanded="false">
                         <p:menuitem value="Discos duros" url="../admin/DiscosForm.jsf"/>
                         <p:menuitem value="Tipos de disco" url="../admin/TipoDiscoForm.jsf"/>
                         <p:menuitem value="Procesadores" url="../admin/ProcesadoresForm.jsf"/>
@@ -28,8 +29,7 @@
                         <p:menuitem value="Motherboards" url="../admin/MotherboardForm.jsf"/>
                         <p:menuitem value="Puertos" url="../admin/PuertosForm.jsf"/>
                         <p:menuitem value="Sockets" url="../admin/SocketsForm.jsf"/>
-                        <p:menuitem value="Fuentes de Voltaje" url="../admin/FuentesForm.jsf"/>
-                        
+                        <p:menuitem value="Fuentes de Poder" url="../admin/FuentesForm.jsf"/>
                     </p:submenu>
                 </p:menu>
             </h:form>

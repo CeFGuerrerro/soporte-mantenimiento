@@ -9,9 +9,13 @@
 
         <ui:composition>
             <h:form id="f_ubicacion">
-                <h2>Ubicaciones</h2>
+                <h2>Asignaci&oacute;n de Equipos</h2>
                 <p:menu toggleable="true">
-                  
+                  <p:submenu label="Asignaci&oacute;n" expanded="false">
+                        <p:menuitem value="Ubicaciones" url="../admin/UbicacionesForm.jsf"/>
+                        <p:menuitem value="Responsables" url="../admin/ResponsablesForm.jsf"/>
+                        <p:menuitem value="Equipos" url="../admin/EquiposForm.jsf"/>
+                    </p:submenu>
                 </p:menu>
             </h:form>
 
