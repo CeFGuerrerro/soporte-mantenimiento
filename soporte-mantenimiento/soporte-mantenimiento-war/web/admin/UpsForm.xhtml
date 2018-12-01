@@ -1,0 +1,196 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../templates/PrincipalTemplate.xhtml">
+
+            <ui:define name="contenido">
+                <h:form id="f_ups">
+                    <p:commandButton value="Nuevo" icon="fa fa-plus" onclick="PF('wd_crearUps').show()" update="f_crearUps"/>
+
+                    <!--Tabla para mostrar los detalles de los UPs-->
+                    <p:dataTable id="t_ups" emptyMessage="No hay registros" selectionMode="single" rows="10" scrollable="true"
+                                 paginator="true" value="#{upsMB.upsList}" var="ups" rowKey="#{ups.idUps}"
+                                 selection="#{upsMB.upsSeleccionada}" widgetVar="wd_tbl_ups">
+                        <f:facet name="header">
+                            Detalles de UPS
+                        </f:facet>
+
+                        <p:column headerText="ID" style="width: 2em">
+                            <p:outputLabel value="#{ups.idUps}"/>
+                        </p:column>
+
+                        <p:column headerText="Num. Inventario">
+                            <p:outputLabel value="#{ups.idComponente.numeroInventario}"/>
+                        </p:column>
+
+                        <p:column headerText="Bateria">
+                            <p:outputPanel layout="inline" styleClass="fa fa-check" rendered="#{ups.bateria}"/>
+                            <p:outputPanel layout="inline" styleClass="fa fa-close" rendered="#{!ups.bateria}"/>
+                        </p:column>
+
+                        <p:column headerText="Estado Bateria">
+                            <p:outputPanel layout="inline" styleClass="fa fa-check" rendered="#{ups.estadoBateria}"/>
+                            <p:outputPanel layout="inline" styleClass="fa fa-close" rendered="#{!ups.estadoBateria}"/>
+                        </p:column>
+
+                        <p:column headerText="Regulador">
+                            <p:outputPanel layout="inline" styleClass="fa fa-check" rendered="#{ups.regulador}"/>
+                            <p:outputPanel layout="inline" styleClass="fa fa-close" rendered="#{!ups.regulador}"/>
+                        </p:column>
+
+                        <p:column headerText="Ultimo Cambio">
+                            <p:outputLabel value="#{ups.ultimoCambio}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </p:outputLabel>
+                        </p:column>
+
+                        <p:column headerText="Observaciones">
+                            <p:outputLabel value="#{ups.observaciones}"/>
+                        </p:column>
+
+                        <p:ajax event="rowDblselect" oncomplete="PF('wd_editarUps').show();" update=":f_editarUps"/>
+                    </p:dataTable>
+
+                    <p:contextMenu for="t_ups">
+                        <p:menuitem value="Eliminar" action="#{upsMB.eliminarUps()}" icon="fa fa-trash" update="f_ups"/>
+                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                    </p:contextMenu>
+                </h:form>
+
+                <!--Menu para crear nuevos detalles de un UPS-->
+
+                <p:dialog widgetVar="wd_crearUps" modal="true" header="Agregar Detalles UPS">
+                    <h:form id="f_crearUps">
+
+                        <p:panelGrid columns="2">
+
+                            <p:outputLabel value="Num.Inventario"/>
+                            <p:commandButton value="Agregar Componente" icon="fa fa-plus" onclick="PF('wd_agregarUps').show()" update="f_agregarUps"/>
+
+                            <br/>
+                            <p:outputLabel value="#{upsMB.comp.numeroInventario}"/>
+
+                            <p:outputLabel value="Bateria"/>
+                            <p:selectBooleanButton id="bat" value="#{upsMB.ups.bateria}" onLabel="Si" onIcon="fa fa-check" offLabel="No" offIcon="fa fa-close"/>
+
+                            <p:outputLabel value="Estado Bateria"/>
+                            <p:selectBooleanButton value="#{upsMB.ups.estadoBateria}" onLabel="Funcionando" onIcon="fa fa-check" offLabel="No Funciona" offIcon="fa fa-close"/>
+
+                            <p:outputLabel value="Regulador"/>
+                            <p:selectBooleanButton value="#{upsMB.ups.regulador}" onLabel="Si" onIcon="fa fa-check" offLabel="No" offIcon="fa fa-close"/>
+
+                            <p:outputLabel for="cal" value="Ultimo Cambio" />
+                            <p:calendar id="cal" value="#{upsMB.ups.ultimoCambio}" showOn="button" pattern="dd/MM/yyyy" />
+
+                            <p:outputLabel value="Observaciones"/>
+                            <p:inputTextarea rows="3" cols="100" value="#{upsMB.ups.observaciones}"/>
+
+                        </p:panelGrid>
+
+                        <p:commandButton value="Guardar" icon="fa fa-check" actionListener="#{upsMB.crearUps()}" update="f_ups" oncomplete="PF('wd_crearUps').hide()"/>
+
+                    </h:form>
+                </p:dialog>
+
+                <!--Menu para mostrar el UPS cuando se crea un detalle--> 
+                <p:dialog widgetVar="wd_agregarUps" modal="true" header="Agregar UPS" closeOnEscape="true">
+                    <h:form id="f_agregarUps">
+                        <p:dataTable id="t_componentes" emptyMessage="No hay registros" rows="20" scrollable="true" lazy="true"
+                                     value="#{componentesMB.compList}" rowKey="#{comp.idComponente}" var="comp" scrollHeight="300"
+                                     selection="#{upsMB.comp}" selectionMode="single" widgetVar="wd_tbl_componentes">
+
+                            <p:column headerText="Num. Inventario" filterBy="#{comp.numeroInventario}" filterMatchMode="contains" sortBy="#{comp.numeroInventario}" style="width: 9em">
+                                <p:outputLabel value="#{comp.numeroInventario}"/>
+                            </p:column>
+
+                            <p:column headerText="Tipo" filterBy="#{comp.idTipoComponente.idTipoComponente}" style="width: 12em">
+                                <f:facet name="filter">
+                                    <p:selectOneMenu onchange="PF('wd_tbl_componentes').filter()" filter="true" filterMatchMode="startsWith" style="width: 8em">
+                                        <f:selectItem itemLabel="Seleccione un tipo" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{tiposComponenteMB.tipoCompList}" var="tc" itemLabel="#{tc.nombre}" itemValue="#{tc.idTipoComponente}" />
+                                    </p:selectOneMenu>
+                                </f:facet>
+                                <p:outputLabel value="#{comp.idTipoComponente.nombre}"/>
+                            </p:column>
+
+                            <p:column headerText="Marca" filterBy="#{comp.idModelo.idMarca.idMarca}" style="width: 12em;">
+                                <f:facet name="filter">
+                                    <p:selectOneMenu onchange="PF('wd_tbl_componentes').filter()" filter="true" filterMatchMode="startsWith" style="width: 10em">
+                                        <f:selectItem itemLabel="Seleccione una marca" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{marcasMB.marcList}" var="mar" itemLabel="#{mar.nombre}" itemValue="#{mar.idMarca}" />
+                                    </p:selectOneMenu>
+                                </f:facet>
+                                <p:outputLabel value="#{comp.idModelo.idMarca.nombre}"/>
+                            </p:column>
+
+                            <p:column headerText="Modelo" filterBy="#{comp.idModelo.idModelo}" style="width: 12em">
+                                <f:facet name="filter">
+                                    <p:selectOneMenu onchange="PF('wd_tbl_componentes').filter()" filter="true" filterMatchMode="startsWith" style="width: 10em">
+                                        <f:selectItem itemLabel="Seleccione un modelo" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{modelosMB.modelList}" var="m" itemLabel="#{m.nombre}" itemValue="#{m.idModelo}"/>
+                                    </p:selectOneMenu>
+                                </f:facet>
+                                <p:outputLabel value="#{comp.idModelo.nombre}"/>
+                            </p:column>
+
+                            <p:column headerText="Serial" filterBy="#{comp.numeroSerie}" filterMatchMode="contains" style="width: 9em">
+                                <p:outputLabel value="#{comp.numeroSerie}"/>
+                            </p:column>
+
+                            <p:column headerText="Observaciones" style="width: 15em">
+                                <p:outputLabel value="#{comp.observaciones}"/>
+                            </p:column>
+                        </p:dataTable>
+                        <p:commandButton value="Agregar" update="f_crearUps" onclick="PF('wd_agregarUps').hide();" icon="fa fa-check"/>
+                    </h:form>
+                </p:dialog>
+
+                <!--Menu para editar los detalles de un UPS-->
+
+                <p:dialog widgetVar="wd_editarUps" modal="true" header="Editar Detalles UPS">
+                    <h:form id="f_editarUps">
+
+                        <p:panelGrid columns="2">
+
+                            <p:outputLabel value="Num.Inventario"/>
+                            <p:outputLabel value="#{upsMB.upsSeleccionada.idComponente.numeroInventario}"/>
+
+                            <p:outputLabel value="Bateria"/>
+                            <p:selectBooleanButton id="bat" value="#{upsMB.upsSeleccionada.bateria}" onLabel="Si" onIcon="fa fa-check" offLabel="No" offIcon="fa fa-close"/>
+
+                            <p:outputLabel value="Estado Bateria"/>
+                            <p:selectBooleanButton value="#{upsMB.upsSeleccionada.estadoBateria}" onLabel="Funcionando" onIcon="fa fa-check" offLabel="No Funciona" offIcon="fa fa-close"/>
+
+                            <p:outputLabel value="Regulador"/>
+                            <p:selectBooleanButton value="#{upsMB.upsSeleccionada.regulador}" onLabel="Si" onIcon="fa fa-check" offLabel="No" offIcon="fa fa-close"/>
+
+                            <p:outputLabel for="cal" value="Ultimo Cambio" />
+                            <p:calendar id="cal" value="#{upsMB.upsSeleccionada.ultimoCambio}" showOn="button" pattern="dd/MM/yyyy" />
+
+                            <p:outputLabel value="Observaciones"/>
+                            <p:inputTextarea rows="3" cols="100" value="#{upsMB.upsSeleccionada.observaciones}"/>
+
+                        </p:panelGrid>
+
+                        <p:commandButton value="Guardar" icon="fa fa-check" actionListener="#{upsMB.modificarUps()}" update="f_ups" oncomplete="PF('wd_editarUps').hide();"/>
+
+                    </h:form>
+                </p:dialog>
+
+            </ui:define>
+
+            <ui:define name="menuLateral">
+                menuLateral
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
