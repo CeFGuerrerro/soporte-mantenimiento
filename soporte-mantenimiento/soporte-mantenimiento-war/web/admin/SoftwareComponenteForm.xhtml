@@ -27,7 +27,7 @@
 
                         <!-- Columnas de la Tabla -->  
 
-                        <p:column headerText="ID" style="width: 2em" filterBy="#{swComp.idSoftwareComponente}">
+                        <p:column headerText="ID" style="width: 2em" sortBy="#{swComp.idSoftwareComponente}">
                             <p:outputLabel>#{swComp.idSoftwareComponente}</p:outputLabel>
                         </p:column>
 
@@ -45,7 +45,7 @@
                             <p:outputLabel value="#{swComp.idComponente.idComponente}"/>
                         </p:column>
 
-                        <p:column headerText="Licencia" style="width: 10px">
+                        <p:column headerText="Licencia" style="width: 15px">
                             <p:outputPanel layout="inline" styleClass="fa fa-check" rendered="#{swComp.licencia}"/>
                             <p:outputPanel layout="inline" styleClass="fa fa-close" rendered="#{!swComp.licencia}"/>
                         </p:column>
@@ -63,18 +63,20 @@
                     </p:dataTable>
 
                     <!--Menu para eliminar-->
-                      <p:contextMenu for="t_softwareComponente">
-                          <p:menuitem value="Eliminar" icon="fa fa-trash" action="#{softwareComponenteMB.eliminarSoftwareComponente()}" update="f_softwareComponente"/>
+                    <p:contextMenu for="t_softwareComponente">
+                        <p:menuitem value="Eliminar" icon="fa fa-trash" action="#{softwareComponenteMB.eliminarSoftwareComponente()}" update="f_softwareComponente"/>
                         <p:menuitem value="Cancelar" icon="fa fa-close"/>
                     </p:contextMenu> 
 
                 </h:form>
 
-                 <!-- Menu para crear Software Componente -->
+                <!--********************************Menus Para Software Componente****************************-->
+                
+                <!-- Menu para crear Software Componente -->
                 <p:dialog widgetVar="wd_crear" modal="true" header="Nuevo Software Componente">
                     <h:form id="f_crear">
                         <p:panelGrid columns="2">
-                            
+
                             <p:outputLabel value="Software"/>
                             <p:selectOneMenu value="#{softwareComponenteMB.softComp.idSoftware}" converter="objectConverter" required="true"
                                              requiredMessage="Seleccione un tipo de software" filter="true" filterMatchMode="startsWith">
@@ -82,43 +84,96 @@
                                 <f:selectItems value="#{softwareMB.softwareList}" var="so" itemLabel="#{so.nombre}" itemValue="#{ts}"/>
                             </p:selectOneMenu>
                             
-                            <p:outputLabel>Licencia:</p:outputLabel>
-                            <p:inputTextarea rows="5" value="#{softwareComponenteMB.softComp.licencia}"/>
+                            <p:outputLabel value="Componente"/>
+                            <p:commandButton value="Agregar Componente" icon="fa fa-plus" onclick="PF('wd_agregarComponente').show()" update="f_agregarComponente"/>
 
-                            <p:outputLabel>Serial:</p:outputLabel>
-                            <p:inputTextarea rows="5" value="#{softwareComponenteMB.softComp.serial}"/>
+                            <p:outputLabel value="Licencia"/>
+                            <p:selectBooleanButton value="#{softwareComponenteMB.softComp.licencia}" onLabel="licencia" onIcon="fa fa-check" offLabel="pirata(?)" offIcon="fa fa-close"/>
 
-                            <p:outputLabel>Observaciones:</p:outputLabel>
-                            <p:inputTextarea rows="5" value="#{softwareComponenteMB.softComp.observaciones}"/>
+                            <p:outputLabel value="Serial"/>
+                            <p:inputText value="#{softwareComponenteMB.softComp.serial}"/>
+
+                            <p:outputLabel value="Observaciones"/>
+                            <p:inputTextarea value="#{softwareComponenteMB.softComp.observaciones}" rows="3" cols="100"/>
+
                         </p:panelGrid>
-                        <p:commandButton icon="fa fa-check" value="Guardar" action="#{softwareComponenteMB.crearSoftwareComponente()}" oncomplete="PF('wd_crear').hide()" update="f_softwareComponente"/>
+                
+                 <!--Tabla de los componentes por software nuevos (AUN FALTAAAAAAA) -->
+                 <p:dataTable id="t_componentesPorSoftware" emptyMessage="No hay registros" rows="8" selectionMode="single" selection="#{softwareComponenteMB.softCompSelec}"
+                              value="#{softwareComponenteMB.softComp.idComponente}" rowKey="#{swComp.idComponente}" var="swComp">
+
+                            <p:column headerText="Num. Inventario" sortBy="#{comp.numeroInventario}" style="width: 9em">
+                                <p:outputLabel value="#{comp.numeroInventario}"/>
+                            </p:column>
+
+                            <p:column headerText="Num. Serie" style="width: 9em">
+                                <p:outputLabel value="#{comp.numeroSerie}"/>
+                            </p:column>
+
+                            <p:column headerText="Tipo" style="width: 12em">
+                                <p:outputLabel value="#{comp.idTipoComponente.nombre}"/>
+                            </p:column>
+
+                            <p:column headerText="Modelo" style="width: 12em">
+                                <p:outputLabel value="#{comp.idModelo.nombre}"/>
+                            </p:column>
+
+                            <p:column headerText="Marca" style="width: 12em">
+                                <p:outputLabel value="#{comp.idModelo.idMarca.nombre}"/>
+                            </p:column>
+
+                        </p:dataTable>        
+                 
+                 <p:commandButton icon="fa fa-check" value="Guardar" action="#{softwareComponenteMB.crearSoftwareComponente()}" oncomplete="PF('wd_crear').hide()" update="f_softwareComponente"/>
                     </h:form>
                 </p:dialog>
+                
+                 <!--Menu para mostrar los componentes cuando se crea un equipo--> 
+                  <p:dialog widgetVar="wd_agregarComponentes" modal="true" header="Agregar Componentes" closeOnEscape="true">
+                    <h:form id="f_agregarComponentes">
+                        <p:dataTable id="t_componentes" emptyMessage="No hay registros" rows="20" scrollable="true" lazy="true"
+                                     value="#{componentesMB.compList}" rowKey="#{comp.idComponente}" var="comp" scrollHeight="300"
+                                     selection="#{tiposComponenteMB.tipoCompList}" widgetVar="wd_tbl_componentes">
+                            
+                             <p:column headerText="Nombre" filterBy="#{comp.numeroInventario}" filterMatchMode="contains" sortBy="#{comp.numeroInventario}" style="width: 9em">
+                                <p:outputLabel value="#{comp.numeroInventario}"/>
+                            </p:column>
+                        
+                        </p:dataTable>
+                 
 
+              
                 <p:dialog widgetVar="wd_editar" modal="true" header="Editar Componente">
                     <h:form id="f_editar">
-                        <p:panelGrid columns="3">
-                            <p:outputLabel>Licencia:</p:outputLabel>
-                            <p:inputText value="#{softwareComponenteMB.softCompSelec.licencia}"/>
+                        <p:panelGrid columns="2">
 
-                            <p:outputLabel>Serial:</p:outputLabel>
-                            <p:inputTextarea value="#{softwareComponenteMB.softCompSelec.serial}"/>
+                            <p:outputLabel value="Software"/>
+                            <p:selectOneMenu value="#{softwareComponenteMB.softCompSelec.idSoftware}" converter="objectConverter" required="true"
+                                             requiredMessage="Seleccione un Software" filter="true" filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Seleccione un Software" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value="#{softwareMB.softwareList}" var="so" itemLabel="#{so.nombre}" itemValue="#{so}"/>
+                            </p:selectOneMenu>
 
-                            <p:outputLabel>Observaciones:</p:outputLabel>
-                            <p:inputTextarea value="#{softwareComponenteMB.softCompSelec.observaciones}"/>
+                            <p:outputLabel value="Licencia"/>
+                            <p:selectBooleanButton value="#{softwareComponenteMB.softCompSelec.licencia}" onLabel="Licencia" 
+                                                   onIcon="fa fa-check" offLabel="Pirata" offIcon="fa fa-close"/>
+
+
+                            <p:outputLabel value="Serial"/>
+                            <p:inputText value="#{softwareComponenteMB.softCompSelec.serial}"/>
+                          
+                            <p:outputLabel value="Observaciones"/>
+                            <p:inputTextarea rows="3" cols="100" value="#{softwareComponenteMB.softCompSelec.observaciones}"/>
+                            
                         </p:panelGrid>
                         <p:commandButton icon="fa fa-check" value="Guardar" action="#{softwareComponenteMB.modificarSoftwareComponente()}" oncomplete="PF('wd_editar').hide()" update=":f_softwareComponente"/>
                     </h:form>
                 </p:dialog>
 
-
-
-
-
             </ui:define>
 
             <ui:define name="menuLateral">
-                menuLateral
+                   <ui:include src="./../templates/HwSwMenuLateral.xhtml"/>
             </ui:define>
 
         </ui:composition>
