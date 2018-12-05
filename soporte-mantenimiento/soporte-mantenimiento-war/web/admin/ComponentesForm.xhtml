@@ -11,6 +11,11 @@
         <ui:composition template="./../templates/PrincipalTemplate.xhtml">
 
             <ui:define name="contenido">
+                <style type="text/css">
+                    .ui-paginator a {
+                        margin-right: 5px;
+                    }
+                </style>
                 <h:form id="f_componentes">
                     <div>
                         <p:commandButton value="Nuevo Componente" icon="fa fa-plus" onclick="PF('wd_crearComponente').show()" update="f_crearComponente"/>
@@ -21,8 +26,24 @@
                     <!--Tabla de componentes-->
 
                     <p:dataTable id="t_componentes" emptyMessage="No hay registros" selectionMode="single" rows="10" scrollable="true"
-                                 paginator="true" value="#{componentesMB.compList}" var="comp" lazy="true" 
+                                 paginator="true" value="#{componentesMB.compList}" var="comp" lazy="true" paginatorPosition="top"
+                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                                  selection="#{componentesMB.compSeleccionado}" widgetVar="wd_tbl_componentes">
+
+                        <f:facet name="{Exporters}">
+                            <div style="float:right;">
+                                <h:commandLink>
+                                    <p:graphicImage value="/resources/img/excel.png" width="24"/>
+                                    <p:dataExporter type="xlsx" target="t_componentes" fileName="Componentes" />
+                                </h:commandLink>
+
+                                <h:commandLink>
+                                    <p:graphicImage value="/resources/img/pdf.png" width="24"/>
+                                    <p:dataExporter type="pdf" target="t_componentes" fileName="Componentes"/>
+                                </h:commandLink>
+                            </div>
+                        </f:facet>
+
                         <f:facet name="header">
                             Componentes
                         </f:facet>
@@ -30,7 +51,7 @@
                         <p:column headerText="Num. Inventario" filterBy="#{comp.numeroInventario}" sortBy="#{comp.numeroInventario}" style="width: 9em">
                             <p:outputLabel value="#{comp.numeroInventario}"/>
                         </p:column>
-                        
+
                         <p:column headerText="Equipo" style="width: 3em">
                             <p:outputLabel value="#{comp.idEquipo.idEquipo}"/>
                         </p:column>
@@ -58,9 +79,9 @@
                         <p:column headerText="Modelo" filterBy="#{comp.idModelo.idModelo}" style="width: 12em">
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('wd_tbl_componentes').filter()" filter="true" filterMatchMode="startsWith" style="width: 10em">
-                                <f:selectItem itemLabel="Seleccione un modelo" itemValue="#{null}" noSelectionOption="true" />
-                                <f:selectItems value="#{modelosMB.modelList}" var="m" itemLabel="#{m.nombre}" itemValue="#{m.idModelo}"/>
-                            </p:selectOneMenu>
+                                    <f:selectItem itemLabel="Seleccione un modelo" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{modelosMB.modelList}" var="m" itemLabel="#{m.nombre}" itemValue="#{m.idModelo}"/>
+                                </p:selectOneMenu>
                             </f:facet>
                             <p:outputLabel value="#{comp.idModelo.nombre}"/>
                         </p:column>
@@ -72,17 +93,17 @@
                         <p:column headerText="Observaciones" style="width: 15em">
                             <p:outputLabel value="#{comp.observaciones}"/>
                         </p:column>
-                        
+
                         <p:column headerText="E" style="width: 30px" sortBy="#{comp.estado}">
                             <p:outputPanel layout="inline" styleClass="fa fa-check" rendered="#{comp.estado}" />
                             <p:outputPanel layout="inline" styleClass="fa fa-close" rendered="#{!comp.estado}" />
                         </p:column>
-                        
+
                         <p:column headerText="A" style="width: 30px" sortBy="#{comp.asignado}">
                             <p:outputPanel layout="inline" styleClass="fa fa-check" rendered="#{comp.asignado}" />
                             <p:outputPanel layout="inline" styleClass="fa fa-close" rendered="#{!comp.asignado}" />
                         </p:column>
-                        
+
                         <p:column headerText="P" style="width: 30px" sortBy="#{comp.personal}">
                             <p:outputPanel layout="inline" styleClass="fa fa-check" rendered="#{comp.personal}" />
                             <p:outputPanel layout="inline" styleClass="fa fa-close" rendered="#{!comp.personal}" />
