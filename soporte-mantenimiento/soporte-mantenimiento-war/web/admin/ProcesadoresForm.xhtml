@@ -45,8 +45,18 @@
                                     <f:selectItems value="#{modelosMB.modelList}" var="modelo" itemLabel="#{modelo.nombre}" itemValue="#{modelo.nombre}" />
                                 </p:selectOneMenu>
                             </f:facet>
+
                             <p:outputLabel>#{procesador.idModelo.nombre}</p:outputLabel>
-                        </p:column>                   
+                        </p:column>
+                        <p:column headerText="Marca" sortBy="#{procesador.idModelo.idMarca.nombre}" filterBy="#{procesador.idModelo.idMarca.nombre}">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('wd_t_procesador').filter()" filter="true" filterMatchMode="startsWith">
+                                    <f:selectItem itemLabel="Seleccionar marca" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{marcasMB.marcList}" var="mar" itemLabel="#{mar.nombre}" itemValue="#{mar.nombre}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <p:outputLabel>#{procesador.idModelo.idMarca.nombre}</p:outputLabel>
+                        </p:column>
                         <p:column headerText="Socket" sortBy="#{procesador.idSocket.socket}" filterBy="#{procesador.idSocket.socket}">
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('wd_t_procesador').filter()" filter="true" filterMatchMode="startsWith">
@@ -64,7 +74,7 @@
                         <p:menuitem value="Cancelar" icon="fa fa-close"/>
                     </p:contextMenu>
                 </h:form>
-                 <!--Crear-->
+                <!--Crear-->
                 <p:dialog widgetVar="wd_agregar" modal="true" header="Agregar Procesador">
                     <h:form id="f_agregar">
                         <p:panelGrid columns="2">
@@ -77,8 +87,8 @@
                                 <f:selectItem itemLabel="Seleccione una arquitectura" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{arquitecturasMB.arquiList}" var="arqui" itemLabel="#{arqui.arquitectura}" itemValue="#{arqui}"/>
                             </p:selectOneMenu>
-                             <p:outputLabel value="Modelo:"/>
-                             <p:selectOneMenu value="#{procesadoresMB.procesador.idModelo}" converter="objectConverter" required="true" 
+                            <p:outputLabel value="Modelo:"/>
+                            <p:selectOneMenu value="#{procesadoresMB.procesador.idModelo}" converter="objectConverter" required="true" 
                                              requiredMessage="Seleccione un modelo" filter="true" 
                                              filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="Seleccione un modelo" itemValue="" noSelectionOption="true" />

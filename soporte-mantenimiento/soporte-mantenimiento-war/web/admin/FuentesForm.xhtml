@@ -36,7 +36,15 @@
                             </f:facet>
                             <p:outputLabel>#{fuente.idModelo.nombre}</p:outputLabel>
                         </p:column>
-
+                        <p:column headerText="Marca" sortBy="#{fuente.idModelo.idMarca.nombre}" filterBy="#{fuente.idModelo.idMarca.nombre}">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('wd_t_fuente').filter()" filter="true" filterMatchMode="startsWith">
+                                    <f:selectItem itemLabel="Seleccionar marca" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{marcasMB.marcList}" var="mar" itemLabel="#{mar.nombre}" itemValue="#{mar.nombre}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <p:outputLabel>#{fuente.idModelo.idMarca.nombre}</p:outputLabel>
+                        </p:column>
                         <p:column headerText="Num. Serie" sortBy="#{fuente.numeroSerie}">
                             <p:outputLabel>#{fuente.numeroSerie}</p:outputLabel>
                         </p:column>
