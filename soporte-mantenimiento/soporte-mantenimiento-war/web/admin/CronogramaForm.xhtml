@@ -11,21 +11,26 @@
 
             <ui:define name="contenido">
                 <style type="text/css">
-                    .value {
-                        width: 1000px;
+                    #panel{
+                        width: 100%;
+                    }
+                    #tabla{
+                        padding: 0 20%;
                     }
                 </style>
                 <h:form>
                     <p:growl id="messages" showDetail="true"/>
-                    <h:panelGrid columnClasses="value" >
-                        <p:schedule id="schedule" value="#{cronogramaMB.eventModel}" widgetVar="myschedule" timeZone="GMT-6" locale="es" resizable="false" rightHeaderTemplate="" aspectRatio="1.5">
+                    <div id="panel">
+                        <div id="tabla">
+                                <p:schedule id="schedule" value="#{cronogramaMB.eventModel}" widgetVar="myschedule" timeZone="GMT-6" locale="es" resizable="false" rightHeaderTemplate="" aspectRatio="1.5">
 
-                            <p:ajax event="dateSelect" listener="#{cronogramaMB.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
-                            <p:ajax event="eventSelect" listener="#{cronogramaMB.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
-                            <p:ajax event="eventMove" listener="#{cronogramaMB.onEventMove}" update="messages"/>
+                                    <p:ajax event="dateSelect" listener="#{cronogramaMB.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                                    <p:ajax event="eventSelect" listener="#{cronogramaMB.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                                    <p:ajax event="eventMove" listener="#{cronogramaMB.onEventMove}" update="messages"/>
 
-                        </p:schedule>
-                    </h:panelGrid>
+                                </p:schedule>
+                        </div>
+                    </div>
                     <p:dialog widgetVar="eventDialog" header="Detalle Actividad" showEffect="clip" hideEffect="clip">
                         <h:panelGrid id="eventDetails" columns="2">
                             <p:outputLabel for="titulo" value="Titulo:" />
@@ -35,7 +40,10 @@
                             <p:calendar id="desde" value="#{cronogramaMB.event.startDate}" pattern="dd/MM/yyyy" locale="es" timeZone="GMT-6" required="true"/>
 
                             <p:outputLabel for="hasta" value="Hasta:" />
-                            <p:calendar id="hasta" value="#{cronogramaMB.event.endDate}" pattern="dd/MM/yyyy" locale="es" timeZone="GMT-6" required="true"/>
+                            <p:calendar id="hasta" value="#{cronogramaMB.event.endDate}" pattern="dd/MM/yyyy " locale="es" timeZone="GMT-6" required="true"/>
+
+                            <p:outputLabel for="descripcion" value="Descripcion:" />
+                            <p:inputText id="descripcion" value="#{cronogramaMB.seleccion.descripcion}"/>
 
                             <p:commandButton id="btnGuardar" value="Guardar" action="#{cronogramaMB.addEvent}" update="messages" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
                             <p:commandButton id="btnEliminar" value="Eliminar" action="#{cronogramaMB.dltEvent()}" update="messages" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />

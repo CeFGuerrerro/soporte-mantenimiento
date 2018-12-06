@@ -11,7 +11,7 @@
         <ui:composition template="./../templates/PrincipalTemplate.xhtml">
 
             <ui:define name="contenido">
-                <h:form id="frmTecnicos">
+                <h:form id="frmTabla">
                     <div>
                         <p:commandButton id="btnNuevo" value="Nuevo Tecnico" oncomplete="PF('wnuevo').show();"/>
                     </div>
@@ -57,7 +57,7 @@
                             <p:outputLabel value="Descripcion" for="descripcion"/>
                             <p:inputTextarea id="descripcion" value="#{tecnicosMB.tecnico.descripcion}"/>
                         </p:panelGrid>
-                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{tecnicosMB.registrar()}" oncomplete="PF('wnuevo').hide()" update=":frmTecnicos"/>
+                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{tecnicosMB.registrar()}" oncomplete="PF('wnuevo').hide()" update=":frmTabla"/>
                     </p:dialog>
                 </h:form>
                 
@@ -73,7 +73,7 @@
                             <p:outputLabel value="Descripcion" for="descripcion"/>
                             <p:inputTextarea id="descripcion" value="#{tecnicosMB.seleccion.descripcion}"/>
                         </p:panelGrid>
-                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{tecnicosMB.editar()}" oncomplete="PF('weditar').hide()" update=":frmTecnicos"/>
+                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{tecnicosMB.editar()}" oncomplete="PF('weditar').hide()" update=":frmTabla"/>
                     </p:dialog>
                     
                 </h:form>
