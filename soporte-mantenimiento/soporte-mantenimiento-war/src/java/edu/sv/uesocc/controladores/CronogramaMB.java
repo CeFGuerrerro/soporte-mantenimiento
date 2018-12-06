@@ -94,7 +94,6 @@ public class CronogramaMB implements Serializable {
             evento = new DefaultScheduleEvent(actividadLista.getNombreEvento(), fechaInicio, fechaFin);
             modelo.addEvent(evento);
             evento.setId(actividadLista.getIdCronograma().toString());
-            System.out.println("Fechas inicio desde la base de datos " + actividadLista.getFechaInicio());
         }
 
         return modelo;
@@ -118,12 +117,14 @@ public class CronogramaMB implements Serializable {
             actividad.setNombreEvento(event.getTitle());
             actividad.setFechaInicio(event.getStartDate());
             actividad.setFechaFin(event.getEndDate());
+            actividad.setDescripcion(seleccion.getDescripcion());
             registrado = cronogramaEJB.remove(actividad);
             if (registrado) {
                 message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Actividad eliminada", null);
                 addMessage(message);
                 eventModel = new DefaultScheduleModel();
                 actividad = new Cronograma();
+                seleccion = new Cronograma();
             } else {
                 message = new FacesMessage(FacesMessage.SEVERITY_INFO, "No se pudo registrar", null);
                 addMessage(message);
@@ -148,12 +149,13 @@ public class CronogramaMB implements Serializable {
                 actividad.setNombreEvento(event.getTitle());
                 actividad.setFechaInicio(event.getStartDate());
                 actividad.setFechaFin(event.getEndDate());
+                actividad.setDescripcion(seleccion.getDescripcion());
                 registrado = cronogramaEJB.create(actividad);
                 if (registrado) {
                     message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Actividad agregada", null);
                     addMessage(message);
-                    System.out.println("Cuando se agrega una nueva fecha inicio " + actividad.getFechaInicio());
                     actividad = new Cronograma();
+                    seleccion = new Cronograma();
                     eventModel = new DefaultScheduleModel();
                 } else {
                     message = new FacesMessage(FacesMessage.SEVERITY_INFO, "No se pudo registrar", null);
@@ -175,11 +177,13 @@ public class CronogramaMB implements Serializable {
                 actividad.setNombreEvento(event.getTitle());
                 actividad.setFechaInicio(event.getStartDate());
                 actividad.setFechaFin(event.getEndDate());
+                actividad.setDescripcion(seleccion.getDescripcion());
                 registrado = cronogramaEJB.edit(actividad);
                 if (registrado) {
                     message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Actividad modificada", null);
                     addMessage(message);
                     actividad = new Cronograma();
+                    seleccion = new Cronograma();
                     eventModel = new DefaultScheduleModel();
                 } else {
                     message = new FacesMessage(FacesMessage.SEVERITY_INFO, "No se pudo registrar", null);
@@ -198,6 +202,13 @@ public class CronogramaMB implements Serializable {
 
     public void onEventSelect(SelectEvent selectEvent) {
         event = (ScheduleEvent) selectEvent.getObject();
+        Integer id = Integer.parseInt(event.getId());
+        seleccion = new Cronograma();
+        for (Cronograma descripcion : actividades) {
+            if (id == descripcion.getIdCronograma()) {
+                seleccion.setDescripcion(descripcion.getDescripcion());
+            }
+        }
     }
 
     public void onDateSelect(SelectEvent selectEvent) {
@@ -216,8 +227,6 @@ public class CronogramaMB implements Serializable {
             registrado = cronogramaEJB.edit(seleccion);
             if (registrado) {
                 message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Actividad desplazada.", "Dias: " + event.getDayDelta());
-                System.out.println("Lo que se guarda en la base " + seleccion.getFechaInicio() + " --- " + seleccion.getFechaFin());
-                System.out.println("Como deberia quedar " + onMove.getStartDate() + " --- " + onMove.getEndDate() + "\n");
                 addMessage(message);
                 seleccion = new Cronograma();
             } else {
@@ -240,14 +249,12 @@ public class CronogramaMB implements Serializable {
             if (lista.getIdCronograma() == id) {
                 mover.setIdCronograma(id);
                 mover.setNombreEvento(lista.getNombreEvento());
+                mover.setDescripcion(lista.getDescripcion());
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(lista.getFechaInicio());
-                System.out.println(lista.getFechaInicio() + "fecha INICIO antes de agregar los dias, los dias que se agregas: " + dias);
                 calendar.add(Calendar.DAY_OF_MONTH, dias);
                 mover.setFechaInicio(calendar.getTime());
-                System.out.println(mover.getFechaInicio() + " despues de agregar los dias\n");
                 calendar.setTime(lista.getFechaFin());
-                System.out.println(lista.getFechaFin() + "fechas FIN antes de agregar los dias, los dias que se agregas: " + dias);
                 calendar.add(Calendar.DAY_OF_MONTH, dias);
                 mover.setFechaFin(calendar.getTime());
                 return mover;
@@ -256,7 +263,7 @@ public class CronogramaMB implements Serializable {
 
         return null;
     }
-    
+
     private void addMessage(FacesMessage message) {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
