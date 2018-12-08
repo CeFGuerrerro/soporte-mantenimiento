@@ -16,8 +16,24 @@
 
                     <!--Tabla para mostrar los equipos-->
                     <p:dataTable id="t_equipos" emptyMessage="No hay registros" selectionMode="single" rows="10" scrollable="true"
-                                 paginator="true" value="#{equiposMB.equipList}" var="equip" rowKey="#{equip.idEquipo}"
+                                 paginator="true" value="#{equiposMB.equipList}" var="equip" rowKey="#{equip.idEquipo}" paginatorPosition="top"
+                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                                  selection="#{equiposMB.equipSeleccionado}" widgetVar="wd_tbl_equipos">
+                        
+                        <f:facet name="{Exporters}">
+                            <div style="float:right;">
+                                <h:commandLink>
+                                    <p:graphicImage value="/resources/img/excel.png" width="24"/>
+                                    <p:dataExporter type="xlsx" target="t_equipos" pageOnly="true" fileName="Equipos" />
+                                </h:commandLink>
+
+                                <h:commandLink>
+                                    <p:graphicImage value="/resources/img/pdf.png" width="24"/>
+                                    <p:dataExporter type="pdf" target="t_equipos" pageOnly="true" fileName="Equipos"/>
+                                </h:commandLink>
+                            </div>
+                        </f:facet>
+                        
                         <f:facet name="header">
                             Equipos
                         </f:facet>
@@ -40,7 +56,7 @@
                             <p:outputLabel value="#{equip.idUbicacion.nombre}"/>
                         </p:column>
 
-                        <p:column headerText="E" style="width: 10px">
+                        <p:column headerText="E" style="width: 10px" exportable="false">
                             <p:outputPanel layout="inline" styleClass="fa fa-check" rendered="#{equip.estado}"/>
                             <p:outputPanel layout="inline" styleClass="fa fa-close" rendered="#{!equip.estado}"/>
                         </p:column>

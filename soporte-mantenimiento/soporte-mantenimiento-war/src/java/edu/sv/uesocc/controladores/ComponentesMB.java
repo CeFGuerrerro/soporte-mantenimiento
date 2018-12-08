@@ -145,16 +145,21 @@ public class ComponentesMB implements Serializable {
     public void eliminarComponente() {
         FacesContext contexto = FacesContext.getCurrentInstance();
         boolean eliminado = false;
-        try {
-            eliminado = compf.remove(compSeleccionado);
-            if (eliminado) {
-                contexto.addMessage(null, new FacesMessage("Registro eliminado"));
-            } else {
-                contexto.addMessage(null, new FacesMessage("No se pudo eliminar el registro"));
+        if (compSeleccionado.getIdEquipo() == null) {
+            try {
+                eliminado = compf.remove(compSeleccionado);
+                if (eliminado) {
+                    contexto.addMessage(null, new FacesMessage("Registro eliminado"));
+                } else {
+                    contexto.addMessage(null, new FacesMessage("No se pudo eliminar el registro"));
+                }
+            } catch (Exception e) {
+                contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error:", e.getMessage()));
             }
-        } catch (Exception e) {
-            contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error:", e.getMessage()));
+        }else {
+            contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error:", "No se puede eliminar el componente"));
         }
+
     }
 
 }

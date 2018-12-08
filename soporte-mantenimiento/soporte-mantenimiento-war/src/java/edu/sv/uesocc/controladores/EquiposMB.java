@@ -29,6 +29,7 @@ public class EquiposMB implements Serializable {
 
     private Componentes compSeleccionado;
     private List<Componentes> compList = new ArrayList<>();
+    private List<Componentes> compDupList = new ArrayList<>();
     private List<Componentes> compSeleccionadoList = new ArrayList<>();
     private List<Componentes> compSeleccionadoDupList = new ArrayList<>();
 
@@ -105,11 +106,17 @@ public class EquiposMB implements Serializable {
 
 //    Metodos publicos 
     public void agregarComponentes() {
-        equip.setComponentesList(compList);
+        for (Componentes c: compList){
+            if(!compDupList.contains(c)){
+                compDupList.add(c);
+            }
+        }
+        equip.setComponentesList(compDupList);
+        compList.clear();
     }
 
     public void quitarComponentes() {
-        compList.remove(compSeleccionado);
+        compDupList.remove(compSeleccionado);
     }
 
     public void cargarComponentesEquipoSeleccionado() {
@@ -122,7 +129,9 @@ public class EquiposMB implements Serializable {
 
     public void agregarComponentesEquipoSelecionado() {
         for (Componentes c : compSeleccionadoList) {
+            if(!compSeleccionadoDupList.contains(c)){
             compSeleccionadoDupList.add(c);
+            }
         }
     }
 
@@ -133,7 +142,7 @@ public class EquiposMB implements Serializable {
     public void crearEquipo() {
         FacesContext contexto = FacesContext.getCurrentInstance();
         try {
-            if (!compList.isEmpty()) {
+            if (!compDupList.isEmpty()) {
                 boolean creado = equipf.create(equip);
                 if (creado) {
                     for (Componentes c : equip.getComponentesList()) {
@@ -143,6 +152,7 @@ public class EquiposMB implements Serializable {
                     }
                     equip = new Equipos();
                     compList.clear();
+                    compDupList.clear();
                     contexto.addMessage(null, new FacesMessage("Registro guardado"));
                 } else {
                     contexto.addMessage(null, new FacesMessage("No se pudo guardar el registro"));

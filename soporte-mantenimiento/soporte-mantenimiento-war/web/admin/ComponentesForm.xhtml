@@ -34,12 +34,12 @@
                             <div style="float:right;">
                                 <h:commandLink>
                                     <p:graphicImage value="/resources/img/excel.png" width="24"/>
-                                    <p:dataExporter type="xlsx" target="t_componentes" fileName="Componentes" />
+                                    <p:dataExporter type="xlsx" target="t_componentes" pageOnly="true" fileName="Componentes" />
                                 </h:commandLink>
 
                                 <h:commandLink>
                                     <p:graphicImage value="/resources/img/pdf.png" width="24"/>
-                                    <p:dataExporter type="pdf" target="t_componentes" fileName="Componentes"/>
+                                    <p:dataExporter type="pdf" target="t_componentes" pageOnly="true" fileName="Componentes"/>
                                 </h:commandLink>
                             </div>
                         </f:facet>
@@ -94,17 +94,17 @@
                             <p:outputLabel value="#{comp.observaciones}"/>
                         </p:column>
 
-                        <p:column headerText="E" style="width: 30px" sortBy="#{comp.estado}">
+                        <p:column headerText="E" style="width: 30px" sortBy="#{comp.estado}" exportable="false">
                             <p:outputPanel layout="inline" styleClass="fa fa-check" rendered="#{comp.estado}" />
                             <p:outputPanel layout="inline" styleClass="fa fa-close" rendered="#{!comp.estado}" />
                         </p:column>
 
-                        <p:column headerText="A" style="width: 30px" sortBy="#{comp.asignado}">
+                        <p:column headerText="A" style="width: 30px" sortBy="#{comp.asignado}" exportable="false">
                             <p:outputPanel layout="inline" styleClass="fa fa-check" rendered="#{comp.asignado}" />
                             <p:outputPanel layout="inline" styleClass="fa fa-close" rendered="#{!comp.asignado}" />
                         </p:column>
 
-                        <p:column headerText="P" style="width: 30px" sortBy="#{comp.personal}">
+                        <p:column headerText="P" style="width: 30px" sortBy="#{comp.personal}" exportable="false">
                             <p:outputPanel layout="inline" styleClass="fa fa-check" rendered="#{comp.personal}" />
                             <p:outputPanel layout="inline" styleClass="fa fa-close" rendered="#{!comp.personal}" />
                         </p:column>

@@ -12,13 +12,28 @@
 
     </h:head>
     <h:body>
-        
+
         <!--Cabecera del documento-->
         <div id="div_header">
             <p:growl id="g_mensajes" showSummary="true" showDetail="true"> <!-- Componente para mostrar mensajes -->
                 <p:autoUpdate />        <!-- Componente para refrescar los mensajes -->
             </p:growl>
-            
+
+
+            <p:panel class="banner">
+                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank banner">
+                   
+                        <p:graphicImage library="img" name="logo.png" height="80"/>
+                   
+                        <div>
+                            <p id="titulo" class="banner">Universidad de El Salvador</p>
+                            <p id="subtitulo" class="banner">Facultad Multidisciplinaria de Occidente</p>
+                            <p class="banner">&Aacute;rea de Soporte y Tecnolog&iacute;a Inform&aacute;tica</p>
+                    </div>
+                </p:panelGrid>
+            </p:panel>
+
+
             <h:form id="f_menuBar">
                 <p:menubar id="menuBar">
                     <p:menuitem value="Hardware y Software" icon="ui-icon-print" url="../admin/ComponentesForm.jsf"/>
@@ -32,11 +47,11 @@
                 </p:menubar>
             </h:form>
         </div>
-        
+
         <!--Boton que abre el panel lateral-->
         <div id="div_btnSidebar">
             <h:form id="f_botonSidebar">
-                <p:commandButton id="btnSidebar" icon=" fa fa-navicon" onclick="PF('sidebar').show()" />
+                <p:commandButton id="btnSidebar" icon="fa fa-navicon" onclick="PF('sidebar').show()" />
             </h:form>
         </div>
 
@@ -49,9 +64,9 @@
 
         <!--Menu Lateral-->
         <div id="div_menuLateral">
-            <p:sidebar widgetVar="sidebar" baseZIndex="1000">
+            <p:sidebar widgetVar="sidebar" baseZIndex="1000" id="sidebar">
                 <ui:insert name="menuLateral">
-                    
+
                 </ui:insert>
             </p:sidebar>
         </div>

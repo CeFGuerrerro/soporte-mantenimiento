@@ -23,7 +23,7 @@
                             Marcas
                         </f:facet>
 
-                        <p:column headerText="ID" sortBy="#{mar.idMarca}">
+                        <p:column headerText="ID" sortBy="#{mar.idMarca}" style="width: 30px;">
                             <p:outputLabel>#{mar.idMarca}</p:outputLabel>
                         </p:column>
 
@@ -36,11 +36,17 @@
                     </p:dataTable>
 
                     <p:contextMenu for="t_marcas">
-                        <p:menuitem value="Eliminar" action="#{marcasMB.eliminarMarca()}" icon="fa fa-trash" update="f_marcas"/>
+                        <p:menuitem value="Eliminar" icon="fa fa-trash"  onclick="PF('conf_eliminar').show();"/>
                         <p:menuitem value="Cancelar" icon="fa fa-close"/>
                     </p:contextMenu>
+
+                    <p:confirmDialog widgetVar="conf_eliminar" message="Desea eliminar el registro seleccionado?">
+                        <p:commandButton value="Si" actionListener="#{marcasMB.eliminarMarca()}" update="f_marcas" oncomplete="PF('conf_eliminar').hide();" icon="fa fa-check" />
+                        <p:commandButton value="No" icon="fa fa-close" onclick="PF('conf_eliminar').hide();"/>
+                    </p:confirmDialog>
+
                 </h:form>
-                
+
                 <!--Formulario para crear marcas-->
 
                 <p:dialog widgetVar="wd_crear" modal="true" header="Nueva Marca">
