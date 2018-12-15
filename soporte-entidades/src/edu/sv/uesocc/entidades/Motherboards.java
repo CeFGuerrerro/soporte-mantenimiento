@@ -50,7 +50,7 @@ public class Motherboards implements Serializable {
     @JoinColumn(name = "id_socket", referencedColumnName = "id_socket")
     @ManyToOne
     private Sockets idSocket;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMotherboard")
+    @OneToMany(mappedBy = "idMotherboard")
     private List<HardwareComponente> hardwareComponenteList;
 
     public Motherboards() {

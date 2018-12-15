@@ -60,7 +60,7 @@ public class Software implements Serializable {
     @JoinColumn(name = "id_tipo_software", referencedColumnName = "id_tipo_software", nullable = false)
     @ManyToOne(optional = false)
     private TiposSoftware idTipoSoftware;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSoftware")
+    @OneToMany(mappedBy = "idSoftware")
     private List<SoftwareComponente> softwareComponenteList;
 
     public Software() {

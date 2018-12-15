@@ -59,6 +59,9 @@ public class Ups implements Serializable {
     @JoinColumn(name = "id_componente", referencedColumnName = "id_componente", nullable = false)
     @ManyToOne(optional = false)
     private Componentes idComponente;
+    @JoinColumn(name = "id_potencia", referencedColumnName = "id_potencia")
+    @ManyToOne
+    private PotenciaUps idPotencia;
 
     public Ups() {
     }
@@ -121,6 +124,14 @@ public class Ups implements Serializable {
 
     public void setIdComponente(Componentes idComponente) {
         this.idComponente = idComponente;
+    }
+
+    public PotenciaUps getIdPotencia() {
+        return idPotencia;
+    }
+
+    public void setIdPotencia(PotenciaUps idPotencia) {
+        this.idPotencia = idPotencia;
     }
 
     @Override

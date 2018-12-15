@@ -8,6 +8,7 @@ package edu.sv.uesocc.entidades;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -44,6 +45,8 @@ public class TarjetasVideo implements Serializable {
     @Column(name = "numero_serial", length = 2147483647)
     private String numeroSerial;
     @OneToMany(mappedBy = "idTarjetaVideo")
+    private List<SalidaTarjetaVideo> salidaTarjetaVideoList;
+    @OneToMany(mappedBy = "idTarjetaVideo")
     private List<HardwareComponente> hardwareComponenteList;
     @JoinColumn(name = "id_marca", referencedColumnName = "id_marca", nullable = false)
     @ManyToOne(optional = false)
@@ -73,6 +76,15 @@ public class TarjetasVideo implements Serializable {
 
     public void setNumeroSerial(String numeroSerial) {
         this.numeroSerial = numeroSerial;
+    }
+
+    @XmlTransient
+    public List<SalidaTarjetaVideo> getSalidaTarjetaVideoList() {
+        return salidaTarjetaVideoList;
+    }
+
+    public void setSalidaTarjetaVideoList(List<SalidaTarjetaVideo> salidaTarjetaVideoList) {
+        this.salidaTarjetaVideoList = salidaTarjetaVideoList;
     }
 
     @XmlTransient

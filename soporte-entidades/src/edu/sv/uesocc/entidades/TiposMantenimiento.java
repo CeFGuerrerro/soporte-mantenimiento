@@ -8,7 +8,6 @@ package edu.sv.uesocc.entidades;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -51,8 +50,8 @@ public class TiposMantenimiento implements Serializable {
     @JoinColumn(name = "id_mantenimiento", referencedColumnName = "id_mantenimiento", nullable = false)
     @ManyToOne(optional = false)
     private Mantenimientos idMantenimiento;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoMantenimiento")
-    private List<DetallesOrdenTrabajo> detallesOrdenTrabajoList;
+    @OneToMany(mappedBy = "idTipoMantenimiento")
+    private List<Soluciones> solucionesList;
 
     public TiposMantenimiento() {
     }
@@ -99,12 +98,12 @@ public class TiposMantenimiento implements Serializable {
     }
 
     @XmlTransient
-    public List<DetallesOrdenTrabajo> getDetallesOrdenTrabajoList() {
-        return detallesOrdenTrabajoList;
+    public List<Soluciones> getSolucionesList() {
+        return solucionesList;
     }
 
-    public void setDetallesOrdenTrabajoList(List<DetallesOrdenTrabajo> detallesOrdenTrabajoList) {
-        this.detallesOrdenTrabajoList = detallesOrdenTrabajoList;
+    public void setSolucionesList(List<Soluciones> solucionesList) {
+        this.solucionesList = solucionesList;
     }
 
     @Override

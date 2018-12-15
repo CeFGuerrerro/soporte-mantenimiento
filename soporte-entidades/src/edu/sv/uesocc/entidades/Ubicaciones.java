@@ -35,9 +35,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Ubicaciones.findByDescripcion", query = "SELECT u FROM Ubicaciones u WHERE u.descripcion = :descripcion")})
 public class Ubicaciones implements Serializable {
 
-    @OneToMany(mappedBy = "idUbicacion")
-    private List<Responsables> responsablesList;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,8 +46,12 @@ public class Ubicaciones implements Serializable {
     private String nombre;
     @Column(name = "descripcion", length = 2147483647)
     private String descripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUbicacion")
+    @OneToMany(mappedBy = "idUbicacion")
+    private List<Usuarios> usuariosList;
+    @OneToMany(mappedBy = "idUbicacion")
     private List<Equipos> equiposList;
+    @OneToMany(mappedBy = "idUbicacion")
+    private List<Responsables> responsablesList;
 
     public Ubicaciones() {
     }
@@ -89,12 +90,30 @@ public class Ubicaciones implements Serializable {
     }
 
     @XmlTransient
+    public List<Usuarios> getUsuariosList() {
+        return usuariosList;
+    }
+
+    public void setUsuariosList(List<Usuarios> usuariosList) {
+        this.usuariosList = usuariosList;
+    }
+
+    @XmlTransient
     public List<Equipos> getEquiposList() {
         return equiposList;
     }
 
     public void setEquiposList(List<Equipos> equiposList) {
         this.equiposList = equiposList;
+    }
+
+    @XmlTransient
+    public List<Responsables> getResponsablesList() {
+        return responsablesList;
+    }
+
+    public void setResponsablesList(List<Responsables> responsablesList) {
+        this.responsablesList = responsablesList;
     }
 
     @Override
@@ -120,15 +139,6 @@ public class Ubicaciones implements Serializable {
     @Override
     public String toString() {
         return "edu.sv.uesocc.entidades.Ubicaciones[ idUbicacion=" + idUbicacion + " ]";
-    }
-
-    @XmlTransient
-    public List<Responsables> getResponsablesList() {
-        return responsablesList;
-    }
-
-    public void setResponsablesList(List<Responsables> responsablesList) {
-        this.responsablesList = responsablesList;
     }
     
 }

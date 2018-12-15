@@ -53,7 +53,10 @@ public class Memorias implements Serializable {
     @JoinColumn(name = "id_tipo", referencedColumnName = "id_tipo_memoria", nullable = false)
     @ManyToOne(optional = false)
     private TiposMemoria idTipo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMemoria")
+    @JoinColumn(name = "id_velocidad", referencedColumnName = "id_velocidad")
+    @ManyToOne
+    private Velocidad idVelocidad;
+    @OneToMany(mappedBy = "idMemoria")
     private List<HardwareComponente> hardwareComponenteList;
 
     public Memorias() {
@@ -101,6 +104,14 @@ public class Memorias implements Serializable {
 
     public void setIdTipo(TiposMemoria idTipo) {
         this.idTipo = idTipo;
+    }
+
+    public Velocidad getIdVelocidad() {
+        return idVelocidad;
+    }
+
+    public void setIdVelocidad(Velocidad idVelocidad) {
+        this.idVelocidad = idVelocidad;
     }
 
     @XmlTransient

@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -46,7 +48,10 @@ public class Soluciones implements Serializable {
     private String nombre;
     @Column(name = "descripcion", length = 2147483647)
     private String descripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSolucion")
+    @JoinColumn(name = "id_tipo_mantenimiento", referencedColumnName = "id_tipo_mantenimiento")
+    @ManyToOne
+    private TiposMantenimiento idTipoMantenimiento;
+    @OneToMany(mappedBy = "idSolucion")
     private List<DetallesOrdenTrabajo> detallesOrdenTrabajoList;
 
     public Soluciones() {
@@ -83,6 +88,14 @@ public class Soluciones implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public TiposMantenimiento getIdTipoMantenimiento() {
+        return idTipoMantenimiento;
+    }
+
+    public void setIdTipoMantenimiento(TiposMantenimiento idTipoMantenimiento) {
+        this.idTipoMantenimiento = idTipoMantenimiento;
     }
 
     @XmlTransient

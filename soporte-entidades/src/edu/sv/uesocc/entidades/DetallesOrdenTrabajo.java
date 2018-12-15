@@ -46,9 +46,6 @@ public class DetallesOrdenTrabajo implements Serializable {
     @JoinColumn(name = "id_solucion", referencedColumnName = "id_solucion", nullable = false)
     @ManyToOne(optional = false)
     private Soluciones idSolucion;
-    @JoinColumn(name = "id_tipo_mantenimiento", referencedColumnName = "id_tipo_mantenimiento", nullable = false)
-    @ManyToOne(optional = false)
-    private TiposMantenimiento idTipoMantenimiento;
 
     public DetallesOrdenTrabajo() {
     }
@@ -87,14 +84,6 @@ public class DetallesOrdenTrabajo implements Serializable {
 
     public void setIdSolucion(Soluciones idSolucion) {
         this.idSolucion = idSolucion;
-    }
-
-    public TiposMantenimiento getIdTipoMantenimiento() {
-        return idTipoMantenimiento;
-    }
-
-    public void setIdTipoMantenimiento(TiposMantenimiento idTipoMantenimiento) {
-        this.idTipoMantenimiento = idTipoMantenimiento;
     }
 
     @Override

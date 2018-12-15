@@ -38,10 +38,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Cronograma.findByDescripcion", query = "SELECT c FROM Cronograma c WHERE c.descripcion = :descripcion")})
 public class Cronograma implements Serializable {
 
-    @JoinColumn(name = "id_equipo", referencedColumnName = "id_equipo")
-    @ManyToOne
-    private Equipos idEquipo;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,6 +57,9 @@ public class Cronograma implements Serializable {
     private String nombreEvento;
     @Column(name = "descripcion", length = 2147483647)
     private String descripcion;
+    @JoinColumn(name = "id_equipo", referencedColumnName = "id_equipo")
+    @ManyToOne
+    private Equipos idEquipo;
 
     public Cronograma() {
     }
@@ -116,6 +115,14 @@ public class Cronograma implements Serializable {
         this.descripcion = descripcion;
     }
 
+    public Equipos getIdEquipo() {
+        return idEquipo;
+    }
+
+    public void setIdEquipo(Equipos idEquipo) {
+        this.idEquipo = idEquipo;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -139,14 +146,6 @@ public class Cronograma implements Serializable {
     @Override
     public String toString() {
         return "edu.sv.uesocc.entidades.Cronograma[ idCronograma=" + idCronograma + " ]";
-    }
-
-    public Equipos getIdEquipo() {
-        return idEquipo;
-    }
-
-    public void setIdEquipo(Equipos idEquipo) {
-        this.idEquipo = idEquipo;
     }
     
 }

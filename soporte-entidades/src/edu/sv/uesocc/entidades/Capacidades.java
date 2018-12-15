@@ -8,7 +8,6 @@ package edu.sv.uesocc.entidades;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,7 +42,7 @@ public class Capacidades implements Serializable {
     @Basic(optional = false)
     @Column(name = "capacidad", nullable = false, length = 2147483647)
     private String capacidad;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCapacidad")
+    @OneToMany(mappedBy = "idCapacidad")
     private List<Discos> discosList;
     @OneToMany(mappedBy = "idCapacidad")
     private List<Memorias> memoriasList;

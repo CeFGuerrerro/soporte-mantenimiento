@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Cybertron
+ * @author o-a19
  */
 @Entity
 @Table(name = "tecnicos", catalog = "soporte", schema = "public")
@@ -36,9 +36,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Tecnicos.findByCorreo", query = "SELECT t FROM Tecnicos t WHERE t.correo = :correo")
     , @NamedQuery(name = "Tecnicos.findByEstado", query = "SELECT t FROM Tecnicos t WHERE t.estado = :estado")})
 public class Tecnicos implements Serializable {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTecnico")
-    private List<OrdenesTrabajo> ordenesTrabajoList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -54,7 +51,9 @@ public class Tecnicos implements Serializable {
     @Column(name = "correo", length = 2147483647)
     private String correo;
     @Column(name = "estado")
-    private Boolean estado = true;
+    private Boolean estado;
+    @OneToMany(mappedBy = "idTecnico")
+    private List<OrdenesTrabajo> ordenesTrabajoList;
 
     public Tecnicos() {
     }
@@ -108,6 +107,15 @@ public class Tecnicos implements Serializable {
         this.estado = estado;
     }
 
+    @XmlTransient
+    public List<OrdenesTrabajo> getOrdenesTrabajoList() {
+        return ordenesTrabajoList;
+    }
+
+    public void setOrdenesTrabajoList(List<OrdenesTrabajo> ordenesTrabajoList) {
+        this.ordenesTrabajoList = ordenesTrabajoList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -131,15 +139,6 @@ public class Tecnicos implements Serializable {
     @Override
     public String toString() {
         return "edu.sv.uesocc.entidades.Tecnicos[ idTecnico=" + idTecnico + " ]";
-    }
-
-    @XmlTransient
-    public List<OrdenesTrabajo> getOrdenesTrabajoList() {
-        return ordenesTrabajoList;
-    }
-
-    public void setOrdenesTrabajoList(List<OrdenesTrabajo> ordenesTrabajoList) {
-        this.ordenesTrabajoList = ordenesTrabajoList;
     }
     
 }

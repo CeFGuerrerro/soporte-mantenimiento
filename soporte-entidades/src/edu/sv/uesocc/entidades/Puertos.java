@@ -43,9 +43,9 @@ public class Puertos implements Serializable {
     @Basic(optional = false)
     @Column(name = "tipo_puerto", nullable = false, length = 2147483647)
     private String tipoPuerto;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPuerto")
+    @OneToMany(mappedBy = "idPuerto")
     private List<Discos> discosList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPuerto")
+    @OneToMany(mappedBy = "idPuerto")
     private List<TarjetasVideo> tarjetasVideoList;
 
     public Puertos() {

@@ -8,7 +8,6 @@ package edu.sv.uesocc.entidades;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,7 +42,7 @@ public class TiposDisco implements Serializable {
     @Basic(optional = false)
     @Column(name = "tipo_disco", nullable = false, length = 2147483647)
     private String tipoDisco;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoDisco")
+    @OneToMany(mappedBy = "idTipoDisco")
     private List<Discos> discosList;
 
     public TiposDisco() {

@@ -36,12 +36,13 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "OrdenesTrabajo.findAll", query = "SELECT o FROM OrdenesTrabajo o")
     , @NamedQuery(name = "OrdenesTrabajo.findByIdOrdenTrabajo", query = "SELECT o FROM OrdenesTrabajo o WHERE o.idOrdenTrabajo = :idOrdenTrabajo")
-    , @NamedQuery(name = "OrdenesTrabajo.findByPrioridad", query = "SELECT o FROM OrdenesTrabajo o WHERE o.prioridad = :prioridad")
     , @NamedQuery(name = "OrdenesTrabajo.findByFechaInicio", query = "SELECT o FROM OrdenesTrabajo o WHERE o.fechaInicio = :fechaInicio")
     , @NamedQuery(name = "OrdenesTrabajo.findByFechaFinalizacion", query = "SELECT o FROM OrdenesTrabajo o WHERE o.fechaFinalizacion = :fechaFinalizacion")
     , @NamedQuery(name = "OrdenesTrabajo.findByHoraInicio", query = "SELECT o FROM OrdenesTrabajo o WHERE o.horaInicio = :horaInicio")
     , @NamedQuery(name = "OrdenesTrabajo.findByHoraFinalizacion", query = "SELECT o FROM OrdenesTrabajo o WHERE o.horaFinalizacion = :horaFinalizacion")
-    , @NamedQuery(name = "OrdenesTrabajo.findByObservaciones", query = "SELECT o FROM OrdenesTrabajo o WHERE o.observaciones = :observaciones")})
+    , @NamedQuery(name = "OrdenesTrabajo.findByObservaciones", query = "SELECT o FROM OrdenesTrabajo o WHERE o.observaciones = :observaciones")
+    , @NamedQuery(name = "OrdenesTrabajo.findByPrioridad", query = "SELECT o FROM OrdenesTrabajo o WHERE o.prioridad = :prioridad")
+    , @NamedQuery(name = "OrdenesTrabajo.findByEstado", query = "SELECT o FROM OrdenesTrabajo o WHERE o.estado = :estado")})
 public class OrdenesTrabajo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,8 +51,6 @@ public class OrdenesTrabajo implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_orden_trabajo", nullable = false)
     private Integer idOrdenTrabajo;
-    @Column(name = "prioridad", length = 2147483647)
-    private String prioridad;
     @Column(name = "fecha_inicio")
     @Temporal(TemporalType.DATE)
     private Date fechaInicio;
@@ -64,11 +63,12 @@ public class OrdenesTrabajo implements Serializable {
     private String horaFinalizacion;
     @Column(name = "observaciones", length = 2147483647)
     private String observaciones;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idOrdenTrabajo")
+    @Column(name = "prioridad")
+    private Integer prioridad;
+    @Column(name = "estado")
+    private Integer estado;
+    @OneToMany(mappedBy = "idOrdenTrabajo")
     private List<DetallesOrdenTrabajo> detallesOrdenTrabajoList;
-    @JoinColumn(name = "id_estado", referencedColumnName = "id_estado")
-    @ManyToOne
-    private EstadosOrden idEstado;
     @JoinColumn(name = "id_mantenimiento", referencedColumnName = "id_mantenimiento", nullable = false)
     @ManyToOne(optional = false)
     private Mantenimientos idMantenimiento;
@@ -92,14 +92,6 @@ public class OrdenesTrabajo implements Serializable {
 
     public void setIdOrdenTrabajo(Integer idOrdenTrabajo) {
         this.idOrdenTrabajo = idOrdenTrabajo;
-    }
-
-    public String getPrioridad() {
-        return prioridad;
-    }
-
-    public void setPrioridad(String prioridad) {
-        this.prioridad = prioridad;
     }
 
     public Date getFechaInicio() {
@@ -142,6 +134,22 @@ public class OrdenesTrabajo implements Serializable {
         this.observaciones = observaciones;
     }
 
+    public Integer getPrioridad() {
+        return prioridad;
+    }
+
+    public void setPrioridad(Integer prioridad) {
+        this.prioridad = prioridad;
+    }
+
+    public Integer getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Integer estado) {
+        this.estado = estado;
+    }
+
     @XmlTransient
     public List<DetallesOrdenTrabajo> getDetallesOrdenTrabajoList() {
         return detallesOrdenTrabajoList;
@@ -149,14 +157,6 @@ public class OrdenesTrabajo implements Serializable {
 
     public void setDetallesOrdenTrabajoList(List<DetallesOrdenTrabajo> detallesOrdenTrabajoList) {
         this.detallesOrdenTrabajoList = detallesOrdenTrabajoList;
-    }
-
-    public EstadosOrden getIdEstado() {
-        return idEstado;
-    }
-
-    public void setIdEstado(EstadosOrden idEstado) {
-        this.idEstado = idEstado;
     }
 
     public Mantenimientos getIdMantenimiento() {

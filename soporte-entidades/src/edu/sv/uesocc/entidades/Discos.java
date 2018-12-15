@@ -44,19 +44,22 @@ public class Discos implements Serializable {
     private Integer idDisco;
     @Column(name = "numero_serie", length = 2147483647)
     private String numeroSerie;
-    @JoinColumn(name = "id_capacidad", referencedColumnName = "id_capacidad", nullable = false)
-    @ManyToOne(optional = false)
+    @JoinColumn(name = "id_capacidad", referencedColumnName = "id_capacidad")
+    @ManyToOne
     private Capacidades idCapacidad;
+    @JoinColumn(name = "id_dimension", referencedColumnName = "id_dimension")
+    @ManyToOne
+    private DimensionDisco idDimension;
     @JoinColumn(name = "id_marca", referencedColumnName = "id_marca", nullable = false)
     @ManyToOne(optional = false)
     private Marcas idMarca;
-    @JoinColumn(name = "id_puerto", referencedColumnName = "id_puerto", nullable = false)
-    @ManyToOne(optional = false)
+    @JoinColumn(name = "id_puerto", referencedColumnName = "id_puerto")
+    @ManyToOne
     private Puertos idPuerto;
-    @JoinColumn(name = "id_tipo_disco", referencedColumnName = "id_tipo_disco", nullable = false)
-    @ManyToOne(optional = false)
+    @JoinColumn(name = "id_tipo_disco", referencedColumnName = "id_tipo_disco")
+    @ManyToOne
     private TiposDisco idTipoDisco;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDisco")
+    @OneToMany(mappedBy = "idDisco")
     private List<HardwareComponente> hardwareComponenteList;
 
     public Discos() {
@@ -88,6 +91,14 @@ public class Discos implements Serializable {
 
     public void setIdCapacidad(Capacidades idCapacidad) {
         this.idCapacidad = idCapacidad;
+    }
+
+    public DimensionDisco getIdDimension() {
+        return idDimension;
+    }
+
+    public void setIdDimension(DimensionDisco idDimension) {
+        this.idDimension = idDimension;
     }
 
     public Marcas getIdMarca() {

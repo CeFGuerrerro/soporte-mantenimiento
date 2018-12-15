@@ -47,18 +47,18 @@ public class Equipos implements Serializable {
     private Boolean estado;
     @Column(name = "observaciones", length = 2147483647)
     private String observaciones;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEquipo")
+    @OneToMany(mappedBy = "idEquipo")
     private List<Solicitudes> solicitudesList;
     @OneToMany(mappedBy = "idEquipo")
-    private List<Componentes> componentesList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEquipo")
     private List<Cronograma> cronogramaList;
-    @JoinColumn(name = "id_ubicacion", referencedColumnName = "id_ubicacion", nullable = false)
-    @ManyToOne(optional = false)
-    private Ubicaciones idUbicacion;
     @JoinColumn(name = "id_responsable", referencedColumnName = "id_responsable")
     @ManyToOne
     private Responsables idResponsable;
+    @JoinColumn(name = "id_ubicacion", referencedColumnName = "id_ubicacion", nullable = false)
+    @ManyToOne(optional = false)
+    private Ubicaciones idUbicacion;
+    @OneToMany(mappedBy = "idEquipo")
+    private List<ComponentesEquipo> componentesEquipoList;
 
     public Equipos() {
     }
@@ -101,15 +101,6 @@ public class Equipos implements Serializable {
     }
 
     @XmlTransient
-    public List<Componentes> getComponentesList() {
-        return componentesList;
-    }
-
-    public void setComponentesList(List<Componentes> componentesList) {
-        this.componentesList = componentesList;
-    }
-
-    @XmlTransient
     public List<Cronograma> getCronogramaList() {
         return cronogramaList;
     }
@@ -118,12 +109,29 @@ public class Equipos implements Serializable {
         this.cronogramaList = cronogramaList;
     }
 
+    public Responsables getIdResponsable() {
+        return idResponsable;
+    }
+
+    public void setIdResponsable(Responsables idResponsable) {
+        this.idResponsable = idResponsable;
+    }
+
     public Ubicaciones getIdUbicacion() {
         return idUbicacion;
     }
 
     public void setIdUbicacion(Ubicaciones idUbicacion) {
         this.idUbicacion = idUbicacion;
+    }
+
+    @XmlTransient
+    public List<ComponentesEquipo> getComponentesEquipoList() {
+        return componentesEquipoList;
+    }
+
+    public void setComponentesEquipoList(List<ComponentesEquipo> componentesEquipoList) {
+        this.componentesEquipoList = componentesEquipoList;
     }
 
     @Override
@@ -150,12 +158,5 @@ public class Equipos implements Serializable {
     public String toString() {
         return "edu.sv.uesocc.entidades.Equipos[ idEquipo=" + idEquipo + " ]";
     }
-
-    public Responsables getIdResponsable() {
-        return idResponsable;
-    }
-
-    public void setIdResponsable(Responsables idResponsable) {
-        this.idResponsable = idResponsable;
-    }
+    
 }

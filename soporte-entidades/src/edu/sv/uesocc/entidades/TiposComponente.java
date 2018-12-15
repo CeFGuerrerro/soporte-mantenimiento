@@ -46,7 +46,7 @@ public class TiposComponente implements Serializable {
     private String nombre;
     @Column(name = "descripcion", length = 2147483647)
     private String descripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoComponente")
+    @OneToMany(mappedBy = "idTipoComponente")
     private List<Componentes> componentesList;
 
     public TiposComponente() {

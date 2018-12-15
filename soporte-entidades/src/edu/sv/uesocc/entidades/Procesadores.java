@@ -53,7 +53,7 @@ public class Procesadores implements Serializable {
     @JoinColumn(name = "id_socket", referencedColumnName = "id_socket")
     @ManyToOne
     private Sockets idSocket;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProcesador")
+    @OneToMany(mappedBy = "idProcesador")
     private List<HardwareComponente> hardwareComponenteList;
 
     public Procesadores() {

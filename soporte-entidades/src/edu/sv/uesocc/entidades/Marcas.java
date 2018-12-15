@@ -43,15 +43,15 @@ public class Marcas implements Serializable {
     @Basic(optional = false)
     @Column(name = "nombre", nullable = false, length = 2147483647)
     private String nombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMarca")
+    @OneToMany(mappedBy = "idMarca")
     private List<Motherboards> motherboardsList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMarca")
+    @OneToMany(mappedBy = "idMarca")
     private List<Discos> discosList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMarca")
+    @OneToMany(mappedBy = "idMarca")
     private List<Memorias> memoriasList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMarca")
+    @OneToMany(mappedBy = "idMarca")
     private List<Modelos> modelosList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMarca")
+    @OneToMany(mappedBy = "idMarca")
     private List<TarjetasVideo> tarjetasVideoList;
 
     public Marcas() {

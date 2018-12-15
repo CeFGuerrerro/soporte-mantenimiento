@@ -38,7 +38,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Solicitudes.findByIdSolicitud", query = "SELECT s FROM Solicitudes s WHERE s.idSolicitud = :idSolicitud")
     , @NamedQuery(name = "Solicitudes.findByNombreSolicitante", query = "SELECT s FROM Solicitudes s WHERE s.nombreSolicitante = :nombreSolicitante")
     , @NamedQuery(name = "Solicitudes.findByFechaSolicitud", query = "SELECT s FROM Solicitudes s WHERE s.fechaSolicitud = :fechaSolicitud")
-    , @NamedQuery(name = "Solicitudes.findByProblema", query = "SELECT s FROM Solicitudes s WHERE s.problema = :problema")})
+    , @NamedQuery(name = "Solicitudes.findByProblema", query = "SELECT s FROM Solicitudes s WHERE s.problema = :problema")
+    , @NamedQuery(name = "Solicitudes.findByEstado", query = "SELECT s FROM Solicitudes s WHERE s.estado = :estado")})
 public class Solicitudes implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -57,13 +58,12 @@ public class Solicitudes implements Serializable {
     @Basic(optional = false)
     @Column(name = "problema", nullable = false, length = 2147483647)
     private String problema;
+    @Column(name = "estado")
+    private Integer estado;
     @JoinColumn(name = "id_equipo", referencedColumnName = "id_equipo", nullable = false)
     @ManyToOne(optional = false)
     private Equipos idEquipo;
-    @JoinColumn(name = "id_estado", referencedColumnName = "id_estado")
-    @ManyToOne
-    private EstadosSolicitud idEstado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSolicitud")
+    @OneToMany(mappedBy = "idSolicitud")
     private List<OrdenesTrabajo> ordenesTrabajoList;
 
     public Solicitudes() {
@@ -112,20 +112,20 @@ public class Solicitudes implements Serializable {
         this.problema = problema;
     }
 
+    public Integer getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Integer estado) {
+        this.estado = estado;
+    }
+
     public Equipos getIdEquipo() {
         return idEquipo;
     }
 
     public void setIdEquipo(Equipos idEquipo) {
         this.idEquipo = idEquipo;
-    }
-
-    public EstadosSolicitud getIdEstado() {
-        return idEstado;
-    }
-
-    public void setIdEstado(EstadosSolicitud idEstado) {
-        this.idEstado = idEstado;
     }
 
     @XmlTransient
