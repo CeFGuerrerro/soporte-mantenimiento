@@ -5,12 +5,12 @@
     <class>edu.sv.uesocc.entidades.Arquitecturas</class>
     <class>edu.sv.uesocc.entidades.Capacidades</class>
     <class>edu.sv.uesocc.entidades.Componentes</class>
+    <class>edu.sv.uesocc.entidades.ComponentesEquipo</class>
     <class>edu.sv.uesocc.entidades.Cronograma</class>
     <class>edu.sv.uesocc.entidades.DetallesOrdenTrabajo</class>
+    <class>edu.sv.uesocc.entidades.DimensionDisco</class>
     <class>edu.sv.uesocc.entidades.Discos</class>
     <class>edu.sv.uesocc.entidades.Equipos</class>
-    <class>edu.sv.uesocc.entidades.EstadosOrden</class>
-    <class>edu.sv.uesocc.entidades.EstadosSolicitud</class>
     <class>edu.sv.uesocc.entidades.Fuentes</class>
     <class>edu.sv.uesocc.entidades.HardwareComponente</class>
     <class>edu.sv.uesocc.entidades.Mantenimientos</class>
@@ -19,9 +19,12 @@
     <class>edu.sv.uesocc.entidades.Modelos</class>
     <class>edu.sv.uesocc.entidades.Motherboards</class>
     <class>edu.sv.uesocc.entidades.OrdenesTrabajo</class>
+    <class>edu.sv.uesocc.entidades.PotenciaUps</class>
     <class>edu.sv.uesocc.entidades.Procesadores</class>
     <class>edu.sv.uesocc.entidades.Puertos</class>
     <class>edu.sv.uesocc.entidades.Responsables</class>
+    <class>edu.sv.uesocc.entidades.SalidaTarjetaVideo</class>
+    <class>edu.sv.uesocc.entidades.SalidaVideo</class>
     <class>edu.sv.uesocc.entidades.Sockets</class>
     <class>edu.sv.uesocc.entidades.Software</class>
     <class>edu.sv.uesocc.entidades.SoftwareComponente</class>
@@ -36,6 +39,8 @@
     <class>edu.sv.uesocc.entidades.TiposSoftware</class>
     <class>edu.sv.uesocc.entidades.Ubicaciones</class>
     <class>edu.sv.uesocc.entidades.Ups</class>
+    <class>edu.sv.uesocc.entidades.Usuarios</class>
+    <class>edu.sv.uesocc.entidades.Velocidad</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>

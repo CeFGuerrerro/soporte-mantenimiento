@@ -5,7 +5,7 @@
  */
 package edu.sv.uesocc.facades;
 
-import edu.sv.uesocc.entidades.EstadosOrden;
+import edu.sv.uesocc.entidades.ComponentesEquipo;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author o-a19
  */
 @Stateless
-public class EstadosOrdenFacade extends AbstractFacade<EstadosOrden> implements EstadosOrdenFacadeLocal {
+public class ComponentesEquipoFacade extends AbstractFacade<ComponentesEquipo> implements ComponentesEquipoFacadeLocal {
 
     @PersistenceContext(unitName = "soportePU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class EstadosOrdenFacade extends AbstractFacade<EstadosOrden> implements 
         return em;
     }
 
-    public EstadosOrdenFacade() {
-        super(EstadosOrden.class);
+    public ComponentesEquipoFacade() {
+        super(ComponentesEquipo.class);
     }
     
 }

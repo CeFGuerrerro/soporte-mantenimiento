@@ -1,7 +1,9 @@
 package edu.sv.uesocc.controladores;
 
 import edu.sv.uesocc.entidades.Componentes;
+import edu.sv.uesocc.entidades.ComponentesEquipo;
 import edu.sv.uesocc.entidades.Equipos;
+import edu.sv.uesocc.facades.ComponentesEquipoFacadeLocal;
 import edu.sv.uesocc.facades.ComponentesFacadeLocal;
 import edu.sv.uesocc.facades.EquiposFacadeLocal;
 import javax.inject.Named;
@@ -22,16 +24,17 @@ public class EquiposMB implements Serializable {
     private EquiposFacadeLocal equipf;
     @EJB
     private ComponentesFacadeLocal compf;
+    @EJB
+    private ComponentesEquipoFacadeLocal compEquipfl;
 
     private Equipos equip;
     private Equipos equipSeleccionado;
-    private List<Equipos> equipList = new ArrayList<>();
+    private ComponentesEquipo comp = new ComponentesEquipo(); // Para equipos nuevos
+    private ComponentesEquipo compSeleccionado = new ComponentesEquipo(); //Para equipos seleccionados
+    private List<Equipos> equipList = new ArrayList<>(); // Lista de todos los equipos
+    private List<ComponentesEquipo> compEquipList = new ArrayList<>(); // Lista de Componentes Por Equipo
+    private List<Componentes> compList = new ArrayList<>(); // Lista de solo componentes cuando se crea equipo
 
-    private Componentes compSeleccionado;
-    private List<Componentes> compList = new ArrayList<>();
-    private List<Componentes> compDupList = new ArrayList<>();
-    private List<Componentes> compSeleccionadoList = new ArrayList<>();
-    private List<Componentes> compSeleccionadoDupList = new ArrayList<>();
 
     public EquiposMB() {
     }
@@ -40,8 +43,6 @@ public class EquiposMB implements Serializable {
     private void init() {
         equip = new Equipos();
         equipSeleccionado = new Equipos();
-        compSeleccionado = new Componentes();
-        obtenerTodos();
     }
 
     public Equipos getEquip() {
@@ -68,16 +69,26 @@ public class EquiposMB implements Serializable {
         this.equipList = equipList;
     }
 
+    public ComponentesEquipo getCompSeleccionado() {
+        return compSeleccionado;
+    }
+
+    public void setCompSeleccionado(ComponentesEquipo compSeleccionado) {
+        this.compSeleccionado = compSeleccionado;
+    }
+    
+//    Metodos publicos
+
     public void obtenerTodos() {
         equipList = equipf.findAll();
     }
 
-    public Componentes getCompSeleccionado() {
-        return compSeleccionado;
+    public List<ComponentesEquipo> getCompEquipList() {
+        return compEquipList;
     }
 
-    public void setCompSeleccionado(Componentes compSeleccionado) {
-        this.compSeleccionado = compSeleccionado;
+    public void setCompEquipList(List<ComponentesEquipo> compEquipList) {
+        this.compEquipList = compEquipList;
     }
 
     public List<Componentes> getCompList() {
@@ -88,124 +99,23 @@ public class EquiposMB implements Serializable {
         this.compList = compList;
     }
 
-    public List<Componentes> getCompSeleccionadoList() {
-        return compSeleccionadoList;
-    }
-
-    public void setCompSeleccionadoList(List<Componentes> compSeleccionadoList) {
-        this.compSeleccionadoList = compSeleccionadoList;
-    }
-
-    public List<Componentes> getCompSeleccionadoDupList() {
-        return compSeleccionadoDupList;
-    }
-
-    public void setCompSeleccionadoDupList(List<Componentes> compSeleccionadoDupList) {
-        this.compSeleccionadoDupList = compSeleccionadoDupList;
-    }
-
 //    Metodos publicos 
-    public void agregarComponentes() {
-        for (Componentes c: compList){
-            if(!compDupList.contains(c)){
-                compDupList.add(c);
-            }
-        }
-        equip.setComponentesList(compDupList);
-        compList.clear();
+    public void obtenerEquipos(){
+        equipList = equipf.findAll();
     }
-
-    public void quitarComponentes() {
-        compDupList.remove(compSeleccionado);
-    }
-
-    public void cargarComponentesEquipoSeleccionado() {
-        compSeleccionadoDupList.clear();
-
-        for (Componentes c : equipSeleccionado.getComponentesList()) {
-            compSeleccionadoDupList.add(c);
+    
+    public void agregarComponentes(){
+        for(Componentes c : compList){
+            
         }
     }
-
-    public void agregarComponentesEquipoSelecionado() {
-        for (Componentes c : compSeleccionadoList) {
-            if(!compSeleccionadoDupList.contains(c)){
-            compSeleccionadoDupList.add(c);
-            }
-        }
+    
+    public void obtenerComponentesPorEquipo(){
+        
     }
-
-    public void quitarComponenteEquipoSeleccionado() {
-        compSeleccionadoDupList.remove(compSeleccionado);
-    }
-
-    public void crearEquipo() {
-        FacesContext contexto = FacesContext.getCurrentInstance();
-        try {
-            if (!compDupList.isEmpty()) {
-                boolean creado = equipf.create(equip);
-                if (creado) {
-                    for (Componentes c : equip.getComponentesList()) {
-                        c.setIdEquipo(equip);
-                        c.setAsignado(true);
-                        compf.edit(c);
-                    }
-                    equip = new Equipos();
-                    compList.clear();
-                    compDupList.clear();
-                    contexto.addMessage(null, new FacesMessage("Registro guardado"));
-                } else {
-                    contexto.addMessage(null, new FacesMessage("No se pudo guardar el registro"));
-                }
-            } else {
-                contexto.addMessage(null, new FacesMessage("Por favor agregue componentes al equipo"));
-            }
-            obtenerTodos();
-        } catch (Exception e) {
-
-        }
-    }
-
-    public void modificarEquipo() {
-        FacesContext contexto = FacesContext.getCurrentInstance();
-        try {
-            if (compSeleccionadoDupList.isEmpty()) {
-                contexto.addMessage(null, new FacesMessage("Por favor agregue componentes al equipo"));
-            } else { 
-                compSeleccionadoList.clear();
-                for(Componentes c: equipSeleccionado.getComponentesList()){
-                    compSeleccionadoList.add(c);
-                }
-                equipSeleccionado.setComponentesList(compSeleccionadoDupList);
-                 boolean modificado = equipf.edit(equipSeleccionado);
-                
-                for(Componentes c: compSeleccionadoDupList){
-                    if(!compSeleccionadoList.contains(c)){
-                        c.setIdEquipo(equipSeleccionado);
-                        c.setAsignado(true);
-                        compf.edit(c);
-                    }
-                }
-                for(Componentes c: compSeleccionadoList){
-                    if(!compSeleccionadoDupList.contains(c)){
-                        c.setAsignado(false);
-                        c.setIdEquipo(null);
-                        compf.edit(c);
-                    }
-                }
-                if(modificado){
-                    contexto.addMessage(null, new FacesMessage("Registro modificado"));
-                }else {
-                    contexto.addMessage(null, new FacesMessage("No se pudo modificar el registro"));
-                }
-                compSeleccionadoDupList.clear();
-                compSeleccionadoList.clear();
-                obtenerTodos();
-            }
-        } catch (Exception e) {
-
-        }
-
+    
+    public void crearEquipo(){
+        
     }
 
 }
