@@ -9,12 +9,19 @@ import edu.sv.uesocc.facades.EquiposFacadeLocal;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import org.primefaces.context.DefaultRequestContext;
+import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.TransferEvent;
+import org.primefaces.event.UnselectEvent;
+import org.primefaces.model.DualListModel;
 
 @Named(value = "equiposMB")
 @ViewScoped
@@ -29,12 +36,15 @@ public class EquiposMB implements Serializable {
 
     private Equipos equip;
     private Equipos equipSeleccionado;
-    private ComponentesEquipo comp = new ComponentesEquipo(); // Para equipos nuevos
+    private ComponentesEquipo comp = new ComponentesEquipo();
     private ComponentesEquipo compSeleccionado = new ComponentesEquipo(); //Para equipos seleccionados
     private List<Equipos> equipList = new ArrayList<>(); // Lista de todos los equipos
     private List<ComponentesEquipo> compEquipList = new ArrayList<>(); // Lista de Componentes Por Equipo
     private List<Componentes> compList = new ArrayList<>(); // Lista de solo componentes cuando se crea equipo
-
+    private DualListModel<Componentes> compAsignar;
+    private List<Componentes> compPorAsignar;
+    private List<Componentes> compDisponibles = new ArrayList<>(); //*****
+    private boolean accion;
 
     public EquiposMB() {
     }
@@ -43,6 +53,29 @@ public class EquiposMB implements Serializable {
     private void init() {
         equip = new Equipos();
         equipSeleccionado = new Equipos();
+        obtenerEquipos();
+        obtenerComponentesDisponibles();
+    }
+
+    public boolean isAccion() {
+        return accion;
+    }
+
+    public void setAccion(boolean accion) {
+        this.accion = accion;
+    }
+
+    public void setAccionCleanning(boolean accion) {
+        this.accion = accion;
+        compList = new ArrayList<>();
+    }
+
+    public DualListModel<Componentes> getCompAsignar() {
+        return compAsignar;
+    }
+
+    public void setCompAsignar(DualListModel<Componentes> compAsignar) {
+        this.compAsignar = compAsignar;
     }
 
     public Equipos getEquip() {
@@ -76,12 +109,6 @@ public class EquiposMB implements Serializable {
     public void setCompSeleccionado(ComponentesEquipo compSeleccionado) {
         this.compSeleccionado = compSeleccionado;
     }
-    
-//    Metodos publicos
-
-    public void obtenerTodos() {
-        equipList = equipf.findAll();
-    }
 
     public List<ComponentesEquipo> getCompEquipList() {
         return compEquipList;
@@ -100,22 +127,138 @@ public class EquiposMB implements Serializable {
     }
 
 //    Metodos publicos 
-    public void obtenerEquipos(){
+    public void obtenerEquipos() {
         equipList = equipf.findAll();
     }
-    
-    public void agregarComponentes(){
-        for(Componentes c : compList){
-            
-        }
-    }
-    
-    public void obtenerComponentesPorEquipo(){
-        
-    }
-    
-    public void crearEquipo(){
-        
+
+    public void obtenerComponentesDisponibles() {
+
+        compPorAsignar = new ArrayList<>();
+        List<Componentes> compDisponibles = compf.findAll();
+        compAsignar = new DualListModel<>(compDisponibles, compPorAsignar);
+
     }
 
+    public void obtenerComponentesPorEquipo() {
+        compEquipList = equipSeleccionado.getComponentesEquipoList();
+        this.setAccion(false);
+    }
+
+    public void crearEquipo() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
+        try {
+            boolean creadoCE;
+            boolean actu;
+            boolean creado = equipf.create(equip);
+            int compG = 0;
+            if (creado) {
+                Date date = new Date();
+                obtenerEquipos();
+                for (Componentes lista : compList) {
+                    comp = new ComponentesEquipo();
+                    Equipos ultimoEquipo = new Equipos();
+                    ultimoEquipo = equipList.get(equipList.size() - 1);
+                    comp.setIdEquipo(ultimoEquipo);
+                    comp.setIdComponente(lista);
+                    comp.setFechaVinculado(date);
+                    creadoCE = compEquipfl.create(comp);
+                    if (creadoCE) {
+                        compG++;
+                        lista.setAsignado(true);
+                        actu = compf.edit(lista);
+                    } else {
+                        contexto.addMessage(null, new FacesMessage("No se pudo guardar el registro de un componente!"));
+                    }
+                }
+                equip = new Equipos();
+                comp = new ComponentesEquipo();
+                contexto.addMessage(null, new FacesMessage("Registro guardado"));
+                contexto.addMessage(null, new FacesMessage("Componentes asignados: " + compG));
+            } else {
+                contexto.addMessage(null, new FacesMessage("No se pudo guardar el registro!"));
+            }
+            obtenerEquipos();
+            obtenerComponentesDisponibles();
+        } catch (Exception e) {
+            contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error!", e.getMessage()));
+        }
+    }
+
+    public void editarEquipo() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
+        try {
+            boolean crearCE;
+            boolean actu;
+            boolean editar = equipf.edit(equipSeleccionado);
+            int compG = 0;
+            if (editar) {
+                Date date = new Date();
+                if (compList.size() > 0) {
+                    for (Componentes lista : compList) {
+                        comp = new ComponentesEquipo();
+                        comp.setIdEquipo(equipSeleccionado);
+                        comp.setIdComponente(lista);
+                        comp.setFechaVinculado(date);
+                        crearCE = compEquipfl.create(comp);
+                        if (crearCE) {
+                            compG++;
+                            lista.setAsignado(true);
+                            actu = compf.edit(lista);
+                        } else {
+                            contexto.addMessage(null, new FacesMessage("No se pudo guardar el registro de un componente!"));
+                        }
+                    }
+                }
+                equipSeleccionado = new Equipos();
+                comp = new ComponentesEquipo();
+                
+                contexto.addMessage(null, new FacesMessage("Registro editado"));
+                contexto.addMessage(null, new FacesMessage("Componentes asignados: " + compG));
+            } else {
+                contexto.addMessage(null, new FacesMessage("No se pudo guardar el registro!"));
+            }
+
+            obtenerEquipos();
+            obtenerComponentesDisponibles();
+        } catch (Exception e) {
+            contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error!", e.getMessage()));
+        }
+    }
+
+    public void closeCleanning() {
+        compList = new ArrayList<>();
+        this.accion = false;
+        obtenerComponentesDisponibles();
+    }
+
+    public void onTransfer(TransferEvent event) {
+        StringBuilder builder = new StringBuilder();
+        for (Object item : event.getItems()) {
+            builder.append(((Componentes) item).getNumeroSerie()).append("<br />");
+        }
+
+        compList = compAsignar.getTarget();
+
+        FacesMessage msg = new FacesMessage();
+        msg.setSeverity(FacesMessage.SEVERITY_INFO);
+        msg.setSummary("Items Transferred");
+        msg.setDetail(builder.toString());
+
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public void onSelect(SelectEvent event) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Item Selected", event.getObject().toString()));
+    }
+
+    public void onUnselect(UnselectEvent event) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Item Unselected", event.getObject().toString()));
+    }
+
+    public void onReorder() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "List Reordered", null));
+    }
 }

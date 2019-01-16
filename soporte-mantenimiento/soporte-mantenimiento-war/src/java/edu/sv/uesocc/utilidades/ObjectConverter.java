@@ -18,7 +18,6 @@ import javax.faces.convert.FacesConverter;
  * @author o-a19
  */
 @FacesConverter(value = "objectConverter")
-
 public class ObjectConverter implements Converter {
 
     @Override

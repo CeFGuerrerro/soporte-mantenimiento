@@ -21,8 +21,8 @@ public class TecnicosMB implements Serializable {
     @EJB
     private TecnicosFacadeLocal tecnicoEJB;
     private List<Tecnicos> tecnicos;
-    private Tecnicos tecnico;
-    private Tecnicos seleccion;
+    private Tecnicos tecnico = new Tecnicos();
+    private Tecnicos seleccion = new Tecnicos();
 
     public List<Tecnicos> getTecnicos() {
         return tecnicos;
@@ -50,9 +50,6 @@ public class TecnicosMB implements Serializable {
 
     @PostConstruct
     private void init() {
-        tecnico = new Tecnicos();
-        seleccion = new Tecnicos();
-
         tecnicos = tecnicoEJB.findAll();
     }
 
@@ -63,6 +60,8 @@ public class TecnicosMB implements Serializable {
             registrado = tecnicoEJB.create(tecnico);
             if (registrado) {
                 contexto.addMessage(null, new FacesMessage("Tecnico registrado."));
+                tecnico = new Tecnicos();
+                seleccion = new Tecnicos();
             } else {
                 contexto.addMessage(null, new FacesMessage("No se pudo registrar."));
             }
@@ -70,7 +69,6 @@ public class TecnicosMB implements Serializable {
             contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error:", e.getMessage()));
         }
         tecnicos = tecnicoEJB.findAll();
-        tecnico = null;
     }
     
     public void editar() {
@@ -80,6 +78,8 @@ public class TecnicosMB implements Serializable {
             registrado = tecnicoEJB.edit(seleccion);
             if (registrado) {
                 contexto.addMessage(null, new FacesMessage("Registro editado."));
+                tecnico = new Tecnicos();
+                seleccion = new Tecnicos();
             } else {
                 contexto.addMessage(null, new FacesMessage("No se pudo registrar."));
             }
@@ -87,7 +87,6 @@ public class TecnicosMB implements Serializable {
             contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error:", e.getMessage()));
         }
         tecnicos = tecnicoEJB.findAll();
-        seleccion = null;
     }
     
     public void eliminar() {
@@ -97,6 +96,7 @@ public class TecnicosMB implements Serializable {
             registrado = tecnicoEJB.remove(seleccion);
             if (registrado) {
                 contexto.addMessage(null, new FacesMessage("Registro eliminado."));
+                tecnico = new Tecnicos();
                 seleccion = new Tecnicos();
             } else {
                 contexto.addMessage(null, new FacesMessage("No se pudo eliminar."));

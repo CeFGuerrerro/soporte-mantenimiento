@@ -31,7 +31,7 @@ public class ComponentesMB implements Serializable {
     }
 
     @PostConstruct
-    private void init() {
+    public void init() {
         comp = new Componentes();
         compSeleccionado = new Componentes();
         obtenerDisponibles();
@@ -169,7 +169,7 @@ public class ComponentesMB implements Serializable {
     }
     
     public void obtenerDisponibles(){
-        compDisponiblesList = compf.findDisponibles();
+        compDisponiblesList = compf.findAll();
     }
 
 }
