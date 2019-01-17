@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <body>
+
+        <ui:composition template="./../templates/PrincipalTemplate.xhtml">
+            <ui:define name="contenido">
+                <h:form id="f_dimensionDisco">
+
+                            <!--Boton agregar-->
+                            <div>
+                            <p:commandButton value="Nuevo" icon="fa fa-plus" onclick="PF('wd_agregar').show()" update="f_agregar"/>
+                            </div>
+                                <!--tabla-->
+                                <p:dataTable id="t_dimensionDisco" emptyMessage="No hay registros" value="#{dimensionDiscoMB.sizeList}" var="dDisco"
+                                             selection="#{dimensionDiscoMB.sizeSeleccionado}" selectionMode="single" rowKey="#{dDisco.idDimension}"
+                                             rows="10" paginator="true">
+                                    <f:facet name="header">
+                                        Dimensión de Discos
+                                    </f:facet>
+
+                                    <p:column headerText="ID" sortBy="#{dDisco.idDimension}">
+                                        <p:outputLabel>#{dDisco.idDimension}</p:outputLabel>
+                                    </p:column>
+                                    <p:column headerText="Dimensión" sortBy="#{dDisco.dimension}">
+                                        <p:outputLabel>#{dDisco.dimension}</p:outputLabel>
+                                    </p:column>
+                                    <p:ajax event="rowDblselect" oncomplete="PF('wd_editar').show()" update=":f_editar"/>
+                                </p:dataTable>
+                      
+                    <!--Eliminar-->
+                    <p:contextMenu for="t_dimensionDisco">
+                        <p:menuitem value="Eliminar" action="#{dimensionDiscoMB.eliminarDimension()}" update="f_dimensionDisco" icon="fa fa-trash"/>
+                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                    </p:contextMenu>
+                </h:form>
+                <!--Crear-->
+                <p:dialog widgetVar="wd_agregar" modal="true" header="Agregar Dimensión de Disco">
+                    <h:form id="f_agregar">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Dimensión de Disco:"/>
+                            <p:inputText value="#{dimensionDiscoMB.size.dimension}" required="true" requiredMessage="Ingrese dimensión de disco!"/>
+                        </p:panelGrid> 
+                        <p:commandButton value="Guardar" action="#{dimensionDiscoMB.agregarDimension()}" icon="fa fa-check" oncomplete="PF('wd_agregar').hide()" update="f_dimensionDisco"/>
+                    </h:form>
+                </p:dialog>
+
+                <!--Editar-->
+                <p:dialog widgetVar="wd_editar" modal="true" header="Editar dimensión de Disco">
+                    <h:form id="f_editar">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Dimensión de Disco:"/>
+                            <p:inputText value="#{dimensionDiscoMB.sizeSeleccionado.dimension}"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Editar" action="#{dimensionDiscoMB.editarDimension()}" icon="fa fa-check" oncomplete="PF('wd_editar').hide()" update="f_dimensionDisco"/>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+
+            <ui:define name="menuLateral">
+                <ui:include src="../templates/HwSwMenuLateral.xhtml"/>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

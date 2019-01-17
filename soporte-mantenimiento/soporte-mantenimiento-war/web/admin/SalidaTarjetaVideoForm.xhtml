@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <body>
+
+        <ui:composition template="./../templates/PrincipalTemplate.xhtml">
+            <ui:define name="contenido">
+                <h:form id="f_VC">
+
+                    <!--Boton agregar-->
+                    <div>
+                        <p:commandButton value="Nuevo" icon="fa fa-plus" onclick="PF('wd_agregar').show()" update="f_agregar"/>
+                    </div>
+                    <!--tabla-->
+                    <p:dataTable id="t_VC" emptyMessage="No hay registros" value="#{salidaTarjetaVideoMB.salidaVCList}" var="vcard"
+                                 selection="#{salidaTarjetaVideoMB.salidaVCSeleccionada}" selectionMode="single" rowKey="#{vcard.idSalidaTarjetaVideo}"
+                                 rows="10" paginator="true">
+                        <f:facet name="header">
+                            Salidas Tarjetas de Video
+                        </f:facet>
+
+                        <p:column headerText="ID" sortBy="#{vcard.idSalidaTarjetaVideo}">
+                            <p:outputLabel>#{vcard.idSalidaTarjetaVideo}</p:outputLabel>
+                        </p:column>
+                        <p:column headerText="Tarjeta de video" sortBy="#{dDisco.dimension}">
+                            <p:outputLabel>#{dDisco.dimension}</p:outputLabel>
+                        </p:column>
+                        <p:column headerText="Salida de tarjeta de video" sortBy="#{dDisco.dimension}">
+                            <p:outputLabel>#{dDisco.dimension}</p:outputLabel>
+                        </p:column>
+                        <p:ajax event="rowDblselect" oncomplete="PF('wd_editar').show()" update=":f_editar"/>
+                    </p:dataTable>
+
+                    <!--Eliminar-->
+                    <p:contextMenu for="t_VC">
+                        <p:menuitem value="Eliminar" action="#{salidaTarjetaVideoMB.eliminarSalidaVC()}" update="f_VC" icon="fa fa-trash"/>
+                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                    </p:contextMenu>
+                </h:form>
+                <!--Crear-->
+                <p:dialog widgetVar="wd_agregar" modal="true" header="Agregar Salidas de Tarjetas de Video">
+                    <h:form id="f_agregar">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Dimensión de Disco:"/>
+                            <p:inputText value="#{dimensionDiscoMB.size.dimension}" required="true" requiredMessage="Ingrese simensión de disco!"/>
+                        </p:panelGrid> 
+                        <p:commandButton value="Guardar" action="#{salidaTarjetaVideoMB.agregarSalidaVC()}" icon="fa fa-check" oncomplete="PF('wd_agregar').hide()" update="f_VC"/>
+                    </h:form>
+                </p:dialog>
+
+                <!--Editar-->
+                <p:dialog widgetVar="wd_editar" modal="true" header="Editar Salida de Tarjetas de Video">
+                    <h:form id="f_editar">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Dimensión de Disco:"/>
+                            <p:inputText value="#{dimensionDiscoMB.sizeSeleccionado.dimension}"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Editar" action="#{salidaTarjetaVideoMB.editarSalidaVC()}" icon="fa fa-check" oncomplete="PF('wd_editar').hide()" update="f_VC"/>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+
+            <ui:define name="menuLateral">
+                <ui:include src="../templates/HwSwMenuLateral.xhtml"/>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

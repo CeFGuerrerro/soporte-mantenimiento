@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <body>
+
+        <ui:composition template="./../templates/PrincipalTemplate.xhtml">
+            <ui:define name="contenido">
+                <h:form id="f_velocidad">
+
+                            <!--Boton agregar-->
+                            <div>
+                            <p:commandButton value="Nuevo" icon="fa fa-plus" onclick="PF('wd_agregar').show()" update="f_agregar"/>
+                            </div>
+                                <!--tabla-->
+                                <p:dataTable id="t_velocidad" emptyMessage="No hay registros" value="#{velocidadMB.speedList}" var="vel"
+                                             selection="#{velocidadMB.speedSeleccionado}" selectionMode="single" rowKey="#{vel.idVelocidad}"
+                                             rows="10" paginator="true">
+                                    <f:facet name="header">
+                                        Velocidad del Componente
+                                    </f:facet>
+
+                                    <p:column headerText="ID" sortBy="#{vel.idVelocidad}">
+                                        <p:outputLabel>#{vel.idVelocidad}</p:outputLabel>
+                                    </p:column>
+                                    <p:column headerText="Velocidad" sortBy="#{vel.velocidad}">
+                                        <p:outputLabel>#{vel.velocidad}</p:outputLabel>
+                                    </p:column>
+                                    <p:ajax event="rowDblselect" oncomplete="PF('wd_editar').show()" update=":f_editar"/>
+                                </p:dataTable>
+                      
+                    <!--Eliminar-->
+                    <p:contextMenu for="t_velocidad">
+                        <p:menuitem value="Eliminar" action="#{velocidadMB.eliminarVelocidad()}" update="f_velocidad" icon="fa fa-trash"/>
+                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                    </p:contextMenu>
+                </h:form>
+                <!--Crear-->
+                <p:dialog widgetVar="wd_agregar" modal="true" header="Agregar velocidad">
+                    <h:form id="f_agregar">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Velocidad:"/>
+                            <p:inputText value="#{velocidadMB.speed.velocidad}" required="true" requiredMessage="Ingrese velocidad!"/>
+                        </p:panelGrid> 
+                        <p:commandButton value="Guardar" action="#{velocidadMB.agregarVelocidad()}" icon="fa fa-check" oncomplete="PF('wd_agregar').hide()" update="f_velocidad"/>
+                    </h:form>
+                </p:dialog>
+
+                <!--Editar-->
+                <p:dialog widgetVar="wd_editar" modal="true" header="Editar velocidad">
+                    <h:form id="f_editar">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Velocidad:"/>
+                            <p:inputText value="#{velocidadMB.speedSeleccionado.velocidad}"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Editar" action="#{velocidadMB.editarVelocidad()}" icon="fa fa-check" oncomplete="PF('wd_editar').hide()" update="f_velocidad"/>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+
+            <ui:define name="menuLateral">
+                <ui:include src="../templates/HwSwMenuLateral.xhtml"/>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <body>
+
+        <ui:composition template="./../templates/PrincipalTemplate.xhtml">
+            <ui:define name="contenido">
+                <h:form id="f_salidaV">
+
+                            <!--Boton agregar-->
+                            <div>
+                            <p:commandButton value="Nuevo" icon="fa fa-plus" onclick="PF('wd_agregar').show()" update="f_agregar"/>
+                            </div>
+                                <!--tabla-->
+                                <p:dataTable id="t_salidaV" emptyMessage="No hay registros" value="#{salidaVideoMB.salidaList}" var="sVideo"
+                                             selection="#{salidaVideoMB.salidaSeleccionada}" selectionMode="single" rowKey="#{sVideo.idSalidaVideo}"
+                                             rows="10" paginator="true">
+                                    <f:facet name="header">
+                                        Salidas de Video
+                                    </f:facet>
+
+                                    <p:column headerText="ID" sortBy="#{sVideo.idSalidaVideo}">
+                                        <p:outputLabel>#{sVideo.idSalidaVideo}</p:outputLabel>
+                                    </p:column>
+                                    <p:column headerText="Tipo de salida video" sortBy="#{sVideo.tipoSalida}">
+                                        <p:outputLabel>#{sVideo.tipoSalida}</p:outputLabel>
+                                    </p:column>
+                                    <p:ajax event="rowDblselect" oncomplete="PF('wd_editar').show()" update=":f_editar"/>
+                                </p:dataTable>
+                      
+                    <!--Eliminar-->
+                    <p:contextMenu for="t_salidaV">
+                        <p:menuitem value="Eliminar" action="#{salidaVideoMB.eliminarSalidaVideo()}" update="f_salidaV" icon="fa fa-trash"/>
+                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                    </p:contextMenu>
+                </h:form>
+                <!--Crear-->
+                <p:dialog widgetVar="wd_agregar" modal="true" header="Agregar Salida de Video">
+                    <h:form id="f_agregar">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Tipo Salida de Video:"/>
+                            <p:inputText value="#{salidaVideoMB.salida.tipoSalida}" required="true" requiredMessage="Ingrese salida de video!"/>
+                        </p:panelGrid> 
+                        <p:commandButton value="Guardar" action="#{salidaVideoMB.agregarSalidaVideo()}" icon="fa fa-check" oncomplete="PF('wd_agregar').hide()" update="f_salidaV"/>
+                    </h:form>
+                </p:dialog>
+
+                <!--Editar-->
+                <p:dialog widgetVar="wd_editar" modal="true" header="Editar salida de Video">
+                    <h:form id="f_editar">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Tipo salida:"/>
+                            <p:inputText value="#{salidaVideoMB.salida.tipoSalida}"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Editar" action="#{salidaVideoMB.editarSalidaVideo()}" icon="fa fa-check" oncomplete="PF('wd_editar').hide()" update="f_salidaV"/>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+
+            <ui:define name="menuLateral">
+                <ui:include src="../templates/HwSwMenuLateral.xhtml"/>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
