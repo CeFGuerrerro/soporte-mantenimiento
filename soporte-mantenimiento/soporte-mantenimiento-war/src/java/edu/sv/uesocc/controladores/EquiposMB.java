@@ -16,8 +16,6 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-import org.primefaces.context.DefaultRequestContext;
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TransferEvent;
 import org.primefaces.event.UnselectEvent;
@@ -211,7 +209,7 @@ public class EquiposMB implements Serializable {
                 }
                 equipSeleccionado = new Equipos();
                 comp = new ComponentesEquipo();
-                
+
                 contexto.addMessage(null, new FacesMessage("Registro editado"));
                 contexto.addMessage(null, new FacesMessage("Componentes asignados: " + compG));
             } else {
@@ -231,6 +229,37 @@ public class EquiposMB implements Serializable {
         obtenerComponentesDisponibles();
     }
 
+    public void desvincular() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
+        Date date = new Date();
+        compSeleccionado.setFechaDesvinculado(date);
+        compSeleccionado.setEstado(false);
+        try {
+            boolean edit = compEquipfl.edit(compSeleccionado);
+
+            if (edit) {
+                equipSeleccionado = new Equipos();
+                contexto.addMessage(null, new FacesMessage("Registro editado"));
+            }
+        } catch (Exception e) {
+            contexto.addMessage(null, new FacesMessage("No se pudo guardar el registro!"));
+        }
+    }
+    
+    public void observaciones (){
+        FacesContext contexto = FacesContext.getCurrentInstance();
+        try {
+            boolean edit = compEquipfl.edit(compSeleccionado);
+
+            if (edit) {
+                equipSeleccionado = new Equipos();
+                contexto.addMessage(null, new FacesMessage("Registro editado"));
+            }
+        } catch (Exception e) {
+            contexto.addMessage(null, new FacesMessage("No se pudo guardar el registro!"));
+        }
+    }
+    
     public void onTransfer(TransferEvent event) {
         StringBuilder builder = new StringBuilder();
         for (Object item : event.getItems()) {

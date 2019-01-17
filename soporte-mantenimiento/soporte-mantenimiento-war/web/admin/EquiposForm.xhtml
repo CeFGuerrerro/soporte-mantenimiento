@@ -214,11 +214,11 @@
                         </p:dataTable>
 
                         <!--Tabla de los componentes por equipo-->
-                        <p:dataTable id="t_componentesPorEquipo" emptyMessage="No hay registros" rows="10" selectionMode="single"
+                        <p:dataTable id="t_componentesPorEquipo" emptyMessage="No hay registros" rows="10" selectionMode="single" selection="#{equiposMB.compSeleccionado}"
                                      value="#{equiposMB.equipSeleccionado.componentesEquipoList}" rowKey="#{comp.idComponenteEquipo}" var="comp">
 
                             <f:facet name="header">
-                                Componentes del Equipo
+                                Registro de Componentes del Equipo
                             </f:facet>
 
                             <p:column headerText="N&ordm; Inventario" sortBy="#{comp.idComponente.numeroInventario}" style="width: 9em">
@@ -241,8 +241,9 @@
                                 <p:outputLabel value="#{comp.idComponente.idModelo.idMarca.nombre}"/>
                             </p:column>
 
-                            <p:column headerText="Vinculado" style="width: 12em">
-                                <p:outputLabel value="#{comp.estado}"/>
+                            <p:column headerText="Vinculado actualmente" style="width: 12em">
+                                <p:outputPanel layout="inline" styleClass="fa fa-check" rendered="#{comp.estado}"/>
+                                <p:outputPanel layout="inline" styleClass="fa fa-close" rendered="#{!comp.estado}"/>
                             </p:column>
 
                             <p:column headerText="Fecha Asignaci&oacute;n" style="width: 12em">
@@ -254,18 +255,29 @@
                             </p:column>
 
                             <p:column headerText="E" style="width: 10px" exportable="false">
-                                <p:outputPanel layout="inline" styleClass="fa fa-check" rendered="#{comp.estado}"/>
-                                <p:outputPanel layout="inline" styleClass="fa fa-close" rendered="#{!comp.estado}"/>
+                                <p:outputPanel layout="inline" styleClass="fa fa-check" rendered="#{comp.idComponente.estado}"/>
+                                <p:outputPanel layout="inline" styleClass="fa fa-close" rendered="#{!comp.idComponente.estado}"/>
                             </p:column>
 
+                            <p:column headerText="Observaciones" style="width: 12em">
+                                <p:outputLabel value="#{comp.observaciones}"/>
+                            </p:column>
                         </p:dataTable>
 
                         <p:contextMenu for="t_componentesPorEquipo">
-                            <p:menuitem value="Eliminar" icon="fa fa-trash" update="f_crearEquipo"/>
+                            <p:menuitem value="Escribir una observacion" icon="fa fa-pencil" oncomplete="PF('wd_observacion').show();"/>
+                            <p:menuitem value="Desvincular" icon="fa fa-unlock" actionListener="#{equiposMB.desvincular()}" update="f_editarEquipo"/>
                             <p:menuitem value="Cancelar" icon="fa fa-close"/>
                         </p:contextMenu>
 
                         <p:commandButton value="Guardar" icon="fa fa-check" actionListener="#{equiposMB.crearEquipo()}" update="f_equipo" oncomplete="PF('wd_Equipo').hide()"/>
+                    </h:form>
+                </p:dialog>
+                <!--  Dialogo para escribir observaciones -->
+                <p:dialog widgetVar="wd_observacion" header="Agregar una observacion" modal="true" closeOnEscape="true" >
+                    <h:form id="f_observacion">
+                        <p:inputTextarea value="#{equiposMB.compSeleccionado.observaciones}"/>
+                        <p:commandButton value="Guardar" update="f_editarEquipo" icon="fa fa-check" actionListener="#{equiposMB.observacion()}" oncomplete="PF('wd_observacion').hide()"/>
                     </h:form>
                 </p:dialog>
                 <!--Menu para mostrar los componentes disponibles a asignar--> 
