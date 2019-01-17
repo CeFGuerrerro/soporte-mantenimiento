@@ -44,7 +44,7 @@ public class Equipos implements Serializable {
     @Column(name = "id_equipo", nullable = false)
     private Integer idEquipo;
     @Column(name = "estado")
-    private Boolean estado;
+    private Boolean estado = true;
     @Column(name = "observaciones", length = 2147483647)
     private String observaciones;
     @OneToMany(mappedBy = "idEquipo")
