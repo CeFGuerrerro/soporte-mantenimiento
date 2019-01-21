@@ -51,7 +51,7 @@ public class ComponentesEquipo implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaDesvinculado;
     @Column(name = "estado")
-    private Boolean estado;
+    private Boolean estado = true;
     @Column(name = "observaciones", length = 2147483647)
     private String observaciones;
     @JoinColumn(name = "id_componente", referencedColumnName = "id_componente", nullable = false)
