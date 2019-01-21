@@ -6,6 +6,7 @@
 package edu.sv.uesocc.facades;
 
 import edu.sv.uesocc.entidades.ComponentesEquipo;
+import edu.sv.uesocc.entidades.Equipos;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -25,6 +26,8 @@ public interface ComponentesEquipoFacadeLocal {
     ComponentesEquipo find(Object id);
 
     List<ComponentesEquipo> findAll();
+    
+    List<ComponentesEquipo> findHistorial(Equipos equipo);
 
     List<ComponentesEquipo> findRange(int[] range);
 

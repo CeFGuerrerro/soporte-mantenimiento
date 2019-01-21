@@ -11,6 +11,13 @@
         <ui:composition template="./../templates/PrincipalTemplate.xhtml">
 
             <ui:define name="contenido">
+                
+                <!--Aun queda pendiente:
+                    - arreglar el render de la tabla cuando se agregar un nuevo compenente a un equipo existente 
+                    - eventos de confirmaciones al guardar y editar
+                    - reiniciar la picklist en caso de no guardar 
+                    - la lista de registro de los componente no ordena :'o
+                -->
                 <h:form id="f_equipo">
                     <p:commandButton value="Nuevo Equipo" icon="fa fa-plus" onclick="PF('wd_Equipo').show()" actionListener="#{equiposMB.setAccionCleanning(false)}" update="f_crearEquipo"/>
 
@@ -88,7 +95,7 @@
                 <!--********************************MENUS PARA CREAR EQUIPOS****************************-->
 
                 <!--Menu para crear un equipo-->
-                <p:dialog widgetVar="wd_Equipo" modal="true" header="Nuevo Equipo" closeOnEscape="true" onHide="#{equiposMB.closeCleanning()}">
+                <p:dialog widgetVar="wd_Equipo" modal="true" header="Nuevo Equipo" closeOnEscape="true" onShow="#{equiposMB.showCleanning()}">
                     <h:form id="f_crearEquipo">
                         <p:growl>
                             <p:autoUpdate/>
@@ -153,7 +160,7 @@
 
 
                 <!--Menu para editar un equipo-->
-                <p:dialog widgetVar="wd_editarEquipo" modal="true" header="Informacion del Equipo" closeOnEscape="true" onHide="#{equiposMB.closeCleanning()}">
+                <p:dialog widgetVar="wd_editarEquipo" modal="true" header="Informacion del Equipo" closeOnEscape="true" onShow="#{equiposMB.showCleanning()}">
                     <h:form id="f_editarEquipo">
                         <p:growl>
                             <p:autoUpdate/>
@@ -182,40 +189,40 @@
                             <p:outputLabel value="Componentes"/>
                             <p:commandButton value="Agregar Componentes" icon="fa fa-plus" onclick="PF('wd_agregarComponentes').show()" update="f_agregarComponentes"/>
                         </p:panelGrid>
-                        
+
                         <!--Tabla de los componentes por equipo nuevos-->
                         <p:dataTable id="t_componentesPorAsignar" emptyMessage="No hay registros" rows="10" selectionMode="single" rendered="#{equiposMB.accion == true}"
-                                     value="#{equiposMB.compList}" rowKey="#{comp.idComponente}" var="comp">
+                                     value="#{equiposMB.compList}" rowKey="#{compA.idComponente}" var="compA">
 
                             <f:facet name="header">
                                 Componentes por Asignar 
                             </f:facet>
-                            
-                            <p:column headerText="N&ordm; Inventario" sortBy="#{comp.numeroInventario}" style="width: 9em">
-                                <p:outputLabel value="#{comp.numeroInventario}"/>
+
+                            <p:column headerText="N&ordm; Inventario" sortBy="#{compA.numeroInventario}" style="width: 9em">
+                                <p:outputLabel value="#{compA.numeroInventario}"/>
                             </p:column>
 
                             <p:column headerText="N&ordm; Serie" style="width: 9em">
-                                <p:outputLabel value="#{comp.numeroSerie}"/>
+                                <p:outputLabel value="#{compA.numeroSerie}"/>
                             </p:column>
 
                             <p:column headerText="Tipo" style="width: 12em">
-                                <p:outputLabel value="#{comp.idTipoComponente.nombre}"/>
+                                <p:outputLabel value="#{compA.idTipoComponente.nombre}"/>
                             </p:column>
 
                             <p:column headerText="Modelo" style="width: 12em">
-                                <p:outputLabel value="#{comp.idModelo.nombre}"/>
+                                <p:outputLabel value="#{compA.idModelo.nombre}"/>
                             </p:column>
 
                             <p:column headerText="Marca" style="width: 12em">
-                                <p:outputLabel value="#{comp.idModelo.idMarca.nombre}"/>
+                                <p:outputLabel value="#{compA.idModelo.idMarca.nombre}"/>
                             </p:column>
 
                         </p:dataTable>
 
                         <!--Tabla de los componentes por equipo-->
                         <p:dataTable id="t_componentesPorEquipo" emptyMessage="No hay registros" rows="10" selectionMode="single" selection="#{equiposMB.compSeleccionado}"
-                                     value="#{equiposMB.equipSeleccionado.componentesEquipoList}" rowKey="#{comp.idComponenteEquipo}" var="comp">
+                                     value="#{equiposMB.compEquipSelectedList()}" rowKey="#{comp.idComponenteEquipo}" var="comp" sortBy="#{comp.estado}" sortOrder="DESCENDING">
 
                             <f:facet name="header">
                                 Registro de Componentes del Equipo
@@ -247,11 +254,15 @@
                             </p:column>
 
                             <p:column headerText="Fecha Asignaci&oacute;n" style="width: 12em">
-                                <p:outputLabel value="#{comp.fechaVinculado}"/>
+                                <p:outputLabel value="#{comp.fechaVinculado}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" type="date"/>
+                                </p:outputLabel>
                             </p:column>
 
                             <p:column headerText="Fecha Salida" style="width: 12em">
-                                <p:outputLabel value="#{comp.fechaDesvinculado}"/>
+                                <p:outputLabel value="#{comp.fechaDesvinculado}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" type="date"/>
+                                </p:outputLabel>
                             </p:column>
 
                             <p:column headerText="E" style="width: 10px" exportable="false">
@@ -270,30 +281,29 @@
                             <p:menuitem value="Cancelar" icon="fa fa-close"/>
                         </p:contextMenu>
 
-                        <p:commandButton value="Guardar" icon="fa fa-check" actionListener="#{equiposMB.crearEquipo()}" update="f_equipo" oncomplete="PF('wd_Equipo').hide()"/>
+                        <p:commandButton value="Guardar" icon="fa fa-check" actionListener="#{equiposMB.editarEquipo()}" update="f_equipo" oncomplete="PF('wd_editarEquipo').hide()"/>
                     </h:form>
                 </p:dialog>
                 <!--  Dialogo para escribir observaciones -->
                 <p:dialog widgetVar="wd_observacion" header="Agregar una observacion" modal="true" closeOnEscape="true" >
                     <h:form id="f_observacion">
                         <p:inputTextarea value="#{equiposMB.compSeleccionado.observaciones}"/>
-                        <p:commandButton value="Guardar" update="f_editarEquipo" icon="fa fa-check" actionListener="#{equiposMB.observacion()}" oncomplete="PF('wd_observacion').hide()"/>
+                        <p:commandButton value="Guardar" update="f_editarEquipo" icon="fa fa-check" actionListener="#{equiposMB.observaciones()}" oncomplete="PF('wd_observacion').hide()"/>
                     </h:form>
                 </p:dialog>
                 <!--Menu para mostrar los componentes disponibles a asignar--> 
                 <p:dialog widgetVar="wd_agregarComponentes" modal="true" header="Agregar Componentes" closeOnEscape="true">
                     <h:form id="f_agregarComponentes">
-                        <p:growl id="msg" showDetail="true" escape="false" />
                         <p:pickList id="PojoPickList" value="#{equiposMB.compAsignar}" var="compA" itemValue="#{compA}" itemLabel="#{compA.numeroInventario}" 
                                     showCheckbox="true" showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" responsive="true" converter="compConverter">
 
                             <f:facet name="sourceCaption">Componentes disponibles</f:facet>
                             <f:facet name="targetCaption">Componentes a asignar</f:facet>
 
-                            <p:ajax event="transfer" listener="#{equiposMB.onTransfer}" update="msg" />
-                            <p:ajax event="select" listener="#{equiposMB.onSelect}" update="msg"/>
-                            <p:ajax event="unselect" listener="#{equiposMB.onUnselect}" update="msg"/>
-                            <p:ajax event="reorder" listener="#{equiposMB.onReorder}" update="msg"/>
+                            <p:ajax event="transfer" listener="#{equiposMB.onTransfer}"/>
+                            <p:ajax event="select" listener="#{equiposMB.onSelect}"/>
+                            <p:ajax event="unselect" listener="#{equiposMB.onUnselect}"/>
+                            <p:ajax event="reorder" listener="#{equiposMB.onReorder}"/>
 
                             <p:column headerText="No. Inventario">
                                 <p:outputLabel value="#{compA.numeroInventario}"/>

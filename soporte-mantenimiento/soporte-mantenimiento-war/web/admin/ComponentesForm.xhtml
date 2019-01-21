@@ -112,15 +112,7 @@
                         <p:ajax event="rowDblselect" oncomplete="PF('wd_editarComponente').show()" update=":f_editarComponente"/>
 
                     </p:dataTable>
-
-                    <!--Menu para eliminar-->
-
-                    <p:contextMenu for="t_componentes">
-                        <p:menuitem value="Eliminar" icon="fa fa-trash" action="#{componentesMB.eliminarComponente()}" update="f_componentes"/>
-                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
-                    </p:contextMenu>
                 </h:form>
-
                 <!--Formulario para crear Marcas-->
 
                 <p:dialog widgetVar="wd_crearMarca" modal="true" header="Nueva Marca">
@@ -178,14 +170,8 @@
                                 <f:selectItem itemLabel="Seleccione un modelo" itemValue="" noSelectionOption="true"/>
                                 <f:selectItems value="#{modelosMB.modelList}" var="modelo" itemLabel="#{modelo.nombre}" itemValue="#{modelo}"/>
                             </p:selectOneMenu>
-
-                            <p:outputLabel value="Estado"/>
-                            <p:selectBooleanButton value="#{componentesMB.comp.estado}" onLabel="Funcionando" onIcon="fa fa-check" offLabel="De baja" offIcon="fa fa-close"/>
-
-                            <p:outputLabel value="Asignado"/>
-                            <p:selectBooleanButton value="#{componentesMB.comp.asignado}" onLabel="Si" onIcon="fa fa-check" offLabel="No" offIcon="fa fa-close"/>
-
-                            <p:outputLabel value="Personal"/>
+                            
+                            <p:outputLabel value="Componente Personal"/>
                             <p:selectBooleanButton value="#{componentesMB.comp.personal}" onLabel="Si" onIcon="fa fa-check" offLabel="No" offIcon="fa fa-close"/>
 
                             <p:outputLabel value="Descripción"/>

@@ -111,6 +111,11 @@ public class EquiposMB implements Serializable {
     public List<ComponentesEquipo> getCompEquipList() {
         return compEquipList;
     }
+    
+    public List<ComponentesEquipo> compEquipSelectedList() {
+        obtenerComponentesPorEquipo();
+        return compEquipList;
+    }
 
     public void setCompEquipList(List<ComponentesEquipo> compEquipList) {
         this.compEquipList = compEquipList;
@@ -132,14 +137,13 @@ public class EquiposMB implements Serializable {
     public void obtenerComponentesDisponibles() {
 
         compPorAsignar = new ArrayList<>();
-        List<Componentes> compDisponibles = compf.findAll();
+        List<Componentes> compDisponibles = compf.findDisponibles();
         compAsignar = new DualListModel<>(compDisponibles, compPorAsignar);
 
     }
 
     public void obtenerComponentesPorEquipo() {
-        compEquipList = equipSeleccionado.getComponentesEquipoList();
-        this.setAccion(false);
+        compEquipList = compEquipfl.findHistorial(equipSeleccionado);
     }
 
     public void crearEquipo() {
@@ -208,7 +212,9 @@ public class EquiposMB implements Serializable {
                     }
                 }
                 equipSeleccionado = new Equipos();
+                compList = new ArrayList<>();
                 comp = new ComponentesEquipo();
+                setAccion(false);
 
                 contexto.addMessage(null, new FacesMessage("Registro editado"));
                 contexto.addMessage(null, new FacesMessage("Componentes asignados: " + compG));
@@ -223,10 +229,10 @@ public class EquiposMB implements Serializable {
         }
     }
 
-    public void closeCleanning() {
+    public void showCleanning() {
+        obtenerComponentesDisponibles();
         compList = new ArrayList<>();
         this.accion = false;
-        obtenerComponentesDisponibles();
     }
 
     public void desvincular() {
@@ -236,17 +242,23 @@ public class EquiposMB implements Serializable {
         compSeleccionado.setEstado(false);
         try {
             boolean edit = compEquipfl.edit(compSeleccionado);
+            boolean editEstado;
 
             if (edit) {
+                Componentes estado = compSeleccionado.getIdComponente();
+                estado.setAsignado(false);
+                editEstado = compf.edit(estado);
                 equipSeleccionado = new Equipos();
                 contexto.addMessage(null, new FacesMessage("Registro editado"));
             }
+            obtenerEquipos();
+            obtenerComponentesDisponibles();
         } catch (Exception e) {
             contexto.addMessage(null, new FacesMessage("No se pudo guardar el registro!"));
         }
     }
-    
-    public void observaciones (){
+
+    public void observaciones() {
         FacesContext contexto = FacesContext.getCurrentInstance();
         try {
             boolean edit = compEquipfl.edit(compSeleccionado);
@@ -255,11 +267,14 @@ public class EquiposMB implements Serializable {
                 equipSeleccionado = new Equipos();
                 contexto.addMessage(null, new FacesMessage("Registro editado"));
             }
+            obtenerEquipos();
+            obtenerComponentesDisponibles();
         } catch (Exception e) {
             contexto.addMessage(null, new FacesMessage("No se pudo guardar el registro!"));
         }
+
     }
-    
+
     public void onTransfer(TransferEvent event) {
         StringBuilder builder = new StringBuilder();
         for (Object item : event.getItems()) {
@@ -268,12 +283,6 @@ public class EquiposMB implements Serializable {
 
         compList = compAsignar.getTarget();
 
-        FacesMessage msg = new FacesMessage();
-        msg.setSeverity(FacesMessage.SEVERITY_INFO);
-        msg.setSummary("Items Transferred");
-        msg.setDetail(builder.toString());
-
-        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     public void onSelect(SelectEvent event) {
