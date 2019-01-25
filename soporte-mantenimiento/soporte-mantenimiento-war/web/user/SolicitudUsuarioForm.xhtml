@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <body>
+
+        <ui:composition template="./../templates/SolicitudUsuariosTemplate.xhtml">
+
+            <ui:define name="contenido">
+                <p:growl id="mensajes" showDetail="true">
+                    <p:autoUpdate/>
+                </p:growl>
+                <h3 style="margin-top: auto">Soporte Tecnico y Reporte de Fallas</h3>
+                <h:form id="solicitud">
+                    <p:steps id="pasos" activeIndex="#{solicitudUsuarioMB.paso}" styleClass="custom">
+                        <p:menuitem value="Autentificacion"/>
+                        <p:menuitem value="Información personal y del equipo"/>
+                        <p:menuitem value="Reporte del problema"/>
+                        <p:menuitem value="Confirmacion"/>
+                    </p:steps>
+
+                    <div id="div_login">
+                        <p:panel rendered="#{solicitudUsuarioMB.paso1}">
+                            <p:panelGrid columns="2">
+                                <p:outputLabel>Unidad/Area solicitante:</p:outputLabel>
+                                <p:selectOneMenu value="#{solicitudUsuarioMB.usuario.idUbicacion}" converter="objectConverter" required="true"
+                                                 requiredMessage="Seleccione una Unidad/Area" filter="true" filterMatchMode="startsWith">
+                                    <f:selectItem itemLabel="Seleccione una Unidad/Area" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{ubicacionesMB.ubicList}" var="ubic" itemLabel="#{ubic.nombre}" itemValue="#{tipo}"/>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel>Contrase&ntilde;a:</p:outputLabel>
+                                <p:password required="true" value="#{solicitudUsuarioMB.usuario.password}" requiredMessage="Ingrese la contrase&ntilde;a"/>
+                            </p:panelGrid>
+                            <p:commandButton value="Siguiente" icon="fa fa-long-arrow-right" update="@form" actionListener="#{solicitudUsuarioMB.irPaso2()}"/>
+                        </p:panel>
+
+                        <p:panel rendered="#{solicitudUsuarioMB.paso2}">
+                            <p:panelGrid columns="2">
+                                <p:outputLabel>Responsable del Equipo:</p:outputLabel>
+                                <p:selectOneMenu value="#{solicitudUsuarioMB.resp}" converter="objectConverter" required="true"
+                                                 requiredMessage="Seleccione un responsable" filter="true" filterMatchMode="startsWith">
+                                    <f:selectItem itemLabel="Seleccione al responsable del Equipo" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{solicitudUsuarioMB.respList}" var="resp" itemLabel="#{resp.nombre}" itemValue="#{tipo}"/>
+                                    <p:ajax listener="#{solicitudUsuarioMB.resposableEquipo()}" process="@this" update="@form"/>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel rendered="#{solicitudUsuarioMB.equipo}">Numero de Inventario del Equipo:/ Aun falta arreglar esto o cambiarlo xD</p:outputLabel>
+                                <p:selectOneMenu value="#{solicitudUsuarioMB.equp}" converter="objectConverter" required="true" rendered="#{solicitudUsuarioMB.equipo}"
+                                                 requiredMessage="Seleccione un equipo" filter="true" filterMatchMode="startsWith">
+                                    <f:selectItem itemLabel="Seleccione el Num. Inventario del Equipo" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{solicitudUsuarioMB.equipList}" var="equip" itemLabel="#{equip.idEquipo}" itemValue="#{tipo}"/>
+                                </p:selectOneMenu>
+                            </p:panelGrid>
+                            <p:commandButton value="Atras" icon="fa fa-long-arrow-left" update="@form" actionListener="#{solicitudUsuarioMB.irPaso1()}" immediate="true"/>
+                            <p:commandButton value="Siguiente" icon="fa fa-long-arrow-right" update="@form" actionListener="#{solicitudUsuarioMB.irPaso3()}"/>
+                        </p:panel>
+
+                        <p:panel rendered="#{solicitudUsuarioMB.paso3}">
+                            <p:panelGrid columns="1">
+                                <p:outputLabel value="Escriba su problema o la falla en el equipo:"/>
+                                <p:inputTextarea required="true" requiredMessage="Ingrese su problema o falla."/>
+                            </p:panelGrid>
+                            <p:commandButton value="Atras" icon="fa fa-long-arrow-left" update="@form" actionListener="#{solicitudUsuarioMB.irPaso2()}" immediate="true"/>
+                            <p:commandButton value="Siguiente" icon="fa fa-long-arrow-right" update="@form" actionListener="#{solicitudUsuarioMB.irPaso4()}"/>
+                        </p:panel>
+
+                        <p:panel rendered="#{solicitudUsuarioMB.paso4}">
+
+                        </p:panel>
+                    </div>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

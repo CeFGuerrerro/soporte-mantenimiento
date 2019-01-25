@@ -5,8 +5,7 @@
  */
 package edu.sv.uesocc.facades;
 
-import edu.sv.uesocc.entidades.ComponentesEquipo;
-import edu.sv.uesocc.entidades.Equipos;
+import edu.sv.uesocc.entidades.Usuarios;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -18,10 +17,10 @@ import javax.persistence.criteria.Root;
 
 /**
  *
- * @author o-a19
+ * @author Cybertron
  */
 @Stateless
-public class ComponentesEquipoFacade extends AbstractFacade<ComponentesEquipo> implements ComponentesEquipoFacadeLocal {
+public class UsuariosFacade extends AbstractFacade<Usuarios> implements UsuariosFacadeLocal {
 
     @PersistenceContext(unitName = "soportePU")
     private EntityManager em;
@@ -31,20 +30,28 @@ public class ComponentesEquipoFacade extends AbstractFacade<ComponentesEquipo> i
         return em;
     }
 
-    public ComponentesEquipoFacade() {
-        super(ComponentesEquipo.class);
+    public UsuariosFacade() {
+        super(Usuarios.class);
     }
 
     @Override
-    public List<ComponentesEquipo> findHistorial(Equipos equipo) {
+    public boolean iniciarSesion(Usuarios us) {
+        boolean rs;
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-        CriteriaQuery<ComponentesEquipo> cq =  cb.createQuery(ComponentesEquipo.class);
-        Root<ComponentesEquipo> comp = cq.from(ComponentesEquipo.class);
-        Predicate condiciones = cb.and(cb.equal(comp.get("idEquipo"), equipo));
+        CriteriaQuery<Usuarios> cq =  cb.createQuery(Usuarios.class);
+        Root<Usuarios> comp = cq.from(Usuarios.class);
+        Predicate condiciones = cb.and(cb.equal(comp.get("idUbicacion"), us.getIdUbicacion()), cb.equal(comp.get("password"), us.getPassword()));
         cq.select(comp);
         cq.where(condiciones);
         
-        return em.createQuery(cq).getResultList();
-    }
+        List<Usuarios> listUsuario = em.createQuery(cq).getResultList();
+            if (!listUsuario.isEmpty()){
+                rs = true;
+            }else{
+                rs = false;
+            }
+        
+        return rs;
+   }
     
 }

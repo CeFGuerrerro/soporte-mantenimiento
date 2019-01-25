@@ -76,3 +76,45 @@
 .ui-menuitem-text:selected {
     text-decoration: underline;
 }
+
+.ui-steps .ui-steps-item {
+    width: 25%;
+}
+ 
+.ui-state-highlight {
+    text-shadow: none !important;
+}
+ 
+.ui-steps.custom {
+    margin-bottom: 60px;
+    margin-top: 60px;
+}
+ 
+.ui-steps.custom .ui-steps-item .ui-menuitem-link {
+    height: 0px;
+    padding: 0 1em;
+    overflow: visible;
+    border: 1px solid #c8c8c8;
+    display: block;
+    background-color: #FFFFFF;
+}
+ 
+.ui-steps.custom .ui-steps-item .ui-menuitem-link .ui-steps-number {
+    background-color: #0081c2;
+    color: #FFFFFF;
+    display: inline-block;
+    width: 40px;
+    border-radius: 100px;
+    margin-top: -20px;
+    margin-bottom: 10px;
+    position: relative;
+    top: -4px;
+}
+ 
+.ui-steps.custom .ui-steps-item .ui-menuitem-link .ui-steps-title {
+    margin-top: -6px;
+}
+ 
+.ui-steps.custom .ui-steps-item.ui-state-highlight .ui-menuitem-link .ui-steps-title {
+    color: #555;
+}

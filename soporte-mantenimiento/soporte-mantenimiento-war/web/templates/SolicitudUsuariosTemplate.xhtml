@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <h:outputStylesheet library="css" name="principal.css"/>
+        <title>Solictud de Soporte Tecnico</title>
+    </h:head>
+
+    <h:body>
+        <!--Cabecera del documento-->
+        <div id="div_header">
+            <p:panel class="banner">
+                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank banner">
+                   
+                        <p:graphicImage library="img" name="logo.png" height="80"/>
+                   
+                        <div>
+                            <p id="titulo" class="banner">Universidad de El Salvador</p>
+                            <p id="subtitulo" class="banner">Facultad Multidisciplinaria de Occidente</p>
+                            <p class="banner">&Aacute;rea de Soporte y Tecnolog&iacute;a Inform&aacute;tica</p>
+                    </div>
+                </p:panelGrid>
+            </p:panel>
+        </div>
+
+
+        <div id="content" class="center_content">
+            <ui:insert name="contenido">
+            
+            </ui:insert>
+        </div>
+
+    </h:body>
+
+</html>

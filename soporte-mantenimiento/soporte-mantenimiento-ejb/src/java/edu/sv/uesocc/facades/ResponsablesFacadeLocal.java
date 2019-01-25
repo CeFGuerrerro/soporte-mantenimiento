@@ -6,6 +6,7 @@
 package edu.sv.uesocc.facades;
 
 import edu.sv.uesocc.entidades.Responsables;
+import edu.sv.uesocc.entidades.Ubicaciones;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -25,6 +26,8 @@ public interface ResponsablesFacadeLocal {
     Responsables find(Object id);
 
     List<Responsables> findAll();
+    
+    List<Responsables> findPorUbicacion(Ubicaciones ubi);
 
     List<Responsables> findRange(int[] range);
 

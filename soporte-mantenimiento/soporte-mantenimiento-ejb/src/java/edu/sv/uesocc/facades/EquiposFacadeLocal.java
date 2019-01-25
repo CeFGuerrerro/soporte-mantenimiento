@@ -6,6 +6,7 @@
 package edu.sv.uesocc.facades;
 
 import edu.sv.uesocc.entidades.Equipos;
+import edu.sv.uesocc.entidades.Responsables;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -25,6 +26,8 @@ public interface EquiposFacadeLocal {
     Equipos find(Object id);
 
     List<Equipos> findAll();
+    
+    List<Equipos> findPorResponsable(Responsables resp);
 
     List<Equipos> findRange(int[] range);
 

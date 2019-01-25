@@ -6,9 +6,15 @@
 package edu.sv.uesocc.facades;
 
 import edu.sv.uesocc.entidades.Equipos;
+import edu.sv.uesocc.entidades.Responsables;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -27,6 +33,18 @@ public class EquiposFacade extends AbstractFacade<Equipos> implements EquiposFac
 
     public EquiposFacade() {
         super(Equipos.class);
+    }
+
+    @Override
+    public List<Equipos> findPorResponsable(Responsables resp) {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Equipos> cq =  cb.createQuery(Equipos.class);
+        Root<Equipos> comp = cq.from(Equipos.class);
+        Predicate condiciones = cb.and(cb.equal(comp.get("idResponsable"), resp));
+        cq.select(comp);
+        cq.where(condiciones);
+        
+        return em.createQuery(cq).getResultList();
     }
     
 }
