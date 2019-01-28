@@ -60,7 +60,7 @@ public class Solicitudes implements Serializable {
     private String problema;
     @Column(name = "estado")
     private Integer estado;
-    @JoinColumn(name = "id_equipo", referencedColumnName = "id_equipo", nullable = false)
+    @JoinColumn(name = "id_equipo", referencedColumnName = "id_equipo")
     @ManyToOne(optional = false)
     private Equipos idEquipo;
     @OneToMany(mappedBy = "idSolicitud")
