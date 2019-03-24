@@ -5,7 +5,7 @@
 -- Dumped from database version 10.5
 -- Dumped by pg_dump version 10.5
 
--- Started on 2019-03-24 16:52:07
+-- Started on 2019-03-24 17:49:54
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -26,7 +26,7 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 2597 (class 0 OID 0)
+-- TOC entry 2598 (class 0 OID 0)
 -- Dependencies: 1
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
@@ -68,7 +68,7 @@ CREATE SEQUENCE public.arquitecturas_id_arquitectura_seq
 ALTER TABLE public.arquitecturas_id_arquitectura_seq OWNER TO postgres;
 
 --
--- TOC entry 2598 (class 0 OID 0)
+-- TOC entry 2599 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: arquitecturas_id_arquitectura_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -106,7 +106,7 @@ CREATE SEQUENCE public.capacidades_id_capacidad_seq
 ALTER TABLE public.capacidades_id_capacidad_seq OWNER TO postgres;
 
 --
--- TOC entry 2599 (class 0 OID 0)
+-- TOC entry 2600 (class 0 OID 0)
 -- Dependencies: 229
 -- Name: capacidades_id_capacidad_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -169,7 +169,7 @@ CREATE SEQUENCE public.componentes_equipo_id_componente_equipo_seq
 ALTER TABLE public.componentes_equipo_id_componente_equipo_seq OWNER TO postgres;
 
 --
--- TOC entry 2600 (class 0 OID 0)
+-- TOC entry 2601 (class 0 OID 0)
 -- Dependencies: 272
 -- Name: componentes_equipo_id_componente_equipo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -194,7 +194,7 @@ CREATE SEQUENCE public.componentes_id_componente_seq
 ALTER TABLE public.componentes_id_componente_seq OWNER TO postgres;
 
 --
--- TOC entry 2601 (class 0 OID 0)
+-- TOC entry 2602 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: componentes_id_componente_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -236,7 +236,7 @@ CREATE SEQUENCE public.cronograma_id_cronograma_seq
 ALTER TABLE public.cronograma_id_cronograma_seq OWNER TO postgres;
 
 --
--- TOC entry 2602 (class 0 OID 0)
+-- TOC entry 2603 (class 0 OID 0)
 -- Dependencies: 231
 -- Name: cronograma_id_cronograma_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -276,7 +276,7 @@ CREATE SEQUENCE public.detalles_orden_trabajo_id_detalle_seq
 ALTER TABLE public.detalles_orden_trabajo_id_detalle_seq OWNER TO postgres;
 
 --
--- TOC entry 2603 (class 0 OID 0)
+-- TOC entry 2604 (class 0 OID 0)
 -- Dependencies: 232
 -- Name: detalles_orden_trabajo_id_detalle_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -314,7 +314,7 @@ CREATE SEQUENCE public.dimension_disco_id_dimension_seq
 ALTER TABLE public.dimension_disco_id_dimension_seq OWNER TO postgres;
 
 --
--- TOC entry 2604 (class 0 OID 0)
+-- TOC entry 2605 (class 0 OID 0)
 -- Dependencies: 260
 -- Name: dimension_disco_id_dimension_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -359,7 +359,7 @@ CREATE SEQUENCE public.discos_id_discos_seq
 ALTER TABLE public.discos_id_discos_seq OWNER TO postgres;
 
 --
--- TOC entry 2605 (class 0 OID 0)
+-- TOC entry 2606 (class 0 OID 0)
 -- Dependencies: 233
 -- Name: discos_id_discos_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -400,7 +400,7 @@ CREATE SEQUENCE public.equipo_id_equipo_seq
 ALTER TABLE public.equipo_id_equipo_seq OWNER TO postgres;
 
 --
--- TOC entry 2606 (class 0 OID 0)
+-- TOC entry 2607 (class 0 OID 0)
 -- Dependencies: 234
 -- Name: equipo_id_equipo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -443,7 +443,7 @@ CREATE SEQUENCE public.fuentes_id_fuente_seq
 ALTER TABLE public.fuentes_id_fuente_seq OWNER TO postgres;
 
 --
--- TOC entry 2607 (class 0 OID 0)
+-- TOC entry 2608 (class 0 OID 0)
 -- Dependencies: 235
 -- Name: fuentes_id_fuente_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -488,7 +488,7 @@ CREATE SEQUENCE public.hardware_componente_id_hardware_componente_seq
 ALTER TABLE public.hardware_componente_id_hardware_componente_seq OWNER TO postgres;
 
 --
--- TOC entry 2608 (class 0 OID 0)
+-- TOC entry 2609 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: hardware_componente_id_hardware_componente_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -527,7 +527,7 @@ CREATE SEQUENCE public.mantenimientos_id_mantenimiento_seq
 ALTER TABLE public.mantenimientos_id_mantenimiento_seq OWNER TO postgres;
 
 --
--- TOC entry 2609 (class 0 OID 0)
+-- TOC entry 2610 (class 0 OID 0)
 -- Dependencies: 237
 -- Name: mantenimientos_id_mantenimiento_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -565,7 +565,7 @@ CREATE SEQUENCE public.marcas_id_marca_seq
 ALTER TABLE public.marcas_id_marca_seq OWNER TO postgres;
 
 --
--- TOC entry 2610 (class 0 OID 0)
+-- TOC entry 2611 (class 0 OID 0)
 -- Dependencies: 238
 -- Name: marcas_id_marca_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -609,7 +609,7 @@ CREATE SEQUENCE public.memorias_id_memoria_seq
 ALTER TABLE public.memorias_id_memoria_seq OWNER TO postgres;
 
 --
--- TOC entry 2611 (class 0 OID 0)
+-- TOC entry 2612 (class 0 OID 0)
 -- Dependencies: 239
 -- Name: memorias_id_memoria_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -648,7 +648,7 @@ CREATE SEQUENCE public.modelos_id_modelo_seq
 ALTER TABLE public.modelos_id_modelo_seq OWNER TO postgres;
 
 --
--- TOC entry 2612 (class 0 OID 0)
+-- TOC entry 2613 (class 0 OID 0)
 -- Dependencies: 240
 -- Name: modelos_id_modelo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -690,7 +690,7 @@ CREATE SEQUENCE public.motherboards_id_motherboard_seq
 ALTER TABLE public.motherboards_id_motherboard_seq OWNER TO postgres;
 
 --
--- TOC entry 2613 (class 0 OID 0)
+-- TOC entry 2614 (class 0 OID 0)
 -- Dependencies: 241
 -- Name: motherboards_id_motherboard_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -738,7 +738,7 @@ CREATE SEQUENCE public.ordenes_trabajo_id_orden_trabajo_seq
 ALTER TABLE public.ordenes_trabajo_id_orden_trabajo_seq OWNER TO postgres;
 
 --
--- TOC entry 2614 (class 0 OID 0)
+-- TOC entry 2615 (class 0 OID 0)
 -- Dependencies: 242
 -- Name: ordenes_trabajo_id_orden_trabajo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -777,7 +777,7 @@ CREATE SEQUENCE public.potencia_ups_id_potencia_seq
 ALTER TABLE public.potencia_ups_id_potencia_seq OWNER TO postgres;
 
 --
--- TOC entry 2615 (class 0 OID 0)
+-- TOC entry 2616 (class 0 OID 0)
 -- Dependencies: 268
 -- Name: potencia_ups_id_potencia_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -820,7 +820,7 @@ CREATE SEQUENCE public.procesadores_id_procesador_seq
 ALTER TABLE public.procesadores_id_procesador_seq OWNER TO postgres;
 
 --
--- TOC entry 2616 (class 0 OID 0)
+-- TOC entry 2617 (class 0 OID 0)
 -- Dependencies: 243
 -- Name: procesadores_id_procesador_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -858,7 +858,7 @@ CREATE SEQUENCE public.puertos_id_puerto_seq
 ALTER TABLE public.puertos_id_puerto_seq OWNER TO postgres;
 
 --
--- TOC entry 2617 (class 0 OID 0)
+-- TOC entry 2618 (class 0 OID 0)
 -- Dependencies: 244
 -- Name: puertos_id_puerto_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -898,7 +898,7 @@ CREATE SEQUENCE public.resposables_id_responsable_seq
 ALTER TABLE public.resposables_id_responsable_seq OWNER TO postgres;
 
 --
--- TOC entry 2618 (class 0 OID 0)
+-- TOC entry 2619 (class 0 OID 0)
 -- Dependencies: 245
 -- Name: resposables_id_responsable_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -937,7 +937,7 @@ CREATE SEQUENCE public.salida_tarjeta_video_id_salida_tarjeta_video_seq
 ALTER TABLE public.salida_tarjeta_video_id_salida_tarjeta_video_seq OWNER TO postgres;
 
 --
--- TOC entry 2619 (class 0 OID 0)
+-- TOC entry 2620 (class 0 OID 0)
 -- Dependencies: 266
 -- Name: salida_tarjeta_video_id_salida_tarjeta_video_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -975,7 +975,7 @@ CREATE SEQUENCE public.salida_video_id_salida_video_seq
 ALTER TABLE public.salida_video_id_salida_video_seq OWNER TO postgres;
 
 --
--- TOC entry 2620 (class 0 OID 0)
+-- TOC entry 2621 (class 0 OID 0)
 -- Dependencies: 264
 -- Name: salida_video_id_salida_video_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1013,7 +1013,7 @@ CREATE SEQUENCE public.sockets_id_socket_seq
 ALTER TABLE public.sockets_id_socket_seq OWNER TO postgres;
 
 --
--- TOC entry 2621 (class 0 OID 0)
+-- TOC entry 2622 (class 0 OID 0)
 -- Dependencies: 246
 -- Name: sockets_id_socket_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1073,7 +1073,7 @@ CREATE SEQUENCE public.software_componente_id_software_componente_seq
 ALTER TABLE public.software_componente_id_software_componente_seq OWNER TO postgres;
 
 --
--- TOC entry 2622 (class 0 OID 0)
+-- TOC entry 2623 (class 0 OID 0)
 -- Dependencies: 248
 -- Name: software_componente_id_software_componente_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1098,7 +1098,7 @@ CREATE SEQUENCE public.software_id_software_seq
 ALTER TABLE public.software_id_software_seq OWNER TO postgres;
 
 --
--- TOC entry 2623 (class 0 OID 0)
+-- TOC entry 2624 (class 0 OID 0)
 -- Dependencies: 247
 -- Name: software_id_software_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1142,7 +1142,7 @@ CREATE SEQUENCE public.solicitudes_id_solicitud_seq
 ALTER TABLE public.solicitudes_id_solicitud_seq OWNER TO postgres;
 
 --
--- TOC entry 2624 (class 0 OID 0)
+-- TOC entry 2625 (class 0 OID 0)
 -- Dependencies: 249
 -- Name: solicitudes_id_solicitud_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1182,7 +1182,7 @@ CREATE SEQUENCE public.soluciones_id_solucion_seq
 ALTER TABLE public.soluciones_id_solucion_seq OWNER TO postgres;
 
 --
--- TOC entry 2625 (class 0 OID 0)
+-- TOC entry 2626 (class 0 OID 0)
 -- Dependencies: 250
 -- Name: soluciones_id_solucion_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1224,7 +1224,7 @@ CREATE SEQUENCE public.tarjetas_video_id_tarjeta_video_seq
 ALTER TABLE public.tarjetas_video_id_tarjeta_video_seq OWNER TO postgres;
 
 --
--- TOC entry 2626 (class 0 OID 0)
+-- TOC entry 2627 (class 0 OID 0)
 -- Dependencies: 251
 -- Name: tarjetas_video_id_tarjeta_video_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1265,7 +1265,7 @@ CREATE SEQUENCE public.tecnicos_id_tecnico_seq
 ALTER TABLE public.tecnicos_id_tecnico_seq OWNER TO postgres;
 
 --
--- TOC entry 2627 (class 0 OID 0)
+-- TOC entry 2628 (class 0 OID 0)
 -- Dependencies: 252
 -- Name: tecnicos_id_tecnico_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1304,7 +1304,7 @@ CREATE SEQUENCE public.tipo_componente_id_tipo_componente_seq
 ALTER TABLE public.tipo_componente_id_tipo_componente_seq OWNER TO postgres;
 
 --
--- TOC entry 2628 (class 0 OID 0)
+-- TOC entry 2629 (class 0 OID 0)
 -- Dependencies: 253
 -- Name: tipo_componente_id_tipo_componente_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1342,7 +1342,7 @@ CREATE SEQUENCE public.tipo_solicitud_id_tipo_solicitud_seq
 ALTER TABLE public.tipo_solicitud_id_tipo_solicitud_seq OWNER TO postgres;
 
 --
--- TOC entry 2629 (class 0 OID 0)
+-- TOC entry 2630 (class 0 OID 0)
 -- Dependencies: 274
 -- Name: tipo_solicitud_id_tipo_solicitud_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1380,7 +1380,7 @@ CREATE SEQUENCE public.tipos_disco_id_tipo_disco_seq
 ALTER TABLE public.tipos_disco_id_tipo_disco_seq OWNER TO postgres;
 
 --
--- TOC entry 2630 (class 0 OID 0)
+-- TOC entry 2631 (class 0 OID 0)
 -- Dependencies: 254
 -- Name: tipos_disco_id_tipo_disco_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1420,7 +1420,7 @@ CREATE SEQUENCE public.tipos_mantenimiento_id_tipo_mantenimiento_seq
 ALTER TABLE public.tipos_mantenimiento_id_tipo_mantenimiento_seq OWNER TO postgres;
 
 --
--- TOC entry 2631 (class 0 OID 0)
+-- TOC entry 2632 (class 0 OID 0)
 -- Dependencies: 255
 -- Name: tipos_mantenimiento_id_tipo_mantenimiento_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1458,7 +1458,7 @@ CREATE SEQUENCE public.tipos_memoria_id_tipo_memoria_seq
 ALTER TABLE public.tipos_memoria_id_tipo_memoria_seq OWNER TO postgres;
 
 --
--- TOC entry 2632 (class 0 OID 0)
+-- TOC entry 2633 (class 0 OID 0)
 -- Dependencies: 256
 -- Name: tipos_memoria_id_tipo_memoria_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1496,7 +1496,7 @@ CREATE SEQUENCE public.tipos_software_id_tipo_software_seq
 ALTER TABLE public.tipos_software_id_tipo_software_seq OWNER TO postgres;
 
 --
--- TOC entry 2633 (class 0 OID 0)
+-- TOC entry 2634 (class 0 OID 0)
 -- Dependencies: 257
 -- Name: tipos_software_id_tipo_software_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1535,7 +1535,7 @@ CREATE SEQUENCE public.ubicaciones_id_ubicacion_seq
 ALTER TABLE public.ubicaciones_id_ubicacion_seq OWNER TO postgres;
 
 --
--- TOC entry 2634 (class 0 OID 0)
+-- TOC entry 2635 (class 0 OID 0)
 -- Dependencies: 258
 -- Name: ubicaciones_id_ubicacion_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1579,7 +1579,7 @@ CREATE SEQUENCE public.ups_id_ups_seq
 ALTER TABLE public.ups_id_ups_seq OWNER TO postgres;
 
 --
--- TOC entry 2635 (class 0 OID 0)
+-- TOC entry 2636 (class 0 OID 0)
 -- Dependencies: 259
 -- Name: ups_id_ups_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1619,7 +1619,7 @@ CREATE SEQUENCE public.usuarios_id_usuario_seq
 ALTER TABLE public.usuarios_id_usuario_seq OWNER TO postgres;
 
 --
--- TOC entry 2636 (class 0 OID 0)
+-- TOC entry 2637 (class 0 OID 0)
 -- Dependencies: 270
 -- Name: usuarios_id_usuario_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1657,7 +1657,7 @@ CREATE SEQUENCE public.velocidad_id_velocidad_seq
 ALTER TABLE public.velocidad_id_velocidad_seq OWNER TO postgres;
 
 --
--- TOC entry 2637 (class 0 OID 0)
+-- TOC entry 2638 (class 0 OID 0)
 -- Dependencies: 262
 -- Name: velocidad_id_velocidad_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -2409,7 +2409,7 @@ ALTER TABLE ONLY public.hardware_componente
 
 
 --
--- TOC entry 2468 (class 2606 OID 17521)
+-- TOC entry 2469 (class 2606 OID 17521)
 -- Name: componentes_equipo id_componente; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2445,7 +2445,7 @@ ALTER TABLE ONLY public.cronograma
 
 
 --
--- TOC entry 2467 (class 2606 OID 17516)
+-- TOC entry 2468 (class 2606 OID 17516)
 -- Name: componentes_equipo id_equipo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2454,7 +2454,7 @@ ALTER TABLE ONLY public.componentes_equipo
 
 
 --
--- TOC entry 2460 (class 2606 OID 17536)
+-- TOC entry 2461 (class 2606 OID 17536)
 -- Name: ordenes_trabajo id_equipo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2472,7 +2472,7 @@ ALTER TABLE ONLY public.hardware_componente
 
 
 --
--- TOC entry 2463 (class 2606 OID 17064)
+-- TOC entry 2464 (class 2606 OID 17064)
 -- Name: tipos_mantenimiento id_mantenimiento; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2481,7 +2481,7 @@ ALTER TABLE ONLY public.tipos_mantenimiento
 
 
 --
--- TOC entry 2458 (class 2606 OID 17308)
+-- TOC entry 2459 (class 2606 OID 17308)
 -- Name: ordenes_trabajo id_mantenimiento; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2580,7 +2580,7 @@ ALTER TABLE ONLY public.hardware_componente
 
 
 --
--- TOC entry 2461 (class 2606 OID 17330)
+-- TOC entry 2462 (class 2606 OID 17330)
 -- Name: detalles_orden_trabajo id_orden_trabajo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2643,7 +2643,7 @@ ALTER TABLE ONLY public.equipos
 
 
 --
--- TOC entry 2464 (class 2606 OID 17490)
+-- TOC entry 2465 (class 2606 OID 17490)
 -- Name: salida_tarjeta_video id_salida_video; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2679,7 +2679,7 @@ ALTER TABLE ONLY public.software_componente
 
 
 --
--- TOC entry 2457 (class 2606 OID 17303)
+-- TOC entry 2458 (class 2606 OID 17303)
 -- Name: ordenes_trabajo id_solicitud; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2688,7 +2688,7 @@ ALTER TABLE ONLY public.ordenes_trabajo
 
 
 --
--- TOC entry 2462 (class 2606 OID 17340)
+-- TOC entry 2463 (class 2606 OID 17340)
 -- Name: detalles_orden_trabajo id_solucion; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2706,7 +2706,7 @@ ALTER TABLE ONLY public.hardware_componente
 
 
 --
--- TOC entry 2465 (class 2606 OID 17495)
+-- TOC entry 2466 (class 2606 OID 17495)
 -- Name: salida_tarjeta_video id_tarjeta_video; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2715,7 +2715,7 @@ ALTER TABLE ONLY public.salida_tarjeta_video
 
 
 --
--- TOC entry 2459 (class 2606 OID 17313)
+-- TOC entry 2460 (class 2606 OID 17313)
 -- Name: ordenes_trabajo id_tecnico; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2796,11 +2796,20 @@ ALTER TABLE ONLY public.responsables
 
 
 --
--- TOC entry 2466 (class 2606 OID 17509)
+-- TOC entry 2467 (class 2606 OID 17509)
 -- Name: usuarios id_ubicacion; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.usuarios
+    ADD CONSTRAINT id_ubicacion FOREIGN KEY (id_ubicacion) REFERENCES public.ubicaciones(id_ubicacion);
+
+
+--
+-- TOC entry 2457 (class 2606 OID 17557)
+-- Name: solicitudes id_ubicacion; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solicitudes
     ADD CONSTRAINT id_ubicacion FOREIGN KEY (id_ubicacion) REFERENCES public.ubicaciones(id_ubicacion);
 
 
@@ -2813,7 +2822,7 @@ ALTER TABLE ONLY public.memorias
     ADD CONSTRAINT id_velocidad FOREIGN KEY (id_velocidad) REFERENCES public.velocidad(id_velocidad);
 
 
--- Completed on 2019-03-24 16:52:07
+-- Completed on 2019-03-24 17:49:55
 
 --
 -- PostgreSQL database dump complete
