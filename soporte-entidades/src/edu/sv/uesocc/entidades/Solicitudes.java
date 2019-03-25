@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,10 +35,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Solicitudes.findAll", query = "SELECT s FROM Solicitudes s")
     , @NamedQuery(name = "Solicitudes.findByIdSolicitud", query = "SELECT s FROM Solicitudes s WHERE s.idSolicitud = :idSolicitud")
-    , @NamedQuery(name = "Solicitudes.findByNombreSolicitante", query = "SELECT s FROM Solicitudes s WHERE s.nombreSolicitante = :nombreSolicitante")
     , @NamedQuery(name = "Solicitudes.findByFechaSolicitud", query = "SELECT s FROM Solicitudes s WHERE s.fechaSolicitud = :fechaSolicitud")
     , @NamedQuery(name = "Solicitudes.findByProblema", query = "SELECT s FROM Solicitudes s WHERE s.problema = :problema")
-    , @NamedQuery(name = "Solicitudes.findByEstado", query = "SELECT s FROM Solicitudes s WHERE s.estado = :estado")})
+    , @NamedQuery(name = "Solicitudes.findByEstado", query = "SELECT s FROM Solicitudes s WHERE s.estado = :estado")
+    , @NamedQuery(name = "Solicitudes.findByCodigoSeguimiento", query = "SELECT s FROM Solicitudes s WHERE s.codigoSeguimiento = :codigoSeguimiento")})
 public class Solicitudes implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,9 +48,6 @@ public class Solicitudes implements Serializable {
     @Column(name = "id_solicitud", nullable = false)
     private Integer idSolicitud;
     @Basic(optional = false)
-    @Column(name = "nombre_solicitante", nullable = false, length = 2147483647)
-    private String nombreSolicitante;
-    @Basic(optional = false)
     @Column(name = "fecha_solicitud", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fechaSolicitud;
@@ -60,9 +56,17 @@ public class Solicitudes implements Serializable {
     private String problema;
     @Column(name = "estado")
     private Integer estado;
-    @JoinColumn(name = "id_equipo", referencedColumnName = "id_equipo")
+    @Column(name = "codigo_seguimiento")
+    private Integer codigoSeguimiento;
+    @JoinColumn(name = "id_responsable", referencedColumnName = "id_responsable", nullable = false)
     @ManyToOne(optional = false)
-    private Equipos idEquipo;
+    private Responsables idResponsable;
+    @JoinColumn(name = "id_tipo_solicitud", referencedColumnName = "id_tipo_solicitud")
+    @ManyToOne
+    private TiposSolicitud idTipoSolicitud;
+    @JoinColumn(name = "id_ubicacion", referencedColumnName = "id_ubicacion", nullable = false)
+    @ManyToOne(optional = false)
+    private Ubicaciones idUbicacion;
     @OneToMany(mappedBy = "idSolicitud")
     private List<OrdenesTrabajo> ordenesTrabajoList;
 
@@ -73,9 +77,8 @@ public class Solicitudes implements Serializable {
         this.idSolicitud = idSolicitud;
     }
 
-    public Solicitudes(Integer idSolicitud, String nombreSolicitante, Date fechaSolicitud, String problema) {
+    public Solicitudes(Integer idSolicitud, Date fechaSolicitud, String problema) {
         this.idSolicitud = idSolicitud;
-        this.nombreSolicitante = nombreSolicitante;
         this.fechaSolicitud = fechaSolicitud;
         this.problema = problema;
     }
@@ -86,14 +89,6 @@ public class Solicitudes implements Serializable {
 
     public void setIdSolicitud(Integer idSolicitud) {
         this.idSolicitud = idSolicitud;
-    }
-
-    public String getNombreSolicitante() {
-        return nombreSolicitante;
-    }
-
-    public void setNombreSolicitante(String nombreSolicitante) {
-        this.nombreSolicitante = nombreSolicitante;
     }
 
     public Date getFechaSolicitud() {
@@ -120,12 +115,36 @@ public class Solicitudes implements Serializable {
         this.estado = estado;
     }
 
-    public Equipos getIdEquipo() {
-        return idEquipo;
+    public Integer getCodigoSeguimiento() {
+        return codigoSeguimiento;
     }
 
-    public void setIdEquipo(Equipos idEquipo) {
-        this.idEquipo = idEquipo;
+    public void setCodigoSeguimiento(Integer codigoSeguimiento) {
+        this.codigoSeguimiento = codigoSeguimiento;
+    }
+
+    public Responsables getIdResponsable() {
+        return idResponsable;
+    }
+
+    public void setIdResponsable(Responsables idResponsable) {
+        this.idResponsable = idResponsable;
+    }
+
+    public TiposSolicitud getIdTipoSolicitud() {
+        return idTipoSolicitud;
+    }
+
+    public void setIdTipoSolicitud(TiposSolicitud idTipoSolicitud) {
+        this.idTipoSolicitud = idTipoSolicitud;
+    }
+
+    public Ubicaciones getIdUbicacion() {
+        return idUbicacion;
+    }
+
+    public void setIdUbicacion(Ubicaciones idUbicacion) {
+        this.idUbicacion = idUbicacion;
     }
 
     @XmlTransient

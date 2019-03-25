@@ -36,6 +36,11 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Memorias.findByNumeroSerie", query = "SELECT m FROM Memorias m WHERE m.numeroSerie = :numeroSerie")})
 public class Memorias implements Serializable {
 
+    @Column(name = "estado")
+    private Boolean estado;
+    @Column(name = "asignado")
+    private Boolean asignado;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -146,6 +151,22 @@ public class Memorias implements Serializable {
     @Override
     public String toString() {
         return "edu.sv.uesocc.entidades.Memorias[ idMemoria=" + idMemoria + " ]";
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    public Boolean getAsignado() {
+        return asignado;
+    }
+
+    public void setAsignado(Boolean asignado) {
+        this.asignado = asignado;
     }
     
 }

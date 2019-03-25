@@ -69,11 +69,14 @@ public class OrdenesTrabajo implements Serializable {
     private Integer estado;
     @OneToMany(mappedBy = "idOrdenTrabajo")
     private List<DetallesOrdenTrabajo> detallesOrdenTrabajoList;
+    @JoinColumn(name = "id_equipo", referencedColumnName = "id_equipo", nullable = false)
+    @ManyToOne(optional = false)
+    private Equipos idEquipo;
     @JoinColumn(name = "id_mantenimiento", referencedColumnName = "id_mantenimiento", nullable = false)
     @ManyToOne(optional = false)
     private Mantenimientos idMantenimiento;
-    @JoinColumn(name = "id_solicitud", referencedColumnName = "id_solicitud", nullable = false)
-    @ManyToOne(optional = false)
+    @JoinColumn(name = "id_solicitud", referencedColumnName = "id_solicitud")
+    @ManyToOne
     private Solicitudes idSolicitud;
     @JoinColumn(name = "id_tecnico", referencedColumnName = "id_tecnico", nullable = false)
     @ManyToOne(optional = false)
@@ -157,6 +160,14 @@ public class OrdenesTrabajo implements Serializable {
 
     public void setDetallesOrdenTrabajoList(List<DetallesOrdenTrabajo> detallesOrdenTrabajoList) {
         this.detallesOrdenTrabajoList = detallesOrdenTrabajoList;
+    }
+
+    public Equipos getIdEquipo() {
+        return idEquipo;
+    }
+
+    public void setIdEquipo(Equipos idEquipo) {
+        this.idEquipo = idEquipo;
     }
 
     public Mantenimientos getIdMantenimiento() {

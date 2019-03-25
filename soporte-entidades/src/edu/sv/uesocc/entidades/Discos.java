@@ -36,6 +36,11 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Discos.findByNumeroSerie", query = "SELECT d FROM Discos d WHERE d.numeroSerie = :numeroSerie")})
 public class Discos implements Serializable {
 
+    @Column(name = "estado")
+    private Boolean estado;
+    @Column(name = "asignado")
+    private Boolean asignado;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -157,6 +162,22 @@ public class Discos implements Serializable {
     @Override
     public String toString() {
         return "edu.sv.uesocc.entidades.Discos[ idDisco=" + idDisco + " ]";
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    public Boolean getAsignado() {
+        return asignado;
+    }
+
+    public void setAsignado(Boolean asignado) {
+        this.asignado = asignado;
     }
     
 }

@@ -8,6 +8,7 @@ package edu.sv.uesocc.entidades;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,6 +36,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Responsables.findByNombre", query = "SELECT r FROM Responsables r WHERE r.nombre = :nombre")
     , @NamedQuery(name = "Responsables.findByCorreo", query = "SELECT r FROM Responsables r WHERE r.correo = :correo")})
 public class Responsables implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idResponsable")
+    private List<Solicitudes> solicitudesList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -129,6 +133,15 @@ public class Responsables implements Serializable {
     @Override
     public String toString() {
         return "edu.sv.uesocc.entidades.Responsables[ idResponsable=" + idResponsable + " ]";
+    }
+
+    @XmlTransient
+    public List<Solicitudes> getSolicitudesList() {
+        return solicitudesList;
+    }
+
+    public void setSolicitudesList(List<Solicitudes> solicitudesList) {
+        this.solicitudesList = solicitudesList;
     }
     
 }

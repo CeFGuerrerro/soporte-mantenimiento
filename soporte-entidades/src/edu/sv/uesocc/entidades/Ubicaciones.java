@@ -35,6 +35,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Ubicaciones.findByDescripcion", query = "SELECT u FROM Ubicaciones u WHERE u.descripcion = :descripcion")})
 public class Ubicaciones implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUbicacion")
+    private List<Solicitudes> solicitudesList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -139,6 +142,15 @@ public class Ubicaciones implements Serializable {
     @Override
     public String toString() {
         return "edu.sv.uesocc.entidades.Ubicaciones[ idUbicacion=" + idUbicacion + " ]";
+    }
+
+    @XmlTransient
+    public List<Solicitudes> getSolicitudesList() {
+        return solicitudesList;
+    }
+
+    public void setSolicitudesList(List<Solicitudes> solicitudesList) {
+        this.solicitudesList = solicitudesList;
     }
     
 }

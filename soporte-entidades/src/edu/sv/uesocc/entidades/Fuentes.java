@@ -37,6 +37,11 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Fuentes.findByNumeroSerie", query = "SELECT f FROM Fuentes f WHERE f.numeroSerie = :numeroSerie")})
 public class Fuentes implements Serializable {
 
+    @Column(name = "estado")
+    private Boolean estado;
+    @Column(name = "asignado")
+    private Boolean asignado;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -134,6 +139,22 @@ public class Fuentes implements Serializable {
     @Override
     public String toString() {
         return "edu.sv.uesocc.entidades.Fuentes[ idFuente=" + idFuente + " ]";
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    public Boolean getAsignado() {
+        return asignado;
+    }
+
+    public void setAsignado(Boolean asignado) {
+        this.asignado = asignado;
     }
     
 }
