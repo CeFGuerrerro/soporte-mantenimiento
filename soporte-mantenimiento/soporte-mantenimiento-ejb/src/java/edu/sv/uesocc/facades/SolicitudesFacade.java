@@ -9,6 +9,10 @@ import edu.sv.uesocc.entidades.Solicitudes;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -27,6 +31,18 @@ public class SolicitudesFacade extends AbstractFacade<Solicitudes> implements So
 
     public SolicitudesFacade() {
         super(Solicitudes.class);
+    }
+
+    @Override
+    public Solicitudes findLastRecord() {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Solicitudes> cq =  cb.createQuery(Solicitudes.class);
+        Root<Solicitudes> sol = cq.from(Solicitudes.class);
+        cq.select(sol);
+        cq.orderBy(cb.desc(sol.get("idSolicitud")));
+        TypedQuery<Solicitudes> q = em.createQuery(cq);
+        
+        return q.setMaxResults(1).getSingleResult();
     }
     
 }

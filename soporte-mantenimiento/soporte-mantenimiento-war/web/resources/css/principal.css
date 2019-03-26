@@ -43,11 +43,26 @@
     border: none;
 }
 
+#div_solicitud{
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%) !important;
+    text-align: center;
+}
+
 #div_contenido {
 
 }
 #sidebar {
     overflow: scroll;
+}
+
+#notificationBar{
+                filter:alpha(opacity=80);
+                opacity:0.8;
+                padding:50px 0 0 50px;
+        z-index: 1000;
 }
 
 .banner {

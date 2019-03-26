@@ -9,10 +9,19 @@
     <h:head>
         <title>Principal</title>
         <h:outputStylesheet library="css" name="principal.css"/>
-
+        <h:outputScript library="js" name="webSocket.js"/>
     </h:head>
     <h:body>
-
+        
+        <h:form>
+            <f:websocket channel="solicitud" onmessage="notificacion"/>
+        </h:form>
+        
+        <p:notificationBar id="notificationBar" position="top" effect="slide" styleClass="top" widgetVar="bar">
+            <h:outputText id="titulo" value="Nueva solicitud de: "/>
+            <h:outputText id="nombre"/>
+        </p:notificationBar>
+        
         <!--Cabecera del documento-->
         <div id="div_header">
             <p:growl id="g_mensajes" showSummary="true" showDetail="true"> <!-- Componente para mostrar mensajes -->
@@ -22,13 +31,13 @@
 
             <p:panel class="banner">
                 <p:panelGrid columns="2" styleClass="ui-panelgrid-blank banner">
-                   
-                        <p:graphicImage library="img" name="logo.png" height="80"/>
-                   
-                        <div>
-                            <p id="titulo" class="banner">Universidad de El Salvador</p>
-                            <p id="subtitulo" class="banner">Facultad Multidisciplinaria de Occidente</p>
-                            <p class="banner">&Aacute;rea de Soporte y Tecnolog&iacute;a Inform&aacute;tica</p>
+
+                    <p:graphicImage library="img" name="logo.png" height="80"/>
+
+                    <div>
+                        <p id="titulo" class="banner">Universidad de El Salvador</p>
+                        <p id="subtitulo" class="banner">Facultad Multidisciplinaria de Occidente</p>
+                        <p class="banner">&Aacute;rea de Soporte y Tecnolog&iacute;a Inform&aacute;tica</p>
                     </div>
                 </p:panelGrid>
             </p:panel>

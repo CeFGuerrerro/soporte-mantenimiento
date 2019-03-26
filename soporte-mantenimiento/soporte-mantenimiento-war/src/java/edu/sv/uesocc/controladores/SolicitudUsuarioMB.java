@@ -3,58 +3,72 @@ package edu.sv.uesocc.controladores;
 import edu.sv.uesocc.entidades.Equipos;
 import edu.sv.uesocc.entidades.Responsables;
 import edu.sv.uesocc.entidades.Solicitudes;
-import edu.sv.uesocc.entidades.Tipo;
+import edu.sv.uesocc.entidades.TiposSolicitud;
 import edu.sv.uesocc.entidades.Usuarios;
-import edu.sv.uesocc.facades.EquiposFacadeLocal;
 import edu.sv.uesocc.facades.ResponsablesFacadeLocal;
 import edu.sv.uesocc.facades.SolicitudesFacadeLocal;
+import edu.sv.uesocc.facades.TiposSolicitudFacadeLocal;
 import edu.sv.uesocc.facades.UsuariosFacadeLocal;
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
+import javax.faces.push.Push;
+import javax.faces.push.PushContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named(value = "solicitudUsuarioMB")
-@ViewScoped
-public class SolicitudUsuarioMB implements Serializable {
+@ApplicationScoped
+public class SolicitudUsuarioMB {
 
-    @EJB
-    private EquiposFacadeLocal equipoEJB;
+    @Inject
+    @Push
+    private PushContext solicitud;
+
     @EJB
     private UsuariosFacadeLocal usuarioEJB;
     @EJB
     private ResponsablesFacadeLocal respEJB;
     @EJB
     private SolicitudesFacadeLocal soliciEJB;
+    @EJB
+    private TiposSolicitudFacadeLocal tipoSoliciEJB;
 
     private Solicitudes solici = new Solicitudes();
+    private TiposSolicitud tipoSolici = new TiposSolicitud();
     private Usuarios usuario = new Usuarios();
-    private Equipos equp = new Equipos();
     private Responsables resp = new Responsables();
     private List<Equipos> equipList = new ArrayList<>();
     private List<Responsables> respList = new ArrayList<>();
-    private List<Tipo> tipoList;
+    private List<TiposSolicitud> tipoList;
     private int paso = 0;
-    private int tipo;
+    private int codigo;
     private boolean tipoProblema;
     private boolean paso1 = true;
     private boolean paso2;
     private boolean paso3;
     private boolean paso4;
-    private boolean equipo;
 
     @PostConstruct
     public void init() {
-        tipoList = Arrays.asList(new Tipo(1,"Problema con mi equipo (UES)"), new Tipo (2,"Problema un equipo en la Unidad/Area"), new Tipo(2,"Otro..."));
+        tipoList = tipoSoliciEJB.findAll();
     }
 
-    public List<Tipo> getTipoList() {
+    public TiposSolicitud getTipoSolici() {
+        return tipoSolici;
+    }
+
+    public void setTipoSolici(TiposSolicitud tipoSolici) {
+        this.tipoSolici = tipoSolici;
+    }
+
+    public List<TiposSolicitud> getTipoList() {
         return tipoList;
     }
 
@@ -72,14 +86,6 @@ public class SolicitudUsuarioMB implements Serializable {
 
     public void setEquipList(List<Equipos> equipList) {
         this.equipList = equipList;
-    }
-
-    public int getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(int tipo) {
-        this.tipo = tipo;
     }
 
     public boolean isTipoProblema() {
@@ -138,14 +144,6 @@ public class SolicitudUsuarioMB implements Serializable {
         this.solici = solici;
     }
 
-    public boolean isEquipo() {
-        return equipo;
-    }
-
-    public void setEquipo(boolean equipo) {
-        this.equipo = equipo;
-    }
-
     public Usuarios getUsuario() {
         return usuario;
     }
@@ -164,40 +162,19 @@ public class SolicitudUsuarioMB implements Serializable {
 
     public void tipoProb() {
         resp = new Responsables();
-        equp = new Equipos();
         tipoProblema = true;
-    }
-
-    public void resposableEquipo() {
-        equp = new Equipos();
-        equipList = equipoEJB.findPorResponsable(resp);
-        if (equipList.size() > 1) {
-            equipo = true;
-        } else {
-            equp = equipList.get(0);
-        }
     }
 
     public void obtenerResponsable() {
         respList = respEJB.findPorUbicacion(usuario.getIdUbicacion());
     }
 
-    public Equipos getEqup() {
-        return equp;
-    }
-
-    public void setEqup(Equipos equp) {
-        this.equp = equp;
-    }
-
     public void irPaso1() {
         this.paso = 0;
         this.paso1 = true;
         this.paso2 = false;
-        this.equipo = false;
         usuario = new Usuarios();
         resp = new Responsables();
-        equp = new Equipos();
     }
 
     public void irPaso2() {
@@ -209,8 +186,6 @@ public class SolicitudUsuarioMB implements Serializable {
                 this.paso = 1;
                 this.paso1 = false;
                 this.paso2 = true;
-                this.equipo = false;
-                equp = new Equipos();
                 resp = new Responsables();
                 obtenerResponsable();
             } else {
@@ -219,11 +194,8 @@ public class SolicitudUsuarioMB implements Serializable {
         } else {
             this.paso2 = true;
             this.paso3 = false;
-            this.equipo = false;
-            tipo = 0;
             tipoProblema = false;
             solici = new Solicitudes();
-            equp = new Equipos();
             resp = new Responsables();
             solici = new Solicitudes();
         }
@@ -233,7 +205,7 @@ public class SolicitudUsuarioMB implements Serializable {
         this.paso = 2;
         this.paso2 = false;
         this.paso3 = true;
-        this.equipo = false;
+        this.paso4 = false;
     }
 
     public void irPaso4() {
@@ -241,8 +213,45 @@ public class SolicitudUsuarioMB implements Serializable {
         this.paso3 = false;
         this.paso4 = true;
     }
-    
-    public void enviar(){
-        
+
+    public void enviar() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
+        Date date = new Date();
+
+        try {
+            solici.setIdTipoSolicitud(tipoSolici);
+            solici.setIdResponsable(resp);
+            solici.setIdUbicacion(usuario.getIdUbicacion());
+            solici.setFechaSolicitud(date);
+            solici.setEstado(1);
+            boolean creado = soliciEJB.create(solici);
+            if (creado) {
+                creado = false;
+                int randomNum = ThreadLocalRandom.current().nextInt(100, 999 + 1);
+                codigo = randomNum * 100000;
+                solici.setCodigoSeguimiento(codigo + soliciEJB.findLastRecord().getIdSolicitud());
+                creado = soliciEJB.edit(solici);
+                if (creado) {
+                    send(resp.getNombre() + " ( " + resp.getIdUbicacion().getNombre() + " )");
+                } else {
+                    contexto.addMessage(null, new FacesMessage("No se pudo crear el codigo de seguimiento (!)"));
+                } 
+            } else {
+                contexto.addMessage(null, new FacesMessage("Hubo un problema al enviar la solicitud"));
+            }
+        } catch (Exception e) {
+            contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", e.getMessage()));
+        }
+
     }
+
+    public void send(Object message) {
+        System.out.println(message);
+        solicitud.send(message);
+    }
+
+    public void enviarSW() {
+        send("Esto es una prueba :v");
+    }
+
 }

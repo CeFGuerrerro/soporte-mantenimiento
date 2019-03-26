@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <body>
+    <h:body>
 
         <ui:composition template="./../templates/SolicitudUsuariosTemplate.xhtml">
 
@@ -22,7 +22,7 @@
                         <p:menuitem value="Confirmacion"/>
                     </p:steps>
 
-                    <div id="div_login">
+                    <div id="div_solicitud">
                         <p:panel rendered="#{solicitudUsuarioMB.paso1}">
                             <p:panelGrid columns="2">
                                 <p:outputLabel>Unidad/Area solicitante:</p:outputLabel>
@@ -36,32 +36,24 @@
                                 <p:password required="true" value="#{solicitudUsuarioMB.usuario.password}" requiredMessage="Ingrese la contrase&ntilde;a"/>
                             </p:panelGrid>
                             <p:commandButton value="Siguiente" icon="fa fa-long-arrow-right" update="@form" actionListener="#{solicitudUsuarioMB.irPaso2()}"/>
+                            <p:commandButton value="Prueba" actionListener="#{solicitudUsuarioMB.enviarSW()}" immediate="true"/>
                         </p:panel>
 
                         <p:panel rendered="#{solicitudUsuarioMB.paso2}">
                             <p:panelGrid columns="2">
                                 <p:outputLabel>Tipo de Solicitud:</p:outputLabel>
-                                <p:selectOneMenu value="#{solicitudUsuarioMB.tipo}" required="true"
+                                <p:selectOneMenu value="#{solicitudUsuarioMB.tipoSolici}" required="true" converter="objectConverter"
                                                  requiredMessage="Seleccione un Tipo de Solicitud" filter="true" filterMatchMode="startsWith">
-                                    <f:selectItem itemLabel="Seleccione un tipo" itemValue="" noSelectionOption="true"/>
-                                    <f:selectItems value="#{solicitudUsuarioMB.tipoList}" var="tipoL" itemLabel="#{tipoL.tipo}" itemValue="#{tipoL.id}"/>
+                                    <f:selectItem itemLabel="Seleccione un tipo de solicitud" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{solicitudUsuarioMB.tipoList}" var="tipoL" itemLabel="#{tipoL.nombre}" itemValue="#{tipo}"/>
                                     <p:ajax listener="#{solicitudUsuarioMB.tipoProb()}" process="@this" update="@form"/>
                                 </p:selectOneMenu>
                                 
-                                <p:outputLabel rendered="#{solicitudUsuarioMB.tipo == 1}">Responsable del Equipo:</p:outputLabel>
-                                <p:outputLabel rendered="#{solicitudUsuarioMB.tipo == 2}">Nombre del Solicitante:</p:outputLabel>
+                                <p:outputLabel rendered="#{solicitudUsuarioMB.tipoProblema}" >Nombre del Solicitante:</p:outputLabel>
                                 <p:selectOneMenu value="#{solicitudUsuarioMB.resp}" converter="objectConverter" required="true" rendered="#{solicitudUsuarioMB.tipoProblema}"
                                                  requiredMessage="Seleccione un nombre" filter="true" filterMatchMode="startsWith">
                                     <f:selectItem itemLabel="Seleccione un nombre" itemValue="" noSelectionOption="true"/>
                                     <f:selectItems value="#{solicitudUsuarioMB.respList}" var="resp" itemLabel="#{resp.nombre}" itemValue="#{tipo}"/>
-                                    <p:ajax listener="#{solicitudUsuarioMB.resposableEquipo()}" process="@this" update="@form"/>
-                                </p:selectOneMenu>
-                                
-                                <p:outputLabel rendered="#{solicitudUsuarioMB.equipo}">Numero de Inventario del Equipo:/ Aun falta arreglar esto o cambiarlo xD</p:outputLabel>
-                                <p:selectOneMenu value="#{solicitudUsuarioMB.equp}" converter="objectConverter" required="true" rendered="#{solicitudUsuarioMB.equipo}"
-                                                 requiredMessage="Seleccione un equipo" filter="true" filterMatchMode="startsWith">
-                                    <f:selectItem itemLabel="Seleccione el Num. Inventario del Equipo" itemValue="" noSelectionOption="true"/>
-                                    <f:selectItems value="#{solicitudUsuarioMB.equipList}" var="equip" itemLabel="#{equip.idEquipo}" itemValue="#{tipo}"/>
                                 </p:selectOneMenu>
                             </p:panelGrid>
                             <p:commandButton value="Atras" icon="fa fa-long-arrow-left" update="@form" actionListener="#{solicitudUsuarioMB.irPaso1()}" immediate="true"/>
@@ -78,16 +70,18 @@
                         </p:panel>
 
                         <p:panel rendered="#{solicitudUsuarioMB.paso4}">
-                            <p:panelGrid columns="1">
-                                <p:outputLabel value="Tipo de Solicitud: "/>
-                                <p:outputLabel value="Responsable del Equipo: "/>
-                                <p:outputLabel value="Solicitante: "/>
-                                <p:outputLabel value="Componente: "/>
-                                <p:outputLabel value="Numero de Inventario: "/>
-                                <p:outputLabel value="Problema: "/>
+                            <p:panelGrid columns="2">
+                                <p:outputLabel>Solicitante: </p:outputLabel>
+                                <p:outputLabel value="#{solicitudUsuarioMB.resp.nombre}"/>
+                                <p:outputLabel>Tipo de Solicitud: </p:outputLabel>
+                                <p:outputLabel value="#{solicitudUsuarioMB.tipoSolici.nombre}"/>
+                                <p:outputLabel>Unidad/Area: </p:outputLabel>
+                                <p:outputLabel value="#{solicitudUsuarioMB.usuario.idUbicacion.nombre}"/>
+                                <p:outputLabel>Problema: </p:outputLabel>
+                                <p:outputPanel>#{solicitudUsuarioMB.solici.problema}</p:outputPanel>
                             </p:panelGrid>
                             <p:commandButton value="Atras" icon="fa fa-long-arrow-left" update="@form" actionListener="#{solicitudUsuarioMB.irPaso3()}" immediate="true"/>
-                            <p:commandButton value="Enviar Solicitud" icon="fa fa-long-arrow-left" update="@form" actionListener="#{solicitudUsuarioMB.enviar()}"/>
+                            <p:commandButton value="Enviar Solicitud" icon="fa fa-send" update="@form" action="#{solicitudUsuarioMB.enviar()}"/>
                         </p:panel>
                     </div>
                 </h:form>
@@ -95,5 +89,5 @@
 
         </ui:composition>
 
-    </body>
+    </h:body>
 </html>

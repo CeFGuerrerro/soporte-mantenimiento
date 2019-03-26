@@ -41,6 +41,7 @@
     <class>edu.sv.uesocc.entidades.Ups</class>
     <class>edu.sv.uesocc.entidades.Usuarios</class>
     <class>edu.sv.uesocc.entidades.Velocidad</class>
+    <class>edu.sv.uesocc.entidades.TiposSolicitud</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>
