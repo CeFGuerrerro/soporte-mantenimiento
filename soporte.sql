@@ -5,7 +5,7 @@
 -- Dumped from database version 10.5
 -- Dumped by pg_dump version 10.5
 
--- Started on 2019-03-24 17:49:54
+-- Started on 2019-03-25 19:32:58
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -1118,7 +1118,7 @@ CREATE TABLE public.solicitudes (
     problema text NOT NULL,
     estado integer,
     codigo_seguimiento integer,
-    id_tipo_solicitud integer,
+    id_tipo_solicitud integer NOT NULL,
     id_ubicacion integer NOT NULL
 );
 
@@ -1281,7 +1281,9 @@ ALTER SEQUENCE public.tecnicos_id_tecnico_seq OWNED BY public.tecnicos.id_tecnic
 CREATE TABLE public.tipos_componente (
     id_tipo_componente integer NOT NULL,
     nombre text NOT NULL,
-    descripcion text
+    descripcion text,
+    contenedor_hw boolean,
+    contenedor_sw boolean
 );
 
 
@@ -2822,7 +2824,7 @@ ALTER TABLE ONLY public.memorias
     ADD CONSTRAINT id_velocidad FOREIGN KEY (id_velocidad) REFERENCES public.velocidad(id_velocidad);
 
 
--- Completed on 2019-03-24 17:49:55
+-- Completed on 2019-03-25 19:32:59
 
 --
 -- PostgreSQL database dump complete
