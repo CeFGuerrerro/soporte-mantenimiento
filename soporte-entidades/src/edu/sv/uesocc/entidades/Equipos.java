@@ -50,6 +50,8 @@ public class Equipos implements Serializable {
     private Boolean estado = true;
     @Column(name = "observaciones", length = 2147483647)
     private String observaciones;
+//    @OneToMany(mappedBy = "idEquipo")
+//    private List<Solicitudes> solicitudesList;
     @OneToMany(mappedBy = "idEquipo")
     private List<Cronograma> cronogramaList;
     @JoinColumn(name = "id_responsable", referencedColumnName = "id_responsable")
@@ -91,6 +93,15 @@ public class Equipos implements Serializable {
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
+
+//    @XmlTransient
+//    public List<Solicitudes> getSolicitudesList() {
+//        return solicitudesList;
+//    }
+//
+//    public void setSolicitudesList(List<Solicitudes> solicitudesList) {
+//        this.solicitudesList = solicitudesList;
+//    }
 
     @XmlTransient
     public List<Cronograma> getCronogramaList() {

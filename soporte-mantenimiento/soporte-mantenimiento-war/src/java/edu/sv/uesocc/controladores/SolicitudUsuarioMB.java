@@ -9,23 +9,24 @@ import edu.sv.uesocc.facades.ResponsablesFacadeLocal;
 import edu.sv.uesocc.facades.SolicitudesFacadeLocal;
 import edu.sv.uesocc.facades.TiposSolicitudFacadeLocal;
 import edu.sv.uesocc.facades.UsuariosFacadeLocal;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.push.Push;
 import javax.faces.push.PushContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named(value = "solicitudUsuarioMB")
-@ApplicationScoped
-public class SolicitudUsuarioMB {
+@ViewScoped
+public class SolicitudUsuarioMB implements Serializable{
 
     @Inject
     @Push

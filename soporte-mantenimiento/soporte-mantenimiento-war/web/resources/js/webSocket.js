@@ -1,6 +1,6 @@
 function notificacion(message, channel, event) {
     document.getElementById("nombre").innerHTML = message;
-    console.log("AAAAAAAAAAAAAAAA")
+    console.log("Nueva solicitud")
     mostrar();
     audioNotificacion();
     setTimeout(esconder, 5000);
