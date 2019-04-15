@@ -31,6 +31,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "TiposComponente.findAll", query = "SELECT t FROM TiposComponente t")
     , @NamedQuery(name = "TiposComponente.findByIdTipoComponente", query = "SELECT t FROM TiposComponente t WHERE t.idTipoComponente = :idTipoComponente")
+    , @NamedQuery(name = "Componentes.findByContenedorHw", query = "SELECT t FROM TiposComponente t WHERE t.contenedorHw = :contenedorHw")
+    , @NamedQuery(name = "Componentes.findByContenedorSw", query = "SELECT t FROM TiposComponente t WHERE t.contenedorSw = :contenedorSw")
     , @NamedQuery(name = "TiposComponente.findByNombre", query = "SELECT t FROM TiposComponente t WHERE t.nombre = :nombre")
     , @NamedQuery(name = "TiposComponente.findByDescripcion", query = "SELECT t FROM TiposComponente t WHERE t.descripcion = :descripcion")})
 public class TiposComponente implements Serializable {
@@ -41,6 +43,10 @@ public class TiposComponente implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_tipo_componente", nullable = false)
     private Integer idTipoComponente;
+    @Column(name = "contenedor_hw")
+    private Boolean contenedorHw;
+    @Column(name = "contenedor_sw")
+    private Boolean contenedorSw;
     @Basic(optional = false)
     @Column(name = "nombre", nullable = false, length = 2147483647)
     private String nombre;
@@ -67,6 +73,22 @@ public class TiposComponente implements Serializable {
 
     public void setIdTipoComponente(Integer idTipoComponente) {
         this.idTipoComponente = idTipoComponente;
+    }
+
+    public Boolean getContenedorHw() {
+        return contenedorHw;
+    }
+
+    public void setContenedorHw(Boolean contenedorHw) {
+        this.contenedorHw = contenedorHw;
+    }
+
+    public Boolean getContenedorSw() {
+        return contenedorSw;
+    }
+
+    public void setContenedorSw(Boolean contenedorSw) {
+        this.contenedorSw = contenedorSw;
     }
 
     public String getNombre() {
@@ -118,5 +140,5 @@ public class TiposComponente implements Serializable {
     public String toString() {
         return "edu.sv.uesocc.entidades.TiposComponente[ idTipoComponente=" + idTipoComponente + " ]";
     }
-    
+
 }

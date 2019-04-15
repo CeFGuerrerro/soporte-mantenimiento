@@ -61,7 +61,7 @@ public class Solicitudes implements Serializable {
     @JoinColumn(name = "id_responsable", referencedColumnName = "id_responsable", nullable = false)
     @ManyToOne(optional = false)
     private Responsables idResponsable;
-    @JoinColumn(name = "id_tipo_solicitud", referencedColumnName = "id_tipo_solicitud")
+    @JoinColumn(name = "id_tipo_solicitud", referencedColumnName = "id_tipo_solicitud", nullable = false)
     @ManyToOne
     private TiposSolicitud idTipoSolicitud;
     @JoinColumn(name = "id_ubicacion", referencedColumnName = "id_ubicacion", nullable = false)
