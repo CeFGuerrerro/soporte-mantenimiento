@@ -42,6 +42,9 @@
     <class>edu.sv.uesocc.entidades.Usuarios</class>
     <class>edu.sv.uesocc.entidades.Velocidad</class>
     <class>edu.sv.uesocc.entidades.TiposSolicitud</class>
+    <class>edu.sv.uesocc.entidades.Loggin</class>
+    <class>edu.sv.uesocc.entidades.Vistas</class>
+    <class>edu.sv.uesocc.entidades.VistasLoggin</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>

@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../templates/PrincipalTemplate.xhtml">
+
+            <ui:define name="contenido">
+                <h:form id="frmTabla">
+                    <p:commandButton id="btnNuevo" value="Nuevo Admin" icon="fa fa-plus" oncomplete="PF('wnuevo').show();" update="frmNuevo"/>
+
+                    <p:dataTable value="#{userAdminMB.adminList}" id="tabla" var="adm" rows="10" paginator="true" emptyMessage="No hay registros" selectionMode="single" selection="#{userAdminMB.adminSel}"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="#{adm.idLoggin}"
+                                 rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página: ({currentPage} de {totalPages})" paginatorPosition="bottom">
+                        <f:facet name="header">
+                            Administradores
+                        </f:facet>
+
+                        <p:column headerText="Nombre" filterBy="#{adm.idTecnico.nombre}" filterMatchMode="contains">
+                            <p:outputLabel value="#{adm.idTecnico.nombre}"/>
+                        </p:column>
+
+                        <p:column headerText="Usuario">
+                            <p:outputLabel value="#{adm.nombreLoggin}"/>
+                        </p:column>
+
+                        <p:column headerText="Password">
+                            <p:outputLabel value="#{adm.passwoird}"/>
+                        </p:column>
+
+                        <p:ajax event="rowDblselect" oncomplete="PF('weditar').show()" update=":frmEditar"/>
+                    </p:dataTable>
+                    <p:contextMenu for="tabla">
+                        <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                    </p:contextMenu>
+                </h:form>
+                <h:form id="frmNuevo">
+                    <p:dialog id="dlgNuevo" widgetVar="wnuevo" header="Nuevo Admin" modal="true" resizable="false" closeOnEscape="true" draggable="false">
+                        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+                            <p:outputLabel value="T&eacute;cnico"/>
+                            <p:selectOneMenu value="#{userAdminMB.admin.idTecnico}" converter="objectConverter" required="true" 
+                                             requiredMessage="Seleccione un tecnico" filter="true" 
+                                             filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Seleccione un tecnico" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{tecnicosMB.tecnicos}" var="tec" itemLabel="#{tec.nombre}" itemValue="#{tec}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Usuario" for="usuario"/>
+                            <p:inputText id="usuario" value="#{userAdminMB.admin.nombreLoggin}" required="true" requiredMessage="Ingrese un nombre de usuario"/>
+                            <p:outputLabel value="Password" for="password"/>
+                            <p:inputText id="password" value="#{userAdminMB.admin.passwoird}" required="true" requiredMessage="Ingrese un password"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{userAdminMB.crearAdmin()}" oncomplete="PF('wnuevo').hide()" update=":frmTabla"/>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="frmEditar">
+                    <p:dialog id="dlgEditar" widgetVar="weditar" header="Editar Admin" modal="true" resizable="false" closeOnEscape="true" draggable="false">
+                        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+                            <p:outputLabel value="T&eacute;cnico"/>
+                            <p:selectOneMenu value="#{userAdminMB.adminSel.idTecnico}" converter="objectConverter" required="true" 
+                                             requiredMessage="Seleccione un tecnico" filter="true" 
+                                             filterMatchMode="contains">
+                                <f:selectItem itemLabel="Seleccione un tecnico" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{tecnicosMB.tecnicos}" var="tec" itemLabel="#{tec.nombre}" itemValue="#{tec.idTecnico}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Usuario" for="usuario"/>
+                            <p:inputText id="usuario" value="#{userAdminMB.adminSel.nombreLoggin}" required="true" requiredMessage="Ingrese un nombre de usuario"/>
+                            <p:outputLabel value="Password" for="password"/>
+                            <p:inputTextarea id="password" value="#{userAdminMB.adminSel.passwoird}"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{userAdminMB.editarAdmin()}" oncomplete="PF('weditar').hide()" update=":frmTabla"/>
+                    </p:dialog>
+
+                </h:form>
+            </ui:define>
+
+            <ui:define name="menuLateral">
+                menuLateral
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

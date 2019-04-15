@@ -30,19 +30,20 @@
 
 
             <p:panel class="banner">
-                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank banner">
+                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
 
                     <p:graphicImage library="img" name="logo.png" height="80"/>
 
-                    <div>
+                    <div align="left">
                         <p id="titulo" class="banner">Universidad de El Salvador</p>
                         <p id="subtitulo" class="banner">Facultad Multidisciplinaria de Occidente</p>
                         <p class="banner">&Aacute;rea de Soporte y Tecnolog&iacute;a Inform&aacute;tica</p>
                     </div>
                 </p:panelGrid>
+                
+                <div align="right"><span id="userDiv">Usuario: #{user}</span></div>
             </p:panel>
-
-
+            
             <h:form id="f_menuBar">
                 <p:menubar id="menuBar">
                     <p:menuitem value="Hardware y Software" icon="ui-icon-print" url="../admin/ComponentesForm.jsf"/>
@@ -50,8 +51,9 @@
                     <p:menuitem value="Ordenes de Trabajo" icon="ui-icon-wrench"/>
                     <p:menuitem value="Asignaci&oacute;n" icon="ui-icon-search" url="../admin/EquiposForm.jsf"/>
                     <p:menuitem value="Cronograma" icon="ui-icon-calendar" url="../admin/CronogramaForm.jsf"/>
+                    <p:menuitem value="Usuarios y Accesos" icon="ui-icon-key" url="../admin/TecnicosForm.jsf"/>
                     <f:facet name="options">
-                        <p:commandButton value="Logout" icon="fa fa-sign-out" />
+                        <p:commandButton value="Logout" icon="fa fa-sign-out" action="#{loginMB.logout()}"/>
                     </f:facet>
                 </p:menubar>
             </h:form>

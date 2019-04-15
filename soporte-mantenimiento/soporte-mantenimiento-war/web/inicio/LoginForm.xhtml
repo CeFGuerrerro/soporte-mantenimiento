@@ -11,17 +11,30 @@
         <p:growl id="mensajes" showDetail="true">
             <p:autoUpdate/>
         </p:growl>
+        <p:panel class="banner">
+            <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+
+                <p:graphicImage library="img" name="logo.png" height="80"/>
+
+                <div align="left">
+                    <p id="titulo" class="banner">Universidad de El Salvador</p>
+                    <p id="subtitulo" class="banner">Facultad Multidisciplinaria de Occidente</p>
+                    <p class="banner">&Aacute;rea de Soporte y Tecnolog&iacute;a Inform&aacute;tica</p>
+                </div>
+            </p:panelGrid>
+        </p:panel>
+        
         <div id="div_login">
             <p:fieldset legend="Ingreso">
                 <h:form>
                     <p:panelGrid columns="2">
                         <p:outputLabel>Usuario:</p:outputLabel>
-                        <p:inputText required="true" value="#{usuariosMB.usuario.usuario}" requiredMessage="Ingrese el usuario"/>
+                        <p:inputText required="true" value="#{loginMB.usuario.nombreLoggin}" requiredMessage="Ingrese el usuario"/>
 
                         <p:outputLabel>Contrase&ntilde;a:</p:outputLabel>
-                        <p:password required="true" value="#{usuariosMB.usuario.clave}" requiredMessage="Ingrese la contrase&ntilde;a"/>
+                        <p:password required="true" value="#{loginMB.usuario.passwoird}" requiredMessage="Ingrese la contrase&ntilde;a"/>
                     </p:panelGrid>
-                    <p:commandButton value="Acceder" icon="fa fa-sign-in"/>
+                    <p:commandButton value="Acceder" action="#{loginMB.login()}" icon="fa fa-sign-in"/>
                 </h:form>
             </p:fieldset>
         </div>
