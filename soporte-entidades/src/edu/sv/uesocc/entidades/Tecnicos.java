@@ -35,7 +35,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Tecnicos.findByDescripcion", query = "SELECT t FROM Tecnicos t WHERE t.descripcion = :descripcion")
     , @NamedQuery(name = "Tecnicos.findByCorreo", query = "SELECT t FROM Tecnicos t WHERE t.correo = :correo")
     , @NamedQuery(name = "Tecnicos.findByEstado", query = "SELECT t FROM Tecnicos t WHERE t.estado = :estado")})
-
 public class Tecnicos implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,9 +53,6 @@ public class Tecnicos implements Serializable {
     @Column(name = "estado")
     private Boolean estado;
     @OneToMany(mappedBy = "idTecnico")
-    private List<OrdenesTrabajo> ordenesTrabajoList;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTecnico")
     private List<Loggin> logginList;
 
     public Tecnicos() {
@@ -112,12 +108,12 @@ public class Tecnicos implements Serializable {
     }
 
     @XmlTransient
-    public List<OrdenesTrabajo> getOrdenesTrabajoList() {
-        return ordenesTrabajoList;
+    public List<Loggin> getLogginList() {
+        return logginList;
     }
 
-    public void setOrdenesTrabajoList(List<OrdenesTrabajo> ordenesTrabajoList) {
-        this.ordenesTrabajoList = ordenesTrabajoList;
+    public void setLogginList(List<Loggin> logginList) {
+        this.logginList = logginList;
     }
 
     @Override
@@ -144,14 +140,5 @@ public class Tecnicos implements Serializable {
     public String toString() {
         return "edu.sv.uesocc.entidades.Tecnicos[ idTecnico=" + idTecnico + " ]";
     }
-
-    @XmlTransient
-    public List<Loggin> getLogginList() {
-        return logginList;
-    }
-
-    public void setLogginList(List<Loggin> logginList) {
-        this.logginList = logginList;
-    }
-
+    
 }

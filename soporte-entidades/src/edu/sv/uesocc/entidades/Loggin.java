@@ -6,7 +6,6 @@
 package edu.sv.uesocc.entidades;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,10 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -46,8 +43,6 @@ public class Loggin implements Serializable {
     private String nombreLoggin;
     @Column(name = "passwoird", length = 2147483647)
     private String passwoird;
-    @OneToMany(mappedBy = "idLoggin")
-    private List<VistasLoggin> vistasLogginList;
     @JoinColumn(name = "id_tecnico", referencedColumnName = "id_tecnico", nullable = false)
     @ManyToOne(optional = false)
     private Tecnicos idTecnico;
@@ -83,15 +78,6 @@ public class Loggin implements Serializable {
         this.passwoird = passwoird;
     }
 
-    @XmlTransient
-    public List<VistasLoggin> getVistasLogginList() {
-        return vistasLogginList;
-    }
-
-    public void setVistasLogginList(List<VistasLoggin> vistasLogginList) {
-        this.vistasLogginList = vistasLogginList;
-    }
-
     public Tecnicos getIdTecnico() {
         return idTecnico;
     }
@@ -124,5 +110,5 @@ public class Loggin implements Serializable {
     public String toString() {
         return "edu.sv.uesocc.entidades.Loggin[ idLoggin=" + idLoggin + " ]";
     }
-
+    
 }
