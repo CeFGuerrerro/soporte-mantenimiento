@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <body>
+
+        <ui:composition template="./../templates/PrincipalTemplate.xhtml">
+            <ui:define name="contenido">
+
+                <h:form id="f_hC">
+                    <p:panelGrid>
+                        <f:facet name="header">
+                            <p:row>
+                                <p:column colspan="2">Asignación de Hardware a CPU</p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column colspan="1" >Componente</p:column>
+                                <p:column colspan="1">Hardware Asignado</p:column>
+                            </p:row>
+                        </f:facet>
+                        <p:row>
+                            <p:column colspan="2">Seleccione el componente:  
+                                <!-- <p:selectOneMenu>
+                                     <f:selectItem itemLabel="Seleccione componente" itemValue="#{null}" noSelectionOption="true" />
+                                     <f:selectItems value="#{tiposComponenteMB.tipoCompList}" var="tcomp" itemLabel="#{tcomp.nombre}" itemValue="#{tcomp.nombre}" />
+                                 </p:selectOneMenu>-->
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column style="width: 60%">
+                                <!--tabla Cpu-->
+                                <p:dataTable id="t_cpus" emptyMessage="No hay registros" value="#{componentesMB.compList}" var="comp" lazy="true"
+                                             selection="#{componentesMB.compSeleccionado}" selectionMode="single" rowKey="#{comp.idComponente}"
+                                             rows="10" paginator="true">
+
+                                    <p:column headerText="No. Inventario" sortBy="#{comp.numeroInventario}">
+                                        <p:outputLabel>#{comp.numeroInventario}</p:outputLabel>
+                                    </p:column>
+                                    <p:column headerText="No. de Serie" sortBy="#{comp.numeroSerie}">
+                                        <p:outputLabel>#{comp.numeroSerie}</p:outputLabel>
+                                    </p:column>
+                                    <p:column headerText="Modelo" sortBy="#{comp.idModelo.nombre}">
+                                        <p:outputLabel>#{comp.idModelo.nombre}</p:outputLabel>
+                                    </p:column>
+                                    <p:column headerText="Marca" sortBy="#{comp.idModelo.idMarca.nombre}" filterBy="#{comp.idModelo.idMarca.nombre}">
+                                        <f:facet name="filter">
+                                            <p:selectOneMenu onchange="PF('wd_t_cpus').filter()" filter="true" filterMatchMode="startsWith">
+                                                <f:selectItem itemLabel="Seleccionar marca" itemValue="#{null}" noSelectionOption="true" />
+                                                <f:selectItems value="#{marcasMB.marcList}" var="mar" itemLabel="#{mar.nombre}" itemValue="#{mar.nombre}" />
+                                            </p:selectOneMenu>
+                                        </f:facet>
+                                        <p:outputLabel>#{comp.idModelo.idMarca.nombre}</p:outputLabel>
+                                    </p:column>
+                                    <p:column headerText="Estado" sortBy="#{comp.estado}">
+                                        <p:outputLabel>#{comp.estado}</p:outputLabel>
+                                    </p:column>
+                                    <!--Enviar información a panel para cambio o insercion de elementos-->
+                                    <p:ajax event="rowDblselect" listener="#{hardwareComponenteMB.hardwareAsignable}" update="p_hardwareAsignable"/>
+
+                                </p:dataTable>
+                                <!--<p:commandButton value="Nuevo" icon="fa fa-plus" onclick="PF('wd_agregar').show()" update="f_agregar"/>-->
+                            </p:column>
+                            <p:column style="width:40%">
+                                <!--tabla hardware-->
+                                <p:panel id="p_hardwareAsignable">
+                                    <h:panelGrid >
+                                        <h:outputText value="Seleccione registro para continuar" />
+                                        
+                                    </h:panelGrid>
+                                </p:panel>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </h:form>
+                <p:panel id="p_hardwareAsignable">
+                    <h:panelGrid >
+                        <h:outputText value="Seleccione registro para continuar" />
+                    </h:panelGrid>
+                </p:panel>
+            </ui:define>
+
+            <ui:define name="menuLateral">
+                <ui:include src="../templates/HwSwMenuLateral.xhtml"/>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>
