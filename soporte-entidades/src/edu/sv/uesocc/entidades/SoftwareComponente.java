@@ -6,6 +6,7 @@
 package edu.sv.uesocc.entidades;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -31,7 +34,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "SoftwareComponente.findByIdSoftwareComponente", query = "SELECT s FROM SoftwareComponente s WHERE s.idSoftwareComponente = :idSoftwareComponente")
     , @NamedQuery(name = "SoftwareComponente.findByLicencia", query = "SELECT s FROM SoftwareComponente s WHERE s.licencia = :licencia")
     , @NamedQuery(name = "SoftwareComponente.findBySerial", query = "SELECT s FROM SoftwareComponente s WHERE s.serial = :serial")
-    , @NamedQuery(name = "SoftwareComponente.findByObservaciones", query = "SELECT s FROM SoftwareComponente s WHERE s.observaciones = :observaciones")})
+    , @NamedQuery(name = "SoftwareComponente.findByObservaciones", query = "SELECT s FROM SoftwareComponente s WHERE s.observaciones = :observaciones")
+    , @NamedQuery(name = "SoftwareComponente.findByFechaInstalacion", query = "SELECT s FROM SoftwareComponente s WHERE s.fechaInstalacion = :fechaInstalacion")})
 public class SoftwareComponente implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,6 +50,9 @@ public class SoftwareComponente implements Serializable {
     private String serial;
     @Column(name = "observaciones", length = 2147483647)
     private String observaciones;
+    @Column(name = "fecha_instalacion")
+    @Temporal(TemporalType.DATE)
+    private Date fechaInstalacion;
     @JoinColumn(name = "id_componente", referencedColumnName = "id_componente", nullable = false)
     @ManyToOne(optional = false)
     private Componentes idComponente;
@@ -90,6 +97,14 @@ public class SoftwareComponente implements Serializable {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
+    }
+
+    public Date getFechaInstalacion() {
+        return fechaInstalacion;
+    }
+
+    public void setFechaInstalacion(Date fechaInstalacion) {
+        this.fechaInstalacion = fechaInstalacion;
     }
 
     public Componentes getIdComponente() {

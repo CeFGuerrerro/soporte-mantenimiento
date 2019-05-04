@@ -6,9 +6,8 @@
 package edu.sv.uesocc.entidades;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,10 +17,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,13 +32,12 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Motherboards.findAll", query = "SELECT m FROM Motherboards m")
     , @NamedQuery(name = "Motherboards.findByIdMotherboard", query = "SELECT m FROM Motherboards m WHERE m.idMotherboard = :idMotherboard")
-    , @NamedQuery(name = "Motherboards.findByNumeroSerie", query = "SELECT m FROM Motherboards m WHERE m.numeroSerie = :numeroSerie")})
+    , @NamedQuery(name = "Motherboards.findByNumeroSerie", query = "SELECT m FROM Motherboards m WHERE m.numeroSerie = :numeroSerie")
+    , @NamedQuery(name = "Motherboards.findByEstado", query = "SELECT m FROM Motherboards m WHERE m.estado = :estado")
+    , @NamedQuery(name = "Motherboards.findByAsignado", query = "SELECT m FROM Motherboards m WHERE m.asignado = :asignado")
+    , @NamedQuery(name = "Motherboards.findByFechaDeBaja", query = "SELECT m FROM Motherboards m WHERE m.fechaDeBaja = :fechaDeBaja")
+    , @NamedQuery(name = "Motherboards.findByObservaciones", query = "SELECT m FROM Motherboards m WHERE m.observaciones = :observaciones")})
 public class Motherboards implements Serializable {
-
-    @Column(name = "estado")
-    private Boolean estado;
-    @Column(name = "asignado")
-    private Boolean asignado;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -49,14 +47,21 @@ public class Motherboards implements Serializable {
     private Integer idMotherboard;
     @Column(name = "numero_serie", length = 2147483647)
     private String numeroSerie;
+    @Column(name = "estado")
+    private Boolean estado;
+    @Column(name = "asignado")
+    private Boolean asignado;
+    @Column(name = "fecha_de_baja")
+    @Temporal(TemporalType.DATE)
+    private Date fechaDeBaja;
+    @Column(name = "observaciones", length = 2147483647)
+    private String observaciones;
     @JoinColumn(name = "id_marca", referencedColumnName = "id_marca", nullable = false)
     @ManyToOne(optional = false)
     private Marcas idMarca;
     @JoinColumn(name = "id_socket", referencedColumnName = "id_socket")
     @ManyToOne
     private Sockets idSocket;
-    @OneToMany(mappedBy = "idMotherboard")
-    private List<HardwareComponente> hardwareComponenteList;
 
     public Motherboards() {
     }
@@ -81,6 +86,38 @@ public class Motherboards implements Serializable {
         this.numeroSerie = numeroSerie;
     }
 
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    public Boolean getAsignado() {
+        return asignado;
+    }
+
+    public void setAsignado(Boolean asignado) {
+        this.asignado = asignado;
+    }
+
+    public Date getFechaDeBaja() {
+        return fechaDeBaja;
+    }
+
+    public void setFechaDeBaja(Date fechaDeBaja) {
+        this.fechaDeBaja = fechaDeBaja;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
     public Marcas getIdMarca() {
         return idMarca;
     }
@@ -95,15 +132,6 @@ public class Motherboards implements Serializable {
 
     public void setIdSocket(Sockets idSocket) {
         this.idSocket = idSocket;
-    }
-
-    @XmlTransient
-    public List<HardwareComponente> getHardwareComponenteList() {
-        return hardwareComponenteList;
-    }
-
-    public void setHardwareComponenteList(List<HardwareComponente> hardwareComponenteList) {
-        this.hardwareComponenteList = hardwareComponenteList;
     }
 
     @Override
@@ -129,22 +157,6 @@ public class Motherboards implements Serializable {
     @Override
     public String toString() {
         return "edu.sv.uesocc.entidades.Motherboards[ idMotherboard=" + idMotherboard + " ]";
-    }
-
-    public Boolean getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
-    }
-
-    public Boolean getAsignado() {
-        return asignado;
-    }
-
-    public void setAsignado(Boolean asignado) {
-        this.asignado = asignado;
     }
     
 }

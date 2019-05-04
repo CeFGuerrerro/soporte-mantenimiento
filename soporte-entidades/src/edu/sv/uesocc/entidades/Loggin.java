@@ -6,7 +6,9 @@
 package edu.sv.uesocc.entidades;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,8 +18,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -43,8 +47,10 @@ public class Loggin implements Serializable {
     private String nombreLoggin;
     @Column(name = "passwoird", length = 2147483647)
     private String passwoird;
-    @JoinColumn(name = "id_tecnico", referencedColumnName = "id_tecnico", nullable = false)
-    @ManyToOne(optional = false)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idLoggin")
+    private List<Permisos> permisosList;
+    @JoinColumn(name = "id_tecnico", referencedColumnName = "id_tecnico")
+    @ManyToOne
     private Tecnicos idTecnico;
 
     public Loggin() {
@@ -76,6 +82,15 @@ public class Loggin implements Serializable {
 
     public void setPasswoird(String passwoird) {
         this.passwoird = passwoird;
+    }
+
+    @XmlTransient
+    public List<Permisos> getPermisosList() {
+        return permisosList;
+    }
+
+    public void setPermisosList(List<Permisos> permisosList) {
+        this.permisosList = permisosList;
     }
 
     public Tecnicos getIdTecnico() {

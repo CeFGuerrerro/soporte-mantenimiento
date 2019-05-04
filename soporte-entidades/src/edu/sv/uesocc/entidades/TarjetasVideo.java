@@ -6,9 +6,8 @@
 package edu.sv.uesocc.entidades;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,10 +17,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,13 +32,12 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "TarjetasVideo.findAll", query = "SELECT t FROM TarjetasVideo t")
     , @NamedQuery(name = "TarjetasVideo.findByIdTarjetaVideo", query = "SELECT t FROM TarjetasVideo t WHERE t.idTarjetaVideo = :idTarjetaVideo")
-    , @NamedQuery(name = "TarjetasVideo.findByNumeroSerial", query = "SELECT t FROM TarjetasVideo t WHERE t.numeroSerial = :numeroSerial")})
+    , @NamedQuery(name = "TarjetasVideo.findByNumeroSerial", query = "SELECT t FROM TarjetasVideo t WHERE t.numeroSerial = :numeroSerial")
+    , @NamedQuery(name = "TarjetasVideo.findByEstado", query = "SELECT t FROM TarjetasVideo t WHERE t.estado = :estado")
+    , @NamedQuery(name = "TarjetasVideo.findByAsignado", query = "SELECT t FROM TarjetasVideo t WHERE t.asignado = :asignado")
+    , @NamedQuery(name = "TarjetasVideo.findByFechaDeBaja", query = "SELECT t FROM TarjetasVideo t WHERE t.fechaDeBaja = :fechaDeBaja")
+    , @NamedQuery(name = "TarjetasVideo.findByObservaciones", query = "SELECT t FROM TarjetasVideo t WHERE t.observaciones = :observaciones")})
 public class TarjetasVideo implements Serializable {
-
-    @Column(name = "estado")
-    private Boolean estado;
-    @Column(name = "asignado")
-    private Boolean asignado;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -49,10 +47,15 @@ public class TarjetasVideo implements Serializable {
     private Integer idTarjetaVideo;
     @Column(name = "numero_serial", length = 2147483647)
     private String numeroSerial;
-    @OneToMany(mappedBy = "idTarjetaVideo")
-    private List<SalidaTarjetaVideo> salidaTarjetaVideoList;
-    @OneToMany(mappedBy = "idTarjetaVideo")
-    private List<HardwareComponente> hardwareComponenteList;
+    @Column(name = "estado")
+    private Boolean estado;
+    @Column(name = "asignado")
+    private Boolean asignado;
+    @Column(name = "fecha_de_baja")
+    @Temporal(TemporalType.DATE)
+    private Date fechaDeBaja;
+    @Column(name = "observaciones", length = 2147483647)
+    private String observaciones;
     @JoinColumn(name = "id_marca", referencedColumnName = "id_marca", nullable = false)
     @ManyToOne(optional = false)
     private Marcas idMarca;
@@ -83,22 +86,36 @@ public class TarjetasVideo implements Serializable {
         this.numeroSerial = numeroSerial;
     }
 
-    @XmlTransient
-    public List<SalidaTarjetaVideo> getSalidaTarjetaVideoList() {
-        return salidaTarjetaVideoList;
+    public Boolean getEstado() {
+        return estado;
     }
 
-    public void setSalidaTarjetaVideoList(List<SalidaTarjetaVideo> salidaTarjetaVideoList) {
-        this.salidaTarjetaVideoList = salidaTarjetaVideoList;
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
 
-    @XmlTransient
-    public List<HardwareComponente> getHardwareComponenteList() {
-        return hardwareComponenteList;
+    public Boolean getAsignado() {
+        return asignado;
     }
 
-    public void setHardwareComponenteList(List<HardwareComponente> hardwareComponenteList) {
-        this.hardwareComponenteList = hardwareComponenteList;
+    public void setAsignado(Boolean asignado) {
+        this.asignado = asignado;
+    }
+
+    public Date getFechaDeBaja() {
+        return fechaDeBaja;
+    }
+
+    public void setFechaDeBaja(Date fechaDeBaja) {
+        this.fechaDeBaja = fechaDeBaja;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
     }
 
     public Marcas getIdMarca() {
@@ -140,22 +157,6 @@ public class TarjetasVideo implements Serializable {
     @Override
     public String toString() {
         return "edu.sv.uesocc.entidades.TarjetasVideo[ idTarjetaVideo=" + idTarjetaVideo + " ]";
-    }
-
-    public Boolean getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
-    }
-
-    public Boolean getAsignado() {
-        return asignado;
-    }
-
-    public void setAsignado(Boolean asignado) {
-        this.asignado = asignado;
     }
     
 }

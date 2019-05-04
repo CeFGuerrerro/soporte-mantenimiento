@@ -6,9 +6,8 @@
 package edu.sv.uesocc.entidades;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,10 +17,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,13 +32,12 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Discos.findAll", query = "SELECT d FROM Discos d")
     , @NamedQuery(name = "Discos.findByIdDisco", query = "SELECT d FROM Discos d WHERE d.idDisco = :idDisco")
-    , @NamedQuery(name = "Discos.findByNumeroSerie", query = "SELECT d FROM Discos d WHERE d.numeroSerie = :numeroSerie")})
+    , @NamedQuery(name = "Discos.findByNumeroSerie", query = "SELECT d FROM Discos d WHERE d.numeroSerie = :numeroSerie")
+    , @NamedQuery(name = "Discos.findByEstado", query = "SELECT d FROM Discos d WHERE d.estado = :estado")
+    , @NamedQuery(name = "Discos.findByAsignado", query = "SELECT d FROM Discos d WHERE d.asignado = :asignado")
+    , @NamedQuery(name = "Discos.findByFechaDeBaja", query = "SELECT d FROM Discos d WHERE d.fechaDeBaja = :fechaDeBaja")
+    , @NamedQuery(name = "Discos.findByObservaciones", query = "SELECT d FROM Discos d WHERE d.observaciones = :observaciones")})
 public class Discos implements Serializable {
-
-    @Column(name = "estado")
-    private Boolean estado;
-    @Column(name = "asignado")
-    private Boolean asignado;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -49,6 +47,15 @@ public class Discos implements Serializable {
     private Integer idDisco;
     @Column(name = "numero_serie", length = 2147483647)
     private String numeroSerie;
+    @Column(name = "estado")
+    private Boolean estado;
+    @Column(name = "asignado")
+    private Boolean asignado;
+    @Column(name = "fecha_de_baja")
+    @Temporal(TemporalType.DATE)
+    private Date fechaDeBaja;
+    @Column(name = "observaciones", length = 2147483647)
+    private String observaciones;
     @JoinColumn(name = "id_capacidad", referencedColumnName = "id_capacidad")
     @ManyToOne
     private Capacidades idCapacidad;
@@ -64,8 +71,6 @@ public class Discos implements Serializable {
     @JoinColumn(name = "id_tipo_disco", referencedColumnName = "id_tipo_disco")
     @ManyToOne
     private TiposDisco idTipoDisco;
-    @OneToMany(mappedBy = "idDisco")
-    private List<HardwareComponente> hardwareComponenteList;
 
     public Discos() {
     }
@@ -88,6 +93,38 @@ public class Discos implements Serializable {
 
     public void setNumeroSerie(String numeroSerie) {
         this.numeroSerie = numeroSerie;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    public Boolean getAsignado() {
+        return asignado;
+    }
+
+    public void setAsignado(Boolean asignado) {
+        this.asignado = asignado;
+    }
+
+    public Date getFechaDeBaja() {
+        return fechaDeBaja;
+    }
+
+    public void setFechaDeBaja(Date fechaDeBaja) {
+        this.fechaDeBaja = fechaDeBaja;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
     }
 
     public Capacidades getIdCapacidad() {
@@ -130,15 +167,6 @@ public class Discos implements Serializable {
         this.idTipoDisco = idTipoDisco;
     }
 
-    @XmlTransient
-    public List<HardwareComponente> getHardwareComponenteList() {
-        return hardwareComponenteList;
-    }
-
-    public void setHardwareComponenteList(List<HardwareComponente> hardwareComponenteList) {
-        this.hardwareComponenteList = hardwareComponenteList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -162,22 +190,6 @@ public class Discos implements Serializable {
     @Override
     public String toString() {
         return "edu.sv.uesocc.entidades.Discos[ idDisco=" + idDisco + " ]";
-    }
-
-    public Boolean getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
-    }
-
-    public Boolean getAsignado() {
-        return asignado;
-    }
-
-    public void setAsignado(Boolean asignado) {
-        this.asignado = asignado;
     }
     
 }

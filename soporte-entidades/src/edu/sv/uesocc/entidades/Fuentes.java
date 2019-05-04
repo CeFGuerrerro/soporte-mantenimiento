@@ -6,7 +6,7 @@
 package edu.sv.uesocc.entidades;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,10 +17,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -34,13 +34,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Fuentes.findByIdFuente", query = "SELECT f FROM Fuentes f WHERE f.idFuente = :idFuente")
     , @NamedQuery(name = "Fuentes.findByPotencia", query = "SELECT f FROM Fuentes f WHERE f.potencia = :potencia")
     , @NamedQuery(name = "Fuentes.findByNumeroPines", query = "SELECT f FROM Fuentes f WHERE f.numeroPines = :numeroPines")
-    , @NamedQuery(name = "Fuentes.findByNumeroSerie", query = "SELECT f FROM Fuentes f WHERE f.numeroSerie = :numeroSerie")})
+    , @NamedQuery(name = "Fuentes.findByNumeroSerie", query = "SELECT f FROM Fuentes f WHERE f.numeroSerie = :numeroSerie")
+    , @NamedQuery(name = "Fuentes.findByEstado", query = "SELECT f FROM Fuentes f WHERE f.estado = :estado")
+    , @NamedQuery(name = "Fuentes.findByAsignado", query = "SELECT f FROM Fuentes f WHERE f.asignado = :asignado")
+    , @NamedQuery(name = "Fuentes.findByFechaDeBaja", query = "SELECT f FROM Fuentes f WHERE f.fechaDeBaja = :fechaDeBaja")
+    , @NamedQuery(name = "Fuentes.findByObservaciones", query = "SELECT f FROM Fuentes f WHERE f.observaciones = :observaciones")})
 public class Fuentes implements Serializable {
-
-    @Column(name = "estado")
-    private Boolean estado;
-    @Column(name = "asignado")
-    private Boolean asignado;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -54,11 +53,18 @@ public class Fuentes implements Serializable {
     private String numeroPines;
     @Column(name = "numero_serie", length = 2147483647)
     private String numeroSerie;
+    @Column(name = "estado")
+    private Boolean estado;
+    @Column(name = "asignado")
+    private Boolean asignado;
+    @Column(name = "fecha_de_baja")
+    @Temporal(TemporalType.DATE)
+    private Date fechaDeBaja;
+    @Column(name = "observaciones", length = 2147483647)
+    private String observaciones;
     @JoinColumn(name = "id_modelo", referencedColumnName = "id_modelo", nullable = false)
     @ManyToOne(optional = false)
     private Modelos idModelo;
-    @OneToMany(mappedBy = "idFuente")
-    private List<HardwareComponente> hardwareComponenteList;
 
     public Fuentes() {
     }
@@ -99,21 +105,44 @@ public class Fuentes implements Serializable {
         this.numeroSerie = numeroSerie;
     }
 
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    public Boolean getAsignado() {
+        return asignado;
+    }
+
+    public void setAsignado(Boolean asignado) {
+        this.asignado = asignado;
+    }
+
+    public Date getFechaDeBaja() {
+        return fechaDeBaja;
+    }
+
+    public void setFechaDeBaja(Date fechaDeBaja) {
+        this.fechaDeBaja = fechaDeBaja;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
     public Modelos getIdModelo() {
         return idModelo;
     }
 
     public void setIdModelo(Modelos idModelo) {
         this.idModelo = idModelo;
-    }
-
-    @XmlTransient
-    public List<HardwareComponente> getHardwareComponenteList() {
-        return hardwareComponenteList;
-    }
-
-    public void setHardwareComponenteList(List<HardwareComponente> hardwareComponenteList) {
-        this.hardwareComponenteList = hardwareComponenteList;
     }
 
     @Override
@@ -139,22 +168,6 @@ public class Fuentes implements Serializable {
     @Override
     public String toString() {
         return "edu.sv.uesocc.entidades.Fuentes[ idFuente=" + idFuente + " ]";
-    }
-
-    public Boolean getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
-    }
-
-    public Boolean getAsignado() {
-        return asignado;
-    }
-
-    public void setAsignado(Boolean asignado) {
-        this.asignado = asignado;
     }
     
 }

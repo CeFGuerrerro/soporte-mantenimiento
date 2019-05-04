@@ -6,9 +6,8 @@
 package edu.sv.uesocc.entidades;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,10 +17,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,13 +32,12 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Memorias.findAll", query = "SELECT m FROM Memorias m")
     , @NamedQuery(name = "Memorias.findByIdMemoria", query = "SELECT m FROM Memorias m WHERE m.idMemoria = :idMemoria")
-    , @NamedQuery(name = "Memorias.findByNumeroSerie", query = "SELECT m FROM Memorias m WHERE m.numeroSerie = :numeroSerie")})
+    , @NamedQuery(name = "Memorias.findByNumeroSerie", query = "SELECT m FROM Memorias m WHERE m.numeroSerie = :numeroSerie")
+    , @NamedQuery(name = "Memorias.findByEstado", query = "SELECT m FROM Memorias m WHERE m.estado = :estado")
+    , @NamedQuery(name = "Memorias.findByAsignado", query = "SELECT m FROM Memorias m WHERE m.asignado = :asignado")
+    , @NamedQuery(name = "Memorias.findByFechaDeBaja", query = "SELECT m FROM Memorias m WHERE m.fechaDeBaja = :fechaDeBaja")
+    , @NamedQuery(name = "Memorias.findByObservaciones", query = "SELECT m FROM Memorias m WHERE m.observaciones = :observaciones")})
 public class Memorias implements Serializable {
-
-    @Column(name = "estado")
-    private Boolean estado;
-    @Column(name = "asignado")
-    private Boolean asignado;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -49,6 +47,15 @@ public class Memorias implements Serializable {
     private Integer idMemoria;
     @Column(name = "numero_serie", length = 2147483647)
     private String numeroSerie;
+    @Column(name = "estado")
+    private Boolean estado;
+    @Column(name = "asignado")
+    private Boolean asignado;
+    @Column(name = "fecha_de_baja")
+    @Temporal(TemporalType.DATE)
+    private Date fechaDeBaja;
+    @Column(name = "observaciones", length = 2147483647)
+    private String observaciones;
     @JoinColumn(name = "id_capacidad", referencedColumnName = "id_capacidad")
     @ManyToOne
     private Capacidades idCapacidad;
@@ -61,8 +68,6 @@ public class Memorias implements Serializable {
     @JoinColumn(name = "id_velocidad", referencedColumnName = "id_velocidad")
     @ManyToOne
     private Velocidad idVelocidad;
-    @OneToMany(mappedBy = "idMemoria")
-    private List<HardwareComponente> hardwareComponenteList;
 
     public Memorias() {
     }
@@ -85,6 +90,38 @@ public class Memorias implements Serializable {
 
     public void setNumeroSerie(String numeroSerie) {
         this.numeroSerie = numeroSerie;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    public Boolean getAsignado() {
+        return asignado;
+    }
+
+    public void setAsignado(Boolean asignado) {
+        this.asignado = asignado;
+    }
+
+    public Date getFechaDeBaja() {
+        return fechaDeBaja;
+    }
+
+    public void setFechaDeBaja(Date fechaDeBaja) {
+        this.fechaDeBaja = fechaDeBaja;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
     }
 
     public Capacidades getIdCapacidad() {
@@ -119,15 +156,6 @@ public class Memorias implements Serializable {
         this.idVelocidad = idVelocidad;
     }
 
-    @XmlTransient
-    public List<HardwareComponente> getHardwareComponenteList() {
-        return hardwareComponenteList;
-    }
-
-    public void setHardwareComponenteList(List<HardwareComponente> hardwareComponenteList) {
-        this.hardwareComponenteList = hardwareComponenteList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -151,22 +179,6 @@ public class Memorias implements Serializable {
     @Override
     public String toString() {
         return "edu.sv.uesocc.entidades.Memorias[ idMemoria=" + idMemoria + " ]";
-    }
-
-    public Boolean getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
-    }
-
-    public Boolean getAsignado() {
-        return asignado;
-    }
-
-    public void setAsignado(Boolean asignado) {
-        this.asignado = asignado;
     }
     
 }
