@@ -45,6 +45,13 @@
     <class>edu.sv.uesocc.entidades.Loggin</class>
     <class>edu.sv.uesocc.entidades.Vistas</class>
     <class>edu.sv.uesocc.entidades.VistasLoggin</class>
+    <class>edu.sv.uesocc.entidades.Permisos</class>
+    <class>edu.sv.uesocc.entidades.DiscosComponente</class>
+    <class>edu.sv.uesocc.entidades.FuenteComponente</class>
+    <class>edu.sv.uesocc.entidades.MemoriasComponente</class>
+    <class>edu.sv.uesocc.entidades.MotherboardComponente</class>
+    <class>edu.sv.uesocc.entidades.ProcesadorComponente</class>
+    <class>edu.sv.uesocc.entidades.TarjetasVideoComponente</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>

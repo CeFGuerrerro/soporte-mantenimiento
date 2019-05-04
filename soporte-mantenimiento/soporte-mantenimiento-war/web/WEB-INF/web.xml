@@ -11,12 +11,13 @@
     
     <!-- Agregar Tema-->
     <context-param>
+      
         <param-name>primefaces.THEME</param-name>
         <param-value>blitzer</param-value>
     </context-param>
     
     <!-- Websocket Config -->
-    <context-param>
+<!--    <context-param>
         <param-name>javax.faces.ENABLE_CDI_RESOLVER_CHAIN</param-name>
         <param-value>true</param-value>
     </context-param>
@@ -24,7 +25,7 @@
         <param-name>javax.faces.ENABLE_WEBSOCKET_ENDPOINT</param-name>
         <param-value>true</param-value>
     </context-param>
-    
+    -->
     <!--Activar Font Awesome-->
     <context-param>
         <param-name>primefaces.FONT_AWESOME</param-name>
