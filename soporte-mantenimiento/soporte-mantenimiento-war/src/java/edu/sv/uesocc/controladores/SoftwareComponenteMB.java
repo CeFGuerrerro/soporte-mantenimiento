@@ -29,9 +29,13 @@ public class SoftwareComponenteMB implements Serializable {
     private SoftwareComponenteFacadeLocal scfl;
 
     // Declaracion de entidades 
+    private boolean estadoInfo=true;
+    private boolean estadoTabla = false;
+    
     private SoftwareComponente softComp;
     private SoftwareComponente softCompSelec;
-    private List<SoftwareComponente> softCompList = new ArrayList<>();
+    private List<SoftwareComponente> softCompList;
+     private List<SoftwareComponente> softcompDisponibleList = new ArrayList<>();
 
     public SoftwareComponenteMB() {
     }
@@ -40,88 +44,64 @@ public class SoftwareComponenteMB implements Serializable {
     private void init() {
         softComp = new SoftwareComponente();
         softCompSelec = new SoftwareComponente();
-        obtenerTodos();
+        
+//        obtenerTodos();
     }
-    
+
     // ---------- Getter and Setter ---------
 
-        public SoftwareComponente getSoftComp() {
+    public boolean isEstadoInfo() {
+        return estadoInfo;
+    }
+
+    public void setEstadoInfo(boolean estadoInfo) {
+        this.estadoInfo = estadoInfo;
+    }
+
+    public boolean isEstadoTabla() {
+        return estadoTabla;
+    }
+
+    public void setEstadoTabla(boolean estadoTabla) {
+        this.estadoTabla = estadoTabla;
+    }
+    
+    
+    
+    
+    public SoftwareComponente getSoftComp() {
         return softComp;
     }
-        public SoftwareComponente getSoftCompSelec() {
+
+    public SoftwareComponente getSoftCompSelec() {
         return softCompSelec;
     }
-        public List<SoftwareComponente> getSoftCompList() {
+
+    public List<SoftwareComponente> getSoftCompList() {
         return softCompList;
     }
-         public void setSoftComp(SoftwareComponente softwareComponente) {
+
+    public void setSoftComp(SoftwareComponente softwareComponente) {
         this.softComp = softwareComponente;
     }
-         public void setSoftCompSelec(SoftwareComponente softCompSelec) {
+
+    public void setSoftCompSelec(SoftwareComponente softCompSelec) {
         this.softCompSelec = softCompSelec;
     }
-         public void setSoftCompList(List<SoftwareComponente> softCompList ) {
+
+    public void setSoftCompList(List<SoftwareComponente> softCompList) {
         this.softCompList = softCompList;
-    }    
+    }
 
     //--------- Metodos ---------
     
-    public void obtenerTodos() {
-        FacesContext contexto = FacesContext.getCurrentInstance();
-        try {
-            softCompList = scfl.findAll();
-        } catch (Exception e) {
-            contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error!", e.getMessage()));
-        }
+    
+    public void sofwareAsignable() {
+     estadoInfo = false;
+     estadoTabla= true; 
     }
-
-    public void crearSoftwareComponente() {
-        FacesContext contexto = FacesContext.getCurrentInstance();
-        boolean creado = false;
-        try {
-            creado = scfl.create(softComp);
-            if (creado) {
-                contexto.addMessage(null, new FacesMessage("Registro guardado"));
-                softComp = new SoftwareComponente();
-            } else {
-                contexto.addMessage(null, new FacesMessage("No se pudo guardar el registro"));
-            }
-            obtenerTodos();
-        } catch (Exception e) {
-            contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error!", e.getMessage()));
-        }
-    }
-
-    public void eliminarSoftwareComponente() {
-        FacesContext contexto = FacesContext.getCurrentInstance();
-        boolean eliminado = false;
-        try {
-            eliminado = scfl.remove(softCompSelec);
-            if (eliminado) {
-                contexto.addMessage(null, new FacesMessage("Registro eliminado"));
-            } else {
-                contexto.addMessage(null, new FacesMessage("No se pudo eliminar el registro"));
-            }
-            obtenerTodos();
-        } catch (Exception e) {
-            contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error!", e.getMessage()));
-        }
-    }
-
-    public void modificarSoftwareComponente() {
-        FacesContext contexto = FacesContext.getCurrentInstance();
-        boolean modificado = false;
-        try {
-            modificado = scfl.edit(softCompSelec);
-            if (modificado) {
-                contexto.addMessage(null, new FacesMessage("Registro modificado"));
-            } else {
-                contexto.addMessage(null, new FacesMessage("No se pudo modificar el registro"));
-            }
-            obtenerTodos();
-        } catch (Exception e) {
-            contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error!", e.getMessage()));
-        }
-    }
-
+    
+    
+    
+    
 }
