@@ -9,8 +9,11 @@
     <body>
 
         <ui:composition template="./../templates/PrincipalTemplate.xhtml">
-
+            
             <ui:define name="contenido">
+            
+                <f:event listener="#{loginMB.accederPagina(loginMB.accesos.marcas)}" type="preRenderView" />
+                
                 <h:form id="f_marcas">
                     <div>
                         <p:commandButton value="Nuevo" icon="fa fa-plus" onclick="PF('wd_crear').show()" update="f_crear"/>

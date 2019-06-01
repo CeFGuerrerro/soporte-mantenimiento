@@ -61,9 +61,9 @@
 
         <!--Boton que abre el panel lateral-->
         <div id="div_btnSidebar">
-            <h:form id="f_botonSidebar">
+<!--            <h:form id="f_botonSidebar">
                 <p:commandButton id="btnSidebar" icon="fa fa-navicon" onclick="PF('sidebar').show()" />
-            </h:form>
+            </h:form>-->
         </div>
 
         <!--Contenido de la pagina-->
@@ -82,5 +82,11 @@
             </p:sidebar>
         </div>
     </h:body>
+    <script>
+        $("#div_btnSidebar").mouseover(function(){
+            PF('sidebar').show();
+        });
+    </script>
+    
 </html>
 

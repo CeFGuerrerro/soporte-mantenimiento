@@ -36,7 +36,7 @@
                         <p:ajax event="rowDblselect" oncomplete="PF('weditar').show()" update=":frmEditar"/>
                     </p:dataTable>
                     <p:contextMenu for="tabla">
-                        <p:menuitem value="Asignar Permisos" icon="fa fa-lock" onclick="PF('wpermisos').show();"/>
+                        <p:menuitem value="Asignar Permisos" icon="fa fa-lock" actionListener="#{userAdminMB.buscarPermisos()}" update="frmPermisos" onclick="PF('wpermisos').show();"/>
                         <p:menuitem value="Cancelar" icon="fa fa-close"/>
                     </p:contextMenu>
                 </h:form>
@@ -55,7 +55,7 @@
                             <p:outputLabel value="Password" for="password"/>
                             <p:inputText id="password" value="#{userAdminMB.admin.passwoird}" required="true" requiredMessage="Ingrese un password"/>
                         </p:panelGrid>
-                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{userAdminMB.crearAdmin()}" oncomplete="PF('wnuevo').hide()" update=":frmTabla"/>
+                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{userAdminMB.crear()}" oncomplete="PF('wnuevo').hide()" update=":frmTabla"/>
                     </p:dialog>
                 </h:form>
 
@@ -78,51 +78,54 @@
                     </p:dialog>
                 </h:form>
 
-                <h:form id="frmPermisos">
-                    <p:dialog id="dlgPermisos" widgetVar="wpermisos" header="Agregar Permisos" modal="true" resizable="false" closeOnEscape="true" draggable="false">
+
+                <p:dialog id="dlgPermisos" widgetVar="wpermisos" header="Agregar Permisos" modal="true" resizable="false" closeOnEscape="true" draggable="false">
+                    <h:form id="frmPermisos">
                         <p:fieldset legend="Hardware y Software">
 
                             <p:panelGrid columns="2">
-                                <p:selectBooleanCheckbox value="#{loginMB.accesos.componentes}" itemLabel="Componentes"/>
-                                <p:selectBooleanCheckbox value="#{loginMB.accesos.equipos}" itemLabel="Equipos"/>
-                                <p:selectBooleanCheckbox value="#{loginMB.accesos.hardware}" itemLabel=" Agregar Hardware (Tipos, procesadores, memorias Ram, etc)"/>
-                                <p:selectBooleanCheckbox value="#{loginMB.accesos.hardwareComponente}" itemLabel="Asignar Hardware a Componente"/>
-                                <p:selectBooleanCheckbox value="#{loginMB.accesos.software}" itemLabel=" Agregar Software (Tipos, detalles de software, etc)"/>
-                                <p:selectBooleanCheckbox value="#{loginMB.accesos.softwareComponente}" itemLabel=" Asignar Software"/>
+                                <p:selectBooleanCheckbox value="#{userAdminMB.accesoSel.componentes}" itemLabel="Componentes"/>
+                                <p:selectBooleanCheckbox value="#{userAdminMB.accesoSel.equipos}" itemLabel="Equipos"/>
+                                <p:selectBooleanCheckbox value="#{userAdminMB.accesoSel.hardware}" itemLabel=" Agregar Hardware (Tipos, procesadores, memorias Ram, etc)"/>
+                                <p:selectBooleanCheckbox value="#{userAdminMB.accesoSel.hardwareComponente}" itemLabel="Asignar Hardware a Componente"/>
+                                <p:selectBooleanCheckbox value="#{userAdminMB.accesoSel.software}" itemLabel=" Agregar Software (Tipos, detalles de software, etc)"/>
+                                <p:selectBooleanCheckbox value="#{userAdminMB.accesoSel.softwareComponente}" itemLabel=" Asignar Software"/>
                             </p:panelGrid>
                         </p:fieldset>
-                        
+
                         <p:fieldset legend="Ordenes y Solicitudes">
                             <p:panelGrid columns="2">
-                                <p:selectBooleanCheckbox value="#{loginMB.accesos.solicitudes}" itemLabel="Administrar Solicitudes"/>
-                                <p:selectBooleanCheckbox value="#{loginMB.accesos.ordenTrabajo}" itemLabel="Administrar Ordenes de Trabajo"/>
-                                <p:selectBooleanCheckbox value="#{loginMB.accesos.soluciones}" itemLabel="Agregar Soluciones"/>
-                                <p:selectBooleanCheckbox value="#{loginMB.accesos.cronograma}" itemLabel="Acceso al Cronograma"/>
+                                <p:selectBooleanCheckbox value="#{userAdminMB.accesoSel.solicitudes}" itemLabel="Administrar Solicitudes"/>
+                                <p:selectBooleanCheckbox value="#{userAdminMB.accesoSel.ordenTrabajo}" itemLabel="Administrar Ordenes de Trabajo"/>
+                                <p:selectBooleanCheckbox value="#{userAdminMB.accesoSel.mantenimiento}" itemLabel="Agregar nuevos tipos de mantenimientos"/>
+                                <p:selectBooleanCheckbox value="#{userAdminMB.accesoSel.soluciones}" itemLabel="Agregar Soluciones"/>
+                                <p:selectBooleanCheckbox value="#{userAdminMB.accesoSel.cronograma}" itemLabel="Acceso al Cronograma"/>
                             </p:panelGrid>
                         </p:fieldset>
 
                         <p:fieldset legend="Usuarios">
                             <p:panelGrid columns="2">
-                                <p:selectBooleanCheckbox value="#{loginMB.accesos.tecnicos}" itemLabel="Agregar T&eacute;cnicos"/>
-                                <!--<p:selectBooleanCheckbox value="0" itemLabel="Agregar Administradores (NO FUNCIONA)"/>-->
-                                <p:selectBooleanCheckbox value="#{loginMB.accesos.ubicaciones}" itemLabel="Agregar Ubicaciones"/>
-                                <p:selectBooleanCheckbox value="#{loginMB.accesos.responsables}" itemLabel="Agregar Responsables"/>
+                                <p:selectBooleanCheckbox value="#{userAdminMB.accesoSel.tecnicos}" itemLabel="Agregar T&eacute;cnicos"/>
+                                <p:selectBooleanCheckbox value="0" itemLabel="Agregar Administradores (NO FUNCIONA)"/>
+                                <p:selectBooleanCheckbox value="#{userAdminMB.accesoSel.ubicaciones}" itemLabel="Agregar Ubicaciones"/>
+                                <p:selectBooleanCheckbox value="#{userAdminMB.accesoSel.responsables}" itemLabel="Agregar Responsables"/>
                             </p:panelGrid>    
                         </p:fieldset>
-                        
+
                         <p:fieldset legend="Otros">
                             <p:panelGrid columns="2">
-                                <p:selectBooleanCheckbox value="#{loginMB.accesos.marcas}" itemLabel="Agregar Marcas"/>
-                                <p:selectBooleanCheckbox value="#{loginMB.accesos.modelos}" itemLabel="Agregar Modelos"/>
+                                <p:selectBooleanCheckbox value="#{userAdminMB.accesoSel.marcas}" itemLabel="Agregar Marcas"/>
+                                <p:selectBooleanCheckbox value="#{userAdminMB.accesoSel.modelos}" itemLabel="Agregar Modelos"/>
                             </p:panelGrid>    
                         </p:fieldset>
-                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{userAdminMB.editarAdmin()}" oncomplete="PF('weditar').hide()" update=":frmTabla"/>
-                    </p:dialog>
-                </h:form>
+                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{userAdminMB.editarPermisos()}" oncomplete="PF('wpermisos').hide()" update=":frmTabla"/>
+                    </h:form>
+                </p:dialog>
+
             </ui:define>
 
             <ui:define name="menuLateral">
-                menuLateral
+                <ui:include src="./../templates/AccesosMenuLateral.xhtml"/>
             </ui:define>
 
         </ui:composition>
