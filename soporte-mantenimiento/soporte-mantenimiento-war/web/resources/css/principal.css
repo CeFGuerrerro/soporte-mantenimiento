@@ -8,6 +8,12 @@
     color: red;
 }
 
+body {
+    height: 100%;
+    width: 99%;
+    position: absolute !important;
+}
+
 /*LOGIN*/
 #b_login {
 
@@ -41,6 +47,9 @@
     margin-right: 0;
     margin-bottom: 1em;
     border: none;
+    float: left;
+    z-index: 999;
+    position: absolute;
 }
 
 #div_solicitud{

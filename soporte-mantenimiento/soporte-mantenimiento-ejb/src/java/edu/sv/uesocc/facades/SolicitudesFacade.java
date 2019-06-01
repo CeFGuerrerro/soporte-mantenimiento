@@ -6,6 +6,7 @@
 package edu.sv.uesocc.facades;
 
 import edu.sv.uesocc.entidades.Solicitudes;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -43,6 +44,17 @@ public class SolicitudesFacade extends AbstractFacade<Solicitudes> implements So
         TypedQuery<Solicitudes> q = em.createQuery(cq);
         
         return q.setMaxResults(1).getSingleResult();
+    }
+
+    @Override
+    public List<Solicitudes> findOrdenados() {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Solicitudes> cq =  cb.createQuery(Solicitudes.class);
+        Root<Solicitudes> sol = cq.from(Solicitudes.class);
+        cq.select(sol);
+        cq.orderBy(cb.desc(sol.get("fechaSolicitud")));
+        
+        return em.createQuery(cq).getResultList();
     }
     
 }

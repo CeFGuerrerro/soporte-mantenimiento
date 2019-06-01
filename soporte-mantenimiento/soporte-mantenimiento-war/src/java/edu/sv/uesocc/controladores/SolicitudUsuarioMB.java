@@ -224,7 +224,6 @@ public class SolicitudUsuarioMB implements Serializable{
             solici.setIdResponsable(resp);
             solici.setIdUbicacion(usuario.getIdUbicacion());
             solici.setFechaSolicitud(date);
-            solici.setEstado(1);
             boolean creado = soliciEJB.create(solici);
             if (creado) {
                 creado = false;

@@ -11,33 +11,167 @@
         <ui:composition template="./../templates/PrincipalTemplate.xhtml">
 
             <ui:define name="contenido">
+                <style type="text/css">
+                    body{
+                        height: 97%;
 
-                <h:form>
-                    <p:dataScroller id="listaSolicitudes" var="soli" value="#{solicitudesMB.solicitudes}">
-                        <f:facet name="header">
-                            Lista de Solicitudes
-                        </f:facet>
-                        <h:panelGrid columns="3" cellpadding="5">
-                            <h:outputText value="Solicitante: " />
-                            <h:outputText value="#{soli.idResponsable.nombre}" style="font-weight: bold"/>
-                            <h:column/>
+                    }
 
-                            <h:outputText value="Tipo de solicitud: " />
-                            <h:outputText value="#{soli.idTipoSolicitud.nombre}" style="font-weight: bold"/>
-                            <h:outputText value="#{soli.fechaSolicitud}"/>
+                    .ui-datatable-scrollable .ui-datatable-scrollable-header, .ui-datatable-scrollable .ui-datatable-scrollable-footer{
+                        height: 0px;
+                    }
 
-                            <h:outputText value="Ubicacion: " />
-                            <h:outputText value="#{soli.idUbicacion.nombre}" style="font-weight: bold"/>
-                            <h:column/>
-                        </h:panelGrid>
-                    </p:dataScroller>
-                    <p:panelGrid id="infoSolicitud" columns="2">
-                        <p:outputPanel rendered="false">
-                            Condicion
-                        </p:outputPanel>
-                    </p:panelGrid>
-                </h:form>
+                    .ui-datatable .ui-datatable-scrollable-body{
+                        min-height: 400px !important;
+                    }
 
+                    .ui-datatable.borderless thead th,
+                    .ui-datatable.borderless tbody,
+                    .ui-datatable.borderless tbody tr,
+                    .ui-datatable.borderless tbody td {
+                        border-style: none;
+                    }
+
+                    .columna1{
+                        width: 30%;
+                        min-width: 300px;
+                    }
+
+                    .columna3{
+                        height: auto;
+                    }
+
+                    .pgImagen{
+                        flex-direction: column;
+                        margin-top: -75px;
+                        padding-top: 0px;
+                        height: 100%;
+                        align-items: center;
+                        text-align: center;
+                        display: flex;
+                    }
+
+                    #mainPnl{
+                        position: relative;
+                        margin-bottom: 0px;
+                        padding-bottom: 0px;
+                    }
+
+                    #nueva_notificacion{
+                        position: absolute;
+                        float: right;
+                    }
+
+                    #pnlInfo{
+                        border: none;
+                        min-width: 500px;
+                    }
+                </style>
+                <p:panelGrid styleClass="ui-panelgrid-blank" id="mainPnl">
+                    <f:facet name="header">
+                        <p:row>
+                            <p:column colspan="2">
+                                <p:outputLabel>Solicitudes</p:outputLabel>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="1" class="columna1">
+                                <p:outputLabel>Lista de solicitudes</p:outputLabel>
+                            </p:column>
+                            <p:column colspan="1" class="columna2">
+                                <p:outputLabel>Informacion de la solicitud</p:outputLabel>
+                            </p:column>
+                        </p:row>
+                    </f:facet>
+
+                    <p:row>
+                        <p:column class="columna3">
+                            <h:form id="f_tabla">
+                                <p:dataTable id="listaSolicitudes" var="soli" value="#{solicitudesMB.solicitudes}" emptyMessage="No hay registros" selectionMode="single" rowKey="#{soli.idSolicitud}"
+                                             rows="40" scrollable="true" scrollRows="20" virtualScroll="true" scrollHeight="400" selection="#{solicitudesMB.solicitud}"
+                                             class="borderless"> 
+                                    <p:column style="width: 75%" id="solicitudColumna">
+                                        <p:outputLabel value="#{soli.idResponsable.nombre}" style="margin-left: 15px"/>
+                                        <div id="nueva_notificacion" align="right" style="float: right">
+                                            <p:graphicImage library="img" name="nueva_notificacion.gif" id="imagen" style="height: 20px;width: 9px; margin-left: -3px;" rendered="#{!soli.estado}"/>
+                                        </div>
+                                        <br/>
+
+                                        <p:outputLabel value="#{soli.idTipoSolicitud.nombre}" style="margin-left: 15px"/>
+                                        <div align="right" style="float: right">
+                                            <p:outputLabel value="#{soli.fechaSolicitud}" style="margin-left: 20px">
+                                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                            </p:outputLabel>
+                                        </div>  
+                                        <br/>
+
+                                        <p:outputLabel value="#{soli.idUbicacion.nombre}" style="margin-left: 15px"/>
+                                        <br/>
+
+                                        <p:separator style="width: 2000px; margin-left: -25px;"/>
+                                    </p:column>
+                                    <p:ajax event="rowSelect" update=":f_info,f_tabla" listener="#{solicitudesMB.render()}" /> 
+                                </p:dataTable>
+                                <p:contextMenu for="listaSolicitudes">
+                                    <p:menuitem value="Marca como no visto" icon="fa fa-unlock" actionListener="#{solicitudesMB.marcarNo()}" update="f_tabla"/>
+                                    <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                                </p:contextMenu>
+                            </h:form>
+                        </p:column>
+                        <p:column class="columna3">
+                            <h:form id="f_info">
+                                <p:panelGrid styleClass="ui-panelgrid-blank" class="pgImagen" columns="1" rendered="#{solicitudesMB.renderedInfo}">
+                                    <p:graphicImage library="img" name="notificacion.png" id="imagen" style="height: 220px;width: 220px"/>
+                                    <p:outputLabel style="font-size: 20px">Seleccione un elemento para leerlo</p:outputLabel>
+                                </p:panelGrid>
+                                <p:panel rendered="#{solicitudesMB.renderedImagen}" id="pnlInfo">
+                                    <div align="right" style="float: right">
+                                        <p:outputLabel value="#{solicitudesMB.solicitud.fechaSolicitud}" style="margin-left: 20px; font-size: 20px;">
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </p:outputLabel>
+                                    </div>
+                                    <p:panelGrid styleClass="ui-panelgrid-blank" class="pgInfo" columns="2">
+                                        <p:outputLabel style="font-size: 20px">Codigo: </p:outputLabel>
+                                        <p:outputLabel style="font-size: 20px" value="#{solicitudesMB.solicitud.codigoSeguimiento}"/>
+
+                                        <p:outputLabel style="font-size: 20px">Solicitante: </p:outputLabel>
+                                        <p:outputLabel style="font-size: 20px" value="#{solicitudesMB.solicitud.idResponsable.nombre}"/>
+
+                                        <p:outputLabel  style="font-size: 20px">Tipo de solicitud: </p:outputLabel>
+                                        <p:outputLabel  style="font-size: 20px" value="#{solicitudesMB.solicitud.idTipoSolicitud.nombre}"/>
+
+                                        <p:outputLabel  style="font-size: 20px">Unidad/Area: </p:outputLabel>
+                                        <p:outputLabel value="#{solicitudesMB.solicitud.idUbicacion.nombre}"  style="font-size: 20px"/>
+
+                                        <p:outputLabel  style="font-size: 20px">Descripcion del problema: </p:outputLabel>
+                                        <p:column>
+                                            <div align="right" style="float: right">
+                                                <p:commandButton id="nuevaOrden" value="Nueva Orden de Trabajo" icon="fa fa-plus"/>
+                                            </div>
+                                        </p:column>
+                                    </p:panelGrid>
+                                    <p:separator/>
+                                    <p:panelGrid columns="1">
+                                        <p:outputPanel style="font-size: 20px">
+                                            #{solicitudesMB.solicitud.problema}
+                                        </p:outputPanel>
+                                    </p:panelGrid>
+                                </p:panel>
+                            </h:form>
+                        </p:column>
+                    </p:row>    
+                </p:panelGrid> 
+                <h:outputScript>
+                    $(function() {
+                    $(".ui-datatable-scrollable-body").css("max-height", $(window).height()- 4 - $(".ui-datatable-scrollable-body").offset().top);
+                    });
+
+                    $(document).ready(function(){ 
+                    $(window).resize(function(){
+                    $(".ui-datatable-scrollable-body").css("max-height", $(window).height()- 4 - $(".ui-datatable-scrollable-body").offset().top);
+                    });
+                    });
+                </h:outputScript>
             </ui:define>
 
             <ui:define name="menuLateral">

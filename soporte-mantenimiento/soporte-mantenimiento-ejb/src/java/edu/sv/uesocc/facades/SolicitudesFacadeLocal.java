@@ -26,6 +26,8 @@ public interface SolicitudesFacadeLocal {
 
     List<Solicitudes> findAll();
     
+    List<Solicitudes> findOrdenados();
+    
     Solicitudes findLastRecord();
 
     List<Solicitudes> findRange(int[] range);
