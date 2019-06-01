@@ -44,12 +44,15 @@ body {
 }
 
 #div_btnSidebar {
-    margin-right: 0;
     margin-bottom: 1em;
     border: none;
-    float: left;
-    z-index: 999;
-    position: absolute;
+    width: 1%;
+    height: 100%;
+    position:absolute;
+    top:0;
+    left:0;
+    
+    z-index: 500;
 }
 
 #div_solicitud{
@@ -147,4 +150,12 @@ body {
 
 .ui-steps.custom .ui-steps-item.ui-state-highlight .ui-menuitem-link .ui-steps-title {
     color: #555;
+}
+
+.ui-datatable .ui-state-highlight {
+    background-image: none;
+    background-color: aliceblue;
+    font-weight: bold;
+    color: black;
+    border: cornflowerblue;
 }

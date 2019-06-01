@@ -9,6 +9,7 @@ import edu.sv.uesocc.entidades.Loggin;
 import edu.sv.uesocc.entidades.Permisos;
 import edu.sv.uesocc.facades.LogginFacadeLocal;
 import edu.sv.uesocc.facades.PermisosFacadeLocal;
+import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -33,6 +34,7 @@ public class LoginMB implements Serializable {
     private Loggin usuario = new Loggin();
     private Loggin loginUser = new Loggin();
     private Permisos accesos = new Permisos();
+
 
     public LoginMB() {
     }
@@ -65,7 +67,8 @@ public class LoginMB implements Serializable {
                 FacesContext contexto = FacesContext.getCurrentInstance();
                 contexto.getExternalContext().getSessionMap().put("user", loginUser.getIdTecnico().getNombre());
                 obtenerAccesos(loginUser);
-                return "/admin/EquiposForm.jsf?faces-redirect=true";
+//                return "/admin/EquiposForm.jsf?faces-redirect=true";
+                return "/templates/PrincipalTemplate.jsf?faces-redirect=true";
             } else {
                 return "/inicio/LoginForm.jsf?faces-redirect=true";
             }
@@ -85,6 +88,19 @@ public class LoginMB implements Serializable {
             accesos = permisosFacade.obtenerAccesos(id);
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error",e.getMessage()));
+        }
+    }
+    
+//    Sirve para permitir el acceso a la paginas
+    public void accederPagina(boolean access){
+        String url = "../noaccess/NoAccessForm.jsf";
+        
+        if (access == false) {
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect(url);
+            } catch (IOException ex) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error", ex.getMessage()));
+            }
         }
     }
 }
