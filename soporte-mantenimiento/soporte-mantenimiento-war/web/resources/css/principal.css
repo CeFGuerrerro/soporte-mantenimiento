@@ -159,3 +159,6 @@ body {
     color: black;
     border: cornflowerblue;
 }
+.topAligned {
+    vertical-align: top;
+}
