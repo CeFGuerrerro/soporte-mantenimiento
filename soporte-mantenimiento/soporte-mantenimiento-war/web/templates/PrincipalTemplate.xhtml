@@ -37,7 +37,7 @@
                         <p class="banner">&Aacute;rea de Soporte y Tecnolog&iacute;a Inform&aacute;tica</p>
                     </div>
                     <p:column>
-                        <div align="right">
+                        <div align="right" style="position: absolute;right:1%;">
                             <span id="userDiv">Usuario: #{user}</span>
                         </div>
                     </p:column>
@@ -48,12 +48,47 @@
 
             <h:form id="f_menuBar">
                 <p:menubar id="menuBar">
-                    <p:menuitem value="Hardware y Software" icon="ui-icon-print" url="../admin/ComponentesForm.jsf"/>
-                    <p:menuitem value="Solicitudes de Mantenimiento" icon="ui-icon-mail-closed"/>
-                    <p:menuitem value="Ordenes de Trabajo" icon="ui-icon-wrench"/>
-                    <p:menuitem value="Asignaci&oacute;n" icon="ui-icon-search" url="../admin/EquiposForm.jsf"/>
+                    <p:submenu label="Hardware y Software" icon="ui-icon-print">
+                        <p:submenu label="Componentes" expanded="false" rendered="#{loginMB.accesos.componentes || loginMB.accesos.marcas || loginMB.accesos.modelos || loginMB.accesos.softwareComponente }">
+                            <p:menuitem value="Tipos de Componentes" url="../admin/TipoComponenteForm.jsf" rendered="#{loginMB.accesos.componentes}"/>
+                            <p:menuitem value="Componentes" url="../admin/ComponentesForm.jsf" rendered="#{loginMB.accesos.componentes}"/>
+                            <p:menuitem value="UPS" url="../admin/UpsForm.jsf" rendered="#{loginMB.accesos.componentes}"/>
+                            <p:menuitem value="Marcas" url="../admin/MarcasForm.jsf" rendered="#{loginMB.accesos.marcas}"/>
+                            <p:menuitem value="Modelos" url="../admin/ModelosForm.jsf" rendered="#{loginMB.accesos.modelos}"/>
+                            <p:menuitem value="Software Componentes" url="../admin/SoftwareComponenteForm.jsf" rendered="#{loginMB.accesos.softwareComponente}"/>
+                        </p:submenu>
+                        <p:submenu label="Hardware" expanded="false" rendered="#{loginMB.accesos.hardware}">
+                            <p:menuitem value="Discos duros" url="../admin/DiscosForm.jsf"/>
+                            <p:menuitem value="Tipos de disco" url="../admin/TipoDiscoForm.jsf"/>
+                            <p:menuitem value="Procesadores" url="../admin/ProcesadoresForm.jsf"/>
+                            <p:menuitem value="Memorias" url="../admin/MemoriasForm.jsf"/>
+                            <p:menuitem value="Tipos de memorias" url="../admin/TiposMemoriaForm.jsf"/>
+                            <p:menuitem value="Tarjetas de Video" url="../admin/TarjetasVideoForm.jsf"/>
+                            <p:menuitem value="Capacidades" url="../admin/CapacidadesForm.jsf"/>
+                            <p:menuitem value="Motherboards" url="../admin/MotherboardForm.jsf"/>
+                            <p:menuitem value="Puertos" url="../admin/PuertosForm.jsf"/>
+                            <p:menuitem value="Sockets" url="../admin/SocketsForm.jsf"/>
+                            <p:menuitem value="Fuentes de Voltaje" url="../admin/FuentesForm.jsf"/>                        
+                        </p:submenu>
+
+                        <p:submenu label="Software" rendered="#{loginMB.accesos.software}">
+                            <p:menuitem value="Software" url="../admin/SoftwareForm.jsf"/>
+                            <p:menuitem value="Tipos de Software" url="../admin/TiposSoftwareForm.jsf"/>
+                            <p:menuitem value="Arquitectura" url="../admin/ArquitecturaForm.jsf"/>
+                        </p:submenu>
+                    </p:submenu>
+                    <p:submenu label="Solicitudes de Mantenimiento" icon="ui-icon-mail-closed"></p:submenu>
+                    <p:submenu label="Ordenes de Trabajo" icon="ui-icon-wrench"></p:submenu>
+                    <p:submenu label="Asignaci&oacute;n" icon="ui-icon-search">
+                        <p:menuitem value="Ubicaciones" url="../admin/UbicacionesForm.jsf"/>
+                        <p:menuitem value="Responsables" url="../admin/ResponsablesForm.jsf"/>
+                        <p:menuitem value="Equipos" url="../admin/EquiposForm.jsf"/>
+                    </p:submenu>
                     <p:menuitem value="Cronograma" icon="ui-icon-calendar" url="../admin/CronogramaForm.jsf"/>
-                    <p:menuitem value="Usuarios y Accesos" icon="ui-icon-key" url="../admin/TecnicosForm.jsf"/>
+                    <p:submenu label="Usuarios y Accesos" icon="ui-icon-key">
+                        <p:menuitem value="Tecnicos" url="../admin/TecnicosForm.jsf"/>
+                        <p:menuitem value="Administradores" url="../admin/UsuariosAdminForm.jsf"/>
+                    </p:submenu>
                     <f:facet name="options">
                         <p:commandButton value="Logout" icon="fa fa-sign-out" action="#{loginMB.logout()}"/>
                     </f:facet>
@@ -63,9 +98,9 @@
 
         <!--Boton que abre el panel lateral-->
         <div id="div_btnSidebar">
-<!--            <h:form id="f_botonSidebar">
-                <p:commandButton id="btnSidebar" icon="fa fa-navicon" onclick="PF('sidebar').show()" />
-            </h:form>-->
+            <!--            <h:form id="f_botonSidebar">
+                            <p:commandButton id="btnSidebar" icon="fa fa-navicon" onclick="PF('sidebar').show()" />
+                        </h:form>-->
         </div>
 
         <!--Contenido de la pagina-->
@@ -85,10 +120,10 @@
         </div>
     </h:body>
     <script>
-        $("#div_btnSidebar").mouseover(function(){
+        $("#div_btnSidebar").mouseover(function () {
             PF('sidebar').show();
         });
     </script>
-    
+
 </html>
 
