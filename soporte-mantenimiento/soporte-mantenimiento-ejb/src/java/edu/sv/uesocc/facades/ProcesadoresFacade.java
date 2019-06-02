@@ -6,9 +6,14 @@
 package edu.sv.uesocc.facades;
 
 import edu.sv.uesocc.entidades.Procesadores;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -28,5 +33,17 @@ public class ProcesadoresFacade extends AbstractFacade<Procesadores> implements 
     public ProcesadoresFacade() {
         super(Procesadores.class);
     }
-    
+
+    @Override
+    public List<Procesadores> findDisponibles() {
+        boolean estado = true;
+        boolean asignado = false;
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Procesadores> cq = cb.createQuery(Procesadores.class);
+        Root<Procesadores> comp = cq.from(Procesadores.class);
+        Predicate condiciones = cb.and(cb.equal(comp.get("estado"), estado), cb.equal(comp.get("asignado"), asignado));
+        cq.select(comp);
+        cq.where(condiciones);
+        return em.createQuery(cq).getResultList();
+    }
 }

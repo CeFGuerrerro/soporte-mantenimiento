@@ -29,5 +29,7 @@ public interface FuentesFacadeLocal {
     List<Fuentes> findRange(int[] range);
 
     int count();
-    
+
+    public List<Fuentes> findDisponibles();
+
 }

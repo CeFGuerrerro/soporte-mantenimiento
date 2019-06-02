@@ -29,5 +29,7 @@ public interface TarjetasVideoFacadeLocal {
     List<TarjetasVideo> findRange(int[] range);
 
     int count();
-    
+
+    public List<TarjetasVideo> findDisponibles();
+
 }

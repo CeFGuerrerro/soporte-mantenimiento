@@ -29,5 +29,7 @@ public interface MemoriasFacadeLocal {
     List<Memorias> findRange(int[] range);
 
     int count();
-    
+
+    public List<Memorias> findDisponibles();
+
 }

@@ -29,5 +29,6 @@ public interface DiscosFacadeLocal {
     List<Discos> findRange(int[] range);
 
     int count();
-    
+
+    public List<Discos> findDisponibles();
 }

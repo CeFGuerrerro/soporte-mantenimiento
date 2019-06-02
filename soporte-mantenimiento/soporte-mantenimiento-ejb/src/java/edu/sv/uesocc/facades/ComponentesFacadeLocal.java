@@ -30,11 +30,13 @@ public interface ComponentesFacadeLocal {
     List<Componentes> findRange(int[] range);
 
     int count();
-    
+
     int countByDataFilter(Map<String, Object> filters);
-    
+
     List<Componentes> findByDataFilter(int first, int pageSize, String sortField, String sortOrder, Map<String, Object> filters);
 
     public List<Componentes> findDisponibles();
-    
+
+    public List<Componentes> ComponenteContenedoresHW();
+
 }

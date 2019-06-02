@@ -29,5 +29,6 @@ public interface ProcesadoresFacadeLocal {
     List<Procesadores> findRange(int[] range);
 
     int count();
-    
+
+    public List<Procesadores> findDisponibles();
 }

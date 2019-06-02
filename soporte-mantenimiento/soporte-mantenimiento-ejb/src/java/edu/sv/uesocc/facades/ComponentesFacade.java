@@ -65,7 +65,7 @@ public class ComponentesFacade extends AbstractFacade<Componentes> implements Co
 
         return condiciones;
     }
-    
+
 //    Devuelve la cantidad de registros
     @Override
     public int countByDataFilter(Map<String, Object> filters) {
@@ -77,7 +77,7 @@ public class ComponentesFacade extends AbstractFacade<Componentes> implements Co
 
         return em.createQuery(cq).getSingleResult().intValue();
     }
-    
+
 //    Ejecuta la operacion y devuelve la lista de registros
     @Override
     public List<Componentes> findByDataFilter(int first, int pageSize, String sortField, String sortOrder, Map<String, Object> filters) {
@@ -95,18 +95,32 @@ public class ComponentesFacade extends AbstractFacade<Componentes> implements Co
         }
         return em.createQuery(cq).setFirstResult(first).setMaxResults(pageSize).getResultList();
     }
-    
+
     @Override
-    public List<Componentes> findDisponibles(){
+    public List<Componentes> findDisponibles() {
         boolean estado = true;
         boolean asignado = false;
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-        CriteriaQuery<Componentes> cq =  cb.createQuery(Componentes.class);
+        CriteriaQuery<Componentes> cq = cb.createQuery(Componentes.class);
         Root<Componentes> comp = cq.from(Componentes.class);
         Predicate condiciones = cb.and(cb.equal(comp.get("estado"), estado), cb.equal(comp.get("asignado"), asignado));
         cq.select(comp);
         cq.where(condiciones);
-        
+
+        return em.createQuery(cq).getResultList();
+    }
+
+    @Override
+    public List<Componentes> ComponenteContenedoresHW() {
+        boolean estado = true;
+        boolean hardware = true;
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Componentes> cq = cb.createQuery(Componentes.class);
+        Root<Componentes> comp = cq.from(Componentes.class);
+        Predicate condi = cb.and(cb.equal(comp.get("estado"), estado), cb.equal(comp.get("idTipoComponente").get("contenedorHw"), hardware));
+        cq.select(comp);
+        cq.where(condi);
+
         return em.createQuery(cq).getResultList();
     }
 

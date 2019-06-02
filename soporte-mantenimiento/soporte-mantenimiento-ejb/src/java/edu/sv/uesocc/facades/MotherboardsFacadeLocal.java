@@ -29,5 +29,6 @@ public interface MotherboardsFacadeLocal {
     List<Motherboards> findRange(int[] range);
 
     int count();
-    
+
+    public List<Motherboards> findDisponibles();
 }

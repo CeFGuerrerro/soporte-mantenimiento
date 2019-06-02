@@ -12,6 +12,8 @@
             <ui:define name="contenido">
 
                 <h:form id="f_hC">
+
+                    <!--contedor de componentes y hardware-->
                     <p:panelGrid>
                         <f:facet name="header">
                             <p:row>
@@ -23,11 +25,13 @@
                             </p:row>
                         </f:facet>
 
+
                         <p:row>
-                            <p:column style="width: 60%">
+                            <!--columna componente-->
+                            <p:column style="width: 60%" class="topAligned">
                                 <!--tabla Cpu-->
-                                <p:dataTable id="t_cpus" emptyMessage="No hay registros" value="#{componentesMB.compList}" var="comp" lazy="true"
-                                             selection="#{componentesMB.compSeleccionado}" selectionMode="single" rowKey="#{comp.idComponente}"
+                                <p:dataTable id="t_cpus" emptyMessage="No hay registros" value="#{hardwareComponenteMB.contenedoresHw}" var="comp" lazy="true"
+                                             selectionMode="single" rowKey="#{comp.idComponente}"
                                              rows="10" paginator="true">
 
                                     <p:column headerText="No. Inventario" sortBy="#{comp.numeroInventario}">
@@ -56,26 +60,52 @@
 
                                 </p:dataTable>
 
-                            </p:column>
-                            <p:column style="width:40%">
-                                <!--tabla hardware-->
+                                <!--columna hardware-->
+                            </p:column >
+                            <p:column style="width:40%" class="topAligned">
                                 <h:outputText value="Seleccione un registro para continuar" rendered="#{hardwareComponenteMB.estadoInfo}"/>
-                                <p:treeTable value="#{hardwareComponenteMB.root}" rendered="#{hardwareComponenteMB.estadoTabla}" var="node" selectionMode="single" >
+
+                                <!--Registro seleccionado-->
+                                <p:treeTable id="datos" value="#{hardwareComponenteMB.root}" rendered="#{hardwareComponenteMB.estadoTabla}" var="node" 
+                                             selection="#{hardwareComponenteMB.singleSelectedTreeNode}" selectionMode="single">
+
                                     <p:column headerText="Tipo">
-                                        <h:outputText value="Discos" />
-                                    </p:column>
-                                    <p:column headerText="Estado">
-                                        <h:outputText value="Discos" />
+                                        <h:outputText value="#{node}" />
                                     </p:column>
                                     <p:column style="width:24px">
-                                       <!-- <p:commandLink update="@form" oncomplete="PF('documentDialog').show()" title="View Detail" styleClass="">
-                                            <f:setPropertyActionListener value="#{hardwareComponenteMB}" target="#{ttBasicView.selectedDocument}" />
-                                        </p:commandLink>-->
+
+                                        <p:commandButton icon="fa fa-plus" onclick="PF('wd_dialog').show()">
+                                            <f:setPropertyActionListener value="#{node}" target="#{hardwareComponenteMB.selectNode()}" />
+                                        </p:commandButton>
                                     </p:column>
+
                                 </p:treeTable>
+
                             </p:column>
                         </p:row>
                     </p:panelGrid>
+
+                    <!--Tabla contenedora de hardware-->
+                    <p:dialog widgetVar="wd_dialog" header="Asignación de Hardware"  modal="true" resizable="false">
+                        <h:form id="tabla_hardwareAsignable">
+                            <p:dataTable id="t_hardwareSeleccionado" emptyMessage="No hay registros" var="comp"                                           
+                                         selectionMode="single"  rows="10" paginator="true">
+
+                                <p:column headerText="No. Inventario" sortBy="#{comp.numeroInventario}">
+                                    <p:outputLabel>#{comp.numeroInventario}</p:outputLabel>
+                                </p:column>
+
+                                <p:column headerText="Estado" sortBy="#{comp.estado}">
+                                    <p:outputLabel>#{comp.estado}</p:outputLabel>
+                                </p:column>
+
+
+                                <p:ajax event="rowSelect" listener="#{hardwareComponenteMB.hardware()}" update="@form"/>
+
+                            </p:dataTable>
+                            <p:commandButton value="Cerrar" oncomplete="PF('wd_dialog').hide()" update="tabla_hardwareAsignable"/>
+                        </h:form>
+                    </p:dialog>
                 </h:form>
 
             </ui:define>
