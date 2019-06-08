@@ -33,9 +33,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
-import javax.swing.JOptionPane;
 import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.model.TreeNode;
 import org.primefaces.model.DefaultTreeNode;
@@ -66,8 +64,9 @@ public class HardwareComponenteMB implements Serializable {
     private boolean estadoInfo = true;
     private boolean estadoTabla = false;
     private List<Componentes> contenedoresHw = new ArrayList<>();
-    private List<Discos> variableInicio;
+    private List<Object> variableInicio;
     private Discos discoSeleccionado;
+    private List<contenedorObjetos> contenedor;
 
     private List<Discos> discosDisponibles = new ArrayList<>();
     private List<Memorias> memoriasDisponibles = new ArrayList<>();
@@ -110,63 +109,14 @@ public class HardwareComponenteMB implements Serializable {
         TreeNode fuenteAsignada = new DefaultTreeNode(this.fuentedAsignada, fuente);
     }
 
-    public Discos getDiscoSeleccionado() {
-        return discoSeleccionado;
+    public List<contenedorObjetos> getContenedor() {
+        return contenedor;
     }
 
-    public void setDiscoSeleccionado(Discos discoSeleccionado) {
-        this.discoSeleccionado = discoSeleccionado;
+    public void setContenedor(List<contenedorObjetos> contenedor) {
+        this.contenedor = contenedor;
     }
 
-   
-
-    public List<Memorias> getMemoriasDisponibles() {
-        return memoriasDisponibles;
-    }
-
-    public void setMemoriasDisponibles(List<Memorias> memoriasDisponibles) {
-        this.memoriasDisponibles = memoriasDisponibles;
-    }
-
-    public List<Procesadores> getProcesadoresDisponibles() {
-        return procesadoresDisponibles;
-    }
-
-    public void setProcesadoresDisponibles(List<Procesadores> procesadoresDisponibles) {
-        this.procesadoresDisponibles = procesadoresDisponibles;
-    }
-
-    public List<Motherboards> getMotherboardsDisponibles() {
-        return motherboardsDisponibles;
-    }
-
-    public void setMotherboardsDisponibles(List<Motherboards> motherboardsDisponibles) {
-        this.motherboardsDisponibles = motherboardsDisponibles;
-    }
-
-    public List<TarjetasVideo> getTarjetasDisponibles() {
-        return tarjetasDisponibles;
-    }
-
-    public void setTarjetasDisponibles(List<TarjetasVideo> tarjetasDisponibles) {
-        this.tarjetasDisponibles = tarjetasDisponibles;
-    }
-
-    public List<Fuentes> getFuentesDisponibles() {
-        return fuentesDisponibles;
-    }
-
-    public void setFuentesDisponibles(List<Fuentes> fuentesDisponibles) {
-        this.fuentesDisponibles = fuentesDisponibles;
-    }
-
-    public List<Discos> getDiscosDisponibles() {
-        return discosDisponibles;
-    }
-
-    public void setDiscosDisponibles(List<Discos> discosDisponibles) {
-        this.discosDisponibles = discosDisponibles;
-    }
 
     public TreeNode getSingleSelectedTreeNode() {
         return singleSelectedTreeNode;
@@ -225,39 +175,42 @@ public class HardwareComponenteMB implements Serializable {
     }
 
 //Cargar listas a tabla t_hardware
-    public List selectedNode(NodeSelectEvent event) {
-        variableInicio = new ArrayList<>();
+    public void selectedNode() {
+        contenedor = new ArrayList<>();
         //   System.out.println("Nodo seleccionado: " + this.singleSelectedTreeNode.getData());
-        try {
+       try {
 
             if (singleSelectedTreeNode.getData() == null) {
-                return variableInicio;
+             
             } else if (singleSelectedTreeNode.getData() == "Discos") {
-                discosDisponibles = discosFacade.findDisponibles();
-                return discosDisponibles;
+                discosDisponibles = discosFacade.findAll();
+               //contenedor
             } else if (singleSelectedTreeNode.getData() == "Memorias RAM") {
                 memoriasDisponibles = memoriasFacade.findDisponibles();
-                return memoriasDisponibles;
+              
             } else if (singleSelectedTreeNode.getData() == "Tarjeta de Video") {
                 tarjetasDisponibles = tarjetasFacade.findDisponibles();
-                return tarjetasDisponibles;
+              
             } else if (singleSelectedTreeNode.getData() == "Procesador") {
                 procesadoresDisponibles = procesadoresFacade.findDisponibles();
-                return procesadoresDisponibles;
+              
             } else if (singleSelectedTreeNode.getData() == "Motherboard") {
                 motherboardsDisponibles = motherboardsFacade.findDisponibles();
-                return motherboardsDisponibles;
+              
             } else if (singleSelectedTreeNode.getData() == "Fuente de Voltaje") {
                 fuentesDisponibles = fuentesFacade.findDisponibles();
-                return fuentesDisponibles;
+              
             }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
-        return variableInicio;
+       
 
+    }
+    public void objetoSeleccinado(){
+    
     }
 
     public void onNodeSelect(NodeSelectEvent event) {
