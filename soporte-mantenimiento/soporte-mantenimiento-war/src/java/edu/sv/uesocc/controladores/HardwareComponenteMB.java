@@ -35,6 +35,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
+import javax.swing.JOptionPane;
 import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.model.TreeNode;
 import org.primefaces.model.DefaultTreeNode;
@@ -65,7 +66,9 @@ public class HardwareComponenteMB implements Serializable {
     private boolean estadoInfo = true;
     private boolean estadoTabla = false;
     private List<Componentes> contenedoresHw = new ArrayList<>();
-    
+    private List<Discos> variableInicio;
+    private Discos discoSeleccionado;
+
     private List<Discos> discosDisponibles = new ArrayList<>();
     private List<Memorias> memoriasDisponibles = new ArrayList<>();
     private List<Procesadores> procesadoresDisponibles = new ArrayList<>();
@@ -76,7 +79,7 @@ public class HardwareComponenteMB implements Serializable {
     //Variables treetable
     private TreeNode root = new DefaultTreeNode("Root Node", null);
     private TreeNode singleSelectedTreeNode;
-    
+
     private DiscosComponente discoAsignado;
     private MemoriasComponente memoriaAsignada;
     private ProcesadorComponente procesadorAsignado;
@@ -99,13 +102,23 @@ public class HardwareComponenteMB implements Serializable {
         TreeNode motherboard = new DefaultTreeNode("Motherboard", this.root);
         TreeNode fuente = new DefaultTreeNode("Fuente de Voltaje", this.root);
         // Creacion de subnodos de treetable
-        TreeNode discoAsignado = new DefaultTreeNode(this.discoAsignado, discos);
+        TreeNode diskAsignado = new DefaultTreeNode(this.discoAsignado, discos);
         TreeNode memAsignada = new DefaultTreeNode(this.memoriaAsignada, memorias);
         TreeNode tarjetaAsignada = new DefaultTreeNode(this.tvAsignada, tarjetasV);
         TreeNode procAsignado = new DefaultTreeNode(this.procesadorAsignado, procesador);
         TreeNode motherAsignada = new DefaultTreeNode(this.motherboardAsignada, motherboard);
         TreeNode fuenteAsignada = new DefaultTreeNode(this.fuentedAsignada, fuente);
     }
+
+    public Discos getDiscoSeleccionado() {
+        return discoSeleccionado;
+    }
+
+    public void setDiscoSeleccionado(Discos discoSeleccionado) {
+        this.discoSeleccionado = discoSeleccionado;
+    }
+
+   
 
     public List<Memorias> getMemoriasDisponibles() {
         return memoriasDisponibles;
@@ -195,10 +208,6 @@ public class HardwareComponenteMB implements Serializable {
         this.contenedoresHw = contenedoresHw;
     }
 
-    public void onNodeSelect(NodeSelectEvent event) {
-        System.out.println("Node Data ::" + event.getTreeNode().getData() + " :: Selected");
-    }
-
 //cambio informacion columna derecha tabla
     public void hardware() {
         estadoInfo = false;
@@ -214,30 +223,47 @@ public class HardwareComponenteMB implements Serializable {
             contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error! contenedores hardware", e.getMessage()));
         }
     }
+
 //Cargar listas a tabla t_hardware
+    public List selectedNode(NodeSelectEvent event) {
+        variableInicio = new ArrayList<>();
+        //   System.out.println("Nodo seleccionado: " + this.singleSelectedTreeNode.getData());
+        try {
 
-    public void selectNode() {
-        // System.out.println("Nodo seleccionado: " + this.singleSelectedTreeNode.getData());
+            if (singleSelectedTreeNode.getData() == null) {
+                return variableInicio;
+            } else if (singleSelectedTreeNode.getData() == "Discos") {
+                discosDisponibles = discosFacade.findDisponibles();
+                return discosDisponibles;
+            } else if (singleSelectedTreeNode.getData() == "Memorias RAM") {
+                memoriasDisponibles = memoriasFacade.findDisponibles();
+                return memoriasDisponibles;
+            } else if (singleSelectedTreeNode.getData() == "Tarjeta de Video") {
+                tarjetasDisponibles = tarjetasFacade.findDisponibles();
+                return tarjetasDisponibles;
+            } else if (singleSelectedTreeNode.getData() == "Procesador") {
+                procesadoresDisponibles = procesadoresFacade.findDisponibles();
+                return procesadoresDisponibles;
+            } else if (singleSelectedTreeNode.getData() == "Motherboard") {
+                motherboardsDisponibles = motherboardsFacade.findDisponibles();
+                return motherboardsDisponibles;
+            } else if (singleSelectedTreeNode.getData() == "Fuente de Voltaje") {
+                fuentesDisponibles = fuentesFacade.findDisponibles();
+                return fuentesDisponibles;
+            }
 
-        if (singleSelectedTreeNode.getData() == "Discos") {
-            discosDisponibles = discosFacade.findDisponibles();
-        } else if (singleSelectedTreeNode.getData() == "Memorias RAM") {
-            memoriasDisponibles = memoriasFacade.findDisponibles();
-        } else if (singleSelectedTreeNode.getData() == "Tarjeta de Video") {
-            tarjetasDisponibles = tarjetasFacade.findDisponibles();
-        } else if (singleSelectedTreeNode.getData() == "Procesador") {
-            procesadoresDisponibles = procesadoresFacade.findDisponibles();
-        } else if (singleSelectedTreeNode.getData() == "Motherboard") {
-            motherboardsDisponibles = motherboardsFacade.findDisponibles();
-        } else if (singleSelectedTreeNode.getData() == "Fuente de Voltaje") {
-            fuentesDisponibles = fuentesFacade.findDisponibles();
-        } else {
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
 
+        return variableInicio;
+
     }
 
-    public void view(ActionEvent e) {
+    public void onNodeSelect(NodeSelectEvent event) {
+        System.out.println("Node Data ::" + event.getTreeNode().getData() + " :: Selected");
+    }
+     /* public void view(ActionEvent e) {
         System.out.println("View action has invoked against node :: " + this.singleSelectedTreeNode.getData());
-    }
-
+    }*/
 }
