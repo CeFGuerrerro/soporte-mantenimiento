@@ -74,8 +74,9 @@
                                     </p:column>
                                     <p:column style="width:24px">
 
-                                        <p:commandButton icon="fa fa-plus" onclick="PF('wd_dialog').show()">
-                                            <f:setPropertyActionListener value="#{node}" target="#{hardwareComponenteMB.selectNode()}" />
+                                        <p:commandButton update=":f_hC:tabla_hardwareAsignable:t_hardwareSelect" oncomplete="PF('wd_dialog').show();"
+                                                       icon="fa fa-plus">
+                                            <f:setPropertyActionListener value="#{node}" target="#{hardwareComponenteMB.discoSeleccionado}" />
                                         </p:commandButton>
                                     </p:column>
 
@@ -88,19 +89,16 @@
                     <!--Tabla contenedora de hardware-->
                     <p:dialog widgetVar="wd_dialog" header="Asignación de Hardware"  modal="true" resizable="false">
                         <h:form id="tabla_hardwareAsignable">
-                            <p:dataTable id="t_hardwareSeleccionado" emptyMessage="No hay registros" var="comp"                                           
-                                         selectionMode="single"  rows="10" paginator="true">
-
-                                <p:column headerText="No. Inventario" sortBy="#{comp.numeroInventario}">
-                                    <p:outputLabel>#{comp.numeroInventario}</p:outputLabel>
+                            <p:dataTable id="t_hardwareSelect" emptyMessage="No hay registros" var="comp"                                           
+                                         selectionMode="single" value="#{hardwareComponenteMB.discosDisponibles}" rows="10" paginator="true">
+                                <p:column headerText="No. Inventario" sortBy="#{comp}">
+                                    <p:outputLabel>#{comp}</p:outputLabel>
                                 </p:column>
 
                                 <p:column headerText="Estado" sortBy="#{comp.estado}">
                                     <p:outputLabel>#{comp.estado}</p:outputLabel>
                                 </p:column>
-
-
-                                <p:ajax event="rowSelect" listener="#{hardwareComponenteMB.hardware()}" update="@form"/>
+                               
 
                             </p:dataTable>
                             <p:commandButton value="Cerrar" oncomplete="PF('wd_dialog').hide()" update="tabla_hardwareAsignable"/>
