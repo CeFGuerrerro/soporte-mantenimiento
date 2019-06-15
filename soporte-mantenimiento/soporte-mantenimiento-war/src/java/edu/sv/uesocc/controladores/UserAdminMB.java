@@ -166,13 +166,35 @@ public class UserAdminMB implements Serializable {
                 contexto.addMessage(null, new FacesMessage("Registro editado."));
                 adminSel = new Loggin();
             } else {
-                contexto.addMessage(null, new FacesMessage("No se pudo registrar."));
+                contexto.addMessage(null, new FacesMessage("No se pudo editar el registro."));
             }
         } catch (Exception e) {
             contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error:", e.getMessage()));
         }
         obtenerTodos();
     }
-        
+
+    public void eliminarPermisos() {
+        boolean eliminado = false;
+        FacesContext contexto = FacesContext.getCurrentInstance();
+        accesoSel = permisosFacade.obtenerAccesos(adminSel);
+
+        try {
+            eliminado = permisosFacade.remove(accesoSel);
+            if (eliminado) {
+                eliminado = loginFacade.remove(adminSel);
+                if (eliminado) {
+                    contexto.addMessage(null, new FacesMessage("Registro eliminado."));
+                } else {
+                    contexto.addMessage(null, new FacesMessage("No se pudo eliminar el registro"));
+                }
+            } else {
+                contexto.addMessage(null, new FacesMessage("No se pudo eliminar el registro."));
+            }
+            obtenerTodos();
+        } catch (Exception e) {
+            contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error:", e.getMessage()));
+        }
+    }
 
 }

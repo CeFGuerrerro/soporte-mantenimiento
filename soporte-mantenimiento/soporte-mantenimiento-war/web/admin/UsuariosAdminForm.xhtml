@@ -35,10 +35,17 @@
 
                         <p:ajax event="rowDblselect" oncomplete="PF('weditar').show()" update=":frmEditar"/>
                     </p:dataTable>
+                    
                     <p:contextMenu for="tabla">
                         <p:menuitem value="Asignar Permisos" icon="fa fa-lock" actionListener="#{userAdminMB.buscarPermisos()}" update="frmPermisos" onclick="PF('wpermisos').show();"/>
+                        <p:menuitem value="Eliminar registro" icon="fa fa-trash" onclick="PF('conf_eliminar').show();"/>
                         <p:menuitem value="Cancelar" icon="fa fa-close"/>
                     </p:contextMenu>
+                    
+                    <p:confirmDialog widgetVar="conf_eliminar" message="Desea eliminar el registro seleccionado?">
+                        <p:commandButton value="Si" actionListener="#{userAdminMB.eliminarPermisos()}" update="frmTabla" oncomplete="PF('conf_eliminar').hide();" icon="fa fa-check" />
+                        <p:commandButton value="No" icon="fa fa-close" onclick="PF('conf_eliminar').hide();"/>
+                    </p:confirmDialog>
                 </h:form>
                 <h:form id="frmNuevo">
                     <p:dialog id="dlgNuevo" widgetVar="wnuevo" header="Nuevo Admin" modal="true" resizable="false" closeOnEscape="true" draggable="false">

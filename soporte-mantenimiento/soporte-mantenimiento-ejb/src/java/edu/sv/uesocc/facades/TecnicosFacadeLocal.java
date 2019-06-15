@@ -28,6 +28,8 @@ public interface TecnicosFacadeLocal {
 
     List<Tecnicos> findRange(int[] range);
 
+    public List<Tecnicos> findAllWithFilter(int filter);
+
     int count();
-    
+
 }

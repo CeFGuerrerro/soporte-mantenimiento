@@ -9,7 +9,9 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.view.ViewScoped;
 
 @Named(value = "tecnicosMB")
@@ -73,7 +75,7 @@ public class TecnicosMB implements Serializable {
         }
         obtenerTodos();
     }
-    
+
     public void editar() {
         boolean registrado = false;
         FacesContext contexto = FacesContext.getCurrentInstance();
@@ -91,8 +93,8 @@ public class TecnicosMB implements Serializable {
         }
         obtenerTodos();
     }
-        
-    public void obtenerTodos(){
+
+    public void obtenerTodos() {
         FacesContext contexto = FacesContext.getCurrentInstance();
         try {
             tecnicos = tecnicoEJB.findAll();
@@ -100,6 +102,16 @@ public class TecnicosMB implements Serializable {
             contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error!", e.getMessage()));
         }
     }
-    
-}
 
+    public void filtrar(AjaxBehaviorEvent e) {
+        FacesContext contexto = FacesContext.getCurrentInstance();
+        try {
+            String filter = (String) ((UIOutput) e.getSource()).getValue();
+            tecnicos.clear();
+            tecnicos = tecnicoEJB.findAllWithFilter(Integer.parseInt(filter));
+        } catch (NumberFormatException ex) {
+            contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error!", ex.getMessage()));
+        }
+    }
+
+}

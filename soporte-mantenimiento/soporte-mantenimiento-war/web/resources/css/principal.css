@@ -162,3 +162,9 @@ body {
 .topAligned {
     vertical-align: top;
 }
+
+#filter_div{
+    float: right;
+    margin-right: 1.5%;
+    font-weight: bolder;
+}

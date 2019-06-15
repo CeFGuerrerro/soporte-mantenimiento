@@ -6,9 +6,13 @@
 package edu.sv.uesocc.facades;
 
 import edu.sv.uesocc.entidades.Tecnicos;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -28,5 +32,24 @@ public class TecnicosFacade extends AbstractFacade<Tecnicos> implements Tecnicos
     public TecnicosFacade() {
         super(Tecnicos.class);
     }
-    
+
+    @Override
+    public List<Tecnicos> findAllWithFilter(int filter) {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+//        cq.select(cq.from(Tecnicos.class));
+        Root<Tecnicos> tec = cq.from(Tecnicos.class);
+        
+        switch (filter) {
+            case 1:
+                cq.where(cb.and(cb.equal(tec.get("estado"), true)));
+                return getEntityManager().createQuery(cq).getResultList();
+            case 2:
+                cq.where(cb.and(cb.equal(tec.get("estado"), false)));
+                return getEntityManager().createQuery(cq).getResultList();
+            default:
+                return getEntityManager().createQuery(cq).getResultList();
+        }
+    }
+
 }
