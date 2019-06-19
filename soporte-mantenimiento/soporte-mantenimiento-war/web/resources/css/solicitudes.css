@@ -1,0 +1,51 @@
+body{
+    height: 97%;
+
+}
+
+.ui-datatable-scrollable .ui-datatable-scrollable-header, .ui-datatable-scrollable .ui-datatable-scrollable-footer{
+    height: 0px;
+}
+
+.ui-datatable .ui-datatable-scrollable-body{
+    min-height: 500px !important;
+}
+
+.ui-datatable.borderless thead th,
+.ui-datatable.borderless tbody,
+.ui-datatable.borderless tbody tr,
+.ui-datatable.borderless tbody td {
+    border-style: none;
+}
+
+.columna1{
+    width: 30%;
+    min-width: 300px;
+}
+
+.pgImagen{
+    flex-direction: column;
+    margin-top: -75px;
+    padding-top: 0px;
+    height: 100%;
+    align-items: center;
+    text-align: center;
+    display: flex;
+}
+
+#mainPnl{
+    position: relative;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
+
+#nueva_notificacion{
+    position: absolute;
+    float: right;
+}
+
+.pnlInfo{
+    border: none;
+    min-height: 500px;
+    min-width: 750px;
+}

@@ -52,7 +52,7 @@ public class SolicitudesFacade extends AbstractFacade<Solicitudes> implements So
         CriteriaQuery<Solicitudes> cq =  cb.createQuery(Solicitudes.class);
         Root<Solicitudes> sol = cq.from(Solicitudes.class);
         cq.select(sol);
-        cq.orderBy(cb.desc(sol.get("fechaSolicitud")));
+        cq.orderBy(cb.desc(sol.get("idSolicitud")));
         
         return em.createQuery(cq).getResultList();
     }

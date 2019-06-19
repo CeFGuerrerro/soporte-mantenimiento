@@ -7,6 +7,7 @@ package edu.sv.uesocc.facades;
 
 import edu.sv.uesocc.entidades.Equipos;
 import edu.sv.uesocc.entidades.Responsables;
+import edu.sv.uesocc.entidades.Ubicaciones;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -41,6 +42,18 @@ public class EquiposFacade extends AbstractFacade<Equipos> implements EquiposFac
         CriteriaQuery<Equipos> cq =  cb.createQuery(Equipos.class);
         Root<Equipos> comp = cq.from(Equipos.class);
         Predicate condiciones = cb.and(cb.equal(comp.get("idResponsable"), resp));
+        cq.select(comp);
+        cq.where(condiciones);
+        
+        return em.createQuery(cq).getResultList();
+    }
+
+    @Override
+    public List<Equipos> findPorUbicacionDeResponsable(Responsables resp, Ubicaciones ubi) {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Equipos> cq =  cb.createQuery(Equipos.class);
+        Root<Equipos> comp = cq.from(Equipos.class);
+        Predicate condiciones = cb.and(cb.equal(comp.get("idResponsable"), resp), cb.equal(comp.get("idUbicacion"), ubi));
         cq.select(comp);
         cq.where(condiciones);
         
