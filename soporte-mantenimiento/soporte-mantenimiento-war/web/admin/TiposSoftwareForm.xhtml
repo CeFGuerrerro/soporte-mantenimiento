@@ -15,14 +15,15 @@
                 <h:form id="f_tiposSoftware">
                     <!--Boton agregar-->
                     <div>
-                        <p:commandButton id="btnNuevo" value="Nuevo Software" icon="fa fa-plus" oncomplete="PF('wd_agregar').show()" update="f_agregar"/>
+                        <p:commandButton id="btnNuevo" value="Nuevo Software" icon="fa fa-plus" oncomplete="PF('wNuevo').show()" update="frmNuevo"/>
                     </div>
 
                     <!--tabla Tipo Software-->
                     <p:dataTable 
-                        id="t_tiposSoftware" emptyMessage="No hay registros" selectionMode="single" rows="10" scrollable="true"
+                        id="t_tiposSoftware" value="#{tiposSoftwareMB.tipoSWList}" emptyMessage="No hay registros" 
+                        selectionMode="single" rows="10" scrollable="true"
                         paginator="true" var="tsw" rowKey="#{tsw.idTipoSoftware}"  
-                        selection="#{softwareMB.softwareSeleccionado}" widgetVar="wd_t_software" value="#{tiposSoftwareMB.tipoSWList}">
+                        selection="#{tiposSoftwareMB.tipoSWSeleccionado}" widgetVar="wd_t_software" >
 
                         <f:facet name="header">
                             Tipos Software
@@ -36,7 +37,7 @@
                             <p:outputLabel value="#{tsw.tipoSoftware}"/>
                         </p:column>
 
-                        <p:ajax event="rowDblselect" oncomplete="PF('wd_editar').show()" update="f_editar"/>
+                        <p:ajax event="rowDblselect" oncomplete="PF('wEditar').show()" update="frmEditar"/>
                     </p:dataTable>
 
                     <!--Eliminar-->
@@ -46,27 +47,27 @@
                     </p:contextMenu>
 
                 </h:form>
-                <!-- Agregar nuevo -->
-                <p:dialog widgetVar="wd_agregar" modal="true" header="Agregar Tipo de Software">
-                    <h:form id="f_agregar">
-                        <p:panelGrid columns="2">
+                
+                <!-- Formulario para agregar nuevo -->
+                <p:dialog widgetVar="wNuevo" modal="true" header="Agregar Tipo de Software" resizable="false" closeOnEscape="true" draggable="false">
+                    <h:form id="frmNuevo">
+                        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
                             <p:outputLabel value="Tipo Software:"/>
                             <p:inputText value="#{tiposSoftwareMB.tiposSW.tipoSoftware}" required="true" requiredMessage="Ingrese tipo de Software!"/>
                         </p:panelGrid>
 
-                        <p:commandButton value="Guardar" action="#{tiposSoftwareMB.crearTiposSoftware()}" icon="fa fa-check" oncomplete="PF('wd_agregar').hide()" update="f_tiposSoftware"/>
-
+                        <p:commandButton value="Guardar" action="#{tiposSoftwareMB.crearTiposSoftware()}" icon="fa fa-check" oncomplete="PF('wNuevo').hide()" update="f_tiposSoftware"/>
                     </h:form>
                 </p:dialog>
 
                 <!--Editar Tipo Software -->
-                <h:form id="f_editar">
-                    <p:dialog widgetVar="wd_editar" modal="true" header="Editar Tipo de Software" resizable="false" closeOnEscape="true" draggable="false">
+                <h:form id="frmEditar">
+                    <p:dialog widgetVar="wEditar" modal="true" header="Editar Tipo de Software" resizable="false" closeOnEscape="true" draggable="false">
                         <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
                             <p:outputLabel value="Tipo de Software:"/>
-                            <p:inputText value="#{tiposSoftwareMB.tipoSWSeleccionado.tipoSoftware}" required="true"/>
+                            <p:inputText value="#{tiposSoftwareMB.tipoSWSeleccionado.tipoSoftware}" required="true" requiredMessage="¡Ingrese un tipo de Software!"/>
                         </p:panelGrid>
-                        <p:commandButton value="Guardar" actionListener="#{tiposSoftwareMB.modificarTiposSoftware()}" icon="fa fa-check" oncomplete="PF('wd_editar').hide()" update="f_tiposSoftware"/>
+                        <p:commandButton value="Guardar" actionListener="#{tiposSoftwareMB.modificarTiposSoftware()}" icon="fa fa-check" oncomplete="PF('wEditar').hide()" update="f_tiposSoftware"/>
                     </p:dialog>
                 </h:form>
 

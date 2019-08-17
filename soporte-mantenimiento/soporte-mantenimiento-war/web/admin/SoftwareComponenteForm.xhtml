@@ -25,7 +25,6 @@
 
                     </f:facet>
 
-
                     <p:row>
                         <p:column style="width: 35%">
 
@@ -126,7 +125,6 @@
                 <!-- FORMULARIO AGREGAR NUEVO SOFTWARE -->
                 <p:dialog widgetVar="wd_nuevo" modal="true" closeOnEscape="true" header="Asignar Software">
                     <h:form id="f_asignar">
-
                         <p:pickList id="PojoPickList" value="#{softwareComponenteMB.scAsignar}" var="scA" itemValue="#{scA}" itemLabel="#{scA.nombre}"
                                     showCheckbox="true" showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" responsive="true" converter="compConverter">
 
@@ -138,24 +136,19 @@
                             <p:ajax event="unselect" listener="#{softwareComponenteMB.onUnselect}"/>
                             <p:ajax event="reorder" listener="#{softwareComponenteMB.onReorder}"/>
 
-                            <p:column headerText="Id Software">
+                            <p:column class="plColumn">
                                 <p:outputLabel value="#{scA.nombre}"/>
                             </p:column>
 
-                            <p:column>
-                                <p:outputLabel value="#{scA.idTipoSoftware.tipoSoftware}"/> 
-                            </p:column>
-
-                            <p:column>
+                            <p:column class="plColumn">
                                 <p:outputLabel value="#{scA.idArquitectura.arquitectura}"/>
                             </p:column>
 
-                            <p:column>
+                            <p:column class="plColumn">
                                 <p:outputLabel value="#{scA.version}"/>
                             </p:column>
-
                         </p:pickList>                        
-                        <p:commandButton value="Asignar software" update=":f_softwareComponente:t_SC" actionListener="#{softwareComponenteMB.nuevoSC()}" icon="fa fa-check" onclick="PF('wd_nuevo').hide()" />                        
+                        <p:commandButton value="Asignar software" update=":f_softwareComponente:t_SC, @form" actionListener="#{softwareComponenteMB.nuevoSC()}" icon="fa fa-check" onclick="PF('wd_nuevo').hide()" />                        
                     </h:form>
                 </p:dialog>
 
@@ -183,14 +176,11 @@
                     </h:form>  
                 </p:dialog>
 
-
-                <p:panel id="p_softwareAsignable">                    
-
+                <p:panel id="p_softwareAsignable">              
                     <h:panelGrid >
                         <h:outputText value="" />
                     </h:panelGrid>
                 </p:panel>
-
             </ui:define>
 
             <ui:define name="menuLateral">

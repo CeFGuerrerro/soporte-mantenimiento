@@ -133,7 +133,7 @@ public class SoftwareComponenteMB implements Serializable {
     public void obtenerSwDisponible() {
         List<Software> sfPorAsignar = new ArrayList<>();
         List<Software> disponibles = new ArrayList<>();
-        disponibles = sfl.findAll();
+        disponibles = sfl.findSWNoAsignado(softCompSelec);
 
         scAsignar = new DualListModel<>(disponibles, sfPorAsignar);
     }

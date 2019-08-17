@@ -13,7 +13,7 @@
             <ui:define name="contenido">
                 <h:form id="frmTabla">
                     <div>
-                        <p:commandButton id="btnNuevo" value="Nueva Arquitectura" oncomplete="PF('wnuevo').show();"/>
+                        <p:commandButton id="btnNuevo" icon="fa fa-plus" value="Nueva Arquitectura" update="frmNuevo" oncomplete="PF('wnuevo').show();"/>
                     </div>
 
                     <p:dataTable value="#{arquitecturasMB.arquiList}" id="tabla" 
@@ -35,21 +35,27 @@
 
                         <p:ajax event="rowDblselect" oncomplete="PF('weditar').show()" update=":frmEditar"/>
                     </p:dataTable>
+                    
+                     <!-- Eliminar Arquitectura -->
                     <p:contextMenu for="tabla">
-                        <p:menuitem value="Eliminar" icon="fa fa-trash" action="#{arquitecturasMB.eliminarArquitecturas()}" update="frmTabla"/>
+                        <p:menuitem value="Eliminar" icon="fa fa-trash" action="#{arquitecturasMB.eliminarArquitecturas()}" update=":frmTabla"/>
                         <p:menuitem value="Cancelar" icon="fa fa-close"/>
                     </p:contextMenu>
                 </h:form>
-                <h:form id="frmNuevo">
-                    <p:dialog id="dlgNuevo" widgetVar="wnuevo" header="Nuevo Estado" modal="true" resizable="false" closeOnEscape="true" draggable="false">
+
+                <!-- Formulario para agregar Arquitectura -->
+                <p:dialog id="dlgNuevo" widgetVar="wnuevo" header="Nuevo Estado" modal="true" resizable="false" closeOnEscape="true" draggable="false">
+                    <h:form id="frmNuevo">
                         <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
                             <p:outputLabel value="Arquitectura" for="nombre"/>
-                            <p:inputText id="nombre" value="#{arquitecturasMB.arquitecturas.arquitectura}" required="true" requiredMessage="¡Ingrese Arquitectura!"/>
+                            <p:inputText id="nombre" value="#{arquitecturasMB.arquitecturas.arquitectura}" required="true" requiredMessage="¡Ingrese una Arquitectura!"/>
                         </p:panelGrid>
-                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{arquitecturasMB.crearArquitecturas()}" oncomplete="PF('wnuevo').hide()" update=":frmTabla"/>
-                    </p:dialog>
-                </h:form>
+                        <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{arquitecturasMB.crearArquitecturas()}" oncomplete="PF('wnuevo').hide()" update="frmTabla"/>
+                    </h:form>
+                </p:dialog>
 
+
+                <!-- Formulario para editar Arquitectura -->
                 <h:form id="frmEditar">
                     <p:dialog id="dlgEditar" widgetVar="weditar" header="Editar Estado" modal="true" resizable="false" closeOnEscape="true" draggable="false">
                         <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
@@ -58,7 +64,6 @@
                         </p:panelGrid>
                         <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{arquitecturasMB.modificarArquitecturas()}" oncomplete="PF('weditar').hide()" update=":frmTabla"/>
                     </p:dialog>
-
                 </h:form>
             </ui:define>
 

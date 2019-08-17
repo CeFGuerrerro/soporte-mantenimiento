@@ -29,7 +29,7 @@
                         </f:facet>
 
                         <!-- Columnas de la Tabla -->
-                        <p:column headerText="ID" sortBy="#{soft.idSoftware}">
+                        <p:column headerText="ID" sortBy="#{soft.idSoftware}" style="width: 10em">
                             <p:outputLabel>#{soft.idSoftware}</p:outputLabel>
                         </p:column>
 
@@ -37,37 +37,35 @@
                             <p:outputLabel value="#{soft.nombre}"/>
                         </p:column>
 
-                        <p:column headerText="Tipo Software" sortBy="#{soft.idTipoSoftware.idTipoSoftware}" filterBy="#{soft.idTipoSoftware.idTipoSoftware}" style="width: 12em">
+                        <p:column headerText="Tipo Software" filterBy="#{soft.idTipoSoftware.idTipoSoftware}" >
                             <f:facet name="filter">
-                                <p:selectOneMenu onchange="PF('wd_t_software').filter()" filter="true" filterMatchMode="startsWith" style="width: 8em">
+                                <p:selectOneMenu onchange="PF('wd_t_software').filter()" filter="true" filterMatchMode="startsWith">
                                     <f:selectItem itemLabel="Seleccione un Tipo de Software" itemValue="#{null}" noSelectionOption="true" />
-                                    <f:selectItems value="#{tiposSoftwareMB.tipoSWList}" var="ts" itemLabel="#{ts.tipoSoftware}" itemValue="#{ts.tipoSoftware}" />
+                                    <f:selectItems value="#{tiposSoftwareMB.tipoSWList}" var="ts" itemLabel="#{ts.tipoSoftware}" itemValue="#{ts.idTipoSoftware}" />
                                 </p:selectOneMenu>
                             </f:facet>
                             <p:outputLabel>#{soft.idTipoSoftware.tipoSoftware}</p:outputLabel>
                         </p:column>
 
-
-                        <p:column headerText="Arquitectura" sortBy="#{soft.idArquitectura.idArquitectura}" filterBy="#{soft.idArquitectura.idArquitectura}" style="width: 12em;">
+                        <p:column headerText="Arquitectura" filterBy="#{soft.idArquitectura.idArquitectura}" style="width: 15em;">
                             <f:facet name="filter">
-                                <p:selectOneMenu onchange="PF('wd_t_software').filter()" filter="true" filterMatchMode="startsWith" style="width: 10em">
+                                <p:selectOneMenu onchange="PF('wd_t_software').filter()" filter="true" filterMatchMode="startsWith" >
                                     <f:selectItem itemLabel="Seleccione una Arquitectura" itemValue="#{null}" noSelectionOption="true" />
-                                    <f:selectItems value="#{arquitecturasMB.arquiList}" var="ar" itemLabel="#{ar.arquitectura}" itemValue="#{ar.arquitectura}" />
+                                    <f:selectItems value="#{arquitecturasMB.arquiList}" var="ar" itemLabel="#{ar.arquitectura}" itemValue="#{ar.idArquitectura}" />
                                 </p:selectOneMenu>
                             </f:facet>
                             <p:outputLabel>#{soft.idArquitectura.arquitectura}</p:outputLabel>
                         </p:column>
 
-
-                        <p:column headerText="Version" filterBy="#{soft.version}" sortBy="#{soft.version}" style="width: 9em">
+                        <p:column headerText="Version" filterBy="#{soft.version}" sortBy="#{soft.version}" style="width: 7em">
                             <p:outputLabel value="#{soft.version}"/>
                         </p:column>
 
-                        <p:column headerText="Service Pack" filterBy="#{soft.servicePack}" sortBy="#{soft.servicePack}" style="width: 9em">
+                        <p:column headerText="Service Pack" filterBy="#{soft.servicePack}" sortBy="#{soft.servicePack}" style="width: 7em">
                             <p:outputLabel value="#{soft.servicePack}"/>
                         </p:column>
 
-                        <p:column headerText="Observaciones" style="width: 15em">
+                        <p:column headerText="Observaciones" style="width: 23em">
                             <p:outputLabel value="#{soft.descripcion}"/>
                         </p:column>
 

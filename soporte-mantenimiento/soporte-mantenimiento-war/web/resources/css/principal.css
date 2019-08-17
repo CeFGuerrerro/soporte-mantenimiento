@@ -168,3 +168,10 @@ body {
     margin-right: 1.5%;
     font-weight: bolder;
 }
+
+/*PICKLIST*/
+
+.ui-picklist tbody .plColumn{
+min-width: 100px;
+
+}
