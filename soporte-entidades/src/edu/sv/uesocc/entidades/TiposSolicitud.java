@@ -8,6 +8,7 @@ package edu.sv.uesocc.entidades;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,7 +42,7 @@ public class TiposSolicitud implements Serializable {
     private Integer idTipoSolicitud;
     @Column(name = "nombre", length = 2147483647)
     private String nombre;
-    @OneToMany(mappedBy = "idTipoSolicitud")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoSolicitud")
     private List<Solicitudes> solicitudesList;
 
     public TiposSolicitud() {

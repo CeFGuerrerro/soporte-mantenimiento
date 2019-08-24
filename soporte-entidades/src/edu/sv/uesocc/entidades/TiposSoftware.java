@@ -43,7 +43,7 @@ public class TiposSoftware implements Serializable {
     @Basic(optional = false)
     @Column(name = "tipo_software", nullable = false, length = 2147483647)
     private String tipoSoftware;
-    @OneToMany(mappedBy = "idTipoSoftware")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoSoftware")
     private List<Software> softwareList;
 
     public TiposSoftware() {

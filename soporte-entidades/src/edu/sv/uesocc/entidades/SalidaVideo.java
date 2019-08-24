@@ -43,7 +43,7 @@ public class SalidaVideo implements Serializable {
     @Basic(optional = false)
     @Column(name = "tipo_salida", nullable = false, length = 2147483647)
     private String tipoSalida;
-    @OneToMany(mappedBy = "idSalidaVideo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSalidaVideo")
     private List<SalidaTarjetaVideo> salidaTarjetaVideoList;
 
     public SalidaVideo() {

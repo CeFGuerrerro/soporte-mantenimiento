@@ -7,6 +7,7 @@ package edu.sv.uesocc.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,10 +18,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -62,6 +65,8 @@ public class Motherboards implements Serializable {
     @JoinColumn(name = "id_socket", referencedColumnName = "id_socket")
     @ManyToOne
     private Sockets idSocket;
+    @OneToMany(mappedBy = "idMotherboard")
+    private List<MotherboardComponente> motherboardComponenteList;
 
     public Motherboards() {
     }
@@ -132,6 +137,15 @@ public class Motherboards implements Serializable {
 
     public void setIdSocket(Sockets idSocket) {
         this.idSocket = idSocket;
+    }
+
+    @XmlTransient
+    public List<MotherboardComponente> getMotherboardComponenteList() {
+        return motherboardComponenteList;
+    }
+
+    public void setMotherboardComponenteList(List<MotherboardComponente> motherboardComponenteList) {
+        this.motherboardComponenteList = motherboardComponenteList;
     }
 
     @Override

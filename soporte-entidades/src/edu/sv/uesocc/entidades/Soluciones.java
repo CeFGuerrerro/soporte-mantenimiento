@@ -51,7 +51,7 @@ public class Soluciones implements Serializable {
     @JoinColumn(name = "id_tipo_mantenimiento", referencedColumnName = "id_tipo_mantenimiento")
     @ManyToOne
     private TiposMantenimiento idTipoMantenimiento;
-    @OneToMany(mappedBy = "idSolucion")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSolucion")
     private List<DetallesOrdenTrabajo> detallesOrdenTrabajoList;
 
     public Soluciones() {

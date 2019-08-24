@@ -37,9 +37,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Equipos.findByObservaciones", query = "SELECT e FROM Equipos e WHERE e.observaciones = :observaciones")})
 public class Equipos implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEquipo")
-    private List<OrdenesTrabajo> ordenesTrabajoList;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,7 +44,7 @@ public class Equipos implements Serializable {
     @Column(name = "id_equipo", nullable = false)
     private Integer idEquipo;
     @Column(name = "estado")
-    private Boolean estado = true;
+    private Boolean estado;
     @Column(name = "observaciones", length = 2147483647)
     private String observaciones;
     @OneToMany(mappedBy = "idEquipo")
@@ -58,8 +55,10 @@ public class Equipos implements Serializable {
     @JoinColumn(name = "id_ubicacion", referencedColumnName = "id_ubicacion", nullable = false)
     @ManyToOne(optional = false)
     private Ubicaciones idUbicacion;
-    @OneToMany(mappedBy = "idEquipo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEquipo")
     private List<ComponentesEquipo> componentesEquipoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEquipo")
+    private List<OrdenesTrabajo> ordenesTrabajoList;
 
     public Equipos() {
     }
@@ -126,6 +125,15 @@ public class Equipos implements Serializable {
         this.componentesEquipoList = componentesEquipoList;
     }
 
+    @XmlTransient
+    public List<OrdenesTrabajo> getOrdenesTrabajoList() {
+        return ordenesTrabajoList;
+    }
+
+    public void setOrdenesTrabajoList(List<OrdenesTrabajo> ordenesTrabajoList) {
+        this.ordenesTrabajoList = ordenesTrabajoList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -149,15 +157,6 @@ public class Equipos implements Serializable {
     @Override
     public String toString() {
         return "edu.sv.uesocc.entidades.Equipos[ idEquipo=" + idEquipo + " ]";
-    }
-
-    @XmlTransient
-    public List<OrdenesTrabajo> getOrdenesTrabajoList() {
-        return ordenesTrabajoList;
-    }
-
-    public void setOrdenesTrabajoList(List<OrdenesTrabajo> ordenesTrabajoList) {
-        this.ordenesTrabajoList = ordenesTrabajoList;
     }
     
 }

@@ -7,6 +7,7 @@ package edu.sv.uesocc.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,10 +18,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -62,6 +65,8 @@ public class Fuentes implements Serializable {
     private Date fechaDeBaja;
     @Column(name = "observaciones", length = 2147483647)
     private String observaciones;
+    @OneToMany(mappedBy = "idFuente")
+    private List<FuenteComponente> fuenteComponenteList;
     @JoinColumn(name = "id_modelo", referencedColumnName = "id_modelo", nullable = false)
     @ManyToOne(optional = false)
     private Modelos idModelo;
@@ -135,6 +140,15 @@ public class Fuentes implements Serializable {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
+    }
+
+    @XmlTransient
+    public List<FuenteComponente> getFuenteComponenteList() {
+        return fuenteComponenteList;
+    }
+
+    public void setFuenteComponenteList(List<FuenteComponente> fuenteComponenteList) {
+        this.fuenteComponenteList = fuenteComponenteList;
     }
 
     public Modelos getIdModelo() {

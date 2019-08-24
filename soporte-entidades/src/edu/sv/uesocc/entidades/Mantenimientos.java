@@ -46,9 +46,9 @@ public class Mantenimientos implements Serializable {
     private String nombre;
     @Column(name = "descripcion", length = 2147483647)
     private String descripcion;
-    @OneToMany(mappedBy = "idMantenimiento")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMantenimiento")
     private List<TiposMantenimiento> tiposMantenimientoList;
-    @OneToMany(mappedBy = "idMantenimiento")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMantenimiento")
     private List<OrdenesTrabajo> ordenesTrabajoList;
 
     public Mantenimientos() {
