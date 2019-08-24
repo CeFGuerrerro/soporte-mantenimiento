@@ -123,5 +123,20 @@ public class ComponentesFacade extends AbstractFacade<Componentes> implements Co
 
         return em.createQuery(cq).getResultList();
     }
+    
+    @Override
+    public List<Componentes> ListasoftComponentes() {
+        boolean estado = true;
+        boolean software = true;
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Componentes> cq = cb.createQuery(Componentes.class);
+        Root<Componentes> comp = cq.from(Componentes.class);
+        Predicate condi = cb.and(cb.equal(comp.get("estado"), estado), cb.equal(comp.get("idTipoComponente").get("contenedorSw"), software));
+        cq.select(comp);
+        cq.where(condi);
+        
+        return em.createQuery(cq).getResultList();
+    }
+
 
 }

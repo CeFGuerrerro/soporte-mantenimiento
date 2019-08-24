@@ -6,6 +6,7 @@
 package edu.sv.uesocc.facades;
 
 import edu.sv.uesocc.entidades.Software;
+import edu.sv.uesocc.entidades.SoftwareComponente;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -25,6 +26,8 @@ public interface SoftwareFacadeLocal {
     Software find(Object id);
 
     List<Software> findAll();
+    
+    List<Software> findSWNoAsignado(SoftwareComponente swComponente);
 
     List<Software> findRange(int[] range);
 

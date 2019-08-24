@@ -8,11 +8,12 @@ package edu.sv.uesocc.facades;
 import edu.sv.uesocc.entidades.SoftwareComponente;
 import java.util.List;
 import javax.ejb.Local;
+import edu.sv.uesocc.entidades.Componentes;
+        /**
+         *
+         * @author o-a19
+         */
 
-/**
- *
- * @author o-a19
- */
 @Local
 public interface SoftwareComponenteFacadeLocal {
 
@@ -26,8 +27,10 @@ public interface SoftwareComponenteFacadeLocal {
 
     List<SoftwareComponente> findAll();
 
+    List<SoftwareComponente> buscarSoftware(Componentes componentes); 
+
     List<SoftwareComponente> findRange(int[] range);
 
     int count();
-    
+
 }

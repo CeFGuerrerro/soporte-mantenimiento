@@ -16,7 +16,7 @@
                 <h:form id="f_tipoComponente">
                     <div>
                         <!--Boton que despliega el modal para crear registros-->
-                        <p:commandButton value="Nuevo" icon="fa fa-plus" onclick="PF('wd_crear').show()" update="f_crear"/>
+                        <p:commandButton value="Nuevo Componente" icon="fa fa-plus" onclick="PF('wd_crear').show()" update="f_crear"/>
                     </div>
                     <!--Tabla que muestra todos los datos-->
                     <p:dataTable id="t_tipoComponente" emptyMessage="No hay registros" value="#{tiposComponenteMB.tipoCompList}" var="tipoComp"
