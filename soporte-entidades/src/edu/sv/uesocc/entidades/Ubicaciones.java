@@ -35,9 +35,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Ubicaciones.findByDescripcion", query = "SELECT u FROM Ubicaciones u WHERE u.descripcion = :descripcion")})
 public class Ubicaciones implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUbicacion")
-    private List<Solicitudes> solicitudesList;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,9 +46,11 @@ public class Ubicaciones implements Serializable {
     private String nombre;
     @Column(name = "descripcion", length = 2147483647)
     private String descripcion;
-    @OneToMany(mappedBy = "idUbicacion")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUbicacion")
     private List<Usuarios> usuariosList;
-    @OneToMany(mappedBy = "idUbicacion")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUbicacion")
+    private List<Solicitudes> solicitudesList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUbicacion")
     private List<Equipos> equiposList;
     @OneToMany(mappedBy = "idUbicacion")
     private List<Responsables> responsablesList;
@@ -102,6 +101,15 @@ public class Ubicaciones implements Serializable {
     }
 
     @XmlTransient
+    public List<Solicitudes> getSolicitudesList() {
+        return solicitudesList;
+    }
+
+    public void setSolicitudesList(List<Solicitudes> solicitudesList) {
+        this.solicitudesList = solicitudesList;
+    }
+
+    @XmlTransient
     public List<Equipos> getEquiposList() {
         return equiposList;
     }
@@ -142,15 +150,6 @@ public class Ubicaciones implements Serializable {
     @Override
     public String toString() {
         return "edu.sv.uesocc.entidades.Ubicaciones[ idUbicacion=" + idUbicacion + " ]";
-    }
-
-    @XmlTransient
-    public List<Solicitudes> getSolicitudesList() {
-        return solicitudesList;
-    }
-
-    public void setSolicitudesList(List<Solicitudes> solicitudesList) {
-        this.solicitudesList = solicitudesList;
     }
     
 }

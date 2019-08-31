@@ -55,14 +55,14 @@ public class Solicitudes implements Serializable {
     @Column(name = "problema", nullable = false, length = 2147483647)
     private String problema;
     @Column(name = "estado")
-    private boolean estado = false;
+    private Integer estado;
     @Column(name = "codigo_seguimiento")
     private Integer codigoSeguimiento;
     @JoinColumn(name = "id_responsable", referencedColumnName = "id_responsable", nullable = false)
     @ManyToOne(optional = false)
     private Responsables idResponsable;
     @JoinColumn(name = "id_tipo_solicitud", referencedColumnName = "id_tipo_solicitud", nullable = false)
-    @ManyToOne
+    @ManyToOne(optional = false)
     private TiposSolicitud idTipoSolicitud;
     @JoinColumn(name = "id_ubicacion", referencedColumnName = "id_ubicacion", nullable = false)
     @ManyToOne(optional = false)
@@ -107,11 +107,11 @@ public class Solicitudes implements Serializable {
         this.problema = problema;
     }
 
-    public boolean getEstado() {
+    public Integer getEstado() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(Integer estado) {
         this.estado = estado;
     }
 

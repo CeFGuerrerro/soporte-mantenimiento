@@ -47,11 +47,11 @@ public class Loggin implements Serializable {
     private String nombreLoggin;
     @Column(name = "passwoird", length = 2147483647)
     private String passwoird;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idLoggin")
-    private List<Permisos> permisosList;
     @JoinColumn(name = "id_tecnico", referencedColumnName = "id_tecnico")
     @ManyToOne
     private Tecnicos idTecnico;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idLoggin")
+    private List<Permisos> permisosList;
 
     public Loggin() {
     }
@@ -84,6 +84,14 @@ public class Loggin implements Serializable {
         this.passwoird = passwoird;
     }
 
+    public Tecnicos getIdTecnico() {
+        return idTecnico;
+    }
+
+    public void setIdTecnico(Tecnicos idTecnico) {
+        this.idTecnico = idTecnico;
+    }
+
     @XmlTransient
     public List<Permisos> getPermisosList() {
         return permisosList;
@@ -91,14 +99,6 @@ public class Loggin implements Serializable {
 
     public void setPermisosList(List<Permisos> permisosList) {
         this.permisosList = permisosList;
-    }
-
-    public Tecnicos getIdTecnico() {
-        return idTecnico;
-    }
-
-    public void setIdTecnico(Tecnicos idTecnico) {
-        this.idTecnico = idTecnico;
     }
 
     @Override

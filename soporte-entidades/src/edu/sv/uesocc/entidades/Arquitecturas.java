@@ -43,9 +43,9 @@ public class Arquitecturas implements Serializable {
     @Basic(optional = false)
     @Column(name = "arquitectura", nullable = false, length = 2147483647)
     private String arquitectura;
-    @OneToMany(mappedBy = "idArquitectura")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idArquitectura")
     private List<Software> softwareList;
-    @OneToMany(mappedBy = "idArquitectura")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idArquitectura")
     private List<Procesadores> procesadoresList;
 
     public Arquitecturas() {

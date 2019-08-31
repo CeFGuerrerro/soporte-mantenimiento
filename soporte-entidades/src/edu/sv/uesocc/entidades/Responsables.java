@@ -37,9 +37,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Responsables.findByCorreo", query = "SELECT r FROM Responsables r WHERE r.correo = :correo")})
 public class Responsables implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idResponsable")
-    private List<Solicitudes> solicitudesList;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,6 +48,8 @@ public class Responsables implements Serializable {
     private String nombre;
     @Column(name = "correo", length = 2147483647)
     private String correo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idResponsable")
+    private List<Solicitudes> solicitudesList;
     @OneToMany(mappedBy = "idResponsable")
     private List<Equipos> equiposList;
     @JoinColumn(name = "id_ubicacion", referencedColumnName = "id_ubicacion")
@@ -94,6 +93,15 @@ public class Responsables implements Serializable {
     }
 
     @XmlTransient
+    public List<Solicitudes> getSolicitudesList() {
+        return solicitudesList;
+    }
+
+    public void setSolicitudesList(List<Solicitudes> solicitudesList) {
+        this.solicitudesList = solicitudesList;
+    }
+
+    @XmlTransient
     public List<Equipos> getEquiposList() {
         return equiposList;
     }
@@ -133,15 +141,6 @@ public class Responsables implements Serializable {
     @Override
     public String toString() {
         return "edu.sv.uesocc.entidades.Responsables[ idResponsable=" + idResponsable + " ]";
-    }
-
-    @XmlTransient
-    public List<Solicitudes> getSolicitudesList() {
-        return solicitudesList;
-    }
-
-    public void setSolicitudesList(List<Solicitudes> solicitudesList) {
-        this.solicitudesList = solicitudesList;
     }
     
 }

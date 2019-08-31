@@ -54,6 +54,9 @@ public class MemoriasComponente implements Serializable {
     private Boolean estado;
     @Column(name = "observaciones", length = 2147483647)
     private String observaciones;
+    @JoinColumn(name = "id_componente", referencedColumnName = "id_componente")
+    @ManyToOne
+    private Componentes idComponente;
     @JoinColumn(name = "id_memoria", referencedColumnName = "id_memoria")
     @ManyToOne
     private Memorias idMemoria;
@@ -103,6 +106,14 @@ public class MemoriasComponente implements Serializable {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
+    }
+
+    public Componentes getIdComponente() {
+        return idComponente;
+    }
+
+    public void setIdComponente(Componentes idComponente) {
+        this.idComponente = idComponente;
     }
 
     public Memorias getIdMemoria() {

@@ -43,7 +43,7 @@ public class TiposMemoria implements Serializable {
     @Basic(optional = false)
     @Column(name = "tipo_memoria", nullable = false, length = 2147483647)
     private String tipoMemoria;
-    @OneToMany(mappedBy = "idTipo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipo")
     private List<Memorias> memoriasList;
 
     public TiposMemoria() {
