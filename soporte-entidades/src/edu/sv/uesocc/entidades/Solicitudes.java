@@ -55,7 +55,7 @@ public class Solicitudes implements Serializable {
     @Column(name = "problema", nullable = false, length = 2147483647)
     private String problema;
     @Column(name = "estado")
-    private Integer estado;
+    private Boolean estado;
     @Column(name = "codigo_seguimiento")
     private Integer codigoSeguimiento;
     @JoinColumn(name = "id_responsable", referencedColumnName = "id_responsable", nullable = false)
@@ -107,11 +107,11 @@ public class Solicitudes implements Serializable {
         this.problema = problema;
     }
 
-    public Integer getEstado() {
+    public Boolean getEstado() {
         return estado;
     }
 
-    public void setEstado(Integer estado) {
+    public void setEstado(Boolean estado) {
         this.estado = estado;
     }
 
