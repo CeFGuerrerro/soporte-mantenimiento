@@ -64,7 +64,7 @@ public class OrdenesTrabajo implements Serializable {
     @Column(name = "observaciones", length = 2147483647)
     private String observaciones;
     @Column(name = "prioridad")
-    private Integer prioridad;
+    private String prioridad = "Media";
     @Column(name = "estado")
     private Integer estado;
     @OneToMany(mappedBy = "idOrdenTrabajo")
@@ -137,11 +137,11 @@ public class OrdenesTrabajo implements Serializable {
         this.observaciones = observaciones;
     }
 
-    public Integer getPrioridad() {
+    public String getPrioridad() {
         return prioridad;
     }
 
-    public void setPrioridad(Integer prioridad) {
+    public void setPrioridad(String prioridad) {
         this.prioridad = prioridad;
     }
 
