@@ -57,7 +57,7 @@
                                         <p:outputLabel>#{comp.estado}</p:outputLabel>
                                     </p:column>
                                     <!--Enviar información a panel para cambio o insercion de elementos-->
-                                    <p:ajax event="rowSelect" listener="#{softwareComponenteMB.sofwareAsignable()}" update="f_softwareComponente"/>
+                                    <p:ajax event="rowSelect" listener="#{softwareComponenteMB.sofwareAsignable()}" update="f_softwareComponente,:f_asignar"/>
 
                                 </p:dataTable>
                             </h:form>
