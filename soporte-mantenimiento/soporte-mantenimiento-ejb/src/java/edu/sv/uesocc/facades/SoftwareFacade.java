@@ -5,6 +5,7 @@
  */
 package edu.sv.uesocc.facades;
 
+import edu.sv.uesocc.entidades.Componentes;
 import edu.sv.uesocc.entidades.Software;
 import edu.sv.uesocc.entidades.SoftwareComponente;
 import java.util.List;
@@ -35,24 +36,27 @@ public class SoftwareFacade extends AbstractFacade<Software> implements Software
     public SoftwareFacade() {
         super(Software.class);
     }
-
-    @Override
-    public List<Software> findSWNoAsignado(SoftwareComponente swComponente) {
-        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-        CriteriaQuery<Software> cq =  cb.createQuery(Software.class);
-        Subquery sub = cq.subquery(Software.class);
+ 
+   @Override
+    public List<Software> findSWNoAsignado(Componentes Componente) {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();    //Definicion de la query principal osea
+        CriteriaQuery<Software> cq = cb.createQuery(Software.class);    // Select * from software
         Root<Software> sw = cq.from(Software.class);
-        Root<Software> subSW = cq.from(Software.class);
-        sub.where(cb.equal(sw.get("idSoftware"), swComponente.getIdSoftware()));
-        // estas dos
-        CriteriaQuery<SoftwareComponente> cqSwC =  cb.createQuery(SoftwareComponente.class);
-       Root<SoftwareComponente> swC = cqSwC.from(SoftwareComponente.class);
-       //
-        Predicate condiciones = cb.and(cb.in(sub).not());
         cq.select(sw);
-        cq.where(condiciones);
         
-        return em.createQuery(cq).getResultList();
+        Subquery<SoftwareComponente> subq = cq.subquery(SoftwareComponente.class);  // Definicion de la subquery osea
+        Root<SoftwareComponente> subSwc = subq.from(SoftwareComponente.class);      // Select * from softwareComponente
+        subq.select(subSwc);
+        
+       // Predicate p = cb.and(cb.equal(subSwc.get("idSoftware"), swComponente.getIdSoftware()),cb.equal(subSwc.get("idSoftware"), sw)); //Condiciones de la subquery osea WHERE idSoftware = swComponente.idSoftware
+        
+        Predicate p = cb.and(cb.equal(subSwc.get("idSoftware"), sw), cb.equal(subSwc.get("idComponente"), Componente));
+        subq.where(p); // Pasamos las condiciones a la subquery
+        cq.where(cb.not(cb.exists(subq))); // Pasamos la subquery a la query principal osea NOT IN (subquery)
+        
+        return em.createQuery(cq).getResultList(); 
     }
+
+
     
 }

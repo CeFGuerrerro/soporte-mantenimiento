@@ -61,7 +61,10 @@ public class SoftwareComponenteMB implements Serializable {
     @PostConstruct
     private void init() {
         softCompSelec = new SoftwareComponente();
-        obtenerSwDisponible();
+        List<Software> sfPorAsignar = new ArrayList<>();
+        List<Software> disponibles = new ArrayList<>();
+
+        scAsignar = new DualListModel<>(disponibles, sfPorAsignar);
     }
 
     // ---------- Getter and Setter ---------
@@ -133,7 +136,9 @@ public class SoftwareComponenteMB implements Serializable {
     public void obtenerSwDisponible() {
         List<Software> sfPorAsignar = new ArrayList<>();
         List<Software> disponibles = new ArrayList<>();
-        disponibles = sfl.findSWNoAsignado(softCompSelec);
+        disponibles = sfl.findSWNoAsignado(compSelect);
+        
+        System.out.println(disponibles.get(0));
 
         scAsignar = new DualListModel<>(disponibles, sfPorAsignar);
     }
@@ -149,6 +154,7 @@ public class SoftwareComponenteMB implements Serializable {
         estadoInfo = false;
         estadoTabla = true;
         mostrarTabla();
+        obtenerSDisponible();
     }
 
     public void nuevoSC() {
@@ -221,7 +227,6 @@ public class SoftwareComponenteMB implements Serializable {
             SAporSC = scfl.buscarSoftware(compSelect);
         } catch (Exception e) {
         }
-
     }
 
     public void onTransfer(TransferEvent event) {
@@ -229,7 +234,6 @@ public class SoftwareComponenteMB implements Serializable {
         for (Object item : event.getItems()) {
             builder.append(((Software) item).getIdSoftware()).append("<br />");
         }
-
         sfList = scAsignar.getTarget();
     }
 
@@ -247,5 +251,8 @@ public class SoftwareComponenteMB implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "List Reordered", null));
     }
-
+    
+    public void obtenerSDisponible () {
+    obtenerSwDisponible();
+    }
 }
