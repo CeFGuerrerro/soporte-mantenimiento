@@ -45,11 +45,11 @@ public class Modelos implements Serializable {
     @Basic(optional = false)
     @Column(name = "nombre", nullable = false, length = 2147483647)
     private String nombre;
-    @OneToMany(mappedBy = "idModelo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idModelo")
     private List<Fuentes> fuentesList;
-    @OneToMany(mappedBy = "idModelo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idModelo")
     private List<Componentes> componentesList;
-    @OneToMany(mappedBy = "idModelo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idModelo")
     private List<Procesadores> procesadoresList;
     @JoinColumn(name = "id_marca", referencedColumnName = "id_marca", nullable = false)
     @ManyToOne(optional = false)

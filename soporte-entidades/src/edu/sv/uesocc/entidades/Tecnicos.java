@@ -8,6 +8,7 @@ package edu.sv.uesocc.entidades;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -53,6 +54,8 @@ public class Tecnicos implements Serializable {
     private Boolean estado;
     @OneToMany(mappedBy = "idTecnico")
     private List<Loggin> logginList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTecnico")
+    private List<OrdenesTrabajo> ordenesTrabajoList;
 
     public Tecnicos() {
     }
@@ -113,6 +116,15 @@ public class Tecnicos implements Serializable {
 
     public void setLogginList(List<Loggin> logginList) {
         this.logginList = logginList;
+    }
+
+    @XmlTransient
+    public List<OrdenesTrabajo> getOrdenesTrabajoList() {
+        return ordenesTrabajoList;
+    }
+
+    public void setOrdenesTrabajoList(List<OrdenesTrabajo> ordenesTrabajoList) {
+        this.ordenesTrabajoList = ordenesTrabajoList;
     }
 
     @Override

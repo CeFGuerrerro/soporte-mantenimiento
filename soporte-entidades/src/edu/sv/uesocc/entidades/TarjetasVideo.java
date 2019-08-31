@@ -7,7 +7,9 @@ package edu.sv.uesocc.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,10 +19,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -56,6 +60,10 @@ public class TarjetasVideo implements Serializable {
     private Date fechaDeBaja;
     @Column(name = "observaciones", length = 2147483647)
     private String observaciones;
+    @OneToMany(mappedBy = "idTarjetaVideo")
+    private List<TarjetasVideoComponente> tarjetasVideoComponenteList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTarjetaVideo")
+    private List<SalidaTarjetaVideo> salidaTarjetaVideoList;
     @JoinColumn(name = "id_marca", referencedColumnName = "id_marca", nullable = false)
     @ManyToOne(optional = false)
     private Marcas idMarca;
@@ -116,6 +124,24 @@ public class TarjetasVideo implements Serializable {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
+    }
+
+    @XmlTransient
+    public List<TarjetasVideoComponente> getTarjetasVideoComponenteList() {
+        return tarjetasVideoComponenteList;
+    }
+
+    public void setTarjetasVideoComponenteList(List<TarjetasVideoComponente> tarjetasVideoComponenteList) {
+        this.tarjetasVideoComponenteList = tarjetasVideoComponenteList;
+    }
+
+    @XmlTransient
+    public List<SalidaTarjetaVideo> getSalidaTarjetaVideoList() {
+        return salidaTarjetaVideoList;
+    }
+
+    public void setSalidaTarjetaVideoList(List<SalidaTarjetaVideo> salidaTarjetaVideoList) {
+        this.salidaTarjetaVideoList = salidaTarjetaVideoList;
     }
 
     public Marcas getIdMarca() {

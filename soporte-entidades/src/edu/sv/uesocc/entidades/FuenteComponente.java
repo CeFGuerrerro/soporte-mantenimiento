@@ -54,6 +54,9 @@ public class FuenteComponente implements Serializable {
     private Boolean estado;
     @Column(name = "observaciones", length = 2147483647)
     private String observaciones;
+    @JoinColumn(name = "id_componente", referencedColumnName = "id_componente")
+    @ManyToOne
+    private Componentes idComponente;
     @JoinColumn(name = "id_fuente", referencedColumnName = "id_fuente")
     @ManyToOne
     private Fuentes idFuente;
@@ -103,6 +106,14 @@ public class FuenteComponente implements Serializable {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
+    }
+
+    public Componentes getIdComponente() {
+        return idComponente;
+    }
+
+    public void setIdComponente(Componentes idComponente) {
+        this.idComponente = idComponente;
     }
 
     public Fuentes getIdFuente() {

@@ -67,7 +67,7 @@ public class OrdenesTrabajo implements Serializable {
     private String prioridad = "Media";
     @Column(name = "estado")
     private Integer estado;
-    @OneToMany(mappedBy = "idOrdenTrabajo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idOrdenTrabajo")
     private List<DetallesOrdenTrabajo> detallesOrdenTrabajoList;
     @JoinColumn(name = "id_equipo", referencedColumnName = "id_equipo", nullable = false)
     @ManyToOne(optional = false)

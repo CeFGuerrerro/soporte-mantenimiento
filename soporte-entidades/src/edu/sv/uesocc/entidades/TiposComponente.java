@@ -31,10 +31,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "TiposComponente.findAll", query = "SELECT t FROM TiposComponente t")
     , @NamedQuery(name = "TiposComponente.findByIdTipoComponente", query = "SELECT t FROM TiposComponente t WHERE t.idTipoComponente = :idTipoComponente")
-    , @NamedQuery(name = "Componentes.findByContenedorHw", query = "SELECT t FROM TiposComponente t WHERE t.contenedorHw = :contenedorHw")
-    , @NamedQuery(name = "Componentes.findByContenedorSw", query = "SELECT t FROM TiposComponente t WHERE t.contenedorSw = :contenedorSw")
     , @NamedQuery(name = "TiposComponente.findByNombre", query = "SELECT t FROM TiposComponente t WHERE t.nombre = :nombre")
-    , @NamedQuery(name = "TiposComponente.findByDescripcion", query = "SELECT t FROM TiposComponente t WHERE t.descripcion = :descripcion")})
+    , @NamedQuery(name = "TiposComponente.findByDescripcion", query = "SELECT t FROM TiposComponente t WHERE t.descripcion = :descripcion")
+    , @NamedQuery(name = "TiposComponente.findByContenedorHw", query = "SELECT t FROM TiposComponente t WHERE t.contenedorHw = :contenedorHw")
+    , @NamedQuery(name = "TiposComponente.findByContenedorSw", query = "SELECT t FROM TiposComponente t WHERE t.contenedorSw = :contenedorSw")})
 public class TiposComponente implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,16 +43,16 @@ public class TiposComponente implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_tipo_componente", nullable = false)
     private Integer idTipoComponente;
-    @Column(name = "contenedor_hw")
-    private Boolean contenedorHw;
-    @Column(name = "contenedor_sw")
-    private Boolean contenedorSw;
     @Basic(optional = false)
     @Column(name = "nombre", nullable = false, length = 2147483647)
     private String nombre;
     @Column(name = "descripcion", length = 2147483647)
     private String descripcion;
-    @OneToMany(mappedBy = "idTipoComponente")
+    @Column(name = "contenedor_hw")
+    private Boolean contenedorHw;
+    @Column(name = "contenedor_sw")
+    private Boolean contenedorSw;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoComponente")
     private List<Componentes> componentesList;
 
     public TiposComponente() {
@@ -75,22 +75,6 @@ public class TiposComponente implements Serializable {
         this.idTipoComponente = idTipoComponente;
     }
 
-    public Boolean getContenedorHw() {
-        return contenedorHw;
-    }
-
-    public void setContenedorHw(Boolean contenedorHw) {
-        this.contenedorHw = contenedorHw;
-    }
-
-    public Boolean getContenedorSw() {
-        return contenedorSw;
-    }
-
-    public void setContenedorSw(Boolean contenedorSw) {
-        this.contenedorSw = contenedorSw;
-    }
-
     public String getNombre() {
         return nombre;
     }
@@ -105,6 +89,22 @@ public class TiposComponente implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Boolean getContenedorHw() {
+        return contenedorHw;
+    }
+
+    public void setContenedorHw(Boolean contenedorHw) {
+        this.contenedorHw = contenedorHw;
+    }
+
+    public Boolean getContenedorSw() {
+        return contenedorSw;
+    }
+
+    public void setContenedorSw(Boolean contenedorSw) {
+        this.contenedorSw = contenedorSw;
     }
 
     @XmlTransient
@@ -140,5 +140,5 @@ public class TiposComponente implements Serializable {
     public String toString() {
         return "edu.sv.uesocc.entidades.TiposComponente[ idTipoComponente=" + idTipoComponente + " ]";
     }
-
+    
 }

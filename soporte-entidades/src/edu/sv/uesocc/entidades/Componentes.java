@@ -59,14 +59,30 @@ public class Componentes implements Serializable {
     private Boolean asignado = false;
     @Column(name = "observaciones", length = 2147483647)
     private String observaciones;
+    @OneToMany(mappedBy = "idComponente")
+    private List<FuenteComponente> fuenteComponenteList;
     @JoinColumn(name = "id_modelo", referencedColumnName = "id_modelo", nullable = false)
     @ManyToOne(optional = false)
     private Modelos idModelo;
     @JoinColumn(name = "id_tipo_componente", referencedColumnName = "id_tipo_componente", nullable = false)
     @ManyToOne(optional = false)
     private TiposComponente idTipoComponente;
+    @OneToMany(mappedBy = "idComponente")
+    private List<DiscosComponente> discosComponenteList;
+    @OneToMany(mappedBy = "idComponente")
+    private List<MemoriasComponente> memoriasComponenteList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idComponente")
     private List<SoftwareComponente> softwareComponenteList;
+    @OneToMany(mappedBy = "idComponente")
+    private List<TarjetasVideoComponente> tarjetasVideoComponenteList;
+    @OneToMany(mappedBy = "idComponente")
+    private List<ProcesadorComponente> procesadorComponenteList;
+    @OneToMany(mappedBy = "idComponente")
+    private List<MotherboardComponente> motherboardComponenteList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idComponente")
+    private List<ComponentesEquipo> componentesEquipoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idComponente")
+    private List<Ups> upsList;
 
     public Componentes() {
     }
@@ -131,6 +147,15 @@ public class Componentes implements Serializable {
         this.observaciones = observaciones;
     }
 
+    @XmlTransient
+    public List<FuenteComponente> getFuenteComponenteList() {
+        return fuenteComponenteList;
+    }
+
+    public void setFuenteComponenteList(List<FuenteComponente> fuenteComponenteList) {
+        this.fuenteComponenteList = fuenteComponenteList;
+    }
+
     public Modelos getIdModelo() {
         return idModelo;
     }
@@ -148,12 +173,75 @@ public class Componentes implements Serializable {
     }
 
     @XmlTransient
+    public List<DiscosComponente> getDiscosComponenteList() {
+        return discosComponenteList;
+    }
+
+    public void setDiscosComponenteList(List<DiscosComponente> discosComponenteList) {
+        this.discosComponenteList = discosComponenteList;
+    }
+
+    @XmlTransient
+    public List<MemoriasComponente> getMemoriasComponenteList() {
+        return memoriasComponenteList;
+    }
+
+    public void setMemoriasComponenteList(List<MemoriasComponente> memoriasComponenteList) {
+        this.memoriasComponenteList = memoriasComponenteList;
+    }
+
+    @XmlTransient
     public List<SoftwareComponente> getSoftwareComponenteList() {
         return softwareComponenteList;
     }
 
     public void setSoftwareComponenteList(List<SoftwareComponente> softwareComponenteList) {
         this.softwareComponenteList = softwareComponenteList;
+    }
+
+    @XmlTransient
+    public List<TarjetasVideoComponente> getTarjetasVideoComponenteList() {
+        return tarjetasVideoComponenteList;
+    }
+
+    public void setTarjetasVideoComponenteList(List<TarjetasVideoComponente> tarjetasVideoComponenteList) {
+        this.tarjetasVideoComponenteList = tarjetasVideoComponenteList;
+    }
+
+    @XmlTransient
+    public List<ProcesadorComponente> getProcesadorComponenteList() {
+        return procesadorComponenteList;
+    }
+
+    public void setProcesadorComponenteList(List<ProcesadorComponente> procesadorComponenteList) {
+        this.procesadorComponenteList = procesadorComponenteList;
+    }
+
+    @XmlTransient
+    public List<MotherboardComponente> getMotherboardComponenteList() {
+        return motherboardComponenteList;
+    }
+
+    public void setMotherboardComponenteList(List<MotherboardComponente> motherboardComponenteList) {
+        this.motherboardComponenteList = motherboardComponenteList;
+    }
+
+    @XmlTransient
+    public List<ComponentesEquipo> getComponentesEquipoList() {
+        return componentesEquipoList;
+    }
+
+    public void setComponentesEquipoList(List<ComponentesEquipo> componentesEquipoList) {
+        this.componentesEquipoList = componentesEquipoList;
+    }
+
+    @XmlTransient
+    public List<Ups> getUpsList() {
+        return upsList;
+    }
+
+    public void setUpsList(List<Ups> upsList) {
+        this.upsList = upsList;
     }
 
     @Override

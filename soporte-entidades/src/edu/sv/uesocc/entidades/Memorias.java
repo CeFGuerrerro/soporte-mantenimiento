@@ -7,6 +7,7 @@ package edu.sv.uesocc.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,10 +18,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -56,6 +59,8 @@ public class Memorias implements Serializable {
     private Date fechaDeBaja;
     @Column(name = "observaciones", length = 2147483647)
     private String observaciones;
+    @OneToMany(mappedBy = "idMemoria")
+    private List<MemoriasComponente> memoriasComponenteList;
     @JoinColumn(name = "id_capacidad", referencedColumnName = "id_capacidad")
     @ManyToOne
     private Capacidades idCapacidad;
@@ -122,6 +127,15 @@ public class Memorias implements Serializable {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
+    }
+
+    @XmlTransient
+    public List<MemoriasComponente> getMemoriasComponenteList() {
+        return memoriasComponenteList;
+    }
+
+    public void setMemoriasComponenteList(List<MemoriasComponente> memoriasComponenteList) {
+        this.memoriasComponenteList = memoriasComponenteList;
     }
 
     public Capacidades getIdCapacidad() {
