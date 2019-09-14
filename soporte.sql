@@ -5,7 +5,7 @@
 -- Dumped from database version 10.5
 -- Dumped by pg_dump version 10.5
 
--- Started on 2019-05-04 12:12:17
+-- Started on 2019-09-14 10:30:41
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -209,11 +209,11 @@ ALTER SEQUENCE public.componentes_id_componente_seq OWNED BY public.componentes.
 
 CREATE TABLE public.cronograma (
     id_cronograma integer NOT NULL,
-    id_equipo integer,
     fecha_inicio date NOT NULL,
     fecha_fin date NOT NULL,
     nombre_evento text NOT NULL,
-    descripcion text
+    descripcion text,
+    id_orden_trabajo integer
 );
 
 
@@ -253,7 +253,8 @@ CREATE TABLE public.detalles_orden_trabajo (
     id_detalle integer NOT NULL,
     id_orden_trabajo integer NOT NULL,
     id_solucion integer NOT NULL,
-    observaciones text
+    observaciones text,
+    id_tipo_mantenimiento integer
 );
 
 
@@ -888,9 +889,9 @@ CREATE TABLE public.ordenes_trabajo (
     hora_inicio text,
     hora_finalizacion text,
     observaciones text,
-    prioridad integer,
     estado integer,
-    id_equipo integer NOT NULL
+    id_equipo integer NOT NULL,
+    prioridad text
 );
 
 
@@ -945,7 +946,8 @@ CREATE TABLE public.permisos (
     soluciones boolean,
     tecnicos boolean,
     ubicaciones boolean,
-    orden_trabajo boolean
+    orden_trabajo boolean,
+    permisos boolean
 );
 
 
@@ -1392,10 +1394,10 @@ CREATE TABLE public.solicitudes (
     id_responsable integer NOT NULL,
     fecha_solicitud date NOT NULL,
     problema text NOT NULL,
-    estado integer,
     codigo_seguimiento integer,
     id_tipo_solicitud integer NOT NULL,
-    id_ubicacion integer NOT NULL
+    id_ubicacion integer NOT NULL,
+    estado boolean
 );
 
 
@@ -1434,8 +1436,7 @@ ALTER SEQUENCE public.solicitudes_id_solicitud_seq OWNED BY public.solicitudes.i
 CREATE TABLE public.soluciones (
     id_solucion integer NOT NULL,
     nombre text NOT NULL,
-    descripcion text,
-    id_tipo_mantenimiento integer
+    descripcion text
 );
 
 
@@ -2833,7 +2834,7 @@ ALTER TABLE ONLY public.software_componente
 
 
 --
--- TOC entry 2511 (class 2606 OID 17203)
+-- TOC entry 2510 (class 2606 OID 17203)
 -- Name: ups id_componente; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2923,15 +2924,6 @@ ALTER TABLE ONLY public.discos_componente
 
 
 --
--- TOC entry 2516 (class 2606 OID 17090)
--- Name: cronograma id_equipo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.cronograma
-    ADD CONSTRAINT id_equipo FOREIGN KEY (id_equipo) REFERENCES public.equipos(id_equipo);
-
-
---
 -- TOC entry 2530 (class 2606 OID 17516)
 -- Name: componentes_equipo id_equipo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
@@ -2941,7 +2933,7 @@ ALTER TABLE ONLY public.componentes_equipo
 
 
 --
--- TOC entry 2523 (class 2606 OID 17536)
+-- TOC entry 2522 (class 2606 OID 17536)
 -- Name: ordenes_trabajo id_equipo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2977,7 +2969,7 @@ ALTER TABLE ONLY public.tipos_mantenimiento
 
 
 --
--- TOC entry 2521 (class 2606 OID 17308)
+-- TOC entry 2520 (class 2606 OID 17308)
 -- Name: ordenes_trabajo id_mantenimiento; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3076,7 +3068,7 @@ ALTER TABLE ONLY public.motherboard_componente
 
 
 --
--- TOC entry 2524 (class 2606 OID 17330)
+-- TOC entry 2523 (class 2606 OID 17330)
 -- Name: detalles_orden_trabajo id_orden_trabajo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3085,7 +3077,16 @@ ALTER TABLE ONLY public.detalles_orden_trabajo
 
 
 --
--- TOC entry 2512 (class 2606 OID 17502)
+-- TOC entry 2515 (class 2606 OID 42138)
+-- Name: cronograma id_orden_trabajo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cronograma
+    ADD CONSTRAINT id_orden_trabajo FOREIGN KEY (id_orden_trabajo) REFERENCES public.ordenes_trabajo(id_orden_trabajo);
+
+
+--
+-- TOC entry 2511 (class 2606 OID 17502)
 -- Name: ups id_potencia; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3121,7 +3122,7 @@ ALTER TABLE ONLY public.tarjetas_video
 
 
 --
--- TOC entry 2517 (class 2606 OID 17531)
+-- TOC entry 2516 (class 2606 OID 17531)
 -- Name: solicitudes id_responsable; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3130,7 +3131,7 @@ ALTER TABLE ONLY public.solicitudes
 
 
 --
--- TOC entry 2514 (class 2606 OID 17348)
+-- TOC entry 2513 (class 2606 OID 17348)
 -- Name: equipos id_responsables; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3175,7 +3176,7 @@ ALTER TABLE ONLY public.software_componente
 
 
 --
--- TOC entry 2520 (class 2606 OID 17303)
+-- TOC entry 2519 (class 2606 OID 17303)
 -- Name: ordenes_trabajo id_solicitud; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3184,7 +3185,7 @@ ALTER TABLE ONLY public.ordenes_trabajo
 
 
 --
--- TOC entry 2525 (class 2606 OID 17340)
+-- TOC entry 2524 (class 2606 OID 17340)
 -- Name: detalles_orden_trabajo id_solucion; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3211,7 +3212,7 @@ ALTER TABLE ONLY public.tarjetas_video_componente
 
 
 --
--- TOC entry 2522 (class 2606 OID 17313)
+-- TOC entry 2521 (class 2606 OID 17313)
 -- Name: ordenes_trabajo id_tecnico; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3247,11 +3248,11 @@ ALTER TABLE ONLY public.discos
 
 
 --
--- TOC entry 2510 (class 2606 OID 17526)
--- Name: soluciones id_tipo_mantenimiento; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2525 (class 2606 OID 42143)
+-- Name: detalles_orden_trabajo id_tipo_mantenimiento; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.soluciones
+ALTER TABLE ONLY public.detalles_orden_trabajo
     ADD CONSTRAINT id_tipo_mantenimiento FOREIGN KEY (id_tipo_mantenimiento) REFERENCES public.tipos_mantenimiento(id_tipo_mantenimiento);
 
 
@@ -3274,7 +3275,7 @@ ALTER TABLE ONLY public.software
 
 
 --
--- TOC entry 2518 (class 2606 OID 17552)
+-- TOC entry 2517 (class 2606 OID 17552)
 -- Name: solicitudes id_tipo_solicitud; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3283,7 +3284,7 @@ ALTER TABLE ONLY public.solicitudes
 
 
 --
--- TOC entry 2513 (class 2606 OID 17071)
+-- TOC entry 2512 (class 2606 OID 17071)
 -- Name: equipos id_ubicacion; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3292,7 +3293,7 @@ ALTER TABLE ONLY public.equipos
 
 
 --
--- TOC entry 2515 (class 2606 OID 17353)
+-- TOC entry 2514 (class 2606 OID 17353)
 -- Name: responsables id_ubicacion; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3310,7 +3311,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 2519 (class 2606 OID 17557)
+-- TOC entry 2518 (class 2606 OID 17557)
 -- Name: solicitudes id_ubicacion; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3327,7 +3328,7 @@ ALTER TABLE ONLY public.memorias
     ADD CONSTRAINT id_velocidad FOREIGN KEY (id_velocidad) REFERENCES public.velocidad(id_velocidad);
 
 
--- Completed on 2019-05-04 12:12:18
+-- Completed on 2019-09-14 10:30:42
 
 --
 -- PostgreSQL database dump complete
