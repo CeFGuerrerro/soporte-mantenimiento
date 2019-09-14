@@ -37,8 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Solicitudes.findByIdSolicitud", query = "SELECT s FROM Solicitudes s WHERE s.idSolicitud = :idSolicitud")
     , @NamedQuery(name = "Solicitudes.findByFechaSolicitud", query = "SELECT s FROM Solicitudes s WHERE s.fechaSolicitud = :fechaSolicitud")
     , @NamedQuery(name = "Solicitudes.findByProblema", query = "SELECT s FROM Solicitudes s WHERE s.problema = :problema")
-    , @NamedQuery(name = "Solicitudes.findByEstado", query = "SELECT s FROM Solicitudes s WHERE s.estado = :estado")
-    , @NamedQuery(name = "Solicitudes.findByCodigoSeguimiento", query = "SELECT s FROM Solicitudes s WHERE s.codigoSeguimiento = :codigoSeguimiento")})
+    , @NamedQuery(name = "Solicitudes.findByCodigoSeguimiento", query = "SELECT s FROM Solicitudes s WHERE s.codigoSeguimiento = :codigoSeguimiento")
+    , @NamedQuery(name = "Solicitudes.findByEstado", query = "SELECT s FROM Solicitudes s WHERE s.estado = :estado")})
 public class Solicitudes implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,10 +54,10 @@ public class Solicitudes implements Serializable {
     @Basic(optional = false)
     @Column(name = "problema", nullable = false, length = 2147483647)
     private String problema;
-    @Column(name = "estado")
-    private Boolean estado;
     @Column(name = "codigo_seguimiento")
     private Integer codigoSeguimiento;
+    @Column(name = "estado")
+    private Boolean estado;
     @JoinColumn(name = "id_responsable", referencedColumnName = "id_responsable", nullable = false)
     @ManyToOne(optional = false)
     private Responsables idResponsable;
@@ -107,20 +107,20 @@ public class Solicitudes implements Serializable {
         this.problema = problema;
     }
 
-    public Boolean getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
-    }
-
     public Integer getCodigoSeguimiento() {
         return codigoSeguimiento;
     }
 
     public void setCodigoSeguimiento(Integer codigoSeguimiento) {
         this.codigoSeguimiento = codigoSeguimiento;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
 
     public Responsables getIdResponsable() {

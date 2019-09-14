@@ -51,7 +51,7 @@ public class TiposMantenimiento implements Serializable {
     @ManyToOne(optional = false)
     private Mantenimientos idMantenimiento;
     @OneToMany(mappedBy = "idTipoMantenimiento")
-    private List<Soluciones> solucionesList;
+    private List<DetallesOrdenTrabajo> detallesOrdenTrabajoList;
 
     public TiposMantenimiento() {
     }
@@ -98,12 +98,12 @@ public class TiposMantenimiento implements Serializable {
     }
 
     @XmlTransient
-    public List<Soluciones> getSolucionesList() {
-        return solucionesList;
+    public List<DetallesOrdenTrabajo> getDetallesOrdenTrabajoList() {
+        return detallesOrdenTrabajoList;
     }
 
-    public void setSolucionesList(List<Soluciones> solucionesList) {
-        this.solucionesList = solucionesList;
+    public void setDetallesOrdenTrabajoList(List<DetallesOrdenTrabajo> detallesOrdenTrabajoList) {
+        this.detallesOrdenTrabajoList = detallesOrdenTrabajoList;
     }
 
     @Override

@@ -52,11 +52,11 @@ public class Componentes implements Serializable {
     @Column(name = "numero_serie", length = 2147483647)
     private String numeroSerie;
     @Column(name = "estado")
-    private Boolean estado = true;
+    private Boolean estado;
     @Column(name = "personal")
     private Boolean personal;
     @Column(name = "asignado")
-    private Boolean asignado = false;
+    private Boolean asignado;
     @Column(name = "observaciones", length = 2147483647)
     private String observaciones;
     @OneToMany(mappedBy = "idComponente")

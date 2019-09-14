@@ -45,7 +45,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Permisos.findBySoluciones", query = "SELECT p FROM Permisos p WHERE p.soluciones = :soluciones")
     , @NamedQuery(name = "Permisos.findByTecnicos", query = "SELECT p FROM Permisos p WHERE p.tecnicos = :tecnicos")
     , @NamedQuery(name = "Permisos.findByUbicaciones", query = "SELECT p FROM Permisos p WHERE p.ubicaciones = :ubicaciones")
-    , @NamedQuery(name = "Permisos.findByOrdenTrabajo", query = "SELECT p FROM Permisos p WHERE p.ordenTrabajo = :ordenTrabajo")})
+    , @NamedQuery(name = "Permisos.findByOrdenTrabajo", query = "SELECT p FROM Permisos p WHERE p.ordenTrabajo = :ordenTrabajo")
+    , @NamedQuery(name = "Permisos.findByPermisos", query = "SELECT p FROM Permisos p WHERE p.permisos = :permisos")})
 public class Permisos implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -88,6 +89,8 @@ public class Permisos implements Serializable {
     private Boolean ubicaciones;
     @Column(name = "orden_trabajo")
     private Boolean ordenTrabajo;
+    @Column(name = "permisos")
+    private Boolean permisos;
     @JoinColumn(name = "id_loggin", referencedColumnName = "id_loggin", nullable = false)
     @ManyToOne(optional = false)
     private Loggin idLoggin;
@@ -241,6 +244,14 @@ public class Permisos implements Serializable {
 
     public void setOrdenTrabajo(Boolean ordenTrabajo) {
         this.ordenTrabajo = ordenTrabajo;
+    }
+
+    public Boolean getPermisos() {
+        return permisos;
+    }
+
+    public void setPermisos(Boolean permisos) {
+        this.permisos = permisos;
     }
 
     public Loggin getIdLoggin() {

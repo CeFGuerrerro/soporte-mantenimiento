@@ -57,9 +57,9 @@ public class Cronograma implements Serializable {
     private String nombreEvento;
     @Column(name = "descripcion", length = 2147483647)
     private String descripcion;
-    @JoinColumn(name = "id_equipo", referencedColumnName = "id_equipo")
+    @JoinColumn(name = "id_orden_trabajo", referencedColumnName = "id_orden_trabajo")
     @ManyToOne
-    private Equipos idEquipo;
+    private OrdenesTrabajo idOrdenTrabajo;
 
     public Cronograma() {
     }
@@ -115,12 +115,12 @@ public class Cronograma implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Equipos getIdEquipo() {
-        return idEquipo;
+    public OrdenesTrabajo getIdOrdenTrabajo() {
+        return idOrdenTrabajo;
     }
 
-    public void setIdEquipo(Equipos idEquipo) {
-        this.idEquipo = idEquipo;
+    public void setIdOrdenTrabajo(OrdenesTrabajo idOrdenTrabajo) {
+        this.idOrdenTrabajo = idOrdenTrabajo;
     }
 
     @Override

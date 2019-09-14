@@ -41,8 +41,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "OrdenesTrabajo.findByHoraInicio", query = "SELECT o FROM OrdenesTrabajo o WHERE o.horaInicio = :horaInicio")
     , @NamedQuery(name = "OrdenesTrabajo.findByHoraFinalizacion", query = "SELECT o FROM OrdenesTrabajo o WHERE o.horaFinalizacion = :horaFinalizacion")
     , @NamedQuery(name = "OrdenesTrabajo.findByObservaciones", query = "SELECT o FROM OrdenesTrabajo o WHERE o.observaciones = :observaciones")
-    , @NamedQuery(name = "OrdenesTrabajo.findByPrioridad", query = "SELECT o FROM OrdenesTrabajo o WHERE o.prioridad = :prioridad")
-    , @NamedQuery(name = "OrdenesTrabajo.findByEstado", query = "SELECT o FROM OrdenesTrabajo o WHERE o.estado = :estado")})
+    , @NamedQuery(name = "OrdenesTrabajo.findByEstado", query = "SELECT o FROM OrdenesTrabajo o WHERE o.estado = :estado")
+    , @NamedQuery(name = "OrdenesTrabajo.findByPrioridad", query = "SELECT o FROM OrdenesTrabajo o WHERE o.prioridad = :prioridad")})
 public class OrdenesTrabajo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -63,10 +63,12 @@ public class OrdenesTrabajo implements Serializable {
     private String horaFinalizacion;
     @Column(name = "observaciones", length = 2147483647)
     private String observaciones;
-    @Column(name = "prioridad")
-    private String prioridad = "Media";
     @Column(name = "estado")
     private Integer estado;
+    @Column(name = "prioridad", length = 2147483647)
+    private String prioridad;
+    @OneToMany(mappedBy = "idOrdenTrabajo")
+    private List<Cronograma> cronogramaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idOrdenTrabajo")
     private List<DetallesOrdenTrabajo> detallesOrdenTrabajoList;
     @JoinColumn(name = "id_equipo", referencedColumnName = "id_equipo", nullable = false)
@@ -137,6 +139,14 @@ public class OrdenesTrabajo implements Serializable {
         this.observaciones = observaciones;
     }
 
+    public Integer getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Integer estado) {
+        this.estado = estado;
+    }
+
     public String getPrioridad() {
         return prioridad;
     }
@@ -145,12 +155,13 @@ public class OrdenesTrabajo implements Serializable {
         this.prioridad = prioridad;
     }
 
-    public Integer getEstado() {
-        return estado;
+    @XmlTransient
+    public List<Cronograma> getCronogramaList() {
+        return cronogramaList;
     }
 
-    public void setEstado(Integer estado) {
-        this.estado = estado;
+    public void setCronogramaList(List<Cronograma> cronogramaList) {
+        this.cronogramaList = cronogramaList;
     }
 
     @XmlTransient
