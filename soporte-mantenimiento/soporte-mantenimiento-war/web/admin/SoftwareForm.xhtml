@@ -57,7 +57,7 @@
                             <p:outputLabel>#{soft.idArquitectura.arquitectura}</p:outputLabel>
                         </p:column>
 
-                        <p:column headerText="Version" filterBy="#{soft.version}" sortBy="#{soft.version}" style="width: 7em">
+                        <p:column headerText="Versi&oacute;n" filterBy="#{soft.version}" sortBy="#{soft.version}" style="width: 7em">
                             <p:outputLabel value="#{soft.version}"/>
                         </p:column>
 
@@ -105,7 +105,7 @@
                                 <f:selectItems value="#{arquitecturasMB.arquiList}" var="arq" itemLabel="#{arq.arquitectura}" itemValue="#{arq}"/>
                             </p:selectOneMenu>
 
-                            <p:outputLabel value="Version"/>
+                            <p:outputLabel value="Versi&oacute;n"/>
                             <p:inputText value="#{softwareMB.software.version}"/>
 
                             <p:outputLabel value="Service Pack"/>
@@ -144,7 +144,7 @@
                                 <f:selectItems value="#{arquitecturasMB.arquiList}" var="aq" itemLabel="#{aq.arquitectura}" itemValue="#{aq}"/>
                             </p:selectOneMenu>
 
-                            <p:outputLabel value="Versión"/>
+                            <p:outputLabel value="Versi&oacute;n"/>
                             <p:inputText value="#{softwareMB.softwareSeleccionado.version}"/>
 
                             <p:outputLabel value="Service Pack"/>

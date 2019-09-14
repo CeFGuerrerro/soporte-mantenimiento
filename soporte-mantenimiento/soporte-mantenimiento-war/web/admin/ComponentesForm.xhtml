@@ -48,7 +48,7 @@
                             Componentes
                         </f:facet>
 
-                        <p:column headerText="Num. Inventario" filterBy="#{comp.numeroInventario}" sortBy="#{comp.numeroInventario}" style="width: 9em">
+                        <p:column headerText="No. Inventario" filterBy="#{comp.numeroInventario}" sortBy="#{comp.numeroInventario}" style="width: 9em">
                             <p:outputLabel value="#{comp.numeroInventario}"/>
                         </p:column>
 
@@ -151,7 +151,7 @@
                     <h:form id="f_crearComponente">
                         <p:panelGrid columns="2">
 
-                            <p:outputLabel value="Num. Inventario"/>
+                            <p:outputLabel value="No. Inventario"/>
                             <p:inputText value="#{componentesMB.comp.numeroInventario}"/>
 
                             <p:outputLabel value="Serial"/>
@@ -174,7 +174,7 @@
                             <p:outputLabel value="Componente Personal"/>
                             <p:selectBooleanButton value="#{componentesMB.comp.personal}" onLabel="Si" onIcon="fa fa-check" offLabel="No" offIcon="fa fa-close"/>
 
-                            <p:outputLabel value="Descripción"/>
+                            <p:outputLabel value="Descripci&oacute;n"/>
                             <p:inputTextarea value="#{componentesMB.comp.observaciones}" rows="5" />
 
                         </p:panelGrid>
@@ -189,7 +189,7 @@
                     <h:form id="f_editarComponente">
                         <p:panelGrid columns="2">
 
-                            <p:outputLabel value="Num. Inventario"/>
+                            <p:outputLabel value="No. Inventario"/>
                             <p:inputText value="#{componentesMB.compSeleccionado.numeroInventario}"/>
 
                             <p:outputLabel value="Serial"/>
@@ -218,7 +218,7 @@
                             <p:outputLabel value="Personal"/>
                             <p:selectBooleanButton value="#{componentesMB.compSeleccionado.personal}" onLabel="Si" onIcon="fa fa-check" offLabel="No" offIcon="fa fa-close"/>
 
-                            <p:outputLabel value="Descripción"/>
+                            <p:outputLabel value="Descripci&oacute;n"/>
                             <p:inputTextarea value="#{componentesMB.compSeleccionado.observaciones}" rows="5" />
 
                         </p:panelGrid>

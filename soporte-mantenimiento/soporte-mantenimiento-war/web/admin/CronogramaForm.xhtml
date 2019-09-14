@@ -33,7 +33,7 @@
                     </div>
                     <p:dialog widgetVar="eventDialog" header="Detalle Actividad" showEffect="clip" hideEffect="clip">
                         <h:panelGrid id="eventDetails" columns="2">
-                            <p:outputLabel for="titulo" value="Titulo:" />
+                            <p:outputLabel for="titulo" value="T&iacute;tulo:" />
                             <p:inputText id="titulo" value="#{cronogramaMB.event.title}" required="true"/>
 
                             <p:outputLabel for="desde" value="Desde:" />
@@ -42,7 +42,7 @@
                             <p:outputLabel for="hasta" value="Hasta:" />
                             <p:calendar id="hasta" value="#{cronogramaMB.event.endDate}" pattern="dd/MM/yyyy " locale="es" timeZone="GMT-6" required="true"/>
 
-                            <p:outputLabel for="descripcion" value="Descripcion:" />
+                            <p:outputLabel for="descripcion" value="Descripci&oacute;n:" />
                             <p:inputTextarea id="descripcion" cols="90" value="#{cronogramaMB.seleccion.descripcion}"/>
 
                             <p:commandButton id="btnGuardar" value="Guardar" action="#{cronogramaMB.addEvent}" update="messages" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />

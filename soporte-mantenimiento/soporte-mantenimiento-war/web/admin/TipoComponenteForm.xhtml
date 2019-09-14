@@ -36,7 +36,7 @@
                             <p:outputLabel>#{tipoComp.nombre}</p:outputLabel>
                         </p:column>
 
-                        <p:column headerText="Descripción">
+                        <p:column headerText="Descripci&oacute;n">
                             <p:outputLabel>#{tipoComp.descripcion}</p:outputLabel>
                         </p:column>
                         <p:column headerText="Hardware" style="width: 8%">
@@ -66,7 +66,7 @@
                         <p:panelGrid columns="2">
                             <p:outputLabel>Nombre:</p:outputLabel>
                             <p:inputText value="#{tiposComponenteMB.tipoComp.nombre}" required="true" requiredMessage="Ingrese un nombre!"/>
-                            <p:outputLabel>Descripcion:</p:outputLabel>
+                            <p:outputLabel>Descripci&oacute;n:</p:outputLabel>
                             <p:inputTextarea rows="5" value="#{tiposComponenteMB.tipoComp.descripcion}"/>
                             <p:outputLabel value="Hardware Asignable"/>
                             <p:selectBooleanButton value="#{tiposComponenteMB.tipoComp.contenedorHw}" onLabel="Si" onIcon="fa fa-check" offLabel="No" offIcon="fa fa-close"/>

@@ -12,7 +12,7 @@
 
             <ui:define name="contenido">
                 <h:form id="frmTabla">
-                    <p:commandButton id="btnNuevo" value="Nuevo Tecnico" icon="fa fa-plus" oncomplete="PF('wnuevo').show();" update=":frmNuevo"/>
+                    <p:commandButton id="btnNuevo" value="Nuevo T&eacute;cnico" icon="fa fa-plus" oncomplete="PF('wnuevo').show();" update=":frmNuevo"/>
                     <div id="filter_div">
                         <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
                             <p:outputLabel value="Buscar:" />
@@ -29,7 +29,7 @@
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="#{tec.idTecnico}"
                                  rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página: ({currentPage} de {totalPages})" paginatorPosition="bottom">
                         <f:facet name="header">
-                            Tecnicos
+                            T&eacute;cnicos
                         </f:facet>
 
                         <p:column headerText="Nombre" filterBy="#{tec.nombre}" filterMatchMode="contains">
@@ -45,7 +45,7 @@
                             <p:outputPanel layout="inline" styleClass="fa fa-close" rendered="#{!tec.estado}" />
                         </p:column>
 
-                        <p:column headerText="Descripcion">
+                        <p:column headerText="Descripci&oacute;n">
                             <p:outputLabel value="#{tec.descripcion}" />
                         </p:column>
 
@@ -54,13 +54,13 @@
                 </h:form>
 
                 <h:form id="frmNuevo">
-                    <p:dialog id="dlgNuevo" widgetVar="wnuevo" header="Nuevo Tecnico" modal="true" resizable="false" closeOnEscape="true" draggable="false">
+                    <p:dialog id="dlgNuevo" widgetVar="wnuevo" header="Nuevo T&eacute;cnico" modal="true" resizable="false" closeOnEscape="true" draggable="false">
                         <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
                             <p:outputLabel value="Nombre" for="nombre"/>
                             <p:inputText id="nombre" value="#{tecnicosMB.tecnico.nombre}" required="true" requiredMessage="¡Ingrese el nombre!"/>
                             <p:outputLabel value="Correo" for="correo"/>
                             <p:inputText id="correo" value="#{tecnicosMB.tecnico.correo}"/>
-                            <p:outputLabel value="Descripcion" for="descripcion"/>
+                            <p:outputLabel value="Descripci&oacute;n" for="descripcion"/>
                             <p:inputTextarea id="descripcion" value="#{tecnicosMB.tecnico.descripcion}"/>
                         </p:panelGrid>
                         <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{tecnicosMB.registrar()}" oncomplete="PF('wnuevo').hide()" update=":frmTabla"/>
@@ -68,7 +68,7 @@
                 </h:form>
 
                 <h:form id="frmEditar">
-                    <p:dialog id="dlgEditar" widgetVar="weditar" header="Editar Tecnico" modal="true" resizable="false" closeOnEscape="true" draggable="false">
+                    <p:dialog id="dlgEditar" widgetVar="weditar" header="Editar T&eacute;cnico" modal="true" resizable="false" closeOnEscape="true" draggable="false">
                         <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
                             <p:outputLabel value="Nombre" for="nombre"/>
                             <p:inputText id="nombre" value="#{tecnicosMB.seleccion.nombre}" required="true" requiredMessage="¡Ingrese el nombre!"/>
@@ -76,7 +76,7 @@
                             <p:inputText id="correo" value="#{tecnicosMB.seleccion.correo}"/>
                             <p:outputLabel value="Estado" for="estado"/>
                             <p:selectBooleanButton value="#{tecnicosMB.seleccion.estado}" onLabel="Activo" onIcon="fa fa-check" offLabel="Inactivo" offIcon="fa fa-close" id="estado"/>
-                            <p:outputLabel value="Descripcion" for="descripcion"/>
+                            <p:outputLabel value="Descripci&oacute;n" for="descripcion"/>
                             <p:inputTextarea id="descripcion" value="#{tecnicosMB.seleccion.descripcion}"/>
                         </p:panelGrid>
                         <p:commandButton value="Guardar"  icon="fa fa-check" actionListener="#{tecnicosMB.editar()}" oncomplete="PF('weditar').hide()" update=":frmTabla"/>

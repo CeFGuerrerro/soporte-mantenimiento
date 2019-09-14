@@ -56,7 +56,7 @@
                         <p:column headerText="Ubicaci&oacute;n" filterBy="#{equip.idUbicacion.idUbicacion}" style="width: 7em">
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('wd_tbl_equipos').filter()" filter="true" filterMatchMode="startsWith" style="width: 10em">
-                                    <f:selectItem itemLabel="Seleccione Ubicacion" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="Seleccione Ubicaci&oacute;n" itemValue="#{null}" noSelectionOption="true" />
                                     <f:selectItems value="#{ubicacionesMB.ubicList}" var="ub" itemLabel="#{ub.nombre}" itemValue="#{ub.idUbicacion}" />
                                 </p:selectOneMenu>
                             </f:facet>
@@ -74,8 +74,8 @@
 
                         <p:column headerText="Componentes" style="width: 12.5em">
                             <p:panelGrid columns="3">
-                                <p:outputLabel value="Num. Inventario"/>
-                                <p:outputLabel value="Num. Serie"/>
+                                <p:outputLabel value="No. Inventario"/>
+                                <p:outputLabel value="No. de Serie"/>
                                 <p:outputLabel value="Tipo"/>
                             </p:panelGrid>
                             <p:repeat value="#{equip.componentesEquipoList}" var="item">
@@ -102,9 +102,9 @@
                         </p:growl>
                         <p:panelGrid columns="2">
 
-                            <p:outputLabel value="Ubicacion"/>
+                            <p:outputLabel value="Ubicaci&oacute;n"/>
                             <p:selectOneMenu value="#{equiposMB.equip.idUbicacion}" converter="objectConverter" required="true"
-                                             requiredMessage="Seleccione una ubicacion" filter="true" filterMatchMode="startsWith">
+                                             requiredMessage="Seleccione una ubicaci&oacute;n" filter="true" filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="Seleccione una ubicaci&oacute;n" itemValue="" noSelectionOption="true"/>
                                 <f:selectItems value="#{ubicacionesMB.ubicList}" var="ubic" itemLabel="#{ubic.nombre}" itemValue="#{tipo}"/>
                             </p:selectOneMenu>
@@ -126,11 +126,11 @@
                         <p:dataTable id="t_componentesPorEquipo" emptyMessage="No hay registros" rows="10" selectionMode="single"
                                      value="#{equiposMB.compList}" rowKey="#{comp.idComponente}" var="comp">
 
-                            <p:column headerText="N&ordm; Inventario" sortBy="#{comp.numeroInventario}" style="width: 9em">
+                            <p:column headerText="No. Inventario" sortBy="#{comp.numeroInventario}" style="width: 9em">
                                 <p:outputLabel value="#{comp.numeroInventario}"/>
                             </p:column>
 
-                            <p:column headerText="N&ordm; Serie" style="width: 9em">
+                            <p:column headerText="No. de Serie" style="width: 9em">
                                 <p:outputLabel value="#{comp.numeroSerie}"/>
                             </p:column>
 
@@ -160,16 +160,16 @@
 
 
                 <!--Menu para editar un equipo-->
-                <p:dialog widgetVar="wd_editarEquipo" modal="true" header="Informacion del Equipo" closeOnEscape="true" onShow="#{equiposMB.showCleanning()}">
+                <p:dialog widgetVar="wd_editarEquipo" modal="true" header="Informaci&oacute;n del Equipo" closeOnEscape="true" onShow="#{equiposMB.showCleanning()}">
                     <h:form id="f_editarEquipo">
                         <p:growl>
                             <p:autoUpdate/>
                         </p:growl>
                         <p:panelGrid columns="2">
 
-                            <p:outputLabel value="Ubicacion"/>
+                            <p:outputLabel value="Ubicaci&oacute;n"/>
                             <p:selectOneMenu value="#{equiposMB.equipSeleccionado.idUbicacion}" converter="objectConverter" required="true"
-                                             requiredMessage="Seleccione una ubicacion" filter="true" filterMatchMode="startsWith">
+                                             requiredMessage="Seleccione una ubicaci&oacute;n" filter="true" filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="Seleccione una ubicaci&oacute;n" itemValue="" noSelectionOption="true"/>
                                 <f:selectItems value="#{ubicacionesMB.ubicList}" var="ubic" itemLabel="#{ubic.nombre}" itemValue="#{tipo}"/>
                             </p:selectOneMenu>
@@ -198,11 +198,11 @@
                                 Componentes por Asignar 
                             </f:facet>
 
-                            <p:column headerText="N&ordm; Inventario" sortBy="#{compA.numeroInventario}" style="width: 9em">
+                            <p:column headerText="No. Inventario" sortBy="#{compA.numeroInventario}" style="width: 9em">
                                 <p:outputLabel value="#{compA.numeroInventario}"/>
                             </p:column>
 
-                            <p:column headerText="N&ordm; Serie" style="width: 9em">
+                            <p:column headerText="No. de Serie" style="width: 9em">
                                 <p:outputLabel value="#{compA.numeroSerie}"/>
                             </p:column>
 
@@ -228,11 +228,11 @@
                                 Registro de Componentes del Equipo
                             </f:facet>
 
-                            <p:column headerText="N&ordm; Inventario" sortBy="#{comp.idComponente.numeroInventario}" style="width: 9em">
+                            <p:column headerText="No. Inventario" sortBy="#{comp.idComponente.numeroInventario}" style="width: 9em">
                                 <p:outputLabel value="#{comp.idComponente.numeroInventario}"/>
                             </p:column>
 
-                            <p:column headerText="N&ordm; Serie" style="width: 9em">
+                            <p:column headerText="No. de Serie" style="width: 9em">
                                 <p:outputLabel value="#{comp.idComponente.numeroSerie}"/>
                             </p:column>
 
@@ -253,13 +253,13 @@
                                 <p:outputPanel layout="inline" styleClass="fa fa-close" rendered="#{!comp.estado}"/>
                             </p:column>
 
-                            <p:column headerText="Fecha Asignaci&oacute;n" style="width: 12em">
+                            <p:column headerText="Fecha Asignaci&oacute;n" style="width: 9em">
                                 <p:outputLabel value="#{comp.fechaVinculado}">
                                     <f:convertDateTime pattern="dd/MM/yyyy" type="date"/>
                                 </p:outputLabel>
                             </p:column>
 
-                            <p:column headerText="Fecha Salida" style="width: 12em">
+                            <p:column headerText="Fecha Salida" style="width: 9em">
                                 <p:outputLabel value="#{comp.fechaDesvinculado}">
                                     <f:convertDateTime pattern="dd/MM/yyyy" type="date"/>
                                 </p:outputLabel>
@@ -340,10 +340,10 @@
                                 <p:outputLabel>#{res.nombre}</p:outputLabel>
                             </p:column>
 
-                            <p:column headerText="Ubicacion" sortBy="#{res.idUbicacion.nombre}" filterBy="#{res.idUbicacion.idUbicacion}">
+                            <p:column headerText="Ubicaci&oacute;n" sortBy="#{res.idUbicacion.nombre}" filterBy="#{res.idUbicacion.idUbicacion}">
                                 <f:facet name="filter">
                                     <p:selectOneMenu onchange="PF('wd_tbl_responsables').filter()" filter="true" filterMatchMode="startsWith" style="width: 10em">
-                                        <f:selectItem itemLabel="Seleccione Ubicacion" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="Seleccione Ubicaci&oacute;n" itemValue="#{null}" noSelectionOption="true" />
                                         <f:selectItems value="#{ubicacionesMB.ubicList}" var="ub" itemLabel="#{ub.nombre}" itemValue="#{ub.idUbicacion}" />
                                     </p:selectOneMenu>
                                 </f:facet>

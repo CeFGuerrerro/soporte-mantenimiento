@@ -31,10 +31,10 @@
                             <p:outputLabel>#{res.nombre}</p:outputLabel>
                         </p:column>
                         
-                        <p:column headerText="Ubicacion" sortBy="#{res.idUbicacion.nombre}" filterBy="#{res.idUbicacion.idUbicacion}">
+                        <p:column headerText="Ubicaci&oacute;n" sortBy="#{res.idUbicacion.nombre}" filterBy="#{res.idUbicacion.idUbicacion}">
                             <f:facet name="filter">
                                     <p:selectOneMenu onchange="PF('wd_tbl_responsables').filter()" filter="true" filterMatchMode="startsWith" style="width: 10em">
-                                        <f:selectItem itemLabel="Seleccione Ubicacion" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="Seleccione Ubicaci&oacute;n" itemValue="#{null}" noSelectionOption="true" />
                                         <f:selectItems value="#{ubicacionesMB.ubicList}" var="ub" itemLabel="#{ub.nombre}" itemValue="#{ub.idUbicacion}" />
                                     </p:selectOneMenu>
                                 </f:facet>
@@ -65,7 +65,7 @@
                             
                             <p:outputLabel value="Ubicacion"/>
                             <p:selectOneMenu value="#{responsablesMB.resp.idUbicacion}" converter="objectConverter" required="true"
-                                             requiredMessage="Seleccione una ubicacion" filter="true" filterMatchMode="startsWith">
+                                             requiredMessage="Seleccione una ubicaci&oacute;n" filter="true" filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="Seleccione una ubicaci&oacute;n" itemValue="" noSelectionOption="true"/>
                                 <f:selectItems value="#{ubicacionesMB.ubicList}" var="ubic" itemLabel="#{ubic.nombre}" itemValue="#{tipo}"/>
                             </p:selectOneMenu>
@@ -84,9 +84,9 @@
                             <p:outputLabel value="Nombre"/>
                             <p:inputText value="#{responsablesMB.respSeleccionado.nombre}" required="true" requiredMessage="Ingrese el nombre!"/>
                             
-                            <p:outputLabel value="Ubicacion"/>
+                            <p:outputLabel value="Ubicaci&oacute;n"/>
                             <p:selectOneMenu value="#{responsablesMB.respSeleccionado.idUbicacion}" converter="objectConverter" required="true"
-                                             requiredMessage="Seleccione una ubicacion" filter="true" filterMatchMode="startsWith">
+                                             requiredMessage="Seleccione una ubicaci&oacute;n" filter="true" filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="Seleccione una ubicaci&oacute;n" itemValue="" noSelectionOption="true"/>
                                 <f:selectItems value="#{ubicacionesMB.ubicList}" var="ubic" itemLabel="#{ubic.nombre}" itemValue="#{tipo}"/>
                             </p:selectOneMenu>
