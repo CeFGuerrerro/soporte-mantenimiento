@@ -101,10 +101,10 @@ public class DiscosMB implements Serializable {
         try {
             eliminado= discosFacade.remove(discosSeleccionados);
             if (eliminado) {
-                 contexto.addMessage(null, new FacesMessage("Disco eliminado"));
+                 contexto.addMessage(null, new FacesMessage("Registro eliminado"));
             }
             else{
-            contexto.addMessage(null, new FacesMessage("No se ha podido eliminar el disco seleccionado"));
+            contexto.addMessage(null, new FacesMessage("No se ha podido eliminar el registro seleccionado"));
         }obtenerTodos(); 
         }catch (Exception e) {
             contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error!", e.getMessage()));
@@ -118,9 +118,9 @@ public class DiscosMB implements Serializable {
         try {
             editado=discosFacade.edit(discosSeleccionados);
             if (editado) {
-                contexto.addMessage(null, new FacesMessage("Disco modificado"));
+                contexto.addMessage(null, new FacesMessage("Registro modificado"));
             } else {
-                contexto.addMessage(null, new FacesMessage("Ningún cambio fue efectuado en el disco seleccionado"));
+                contexto.addMessage(null, new FacesMessage("Ningún cambio fue efectuado en el registro seleccionado"));
             }obtenerTodos();;
         } catch (Exception e) {
             contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,"Error!", e.getMessage()));

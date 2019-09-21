@@ -5,12 +5,15 @@
  */
 package edu.sv.uesocc.controladores;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Gaby
  */
 public class contenedorObjetos {
-
+    private int id;
     private String numeroSerie;
     private String marca;
     private String modelo;
@@ -24,6 +27,7 @@ public class contenedorObjetos {
     private String velocidad;
 
     public contenedorObjetos() {
+        id=0;
         numeroSerie = "";
         marca = "";
         modelo = "";
@@ -37,7 +41,8 @@ public class contenedorObjetos {
         velocidad = "";
     }
 
-    public contenedorObjetos(String numeroSerie, String marca, String modelo, String puertos, String potencia, String socket, String salidaVideo, String arquitectura, String capacidad, String tipoObjeto, String velocidad) {
+    public contenedorObjetos(int id,String numeroSerie, String marca, String modelo, String puertos, String potencia, String socket, String salidaVideo, String arquitectura, String capacidad, String tipoObjeto, String velocidad) {
+        this.id=id;
         this.numeroSerie = numeroSerie;
         this.marca = marca;
         this.modelo = modelo;
@@ -49,6 +54,14 @@ public class contenedorObjetos {
         this.capacidad = capacidad;
         this.tipoObjeto = tipoObjeto;
         this.velocidad = velocidad;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNumeroSerie() {

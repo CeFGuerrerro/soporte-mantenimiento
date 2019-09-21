@@ -5,6 +5,7 @@
  */
 package edu.sv.uesocc.facades;
 
+import edu.sv.uesocc.entidades.Discos;
 import edu.sv.uesocc.entidades.DiscosComponente;
 import java.util.List;
 import javax.ejb.Local;
@@ -28,6 +29,8 @@ public interface DiscosComponenteFacadeLocal {
 
     List<DiscosComponente> findRange(int[] range);
 
+    public List<DiscosComponente> findAsignados(int id);
+
     int count();
-    
+
 }

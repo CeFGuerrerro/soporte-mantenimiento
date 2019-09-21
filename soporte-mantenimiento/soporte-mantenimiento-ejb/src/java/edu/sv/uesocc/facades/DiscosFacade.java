@@ -46,4 +46,21 @@ public class DiscosFacade extends AbstractFacade<Discos> implements DiscosFacade
         cq.where(condiciones);
         return em.createQuery(cq).getResultList();
     }
+
+    @Override
+    public List<Discos> findHistorial(int id) {
+        boolean estado = false;
+        boolean asignado = true;
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Discos> cq = cb.createQuery(Discos.class);
+        Root<Discos> comp = cq.from(Discos.class);
+        Predicate condiciones = cb.and(cb.equal(comp.get("idDisco"), id), cb.equal(comp.get("estado"), estado),
+                cb.equal(comp.get("asignado"), asignado), cb.isNotEmpty(comp.get("fechaDeBaja")));
+        cq.select(comp);
+        cq.where(condiciones);
+        return em.createQuery(cq).getResultList();
+    }
+    
+    
+
 }

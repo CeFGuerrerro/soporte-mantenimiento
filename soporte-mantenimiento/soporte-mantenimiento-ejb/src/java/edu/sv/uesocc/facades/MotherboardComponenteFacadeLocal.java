@@ -28,6 +28,8 @@ public interface MotherboardComponenteFacadeLocal {
 
     List<MotherboardComponente> findRange(int[] range);
 
+    List<MotherboardComponente> findAsignados(int id);
+
     int count();
-    
+
 }

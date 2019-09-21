@@ -230,13 +230,13 @@ public class SolicitudesMB implements Serializable {
         return filtro;
     }
     
-    public void render(){
+   /* public void render(){
         renderedInfo = false;
         renderedImagen = true;
         visto();
     }
     
-    public void visto(){
+ /*   public void visto(){
         FacesContext contexto = FacesContext.getCurrentInstance();
         boolean creado;
         try {
@@ -267,7 +267,7 @@ public class SolicitudesMB implements Serializable {
             contexto.addMessage(null, new FacesMessage("Algo malo paso!"));
         }
     }
-    
+    */
     public void ordenFromSolicitud(){
         ubicacion = solicitud.getIdUbicacion();
         responsable = solicitud.getIdResponsable();

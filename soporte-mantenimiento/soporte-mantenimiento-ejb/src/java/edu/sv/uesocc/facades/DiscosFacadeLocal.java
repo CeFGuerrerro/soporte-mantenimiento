@@ -31,4 +31,6 @@ public interface DiscosFacadeLocal {
     int count();
 
     public List<Discos> findDisponibles();
+
+    public List<Discos> findHistorial(int id);
 }

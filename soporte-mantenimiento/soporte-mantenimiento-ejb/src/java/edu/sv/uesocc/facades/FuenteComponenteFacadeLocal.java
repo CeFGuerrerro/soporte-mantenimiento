@@ -28,6 +28,8 @@ public interface FuenteComponenteFacadeLocal {
 
     List<FuenteComponente> findRange(int[] range);
 
+    List<FuenteComponente> findAsignados(int id);
+
     int count();
-    
+
 }

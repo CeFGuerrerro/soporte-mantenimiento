@@ -27,7 +27,9 @@ public interface ProcesadorComponenteFacadeLocal {
     List<ProcesadorComponente> findAll();
 
     List<ProcesadorComponente> findRange(int[] range);
+    
+    List<ProcesadorComponente> findAsignados(int id);
 
     int count();
-    
+
 }

@@ -28,6 +28,8 @@ public interface TarjetasVideoComponenteFacadeLocal {
 
     List<TarjetasVideoComponente> findRange(int[] range);
 
+    List<TarjetasVideoComponente> findAsignados(int id);
+
     int count();
-    
+
 }

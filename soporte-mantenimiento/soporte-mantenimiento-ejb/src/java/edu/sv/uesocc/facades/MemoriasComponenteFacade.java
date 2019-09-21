@@ -6,9 +6,14 @@
 package edu.sv.uesocc.facades;
 
 import edu.sv.uesocc.entidades.MemoriasComponente;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -28,5 +33,16 @@ public class MemoriasComponenteFacade extends AbstractFacade<MemoriasComponente>
     public MemoriasComponenteFacade() {
         super(MemoriasComponente.class);
     }
-    
+
+    @Override
+    public List<MemoriasComponente> findAsignados(int id) {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<MemoriasComponente> cq = cb.createQuery(MemoriasComponente.class);
+        Root<MemoriasComponente> comp = cq.from(MemoriasComponente.class);
+        Predicate condiciones = cb.and(cb.equal(comp.get("idMemoriasComponente"), id));
+        cq.select(comp);
+        cq.where(condiciones);
+        return em.createQuery(cq).getResultList();
+    }
+
 }

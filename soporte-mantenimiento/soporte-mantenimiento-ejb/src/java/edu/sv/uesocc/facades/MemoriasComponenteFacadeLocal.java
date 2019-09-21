@@ -26,8 +26,10 @@ public interface MemoriasComponenteFacadeLocal {
 
     List<MemoriasComponente> findAll();
 
+    public List<MemoriasComponente> findAsignados(int id);
+
     List<MemoriasComponente> findRange(int[] range);
 
     int count();
-    
+
 }

@@ -13,7 +13,7 @@
 
                 <h:form id="f_hC">
 
-                    <!--contedor de componentes y hardware-->
+                    <!--contenedor de componentes y hardware-->
                     <p:panelGrid>
                         <f:facet name="header">
                             <p:row>
@@ -24,14 +24,14 @@
                                 <p:column colspan="1">Hardware Asignado</p:column>
                             </p:row>
                         </f:facet>
-
-
                         <p:row>
                             <!--columna componente-->
-                            <p:column style="width: 60%" class="topAligned">
+                            <p:column style="width: 45%" class="topAligned">
                                 <!--tabla Cpu-->
-                                <p:dataTable id="t_cpus" emptyMessage="No hay registros" value="#{hardwareComponenteMB.contenedoresHw}" var="comp" lazy="true"
+                                <p:dataTable id="t_cpus" emptyMessage="No hay registros" value="#{hardwareComponenteMB.contenedoresHw}"
+                                             var="comp" lazy="true"
                                              selectionMode="single" rowKey="#{comp.idComponente}"
+                                             selection="#{hardwareComponenteMB.componenteSeleccionado}"
                                              rows="10" paginator="true">
 
                                     <p:column headerText="No. Inventario" sortBy="#{comp.numeroInventario}">
@@ -52,32 +52,31 @@
                                         </f:facet>
                                         <p:outputLabel>#{comp.idModelo.idMarca.nombre}</p:outputLabel>
                                     </p:column>
-                                    <p:column headerText="Estado" sortBy="#{comp.estado}">
-                                        <p:outputLabel>#{comp.estado}</p:outputLabel>
-                                    </p:column>
                                     <!--Enviar información a panel para cambio o insercion de elementos-->
                                     <p:ajax event="rowSelect" listener="#{hardwareComponenteMB.hardware()}" update="@form"/>
 
                                 </p:dataTable>
 
-                                <!--columna hardware-->
+                                <!--columna hardware treetable-->
                             </p:column >
-                            <p:column style="width:40%" class="topAligned">
+                            <p:column style="width:55%" class="topAligned">
                                 <h:outputText value="Seleccione un registro para continuar" rendered="#{hardwareComponenteMB.estadoInfo}"/>
 
                                 <!--Registro seleccionado-->
                                 <p:treeTable id="datos" value="#{hardwareComponenteMB.root}" rendered="#{hardwareComponenteMB.estadoTabla}" var="node" 
                                              selection="#{hardwareComponenteMB.singleSelectedTreeNode}" selectionMode="single">
 
+                                    <!--p:focus>
+                                       
+                                    </p:focus-->
                                     <p:column headerText="Tipo">
                                         <h:outputText value="#{node}" />
                                     </p:column>
-                                    <p:column style="width:24px">
-
-                                        <p:commandButton update=":f_hC:tabla_hardwareAsignable:t_hardwareSelect" oncomplete="PF('wd_dialog').show();"
-                                                         icon="fa fa-plus" actionListener="#{hardwareComponenteMB.selectedNode()}">
-                                           
+                                    <p:column style="width:24px" >
+                                        <p:commandButton  update=":f_hC:tabla_hardwareAsignable:t_hardwareSelect" oncomplete="PF('wd_dialog').show();"
+                                                          icon="fa fa-plus" actionListener="#{hardwareComponenteMB.selectedNode(node)}">
                                         </p:commandButton>
+
                                     </p:column>
 
                                 </p:treeTable>
@@ -87,21 +86,52 @@
                     </p:panelGrid>
 
                     <!--Tabla contenedora de hardware-->
-                    <p:dialog widgetVar="wd_dialog" header="Asignación de Hardware"  modal="true" resizable="false">
+                    <p:dialog widgetVar="wd_dialog" header="Asignación de Hardware"  modal="true" resizable="false" width="70%">
                         <h:form id="tabla_hardwareAsignable">
-                            <p:dataTable id="t_hardwareSelect" emptyMessage="No hay registros" var="comp"                                           
-                                         value="#{hardwareComponenteMB.discosDisponibles}" rows="10" paginator="true">
-                                <p:column headerText="No. Inventario" sortBy="#{comp.numeroSerie}">
-                                    <p:outputLabel>#{comp.numeroSerie}</p:outputLabel>
+                            <p:dataTable id="t_hardwareSelect" emptyMessage="No hay registros"         
+                                         selection="#{hardwareComponenteMB.hardwareSeleccionado}"
+                                         selectionMode="single" rowKey="#{contenedor}"
+                                         value="#{hardwareComponenteMB.contenedorObj}" var="contenedor"  
+                                         rows="10" paginator="true">
+
+                                <p:column headerText="No. Serie" rendered="#{ not empty hardwareComponenteMB.contenedorObjetos.numeroSerie}">
+                                    <p:outputLabel>#{contenedor.numeroSerie}</p:outputLabel>
+                                </p:column>
+                                <p:column headerText="Marca" rendered="#{ not empty hardwareComponenteMB.contenedorObjetos.marca}">
+                                    <p:outputLabel>#{contenedor.marca}</p:outputLabel>
+                                </p:column>
+                                <p:column headerText="Modelo" rendered="#{ not empty hardwareComponenteMB.contenedorObjetos.modelo}">
+                                    <p:outputLabel>#{contenedor.modelo}</p:outputLabel>
+                                </p:column>
+                                <p:column headerText="Puertos" rendered="#{ not empty hardwareComponenteMB.contenedorObjetos.puertos}">
+                                    <p:outputLabel>#{contenedor.puertos}</p:outputLabel>
+                                </p:column>
+                                <p:column headerText="Potencia" rendered="#{ not empty hardwareComponenteMB.contenedorObjetos.potencia}">
+                                    <p:outputLabel>#{contenedor.potencia}</p:outputLabel>
+                                </p:column>
+                                <p:column headerText="Socket" rendered="#{ not empty hardwareComponenteMB.contenedorObjetos.socket}">
+                                    <p:outputLabel>#{contenedor.socket}</p:outputLabel>
+                                </p:column>
+                                <p:column headerText="Salida Video" rendered="#{ not empty hardwareComponenteMB.contenedorObjetos.salidaVideo}">
+                                    <p:outputLabel>#{contenedor.salidaVideo}</p:outputLabel>
+                                </p:column>
+                                <p:column headerText="Arquitectura" rendered="#{ not empty hardwareComponenteMB.contenedorObjetos.arquitectura}">
+                                    <p:outputLabel>#{contenedor.arquitectura}</p:outputLabel>
+                                </p:column>
+                                <p:column headerText="Capacidad" rendered="#{ not empty hardwareComponenteMB.contenedorObjetos.capacidad}">
+                                    <p:outputLabel>#{contenedor.capacidad}</p:outputLabel>
+                                </p:column>
+                                <p:column headerText="Tipo" rendered="#{ not empty hardwareComponenteMB.contenedorObjetos.tipoObjeto}">
+                                    <p:outputLabel>#{contenedor.tipoObjeto}</p:outputLabel>
+                                </p:column>
+                                <p:column headerText="Velocidad" rendered="#{ not empty hardwareComponenteMB.contenedorObjetos.velocidad}">
+                                    <p:outputLabel>#{contenedor.velocidad}</p:outputLabel>
                                 </p:column>
 
-                                <p:column headerText="Estado" sortBy="#{comp.estado}">
-                                    <p:outputLabel>#{comp.estado}</p:outputLabel>
-                                </p:column>
-                               
-
+                                <p:ajax event="rowSelect" listener="#{hardwareComponenteMB.hwSeleccionado}" update="@form"/>
                             </p:dataTable>
-                            <p:commandButton value="Cerrar" oncomplete="PF('wd_dialog').hide()" update="tabla_hardwareAsignable"/>
+                            <p:commandButton  value="Guardar" action="#{hardwareComponenteMB.agregarHardware()}" icon="fa fa-check" oncomplete="PF('wd_dialog').hide()" update=":f_hC:datos"/>
+                            <p:commandButton value="Cerrar" oncomplete="PF('wd_dialog').hide()" update=":f_hC:datos"/>
                         </h:form>
                     </p:dialog>
                 </h:form>
