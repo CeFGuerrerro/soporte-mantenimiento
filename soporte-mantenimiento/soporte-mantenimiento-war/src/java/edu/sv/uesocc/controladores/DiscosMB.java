@@ -82,9 +82,11 @@ public class DiscosMB implements Serializable {
         boolean agregado = false;
         FacesContext contexto = FacesContext.getCurrentInstance();
         try {
+            disco.setEstado(true);
+            disco.setAsignado(false);
            agregado = discosFacade.create(disco);
            if(agregado){
-               disco = new Discos();
+              // disco = new Discos();
                contexto.addMessage(null, new FacesMessage("Registro guardado"));
            }else {
                contexto.addMessage(null, new FacesMessage("No se pudo guardar el registro!"));

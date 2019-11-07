@@ -32,22 +32,23 @@
                                              var="comp" lazy="true"
                                              selectionMode="single" rowKey="#{comp.idComponente}"
                                              selection="#{hardwareComponenteMB.componenteSeleccionado}"
-                                             rows="10" paginator="true">
+                                             rows="10" paginator="true"
+                                             widgetVar="wd_t_cpus">
 
-                                    <p:column headerText="No. Inventario" sortBy="#{comp.numeroInventario}">
+                                    <p:column headerText="No. Inventario" sortBy="#{comp.numeroInventario}" style="width: 15%" >
                                         <p:outputLabel>#{comp.numeroInventario}</p:outputLabel>
                                     </p:column>
-                                    <p:column headerText="No. de Serie" sortBy="#{comp.numeroSerie}">
+                                    <p:column headerText="No. de Serie" sortBy="#{comp.numeroSerie}" style="width: 10%" >
                                         <p:outputLabel>#{comp.numeroSerie}</p:outputLabel>
                                     </p:column>
-                                    <p:column headerText="Modelo" sortBy="#{comp.idModelo.nombre}">
+                                    <p:column headerText="Modelo" sortBy="#{comp.idModelo.nombre}" style="width: 10%" >
                                         <p:outputLabel>#{comp.idModelo.nombre}</p:outputLabel>
                                     </p:column>
-                                    <p:column headerText="Marca" sortBy="#{comp.idModelo.idMarca.nombre}" filterBy="#{comp.idModelo.idMarca.nombre}">
+                                    <p:column headerText="Marca" sortBy="#{comp.idModelo.idMarca.nombre}" filterBy="#{comp.idModelo.idMarca.nombre}" style="width: 10%" >
                                         <f:facet name="filter">
-                                            <p:selectOneMenu onchange="PF('wd_t_cpus').filter()" filter="true" filterMatchMode="startsWith">
+                                            <p:selectOneMenu onchange="PF('wd_t_cpus').filter()" filter="true" filterMatchMode="equals">
                                                 <f:selectItem itemLabel="Seleccionar marca" itemValue="#{null}" noSelectionOption="true" />
-                                                <f:selectItems value="#{marcasMB.marcList}" var="mar" itemLabel="#{mar.nombre}" itemValue="#{mar.nombre}" />
+                                                <f:selectItems value="#{marcasMB.marcList}" var="mar" itemLabel="#{mar.nombre}" itemValue="#{mar}" />
                                             </p:selectOneMenu>
                                         </f:facet>
                                         <p:outputLabel>#{comp.idModelo.idMarca.nombre}</p:outputLabel>
@@ -76,7 +77,10 @@
                                         <p:commandButton  update=":f_hC:tabla_hardwareAsignable:t_hardwareSelect" oncomplete="PF('wd_dialog').show();"
                                                           icon="fa fa-plus" actionListener="#{hardwareComponenteMB.selectedNode(node)}">
                                         </p:commandButton>
-
+                                        <p:contextMenu for="datos">
+                                            <p:menuitem value="Inactivar" icon="fa fa-trash" action="#{hardwareComponent}" update=":f_hC:datos"/>
+                                            <p:menuitem value="Cancelar" icon="fa fa-close"/>
+                                        </p:contextMenu>
                                     </p:column>
 
                                 </p:treeTable>

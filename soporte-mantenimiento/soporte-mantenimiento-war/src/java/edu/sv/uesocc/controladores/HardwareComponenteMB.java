@@ -92,7 +92,7 @@ public class HardwareComponenteMB implements Serializable {
     private String nodoPrincipal = "";
     private String nodeSeleccionado;
 
-    private Discos contDisco, reemplazoDisco;
+    private Discos contDisco, reemplazoDisco, discoSeleccionado;
     private Memorias contMemorias, reemplazoMemoria;
     private Procesadores contProcesadores, reemplazoProcesador;
     private Motherboards contMotherboards, reemplazoMotherboard;
@@ -143,17 +143,18 @@ public class HardwareComponenteMB implements Serializable {
     private TreeNode fuente;
 
     //SubNodos
-    private TreeNode discAsignado;
+   /* private TreeNode discAsignado;
     private TreeNode memAsignada;
     private TreeNode tarjetaAsignada;
     private TreeNode procAsignado;
     private TreeNode motherAsignada;
-    private TreeNode fuenteAsignada;
+    private TreeNode fuenteAsignada;*/
 
     @PostConstruct
 
     private void init() {
         contenedor();
+        discoSeleccionado= new Discos();
     }
 
     public HardwareComponenteMB() {
@@ -276,70 +277,45 @@ public class HardwareComponenteMB implements Serializable {
         //  limpiarListas();
         estadoInfo = false;
         estadoTabla = true;
+      //  discAsignado.getChildren().clear();
 
         componenteAsignado();
-        // historialHardware();
     }
 
-    /*public String nodoPrincipal() {
-        if (nodeSeleccionado == "Discos") {
-            nodoPrincipal = "si";
-            System.out.println(nodoPrincipal);
-        } else if (nodeSeleccionado == "Memorias RAM") {
-            nodoPrincipal = "si";
-            System.out.println(nodoPrincipal);
-        } else if (nodeSeleccionado == "Tarjeta de Video") {
-            nodoPrincipal = "si";
-            System.out.println(nodoPrincipal);
-        } else if (nodeSeleccionado == "Procesador") {
-            nodoPrincipal = "si";
-            System.out.println(nodoPrincipal);
-        } else if (nodeSeleccionado == "Motherboard") {
-            nodoPrincipal = "si";
-            System.out.println(nodoPrincipal);
-        } else if (nodeSeleccionado == "Fuente de Voltaje") {
-            nodoPrincipal = "si";
-            //System.out.println(nodoPrincipal);
-        }
-        System.out.println(singleSelectedTreeNode.getData() + nodoPrincipal);
-        return nodoPrincipal;
-
-    }*/
 //cargar hardwareComponente asignado
-
     public void componenteAsignado() {
-        
         FacesContext contexto = FacesContext.getCurrentInstance();
         try {
+
             discoDisp = discoCompFacade.findAsignados(componenteSeleccionado.getIdComponente());
             for (DiscosComponente d : discoDisp) {
-                discAsignado = new DefaultTreeNode(d.getIdDiscos().getNumeroSerie() + "-" + d.getIdDiscos().getIdMarca().getNombre()
+              TreeNode discAsignado = new DefaultTreeNode(d.getIdDiscos().getNumeroSerie() + "-" + d.getIdDiscos().getIdMarca().getNombre()
                         + "-" + d.getIdDiscos().getIdTipoDisco().getTipoDisco() + "-" + d.getIdDiscos().getIdPuerto().getTipoPuerto(), discos);
             }
             memoriasDisp = memoriaCompFacade.findAsignados(componenteSeleccionado.getIdComponente());
             for (MemoriasComponente m : memoriasDisp) {
-                memAsignada = new DefaultTreeNode(m.getIdMemoria().getNumeroSerie() + "-" + m.getIdMemoria().getIdMarca().getNombre()
+             TreeNode memAsignada = new DefaultTreeNode(m.getIdMemoria().getNumeroSerie() + "-" + m.getIdMemoria().getIdMarca().getNombre()
                         + "-" + m.getIdMemoria().getIdTipo().getTipoMemoria() + "-" + m.getIdMemoria().getIdCapacidad().getCapacidad()
                         + "-" + m.getIdMemoria().getIdVelocidad().getVelocidad(), memorias);
             }
             tarjetasDisp = tarjetasCompFacade.findAsignados(componenteSeleccionado.getIdComponente());
             for (TarjetasVideoComponente tv : tarjetasDisp) {
-                tarjetaAsignada = new DefaultTreeNode(tv.getIdTarjetaVideo().getNumeroSerial() + "-" + tv.getIdTarjetaVideo().getIdMarca().getNombre()
+             TreeNode tarjetaAsignada = new DefaultTreeNode(tv.getIdTarjetaVideo().getNumeroSerial() + "-" + tv.getIdTarjetaVideo().getIdMarca().getNombre()
                         + "-" + tv.getIdTarjetaVideo().getIdPuerto().getTipoPuerto(), tarjetasV);
             }
             procesadoresDisp = procesadorCompFacade.findAsignados(componenteSeleccionado.getIdComponente());
             for (ProcesadorComponente p : procesadoresDisp) {
-                procAsignado = new DefaultTreeNode(p.getIdProcesador().getNumeroSerie() + "-" + p.getIdProcesador().getIdArquitectura().getArquitectura()
+             TreeNode procAsignado = new DefaultTreeNode(p.getIdProcesador().getNumeroSerie() + "-" + p.getIdProcesador().getIdArquitectura().getArquitectura()
                         + "-" + p.getIdProcesador().getIdModelo().getNombre() + "-" + p.getIdProcesador().getIdSocket().getSocket(), procesador);
             }
             motherDisp = motherboardCompFacade.findAsignados(componenteSeleccionado.getIdComponente());
             for (MotherboardComponente mb : motherDisp) {
-                motherAsignada = new DefaultTreeNode(mb.getIdMotherboard().getNumeroSerie() + "-" + mb.getIdMotherboard().getIdMarca().getNombre()
+             TreeNode motherAsignada = new DefaultTreeNode(mb.getIdMotherboard().getNumeroSerie() + "-" + mb.getIdMotherboard().getIdMarca().getNombre()
                         + "-" + mb.getIdMotherboard().getIdSocket().getSocket(), motherboard);
             }
             fuentesDisp = fuenteCompFacade.findAsignados(componenteSeleccionado.getIdComponente());
             for (FuenteComponente f : fuentesDisp) {
-                fuenteAsignada = new DefaultTreeNode(f.getIdFuente().getNumeroSerie() + "-" + f.getIdFuente().getIdModelo().getNombre()
+             TreeNode fuenteAsignada = new DefaultTreeNode(f.getIdFuente().getNumeroSerie() + "-" + f.getIdFuente().getIdModelo().getNombre()
                         + "-" + f.getIdFuente().getPotencia(), motherboard);
             }
             // System.out.println(discoDisp);
@@ -436,7 +412,7 @@ public class HardwareComponenteMB implements Serializable {
         }
     }
 
-  /*  public void limpiarListas() {
+    /*  public void limpiarListas() {
         discoDisp = new ArrayList<>();
         memoriasDisp = new ArrayList<>();
         procesadoresDisp = new ArrayList<>();
@@ -444,7 +420,6 @@ public class HardwareComponenteMB implements Serializable {
         tarjetasDisp = new ArrayList<>();
         fuentesDisp = new ArrayList<>();
     }*/
-
     public void obtenerTodos() {
         FacesContext contexto = FacesContext.getCurrentInstance();
         try {
@@ -504,23 +479,21 @@ public class HardwareComponenteMB implements Serializable {
         java.util.Date date = new java.util.Date();
         try {
             if (nodeSeleccionado == "Discos") {
-                // System.out.println(contDisco);
                 discosComponente.setIdDiscos(contDisco);
                 discosComponente.setIdComponente(componenteSeleccionado);
                 discosComponente.setEstado(true);
                 discosComponente.setFechaAsignado(date);
                 agregado = discoCompFacade.create(discosComponente);
-                // System.out.println(discosComponente);
                 if (agregado) {
-                    // reemplazoDisco.setNumeroSerie(IdHwAsignado(discAsignado));
-                    // System.out.println(IdHwAsignado(discAsignado));
+                    Discos discoSeleccionado = new Discos();
+                    discoSeleccionado = discosFacade.find(contDisco.getIdDisco());
+                    discoSeleccionado.setAsignado(true);
+                    agregado = discosFacade.edit(discoSeleccionado);
                     contexto.addMessage(null, new FacesMessage("Registro guardado"));
-
                 } else {
                     contexto.addMessage(null, new FacesMessage("No se pudo guardar el registro!"));
                 }
                 obtenerTodos();
-
             }
 
         } catch (Exception e) {
@@ -529,10 +502,30 @@ public class HardwareComponenteMB implements Serializable {
         }
     }
 
-    private String IdHwAsignado(TreeNode hardwareAsignado) {
+   /* private String IdHwAsignado(TreeNode hardwareAsignado) {
         String string = hardwareAsignado.toString();
         String[] parts = string.split("-");
         String id = parts[0];
         return id;
+    }*/
+    
+    
+    public void inactivarHW() {
+        boolean inactivado = false;
+        FacesContext contexto = FacesContext.getCurrentInstance();
+        try {
+            if (nodeSeleccionado=="Discos"){
+                discoSeleccionado.setAsignado(false);
+                inactivado = discosFacade.edit(discoSeleccionado);
+            }
+           if(inactivado){
+               contexto.addMessage(null, new FacesMessage("Registro inactivado"));
+           }else {
+               contexto.addMessage(null, new FacesMessage("No se pudo inactivar el registro!"));
+           }
+           obtenerTodos();
+        } catch (Exception e) {
+            contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error!", e.getMessage()));
+        }
     }
 }
