@@ -44,7 +44,7 @@ public class DiscosFacade extends AbstractFacade<Discos> implements DiscosFacade
         Predicate condiciones = cb.and(cb.equal(comp.get("estado"), estado), cb.equal(comp.get("asignado"), asignado));
         cq.select(comp);
         cq.where(condiciones);
-        return em.createQuery(cq).getResultList();
+        return em.createQuery(cq).getResultList(); 
     }
 
     @Override

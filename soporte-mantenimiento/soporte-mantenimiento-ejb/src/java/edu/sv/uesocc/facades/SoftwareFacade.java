@@ -45,10 +45,11 @@ public class SoftwareFacade extends AbstractFacade<Software> implements Software
         cq.select(sw);
         
         Subquery<SoftwareComponente> subq = cq.subquery(SoftwareComponente.class);  // Definicion de la subquery osea
-        Root<SoftwareComponente> subSwc = subq.from(SoftwareComponente.class);      // Select * from softwareComponente
+        Root<SoftwareComponente> subSwc = subq.from(SoftwareComponente.class);     // Select * from softwareComponente
         subq.select(subSwc);
         
-       // Predicate p = cb.and(cb.equal(subSwc.get("idSoftware"), swComponente.getIdSoftware()),cb.equal(subSwc.get("idSoftware"), sw)); //Condiciones de la subquery osea WHERE idSoftware = swComponente.idSoftware
+       // Predicate p = cb.and(cb.equal(subSwc.get("idSoftware"), swComponente.getIdSoftware()),cb.equal(subSwc.get("idSoftware"), sw));
+      //Condiciones de la subquery osea WHERE idSoftware = swComponente.idSoftware
         
         Predicate p = cb.and(cb.equal(subSwc.get("idSoftware"), sw), cb.equal(subSwc.get("idComponente"), Componente));
         subq.where(p); // Pasamos las condiciones a la subquery
@@ -56,7 +57,5 @@ public class SoftwareFacade extends AbstractFacade<Software> implements Software
         
         return em.createQuery(cq).getResultList(); 
     }
-
-
-    
+   
 }

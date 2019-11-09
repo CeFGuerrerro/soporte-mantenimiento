@@ -17,7 +17,7 @@
     </context-param>
     
     <!-- Websocket Config -->
-<!--    <context-param>
+    <!--    <context-param>
         <param-name>javax.faces.ENABLE_CDI_RESOLVER_CHAIN</param-name>
         <param-value>true</param-value>
     </context-param>
@@ -47,7 +47,7 @@
         <extension>eot</extension>
         <mime-type>application/x-font-eot</mime-type>
     </mime-mapping>
-    
+      
     
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>

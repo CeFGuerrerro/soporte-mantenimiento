@@ -42,9 +42,9 @@
                         </div>
                     </p:column>
                 </p:panelGrid>
+ 
 
-
-            </p:panel>
+            </p:panel> 
 
             <h:form id="f_menuBar">
                 <p:menubar id="menuBar">
@@ -56,6 +56,7 @@
                             <p:menuitem value="Marcas" url="../admin/MarcasForm.jsf" rendered="#{loginMB.accesos.marcas}"/>
                             <p:menuitem value="Modelos" url="../admin/ModelosForm.jsf" rendered="#{loginMB.accesos.modelos}"/>
                             <p:menuitem value="Software Componentes" url="../admin/SoftwareComponenteForm.jsf" rendered="#{loginMB.accesos.softwareComponente}"/>
+                            <p:menuitem value="Hardware Componentes" url="../admin/HardwareComponenteForm.jsf" rendered="#{loginMB.accesos.hardwareComponente}"/>
                         </p:submenu>
                         <p:submenu label="Hardware" expanded="false" rendered="#{loginMB.accesos.hardware}">
                             <p:menuitem value="Discos duros" url="../admin/DiscosForm.jsf"/>
@@ -71,7 +72,7 @@
                             <p:menuitem value="Fuentes de Voltaje" url="../admin/FuentesForm.jsf"/>                        
                         </p:submenu>
 
-                        <p:submenu label="Software" rendered="#{loginMB.accesos.software}"> 
+                        <p:submenu label="Software" rendered="#{loginMB.accesos.software}">   
                             <p:menuitem value="Software" url="../admin/SoftwareForm.jsf"/>
                             <p:menuitem value="Tipos de Software" url="../admin/TiposSoftwareForm.jsf"/>
                             <p:menuitem value="Arquitectura" url="../admin/ArquitecturaForm.jsf"/>

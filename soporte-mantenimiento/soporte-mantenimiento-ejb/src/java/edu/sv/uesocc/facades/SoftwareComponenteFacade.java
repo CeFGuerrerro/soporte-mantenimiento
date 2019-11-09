@@ -42,7 +42,7 @@ public class SoftwareComponenteFacade extends AbstractFacade<SoftwareComponente>
         CriteriaQuery<SoftwareComponente> cq = cb.createQuery(SoftwareComponente.class);
         Root<SoftwareComponente> comp = cq.from(SoftwareComponente.class);
         Predicate condi = cb.and(cb.equal(comp.get("idComponente"), componentes));
-        cq.select(comp);
+        cq.select(comp);     
         cq.where(condi);
         
         return em.createQuery(cq).getResultList();

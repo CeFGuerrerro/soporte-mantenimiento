@@ -28,7 +28,7 @@
                             <!--columna componente-->
                             <p:column style="width: 45%" class="topAligned">
                                 <!--tabla Cpu-->
-                                <p:dataTable id="t_cpus" emptyMessage="No hay registros" value="#{hardwareComponenteMB.contenedoresHw}"
+                                <p:dataTable id="t_cpus" emptyMessage="No hay registros" value="#{componentesMB.compDisponiblesList}"
                                              var="comp" lazy="true"
                                              selectionMode="single" rowKey="#{comp.idComponente}"
                                              selection="#{hardwareComponenteMB.componenteSeleccionado}"
@@ -92,7 +92,7 @@
                                          selection="#{hardwareComponenteMB.hardwareSeleccionado}"
                                          selectionMode="single" rowKey="#{contenedor}"
                                          value="#{hardwareComponenteMB.contenedorObj}" var="contenedor"  
-                                         rows="10" paginator="true">
+                                         rows="10" paginator="true" rendered="#{hardwareComponenteMB.estadoTabla}">
 
                                 <p:column headerText="No. Serie" rendered="#{ not empty hardwareComponenteMB.contenedorObjetos.numeroSerie}">
                                     <p:outputLabel>#{contenedor.numeroSerie}</p:outputLabel>

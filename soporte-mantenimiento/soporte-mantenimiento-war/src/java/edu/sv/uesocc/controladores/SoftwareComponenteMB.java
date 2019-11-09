@@ -137,7 +137,7 @@ public class SoftwareComponenteMB implements Serializable {
         List<Software> sfPorAsignar = new ArrayList<>();
         List<Software> disponibles = new ArrayList<>();
         disponibles = sfl.findSWNoAsignado(compSelect);
-        
+
         System.out.println(disponibles.get(0));
 
         scAsignar = new DualListModel<>(disponibles, sfPorAsignar);
@@ -229,6 +229,11 @@ public class SoftwareComponenteMB implements Serializable {
         }
     }
 
+    public void obtenerSDisponible() {
+        obtenerSwDisponible();
+    }
+
+    // Metodos de la pick list
     public void onTransfer(TransferEvent event) {
         StringBuilder builder = new StringBuilder();
         for (Object item : event.getItems()) {
@@ -250,9 +255,5 @@ public class SoftwareComponenteMB implements Serializable {
     public void onReorder() {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "List Reordered", null));
-    }
-    
-    public void obtenerSDisponible () {
-    obtenerSwDisponible();
     }
 }

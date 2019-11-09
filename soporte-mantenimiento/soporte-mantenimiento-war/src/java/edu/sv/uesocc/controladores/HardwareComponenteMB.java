@@ -167,6 +167,33 @@ public class HardwareComponenteMB implements Serializable {
 
     }
 
+    public void limpiarRoot() {
+//
+//        discos.clearParent();
+//        memorias.clearParent();
+//        tarjetasV.clearParent();
+//        procesador.clearParent();
+//        motherboard.clearParent();
+//        fuente.clearParent();
+        //   root = new DefaultTreeNode();
+
+        discos = new DefaultTreeNode();
+        memorias = new DefaultTreeNode();
+        tarjetasV = new DefaultTreeNode();
+        procesador = new DefaultTreeNode();
+        motherboard = new DefaultTreeNode();
+        fuente = new DefaultTreeNode();
+    }
+    
+    /*  public void limpiarListas() {
+        discoDisp = new ArrayList<>();
+        memoriasDisp = new ArrayList<>();
+        procesadoresDisp = new ArrayList<>();
+        motherDisp = new ArrayList<>();
+        tarjetasDisp = new ArrayList<>();
+        fuentesDisp = new ArrayList<>();
+    }*/
+
     public Discos getContDisco() {
         return contDisco;
     }
@@ -276,8 +303,8 @@ public class HardwareComponenteMB implements Serializable {
         //  limpiarListas();
         estadoInfo = false;
         estadoTabla = true;
-
         componenteAsignado();
+        
         // historialHardware();
     }
 
@@ -306,9 +333,8 @@ public class HardwareComponenteMB implements Serializable {
 
     }*/
 //cargar hardwareComponente asignado
-
     public void componenteAsignado() {
-        
+      //  limpiarRoot();
         FacesContext contexto = FacesContext.getCurrentInstance();
         try {
             discoDisp = discoCompFacade.findAsignados(componenteSeleccionado.getIdComponente());
@@ -342,6 +368,7 @@ public class HardwareComponenteMB implements Serializable {
                 fuenteAsignada = new DefaultTreeNode(f.getIdFuente().getNumeroSerie() + "-" + f.getIdFuente().getIdModelo().getNombre()
                         + "-" + f.getIdFuente().getPotencia(), motherboard);
             }
+            limpiarRoot();
             // System.out.println(discoDisp);
         } catch (Exception e) {
             contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error! al cargar hardware asignado a componente", e.getMessage()));
@@ -436,15 +463,7 @@ public class HardwareComponenteMB implements Serializable {
         }
     }
 
-  /*  public void limpiarListas() {
-        discoDisp = new ArrayList<>();
-        memoriasDisp = new ArrayList<>();
-        procesadoresDisp = new ArrayList<>();
-        motherDisp = new ArrayList<>();
-        tarjetasDisp = new ArrayList<>();
-        fuentesDisp = new ArrayList<>();
-    }*/
-
+    
     public void obtenerTodos() {
         FacesContext contexto = FacesContext.getCurrentInstance();
         try {
